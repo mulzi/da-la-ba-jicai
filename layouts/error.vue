@@ -2,7 +2,9 @@
   <div>
     <index-head />
 
-    <nuxt />
+    <h1>
+      404错误！页面飞了
+    </h1>
 
     <index-foot />
   </div>
