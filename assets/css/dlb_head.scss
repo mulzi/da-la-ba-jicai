@@ -1,0 +1,207 @@
+
+*{
+  padding: 0;
+  margin: 0;
+  border: none;
+  list-style: none;
+  text-decoration: none;
+  font-style: normal;
+}
+html,body{
+  width: 100%;
+  font-family: "Microsoft YaHei","微软雅黑";
+}
+#__nuxt{
+  width: 100%;
+}
+#__layout{
+  overflow: hidden;
+  width: 100%;
+}
+.el-header, .el-main, .el-footer{
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+}
+.header{
+  width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.indexBodybox{
+  width: 75%;
+  max-width: 1400px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.headTopBox{
+  width: 100%;
+  background: #eeeeee;
+  overflow: hidden;
+  .headTop{
+    width: 75%;
+    max-width: 1400px;
+    display: flex;
+    margin: 0 auto;
+    height: 40px;
+    overflow: hidden;
+    .changeCity{
+      min-width:120px;
+      height: 40px;
+      line-height: 40px;
+      color: #666666;
+      float: left;
+      font-size: 0;
+      i{
+        vertical-align: middle;
+        font-size: 16px;
+      }
+      span {
+        font-size: 12px;
+        font-weight: bold;
+        vertical-align: middle;
+      }
+      a{
+        color: #666666;
+        font-size: 12px;
+        width:54px;
+        height:18px;
+        line-height: 18px;
+        border:1px solid rgba(204,204,204,1);
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 8px;
+        text-align: center;
+        cursor: pointer;
+      }
+
+    }
+    .loginBox{
+      float: left;
+      height: 40px;
+      line-height: 40px;
+      margin-left: 20px;
+      a{
+        display: inline-block;
+        font-size: 12px;
+        color: #666666;
+        margin: 0 6px;
+        padding: 0 2px;
+        &.active{
+          color: #DA251D;
+        }
+      }
+    }
+    .rightShops{
+      height: 40px;
+      line-height: 40px;
+      text-align: right;
+      a{
+        display: inline-block;
+        padding: 0 6px;
+        margin: 0 10px;
+        font-size: 12px;
+        color: #666666;
+      }
+    }
+  }
+}
+.headSearchBox{
+  max-width: 1400px;
+  width: 75%;
+  margin: 0 auto;
+  overflow: hidden;
+  .logoBox{
+    max-width:319px ;
+    width: 100%;
+    height: 54px;
+    margin-top: 40px;
+    a{
+      height: 100%;
+      width: 100%;
+      display: block;
+      img{
+        height: 100%;
+        width: 100%;
+        display: block;
+      }
+    }
+  }
+  .headSearch{
+    width: 84%;
+    max-width: 450px;
+    overflow: hidden;
+    margin:40px 0 0 20%;
+    .topIpt{
+      width: 100%;
+      float: left;
+      display: flex;
+      overflow: hidden;
+      .input{
+        float: left;
+        flex: 1;
+        width: 86%;
+        max-width:390px;
+        height:34px ;
+        line-height: 34px;
+        border: 2px solid #DA251D ;
+        border-right: none;
+        outline: none;
+        display: block;
+        text-indent: 1em;
+        color: #333333;
+        font-size: 12px;
+        &::placeholder{
+          color: #9b9b9b;
+        }
+      }
+      .btn{
+        float: left;
+        border-radius: 0;
+        background: #DA251D;
+        border: none;
+
+      }
+    }
+    .bottomText{
+      width: 100%;
+      margin-top: 14px;
+      overflow: hidden;
+      height: 28px;
+      span{
+        display: block;
+        float: left;
+        padding: 0 2px;
+        font-size: 12px;
+        margin-right: 16px;
+        margin-top: 8px;
+        cursor: pointer;
+        &.active{
+          color: #DA251D;
+        }
+        &:hover{
+          color: #DA251D;
+        }
+
+      }
+    }
+
+  }
+  .rightPhone{
+    width: 100%;
+    .img{
+      max-width: 65%;
+      max-height: 37px;
+      margin: 40px 10px 0 auto;
+      img{
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+    }
+  }
+}
+
+

@@ -16,6 +16,11 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/style-resources": "^1.0.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "cookie-universal-nuxt": "^2.0.18",
     "element-ui": "^2.12.0",
     "nuxt": "^2.0.0",

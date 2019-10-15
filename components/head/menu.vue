@@ -38,7 +38,8 @@ export default {
     display: flex;
 
     .list {
-      width: 1400px;
+      width: 75%;
+      max-width: 1400px;
       margin: 0 auto;
 
       a {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dlb_indexBody">
     <index-head />
 
     <nuxt />

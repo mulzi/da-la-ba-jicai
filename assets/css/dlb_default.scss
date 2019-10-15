@@ -1,0 +1,16 @@
+a{
+  cursor: pointer;
+}
+$redColor: #DA251D; //默认红色
+$borderE7: #e7e7e7; //默认边框线颜色
+@mixin img {
+  display: block; //默认图片的百分比大小
+  width: 100%;
+  height: 100%
+}
+@mixin over {
+  white-space: nowrap; //一行文字溢出隐藏
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+

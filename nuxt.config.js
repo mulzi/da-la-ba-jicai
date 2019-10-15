@@ -23,9 +23,8 @@ export default {
     */
   css: [
     'element-ui/lib/theme-chalk/index.css',
-    '@/assets/css/head.scss',
-    '@/assets/css/foot.scss',
-    'swiper/dist/css/swiper.css',
+    '@/assets/css/dlb_head.scss',
+    '@/assets/css/dlb_foot.scss',
     '@/assets/css/@media.scss'
   ],
   /*
@@ -33,7 +32,8 @@ export default {
     */
   plugins: [
     { src: '~/plugins/nuxt-swiper-plugin.js', ssr: false },
-    { src: '~/plugins/ElementUI', ssr: true } // ssr:true代表在服务端渲染,客户端不渲染
+    { src: '~/plugins/ElementUI', ssr: true }, // ssr:true代表在服务端渲染,客户端不渲染
+    { src: '~/plugins/babel-polyfill', ssr: true }
   ],
   /*
     ** Nuxt.js dev-modules
@@ -53,6 +53,7 @@ export default {
   ],
 
   styleResources: {
+    scss: ['./assets/css/dlb_default.scss']
   },
 
   /*

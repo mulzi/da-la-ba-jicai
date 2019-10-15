@@ -1,6 +1,6 @@
 @media screen and(max-width: 1280px) {
   .headTopBox .headTop{
-    width: 980px;
+    width: 94%;
   }
   .headSearchBox{
     width: 980px;
@@ -8,8 +8,31 @@
   .menu .list{
     width: 980px!important;
   }
-  .banner{
+  .indexBodybox{
     width: 980px;
 
   }
+}
+@media screen and (min-width: 768px) and (max-width:1024px ) {
+  .headTopBox .headTop{
+    width: 100%;
+  }
+  .headSearchBox{
+    width: 100%;
+  }
+  .menu .list{
+    width: 100% !important;
+  }
+  .indexBodybox{
+    width: 100%;
+  }
+}
+@media screen and (min-width: 1024px) and (max-width:1280px ) {
+
+}
+@media screen and (min-width: 1280px) and (max-width:1440px ) {
+
+}
+@media screen and (min-width: 1440px) and (max-width:1660px ) {
+
 }

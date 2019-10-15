@@ -1,7 +1,7 @@
 <template>
   <div class="banner">
     <el-carousel :interval="5000" arrow="always" :height="bannerHeight">
-      <el-carousel-item v-for="item in $store.state.home.home.banners" :key="item.picUrl">
+      <el-carousel-item v-for="item in banners" :key="item.picUrl">
         <nuxt-link :to="item.url">
           <img :src="item.picUrl" alt="">
         </nuxt-link>
@@ -12,6 +12,7 @@
 
 <script>
 export default {
+  props: [ 'banners' ],
   data () {
     return {
       bannerHeight: '505px'
@@ -27,7 +28,7 @@ export default {
 
 <style scoped lang="scss">
     .banner{
-        max-width: 1400px;
+        width: 100%;
         margin: 0 auto;
         img{
          display: block;
