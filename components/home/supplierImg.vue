@@ -9,286 +9,19 @@
     </div>
     <div class="bottomListBox">
       <div v-if="numberone==0" class="one">
-        <ul>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-        </ul>
+        <div class="img">
+          <img src="@/assets/img/home/other_company.2c64491.png" alt="">
+        </div>
       </div>
       <div v-if="numberone==1" class="one">
-        <ul>
-          <li>
-            <span>
-              <img src="https://dalabajicai-prod.oss-cn-chengdu.aliyuncs.com/files/dalaba/file/A31BCBE12A0F42A3838F1A0F0E61A024.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-        </ul>
+        <div class="img">
+          <img src="@/assets/img/home/other_company1.6abded2.png" alt="">
+        </div>
       </div>
       <div v-if="numberone==2" class="one">
-        <ul>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-          <li>
-            <span>
-              <img src="@/assets/img/0123.jpg" alt="">
-            </span>
-          </li>
-        </ul>
+        <div class="img">
+          <img src="@/assets/img/home/other_company.2c64491.png" alt="">
+        </div>
       </div>
     </div>
   </div>
@@ -319,7 +52,6 @@ export default {
         width: 100%;
         margin-top: 40px;
         border: solid 1px $borderE7;
-        border-bottom: none;
         overflow: hidden;
         box-sizing: border-box;
         .topTit{
@@ -358,37 +90,12 @@ export default {
         }
         .bottomListBox{
             width: 100%;
-            .one{
-                width: 100%;
-                ul{
-                    width: 100%;
-                    li{
-                        float: left;
-                        width: 16.66%;
-                        box-sizing: border-box;
-                        border-right: 1px solid $borderE7;
-                        border-bottom: 1px solid $borderE7;
-                        background: #ffffff;
-                        height: 120px;
-                        &:nth-child(6n){
-                            border-right: none;
-                        }
-                        &:hover{
-                            background: #e1e1e1;
-                        }
-                        span{
-                            width: 88%;
-                            height:100px ;
-                            display: block;
-                            margin: 10px auto;
-                            img{
-                                @include img;
-                            }
-                        }
-
-                    }
-
-                }
+            .img{
+              width: 100%;
+              height: 375px;
+              img{
+                @include img;
+              }
             }
         }
 

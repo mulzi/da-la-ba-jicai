@@ -3,7 +3,7 @@
     <el-carousel :interval="5000" arrow="always" :height="bannerHeight">
       <el-carousel-item v-for="item in banners" :key="item.picUrl">
         <nuxt-link :to="item.url">
-          <img :src="item.picUrl" alt="">
+          <img v-lazy="item.picUrl" alt="">
         </nuxt-link>
       </el-carousel-item>
     </el-carousel>
@@ -27,13 +27,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .banner{
-        width: 100%;
-        margin: 0 auto;
-        img{
-         display: block;
-          height: 100%;
-          width: 100%;
-        }
-    }
+ .banner{
+   width: 100%;
+   img{
+     @include img;
+   }
+ }
 </style>

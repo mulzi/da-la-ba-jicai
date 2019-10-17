@@ -7,27 +7,27 @@
       </a>
     </div>
     <div class="bottomList">
-      <a href="" v-for="(item,index) in newProducts.works" :key="index">
+      <a v-for="(item,index) in newProducts.works" :key="index" href="">
         <div class="img">
-          <img :src="item.cover" alt="">
+          <img :key="index ++ " v-lazy="item.cover"  alt="">
         </div>
         <div class="b_list">
-          <p>{{item.theme}}</p>
-          <p>{{item.name}}</p>
+          <p>{{ item.theme }}</p>
+          <p>{{ item.name }}</p>
           <p>
-            <i class="el-icon-view" />{{item.supplierId}}
-            <i class="el-icon-chat-dot-square" />{{item.userId}}
-            <i class="el-icon-thumb" />{{item.userId}}
+            <i class="el-icon-view" />{{ item.supplierId }}
+            <i class="el-icon-chat-dot-square" />{{ item.userId }}
+            <i class="el-icon-thumb" />{{ item.userId }}
           </p>
 
         </div>
         <div class="b_name">
           <div class="l_img">
-            <img :src="item.cover" alt="">
+            <img v-lazy="item.cover" alt="">
             <span :title="item.agent">
-              {{item.agent}}
+              {{ item.agent }}
             </span>
-            <em>{{item.createdAtStr}}</em>
+            <em>{{ item.createdAtStr }}</em>
           </div>
         </div>
       </a>
@@ -53,10 +53,13 @@ export default {
             line-height: 52px;
             background: linear-gradient(20deg,#ff714a,#fc4242);
             display: flex;
+           display: -ms-flex;
             color: #ffffff;
             border-radius: 6px;
             span{
+                display: inline-block;
                 flex: 1;
+                -ms-flex: 1;
                 font-size: 22px;
                 margin-left: 20px;
                 font-weight: bold;
@@ -132,6 +135,7 @@ export default {
                         max-width: 240px;
                         margin: 6px auto;
                         display: flex;
+                        display: -ms-flex;
                         align-items: center;
                         img{
                             height: 30px;
@@ -139,6 +143,8 @@ export default {
                             border-radius: 50%;
                         }
                         span{
+                            display: inline-block;
+                            -ms-flex: 1;
                             flex: 1;
                             color: #464646;
                             font-size: 12px;
@@ -148,7 +154,7 @@ export default {
                         em{
                             color: #464646;
                             font-size: 12px;
-                            margin-left: 38px;
+                            margin-left: 30px;
                             padding: 0 1px;
                         }
                     }

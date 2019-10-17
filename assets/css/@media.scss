@@ -1,18 +1,4 @@
-@media screen and(max-width: 1280px) {
-  .headTopBox .headTop{
-    width: 94%;
-  }
-  .headSearchBox{
-    width: 980px;
-  }
-  .menu .list{
-    width: 980px!important;
-  }
-  .indexBodybox{
-    width: 980px;
 
-  }
-}
 @media screen and (min-width: 768px) and (max-width:1024px ) {
   .headTopBox .headTop{
     width: 100%;
@@ -26,13 +12,58 @@
   .indexBodybox{
     width: 100%;
   }
+  .dlb_indexBody .footerBox .centnetBox{
+    width: 90%;
+  }
 }
 @media screen and (min-width: 1024px) and (max-width:1280px ) {
-
+  .headTopBox .headTop{
+    width: 90%;
+  }
+  .headSearchBox{
+    width: 90%;
+  }
+  .menu .list{
+    width: 90% !important;
+  }
+  .indexBodybox{
+    width: 90%;
+  }
+  .dlb_indexBody .footerBox .centnetBox{
+    width: 84%;
+  }
 }
 @media screen and (min-width: 1280px) and (max-width:1440px ) {
-
+  .headTopBox .headTop{
+    width: 85%;
+  }
+  .headSearchBox{
+    width: 85%;
+  }
+  .menu .list{
+    width: 85% !important;
+  }
+  .indexBodybox{
+    width: 85%;
+  }
+  .dlb_indexBody .footerBox .centnetBox{
+    width: 80%;
+  }
 }
 @media screen and (min-width: 1440px) and (max-width:1660px ) {
-
+  .headTopBox .headTop{
+    width: 80%;
+  }
+  .headSearchBox{
+    width: 80%;
+  }
+  .menu .list{
+    width: 80% !important;
+  }
+  .indexBodybox{
+    width: 80%;
+  }
+  .dlb_indexBody .footerBox .centnetBox{
+    width: 76%;
+  }
 }

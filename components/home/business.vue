@@ -59,6 +59,7 @@ export default {
       align-items: center;
       span{
         font-size: 19px;
+        display: inline-block;
         flex: 1;
         -ms-flex: 1; /* 兼容IE */
         color: #333333;
@@ -138,5 +139,4 @@ export default {
       }
     }
   }
-
 </style>

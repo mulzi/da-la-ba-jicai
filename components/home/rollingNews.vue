@@ -4,7 +4,7 @@
       <div class="one">
         <div class="leftName">
           <img src="@/assets/img/horn.png" alt="">
-          <span>【平台动态】</span>
+          <span>【工程商家推荐】</span>
         </div>
 
         <el-carousel
@@ -25,7 +25,7 @@
       <div class="one">
         <div class="leftName">
           <img src="@/assets/img/horn.png" alt="">
-          <span>【平台动态】</span>
+          <span>【家装商家推荐】</span>
         </div>
         <el-carousel
           class="rightRollList"
@@ -45,7 +45,7 @@
       <div class="one">
         <div class="leftName">
           <img src="@/assets/img/horn.png" alt="">
-          <span>【平台动态】</span>
+          <span>【设计施工方推荐】</span>
         </div>
         <el-carousel
           class="rightRollList"
@@ -88,25 +88,28 @@ export default {
     .one{
       overflow: hidden;
       display: flex;
+      display: -ms-flex;
       align-items: center;
       .leftName{
-        float: left;
-        width: 120px;
+        padding: 0 1px;
         align-items: center;
+        display: -ms-flex;
         display: flex;
+        font-size: 0;
         img{
           width: 19px;
           height: 19px;
         }
         span{
-          flex: 1;
-          margin-left: 19px;
+          margin-left: 12px;
           font-size: 13px;
           color: #DA251D;
+          line-height: 20px;
+          height: 20px;
+          display: inline-block;
         }
       }
       .rightRollList{
-        float: left;
         flex: 1;
         margin-right: 60px;
         overflow: hidden;

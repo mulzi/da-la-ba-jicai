@@ -3,7 +3,7 @@
     <banner :banners="home.banners" />
     <rolling-news :roll-news="home" />
     <div class="index_Decoration">
-      <business title-name="公装商家推荐" :home-suppliers-recommend="home.homeSuppliersRecommend" />
+      <business title-name="工程商家推荐" :home-suppliers-recommend="home.homeSuppliersRecommend" />
       <business style="margin: 0 1.25%" title-name="家装商家推荐" :home-suppliers-recommend="home.projectSuppliersRecommend" />
       <business title-name="设计施工方推荐" :home-suppliers-recommend="home.homeSuppliersRecommend" />
     </div>
@@ -72,6 +72,7 @@ export default {
     width: 100%;
     overflow: hidden;
     display: flex;
+    display: -ms-flex;
   }
   .homeNewsBox{
     width: 100%;
@@ -82,10 +83,13 @@ export default {
       line-height: 52px;
       background: linear-gradient(20deg,#58aedd ,#41bfcc);
       display: flex;
+      display: -ms-flex;
       color: #ffffff;
       border-radius: 6px;
       span{
+        -ms-flex: 1;
         flex: 1;
+        display: inline-block;
         font-size: 22px;
         margin-left: 20px;
         font-weight: bold;

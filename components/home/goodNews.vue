@@ -1,20 +1,19 @@
 <template>
   <div class="goodNews">
     <div class="TwoBox">
-      <!--      <rolling-news :goodnews="goodNews"/>-->
-      <roll-three-news-two :goodnews="goodNews" />
-      <roll-three-news-two :goodnews="goodNews" />
+      <rolling-news :goodnews-left="goodNews.enterpriseNews" />
+      <roll-three-news-two :goodnews="goodNews.successCases" />
     </div>
   </div>
 </template>
 
 <script>
-// import rollingNews from './rollingNews'
+import rollingNews from './rollThreeNews'
 import rollThreeNewsTwo from './rollThreeNewsTwo'
 export default {
   components: {
-    rollThreeNewsTwo
-    // rollingNews
+    rollThreeNewsTwo,
+    rollingNews
   },
   props: ['goodNews'],
   data () {

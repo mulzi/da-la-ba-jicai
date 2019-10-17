@@ -6,7 +6,7 @@
     <div class="threeList">
       <div v-swiper:mySwiper="swiperOption">
         <div class="swiper-wrapper">
-          <div v-for="(item,index) in goodnews.successCases " :key="index" class="swiper-slide clearfix swiper-no-swiping">
+          <div v-for="(item,index) in goodnews " :key="index" class="swiper-slide clearfix swiper-no-swiping">
             <a class="p1">
               <em>恭喜</em>{{ item.info }}
             </a>
@@ -29,7 +29,7 @@ export default {
       swiperOption: {
         direction: 'vertical', // 向上
         autoplay: {
-          delay: 1000
+          delay: 2000
         },
         speed: 1000, // 速度
         loop: true, // 自动轮播
@@ -66,57 +66,6 @@ export default {
                 top: 30px;
                 background: linear-gradient(180deg,#f9f9f9,#d9d9d9,#f9f9f9);
             }
-            .one{
-                width: 50%;
-                overflow: hidden;
-                float: left;
-                box-sizing: border-box;
-                .title{
-                    font-size: 18px;
-                    color: #333333;
-                    width: 100%;
-                    text-align: center;
-                    margin-top: 30px;
-                    height: 20px;
-                    line-height: 20px;
-                }
-                .threeList{
-                    margin-top: 20px;
-                    margin-bottom: 30px;
-                    height: 96px;
-                    overflow: hidden;
-                    .swiper-container{
-                        height: 96px;
-                        overflow: hidden;
-                        .p1{
-                            flex: 1;
-                            height: 32px;
-                            line-height: 32px;
-                            color: #333333;
-                            font-size: 14px;
-                            display: flex;
-                            align-items: center;
-                            em{
-                                color: $redColor;
-                                max-width: 152px;
-                                @include over;
-                            }
-                        }
-                        span{
-                            width: 80px;
-                            margin: 0 30px 0 30px;
-                            font-size:14px ;
-                            color: #333333;
-                        }
-                        i{
-                            min-width: 66px;
-                            color: $redColor;
-                            font-size: 14px;
-                        }
-                    }
-
-                }
-            }
             .two{
                 width: 50%;
                 overflow: hidden;
@@ -142,6 +91,7 @@ export default {
                         .swiper-slide{
                             display: flex;
                             .p1{
+                              display: inline-block;
                                 flex: 1;
                                 height: 32px;
                                 line-height: 32px;

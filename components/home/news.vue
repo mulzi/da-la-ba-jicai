@@ -22,6 +22,7 @@
       </div>
       <div class="two">
         <a v-for="(item,index) in newslist" :key="index" href="">
+          <i></i>
           <span>
             {{ item.title }}
           </span>
@@ -53,7 +54,7 @@ export default {
         margin-right: 2%;
         box-sizing: border-box;
         border: 1px solid $borderE7;
-        .title{
+       > .title{
             width: 92%;
             max-width: 634px;
             margin: 20px auto 0;
@@ -61,8 +62,11 @@ export default {
             height: 50px;
             line-height: 50px;
             display: flex;
+            display: -ms-flex;
             align-items: center;
             span{
+                 display: inline-block;
+                -ms-flex: 1;
                 font-size: 21px;
                 color: #333333;
                 flex: 1;
@@ -73,7 +77,7 @@ export default {
             }
 
         }
-        .bottomList{
+        > .bottomList{
             width: 92%;
             max-width: 634px;
             margin: 20px auto 0;
@@ -123,7 +127,6 @@ export default {
                         border-radius: 6px;
                         margin-top: 10px;
                         border: 1px solid $borderE7;
-                        box-sizing: border-box;
                         &:hover{
                             background: #f0f0f0;
                         }
@@ -139,15 +142,18 @@ export default {
                     line-height: 44px;
                     box-sizing: border-box;
                     display: flex;
+                    display: -ms-flex;
                     align-items: center;
-                    &::before{
-                        content: "";
+                        i{
+                        display: inline-block;
                         width: 3px;
                         height: 3px;
                         background: #999999;
                         margin-right:12px ;
-                    }
+                        }
                     span{
+                        -ms-flex: 1;
+                        display: inline-block;
                         flex: 1;
                         font-size: 14px;
                         color: #666666;
@@ -161,7 +167,7 @@ export default {
                         padding: 0 2px;
                     }
                     &:hover{
-                        &::before{
+                        i{
                             background: $redColor;
 
                         }

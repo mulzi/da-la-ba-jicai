@@ -33,17 +33,23 @@ export default {
 
   .menu {
     width: 100%;
-    margin: 40px auto 10px;
+    margin: 40px auto 0;
     overflow: hidden;
     display: flex;
 
     .list {
       width: 75%;
       max-width: 1400px;
-      margin: 0 auto;
+      margin: 0 auto 0;
+      border-bottom: 1px solid $redColor;
+      overflow: hidden;
+      display: -ms-flex;
+      display: flex;
 
       a {
+        margin-bottom: 10px;
         flex: 1;
+        -ms-flex: 1;
         text-align: center;
         height: 30px;
         line-height: 30px;
