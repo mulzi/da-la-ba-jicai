@@ -15,9 +15,9 @@
           <p>{{ item.theme }}</p>
           <p>{{ item.name }}</p>
           <p>
-            <i class="el-icon-view" />{{ item.supplierId }}
-            <i class="el-icon-chat-dot-square" />{{ item.userId }}
-            <i class="el-icon-thumb" />{{ item.userId }}
+            <i class="el-icon-view"> </i>{{ item.supplierId }}
+            <i class="el-icon-chat-dot-square"></i>{{item.userId }}
+            <i class="iconfont">&#xe680;</i>{{ item.userId }}
           </p>
 
         </div>

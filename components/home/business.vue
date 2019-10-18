@@ -2,7 +2,7 @@
   <div class="businessBoxOne">
     <div class="headTit">
       <span>
-        {{titleName}}
+        {{ titleName }}
       </span>
       <a>
         更多 +
@@ -35,18 +35,20 @@
 
 <script>
 export default {
+  // eslint-disable-next-line
   props: ['homeSuppliersRecommend', 'titleName'],
   data () {
     return {}
   }
 }
 </script>
-
+/* eslint-disable */
 <style scoped lang="scss">
   .businessBoxOne{
     width:32.5% ;
     max-width:460px;
     box-sizing: border-box;
+    /* eslint-disable */
     border: 1px solid $borderE7;
     .headTit{
       width:90% ;

@@ -1,8 +1,11 @@
 <template>
   <div class="menu">
     <div class="list">
-      <nuxt-link v-for="(item,index) in menu" :key="index" :to="item.name">
-        {{ item.name }}
+      <nuxt-link to="/">
+        首页
+      </nuxt-link>
+      <nuxt-link v-for="(item,index) in nav" :key="index" :to="item.path">
+        {{ item.title }}
       </nuxt-link>
     </div>
   </div>
@@ -12,17 +15,49 @@
 export default {
   data () {
     return {
-      menu: [
-        { name: '首页', id: 1 },
-        { name: '作品精选', id: 1 },
-        { name: '材料供应商', id: 1 },
-        { name: '设计施工方', id: 1 },
-        { name: '项目信息', id: 1 },
-        { name: '招采信息', id: 1 },
-        { name: '招募招标', id: 1 },
-        { name: '库存信息', id: 1 },
-        { name: '论坛', id: 1 }
-
+      nav: [
+        {
+          title: '作品精选',
+          path: '/works'
+        },
+        {
+          title: '材料供应商',
+          path: '/supplier',
+          params: {
+            type: 0
+          }
+        },
+        {
+          title: '设计施工方',
+          path: '/user',
+          params: {
+            type: 3
+          }
+        },
+        {
+          title: '项目信息',
+          path: '/projectInfo'
+        },
+        {
+          title: '招采信息',
+          path: '/purchaseList'
+        },
+        {
+          title: '招募招标',
+          path: '/purchaseList/AskPriseList'
+        },
+        {
+          title: '库存信息',
+          path: '/stock'
+        },
+        {
+          title: '论坛',
+          path: '/news'
+        }
+        // {
+        //   title: '关于我们',
+        //   path: '/we'
+        // },
       ]
     }
   }

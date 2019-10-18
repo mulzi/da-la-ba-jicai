@@ -107,16 +107,16 @@
           </div>
           <div class="two">
             <p>服务与支持</p>
-            <em>服务热线：17316789980</em>
+            <em>服务热线：400-023-5655</em>
             <em>服务时间：9:00-18:00</em>
-            <em>服务邮箱：59455428@qq.com</em>
-            <em>地址：重庆市不知道哪里</em>
+            <em>服务邮箱：dalabajicai@outlook.com</em>
+            <em>地址：重庆市渝北区山顶道捌号B区8栋4单元301</em>
           </div>
         </div>
         <div class="rightImg">
           <div class="imgOne">
             <p>
-              <img src="@/assets/img/0123.jpg" alt="">
+              <img src="../assets/img/home/official_account.jpg" alt="">
             </p>
             <p>
               公众号
@@ -124,7 +124,7 @@
           </div>
           <div class="imgOne">
             <p>
-              <img src="@/assets/img/0123.jpg" alt="">
+              <img src="../assets/img/home/miniprogram.jpg" alt="">
             </p>
             <p>
               小程序

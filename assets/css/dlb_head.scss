@@ -1,5 +1,5 @@
 
-*{
+* {
   padding: 0;
   margin: 0;
   border: none;
@@ -7,68 +7,79 @@
   text-decoration: none;
   font-style: normal;
 }
-html,body{
+
+html, body {
   width: 100%;
-  font-family: "Microsoft YaHei","微软雅黑";
+  font-family: "Microsoft YaHei", "微软雅黑";
 }
-#__nuxt{
+
+#__nuxt {
   width: 100%;
 }
-#__layout{
+
+#__layout {
   overflow: hidden;
   width: 100%;
 }
-.el-header, .el-main, .el-footer{
+
+.el-header, .el-main, .el-footer {
   padding: 0;
   width: 100%;
   overflow: hidden;
 }
-.header{
+
+.header {
   width: 100%;
   overflow: hidden;
   margin: 0 auto;
 }
-.indexBodybox{
+
+.indexBodybox {
   width: 75%;
   max-width: 1400px;
   margin: 0 auto;
   overflow: hidden;
 }
 
-.headTopBox{
+.headTopBox {
   width: 100%;
   background: #eeeeee;
   overflow: hidden;
-  .headTop{
+
+  .headTop {
     width: 75%;
     max-width: 1400px;
     display: flex;
     margin: 0 auto;
     height: 40px;
     overflow: hidden;
-    .changeCity{
-      min-width:120px;
+
+    .changeCity {
+      min-width: 120px;
       height: 40px;
       line-height: 40px;
       color: #666666;
       float: left;
       font-size: 0;
-      i{
+
+      i {
         vertical-align: middle;
         font-size: 16px;
       }
+
       span {
         font-size: 12px;
         font-weight: bold;
         vertical-align: middle;
       }
-      a{
+
+      a {
         color: #666666;
         font-size: 12px;
-        width:54px;
-        height:18px;
+        width: 54px;
+        height: 18px;
         line-height: 18px;
-        border:1px solid rgba(204,204,204,1);
+        border: 1px solid rgba(204, 204, 204, 1);
         display: inline-block;
         vertical-align: middle;
         margin-left: 8px;
@@ -77,27 +88,32 @@ html,body{
       }
 
     }
-    .loginBox{
+
+    .loginBox {
       float: left;
       height: 40px;
       line-height: 40px;
       margin-left: 20px;
-      a{
+
+      a {
         display: inline-block;
         font-size: 12px;
         color: #666666;
         margin: 0 6px;
         padding: 0 2px;
-        &.active{
+
+        &.active {
           color: #DA251D;
         }
       }
     }
-    .rightShops{
+
+    .rightShops {
       height: 40px;
       line-height: 40px;
       text-align: right;
-      a{
+
+      a {
         display: inline-block;
         padding: 0 6px;
         margin: 0 10px;
@@ -107,56 +123,65 @@ html,body{
     }
   }
 }
-.headSearchBox{
+
+.headSearchBox {
   max-width: 1400px;
   width: 75%;
   margin: 0 auto;
   overflow: hidden;
-  .logoBox{
-    max-width:319px ;
+
+  .logoBox {
+    max-width: 319px;
     width: 100%;
     height: 54px;
     margin-top: 40px;
-    a{
+
+    a {
       height: 100%;
       width: 100%;
       display: block;
-      img{
+
+      img {
         height: 100%;
         width: 100%;
         display: block;
       }
     }
   }
-  .headSearch{
+
+  .headSearch {
     width: 84%;
     max-width: 450px;
     overflow: hidden;
-    margin:40px 0 0 20%;
-    .topIpt{
+    margin: 40px 0 0 20%;
+
+    .topIpt {
       width: 100%;
       float: left;
       display: flex;
       overflow: hidden;
-      .input{
+
+      .input {
         float: left;
         flex: 1;
         width: 86%;
-        max-width:390px;
-        height:34px ;
+        max-width: 390px;
+        height: 34px;
         line-height: 34px;
-        border: 2px solid #DA251D ;
+        border: 2px solid #DA251D;
         border-right: none;
         outline: none;
         display: block;
         text-indent: 1em;
         color: #333333;
         font-size: 12px;
-        &::placeholder{
+
+        &::placeholder {
           color: #9b9b9b;
         }
       }
-      .btn{
+
+      .btn {
         float: left;
         border-radius: 0;
         background: #DA251D;
@@ -164,12 +189,14 @@ html,body{
 
       }
     }
-    .bottomText{
+
+    .bottomText {
       width: 100%;
       margin-top: 14px;
       overflow: hidden;
       height: 28px;
-      span{
+
+      span {
         display: block;
         float: left;
         padding: 0 2px;
@@ -177,10 +204,12 @@ html,body{
         margin-right: 16px;
         margin-top: 8px;
         cursor: pointer;
-        &.active{
+
+        &.active {
           color: #DA251D;
         }
-        &:hover{
+
+        &:hover {
           color: #DA251D;
         }
 
@@ -188,13 +217,16 @@ html,body{
     }
 
   }
-  .rightPhone{
+
+  .rightPhone {
     width: 100%;
-    .img{
+
+    .img {
       max-width: 65%;
       max-height: 37px;
       margin: 40px 10px 0 auto;
-      img{
+
+      img {
         display: block;
         width: 100%;
         height: 100%;
@@ -203,5 +235,97 @@ html,body{
     }
   }
 }
+.supplierBody{
+  width: 100%;
+  background: #f0f3ef;
+  overflow: hidden;
+  .bodyBox{
+    width: 75%;
+    max-width: 1400px;
+    margin: 0 auto;
+    overflow: hidden;
+    .HeaderBreadcrumb{
+      width: 100%;
+      margin-top: 20px;
+      .breadcrumb{
+        overflow: hidden;
+        height: 20px;
+        line-height: 20px;
+        span{
+          display: block;
+          float: left;
+          font-size: 14px;
+          color: #333333;
+          margin-right: 6px;
+          &.right{
+            font-size: 12px;
+          }
+        }
+        a{
+          font-size: 14px;
+          display: block;
+          float: left;
+          color: #8e8e8e;
+          margin-right: 6px;
+        }
+        .iconfont{
+          color:#9a9a9a ;
+          font-size: 20px;
+        }
+      }
 
+    }
+    .topMenuBox{
+      background: #ffffff;
+      width: 100%;
+      overflow: hidden;
+      margin-top: 20px;
+      .contentBox{
+        width:92% ;
+        max-width: 1342px;
+        margin: 40px auto 0;
+        .defaultBox{
+          width: 100%;
+          margin-bottom: 20px;
+          border-bottom: 1px solid $borderE7;
+          display: flex;
+          display: -ms-flex;
+          .leftText{
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            margin-bottom: 16px;
+            text-align: right;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333333;
+          }
+          .rightList{
+            flex: 1;
+            -ms-flex: 1;
+              span{
+                display: inline-block;
+                height: 26px;
+                line-height: 26px;
+               font-size: 16px;
+                color: #666666;
+                margin: 0 30px 10px 0;
+                padding: 2px 10px;
+                cursor: pointer;
+                &.active{
+                  color: #ffffff;
+                  background: $redColor;
+                }
+                &:hover{
+                  color: #ffffff;
+                  background: $redColor;
+                  @include triText;
+                }
+              }
+          }
+        }
+      }
+    }
+  }
+}
 
