@@ -49,6 +49,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     '@nuxtjs/style-resources',
     'cookie-universal-nuxt'
   ],
@@ -61,7 +62,18 @@ export default {
     ** Axios module configuration
     ** See https://axios.nuxtjs.org/options
     */
-  axios: {},
+  axios: {
+    proxy: true
+  },
+
+  proxy: {
+    '/api': {
+      target: 'http://www.dalabajicai.com',
+      pathRewrite: {
+        '^/api' : '/api'
+      }
+    }
+  },
   /*
     ** Build configuration
     */

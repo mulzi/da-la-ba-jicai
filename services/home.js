@@ -1,7 +1,7 @@
 import { Auth } from '@/services/auth'
 import { TIME_OUT } from '@/utils/constants'
 
-const host = 'http://api.dalabajicai.com'
+const host = ''
 
 export class HomeService {
   constructor (context) {
