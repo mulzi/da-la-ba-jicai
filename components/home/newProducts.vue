@@ -91,8 +91,12 @@ export default {
                 .img{
                     height: 258px;
                     width: 100%;
+                    overflow: hidden;
                     img{
                         @include img;
+                      &:hover{
+                        @include imgTrf;
+                      }
                     }
                 }
                 .b_list{
@@ -159,6 +163,10 @@ export default {
                         }
                     }
                 }
+              &:hover{
+                border-color: #b7b7b7;
+                @include triText;
+              }
 
             }
         }

@@ -123,6 +123,7 @@ export default {
           color: #666666;
           height: 19px;
           line-height: 19px;
+          cursor: pointer;
         }
       }
     }

@@ -45,7 +45,7 @@
               品牌档次：
             </div>
             <div class="rightList">
-              <span v-for="(item,index) in supplier" :key="index" :class="$store.state.supplier.supplierFour === index ? 'active':'' " @click="changeFour (index)">{{ item.name }}</span>
+              <span v-for="(item,index) in brandLevels" :key="index" :class="$store.state.supplier.supplierFour === index ? 'active':'' " @click="changeFour (index)">{{ item.name }}</span>
             </div>
           </div>
         </div>
@@ -56,20 +56,29 @@
             <p>
               <img src="@/assets/img/0123.jpg" alt="">
             </p>
-            <el-row>
-              <el-col :span="12">
+            <el-row class="oneName">
+              <el-col :span="14">
                 代理品牌
               </el-col>
-              <el-col :span="12">
+              <el-col :span="10" class="rightVip color">
                 vip会员
               </el-col>
             </el-row>
-            <el-row>
+            <el-row class="twoName">
               <el-col :span="16">
-                公司名称
+                公司名称sd sad sd asdas das  sa
               </el-col>
-              <el-col :span="8">
+              <el-col :span="8" class="right">
                 商家性质
+              </el-col>
+            </el-row>
+            <el-row class="rate">
+              <el-col :span="24" class="xing">
+                <el-rate
+                  :value="4"
+                  disabled
+                  disabled-void-color="#d6d6d6"
+                />
               </el-col>
             </el-row>
           </nuxt-link>
@@ -80,6 +89,8 @@
 </template>
 
 <script>
+import { HomeService } from '@/services/home'
+
 export default {
   layout: 'main',
   data () {
@@ -89,9 +100,54 @@ export default {
         { name: '家装供应商' },
         { name: '园林景观' },
         { name: '机电设备' },
+        { name: '公装供应商' },
+        { name: '家装供应商' },
+        { name: '园林景观' },
+        { name: '机电设备' },
+        { name: '公装供应商' },
+        { name: '家装供应商' },
+        { name: '园林景观' },
+        { name: '机电设备' },
+        { name: '公装供应商' },
+        { name: '家装供应商' },
+        { name: '园林景观' },
+        { name: '机电设备' },
+        { name: '公装供应商' },
+        { name: '家装供应商' },
+        { name: '园林景观' },
+        { name: '机电设备' },
         { name: '建筑材料' }
+      ],
+      brandLevels: [
+        {
+          name: '不限',
+          id: null
+        },
+        {
+          name: '高端品牌',
+          id: '1'
+        },
+        {
+          name: '中端品牌',
+          id: '2'
+        },
+        {
+          name: '亲民品牌',
+          id: '3'
+        },
+        {
+          name: '进口馆',
+          id: '4'
+        }
+
       ]
     }
+  },
+  asyncData (context) {
+    const homeService = new HomeService(context)
+    return homeService.supplierType().then((res) => {
+      console.log(res.data)
+    })
   },
   methods: {
     changeOne (index) {

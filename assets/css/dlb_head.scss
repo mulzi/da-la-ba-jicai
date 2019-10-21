@@ -326,6 +326,81 @@ html, body {
         }
       }
     }
+    .bottomListBox{
+      margin-top: 30px;
+      overflow: hidden;
+      width: 100%;
+
+      .contentList{
+        width: 100%;
+        overflow: hidden;
+        a{
+          width:18% ;
+          float: left;
+          margin-right: 2.5%;
+          border-radius: 6px;
+          margin-bottom: 20px;
+          overflow: hidden;
+          background: #ffffff;
+          >p{
+            width: 100%;
+            height:258px ;
+            img{
+              @include img;
+            }
+          }
+          &:nth-child(5n){
+            margin-right: 0;
+          }
+          .oneName{
+            width: 90%;
+            margin: 0 auto;
+            height: 40px;
+            line-height: 40px;
+            color: #333333;
+            font-size: 16px;
+            >div{
+              @include over;
+            }
+            .rightVip{
+              font-size: 14px;
+              color: #333333;
+              text-align: right;
+            }
+            .color{
+              color: #feaa12;
+            }
+          }
+          .twoName{
+            width: 90%;
+            margin: 0 auto;
+            height: 18px;
+            line-height: 18px;
+            color: #333333;
+            font-size: 15px;
+            .right{
+              text-align: right;
+            }
+            >div{
+              @include over;
+            }
+          }
+          .rate{
+            height: 40px;
+            line-height: 40px;
+            width: 90%;
+            margin: 0 auto;
+            .xing{
+              margin-top: 10px;
+              font-size: 0;
+              .el-rate__icon{
+                font-size:18px;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 

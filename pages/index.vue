@@ -9,7 +9,7 @@
     </div>
     <good-news :good-news="home" />
     <new-products :new-products="home" />
-    <div class="homeNewsBox">
+    <div class="homeNewsBox marginBottom130">
       <div class="title">
         <span>新闻资讯</span>
         <a href="">
@@ -19,7 +19,7 @@
       <news :newslist="home.platformNews" />
       <news :newslist="home.industryNews" />
     </div>
-    <supplier-img />
+<!--    <supplier-img />-->
   </div>
 </template>
 
@@ -31,7 +31,7 @@ import business from '@/components/home/business'
 import goodNews from '@/components/home/goodNews'
 import newProducts from '@/components/home/newProducts'
 import news from '@/components/home/news'
-import supplierImg from '@/components/home/supplierImg'
+// import supplierImg from '@/components/home/supplierImg'
 export default {
   layout: 'main',
   middleware: 'authenticated',
@@ -41,8 +41,8 @@ export default {
     business,
     goodNews,
     newProducts,
-    news,
-    supplierImg
+    news
+    // supplierImg
   },
   data () {
     return {

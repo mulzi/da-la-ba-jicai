@@ -20,6 +20,18 @@ a{
 }
 $redColor: #DA251D; //默认红色
 $borderE7: #e7e7e7; //默认边框线颜色
+
+
+.marginBottom130{
+  margin-bottom: 130px;
+}
+
+
+
+
+
+
+
 @mixin img {
   display: block; //默认图片的百分比大小
   width: 100%;
@@ -34,3 +46,8 @@ $borderE7: #e7e7e7; //默认边框线颜色
 @mixin triText{
   transition: .2s ease-in-out;
 }
+@mixin imgTrf{  // 图片放大动画
+  transform: scale(1.05);
+  transition: .3s ease-in-out;
+}
+

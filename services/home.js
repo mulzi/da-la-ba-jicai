@@ -22,4 +22,15 @@ export class HomeService {
       timeout: TIME_OUT
     })
   }
+  async supplierType () {
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `${host}/api/supplier/open//findAllNavigation.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT
+    })
+  }
 }
