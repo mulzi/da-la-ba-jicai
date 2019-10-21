@@ -3,7 +3,7 @@ import uuid from 'uuid-random'
 import { TIME_OUT } from '../utils/constants'
 import { getDeviceId, getUserInfo, getUserToken, setDeviceId, setUserInfo, setUserToken } from '../utils/cookies'
 
-const host = 'http://api.dalabajicai.com'
+const host = ''
 const CLIENT_ID = 'test_client_id'
 export const VISITOR_IDENTITY = 'visitor_identity'
 export const REFRESH_TOKEN = 'refresh_token'
