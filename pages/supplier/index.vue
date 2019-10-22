@@ -56,7 +56,15 @@
         </div>
       </div>
       <div class="bottomListBox">
-        <div class="contentList">
+        <div v-if="getSupplierLiList ==='' " class="NoData">
+          <div class="img">
+            <img src="@/assets/img/nodata.png" alt="">
+          </div>
+          <div class="text">
+            没有数据
+          </div>
+        </div>
+        <div v-if="getSupplierLiList !=='' " class="contentList">
           <nuxt-link v-for="(item, index) in getSupplierLiList" :key="index" :to="`/supplier/toolDecoration/${item.supplierId}`">
             <p>
               <img :src="item.logo" alt="">
@@ -103,7 +111,7 @@
             </el-row>
           </nuxt-link>
         </div>
-        <div class="pageSbox">
+        <div v-if="getSupplierLiList !=='' " class="pageSbox">
           <!--          <el-pagination-->
           <!--            background-->
           <!--            :current-page.sync="currentPage2"-->
