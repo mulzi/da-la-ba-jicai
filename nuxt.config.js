@@ -70,7 +70,7 @@ export default {
     '/api': {
       target: 'http://www.dalabajicai.com',
       pathRewrite: {
-        '^/api' : '/api'
+        '^/api': '/api'
       }
     }
   },

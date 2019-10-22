@@ -7,9 +7,9 @@
       <div v-swiper:mySwiper="swiperOption">
         <div class="swiper-wrapper">
           <div v-for="(item,index) in goodnewsLeft " :key="index" class="swiper-slide clearfix swiper-no-swiping">
-            <a class="p1" href="/">
+            <nuxt-link class="p1" to="/">
               <i>恭喜</i><em>{{ item.addAgent }}</em><i>通过大喇叭采集与</i> <em>{{ item.addedAgent }}</em>达成入库协议
-            </a>
+            </nuxt-link>
             <span>
               {{ item.createdAtStr }}
             </span>

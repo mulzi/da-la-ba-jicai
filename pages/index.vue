@@ -19,7 +19,7 @@
       <news :newslist="home.platformNews" />
       <news :newslist="home.industryNews" />
     </div>
-<!--    <supplier-img />-->
+    <!--    <supplier-img />-->
   </div>
 </template>
 

@@ -2,14 +2,14 @@
   <div class="newsProducts">
     <div class="title">
       <span>新品推荐</span>
-      <a href="">
+      <nuxt-link  to="/">
         更多>
-      </a>
+      </nuxt-link>
     </div>
     <div class="bottomList">
-      <a v-for="(item,index) in newProducts.works" :key="index" href="">
+      <nuxt-link v-for="(item,index) in newProducts.works" :key="index" to="/">
         <div class="img">
-          <img :key="index ++ " v-lazy="item.cover"  alt="">
+          <img :key="index ++ " v-lazy="item.cover" alt="">
         </div>
         <div class="b_list">
           <p>{{ item.theme }}</p>
@@ -19,7 +19,6 @@
             <i class="el-icon-chat-dot-square"></i>{{item.userId }}
             <i class="iconfont">&#xe680;</i>{{ item.userId }}
           </p>
-
         </div>
         <div class="b_name">
           <div class="l_img">
@@ -30,7 +29,7 @@
             <em>{{ item.createdAtStr }}</em>
           </div>
         </div>
-      </a>
+      </nuxt-link>
     </div>
   </div>
 </template>

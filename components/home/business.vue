@@ -4,14 +4,14 @@
       <span>
         {{ titleName }}
       </span>
-      <a>
+      <nuxt-link to="/">
         更多 +
-      </a>
+      </nuxt-link>
     </div>
     <div class="bottomList">
       <ul>
         <li v-for="(item,index) in homeSuppliersRecommend" :key="index">
-          <a>
+          <nuxt-link to="/">
             <div class="leftImg">
               <span>
                 <img :src="item.logo" alt="">
@@ -26,7 +26,7 @@
                 主营品牌：<em>{{ item.brand }}</em>
               </p>
             </div>
-          </a>
+          </nuxt-link>
         </li>
       </ul>
     </div>

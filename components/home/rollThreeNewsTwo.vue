@@ -7,9 +7,9 @@
       <div v-swiper:mySwiper="swiperOption">
         <div class="swiper-wrapper">
           <div v-for="(item,index) in goodnews " :key="index" class="swiper-slide clearfix swiper-no-swiping">
-            <a class="p1">
+            <nuxt-link to="/" class="p1">
               <em>恭喜</em>{{ item.info }}
-            </a>
+            </nuxt-link>
             <i>{{ item.money }}</i>
             <span>
               {{ item.createdAtStr }}
