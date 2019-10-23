@@ -92,7 +92,9 @@ export default {
         width: 11%;
         float: left;
         color: #616161;
-
+        &.nuxt-link-exact-active{
+          color: $redColor;
+        }
         &:hover {
           color: #DA251D;
         }

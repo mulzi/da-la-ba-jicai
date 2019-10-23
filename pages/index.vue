@@ -90,7 +90,7 @@ export default {
         -ms-flex: 1;
         flex: 1;
         display: inline-block;
-        font-size: 22px;
+        font-size: 18px;
         margin-left: 20px;
         font-weight: bold;
       }
@@ -98,7 +98,7 @@ export default {
         width: 60px;
         text-align: center;
         margin-right: 20px;
-        font-size: 18px;
+        font-size: 16px;
         color: #ffffff;
       }
     }

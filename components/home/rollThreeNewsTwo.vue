@@ -23,6 +23,7 @@
 
 <script>
 export default {
+  // eslint-disable-next-line vue/require-prop-types
   props: ['goodnews'],
   data () {
     return {
@@ -79,6 +80,7 @@ export default {
                     margin-top: 30px;
                     height: 20px;
                     line-height: 20px;
+                   font-weight: bold;
                 }
                 .threeList{
                     margin-top: 20px;

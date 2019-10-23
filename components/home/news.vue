@@ -2,7 +2,8 @@
   <div class="newsOne">
     <div class="title">
       <span>平台动态</span>
-      <nuxt-link to="/" >更多 +
+      <nuxt-link to="/">
+        更多 +
       </nuxt-link>
     </div>
     <div class="bottomList">
@@ -17,12 +18,14 @@
           <p>
             我是简介我是简介  我是简介我是简介  我是简介我是简介  我是简介我是简介  我是简介我是简介  我是简介我是简介  我是简介我是简介  我是简介我是简介  我是简介我是简介
           </p>
-          <nuxt-link to="/">了解详情</nuxt-link>
+          <nuxt-link to="/">
+            了解详情
+          </nuxt-link>
         </div>
       </div>
       <div class="two">
         <nuxt-link v-for="(item,index) in newslist" :key="index" to="/">
-          <i></i>
+          <i />
           <span>
             {{ item.title }}
           </span>
@@ -37,6 +40,7 @@
 
 <script>
 export default {
+  // eslint-disable-next-line vue/require-prop-types
   props: ['newslist'],
   data () {
     return {}

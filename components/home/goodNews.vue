@@ -15,6 +15,7 @@ export default {
     rollThreeNewsTwo,
     rollingNews
   },
+  // eslint-disable-next-line vue/require-prop-types
   props: ['goodNews'],
   data () {
     return {

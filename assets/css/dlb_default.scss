@@ -21,12 +21,21 @@ a{
 $redColor: #DA251D; //默认红色
 $borderE7: #e7e7e7; //默认边框线颜色
 
-
-.marginBottom130{
-  margin-bottom: 130px;
+.nuxt-link-active{
+  color:$redColor;
 }
-
-
+.marginBottom130{
+  margin-bottom: 100px;
+}
+.marginBottom40{
+  margin-bottom: 40px;
+}
+.padding24{
+  padding: 24px;
+}
+.fRight{
+  float: right;
+}
 
 
 

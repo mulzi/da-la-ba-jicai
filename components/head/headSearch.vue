@@ -23,12 +23,12 @@
     <el-col :span="6">
       <div class="rightPhone">
         <div class="img">
-          <div class="leftIphoneImg">
-            <img src="@/assets/img/tel.png" alt="">
-          </div>
           <div class="rightNumber">
             <p>服务热线</p>
             <p>400 023 5655</p>
+          </div>
+          <div class="leftIphoneImg">
+            <img src="@/assets/img/tel.png" alt="">
           </div>
         </div>
       </div>

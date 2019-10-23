@@ -23,6 +23,7 @@
 <script>
 export default {
   props: [
+    // eslint-disable-next-line vue/require-prop-types
     'goodnewsLeft'
   ],
   data () {
@@ -74,6 +75,7 @@ export default {
         box-sizing: border-box;
         .title{
           font-size: 18px;
+          font-weight: bold;
           color: #333333;
           width: 100%;
           text-align: center;
