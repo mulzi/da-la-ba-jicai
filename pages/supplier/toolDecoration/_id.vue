@@ -19,7 +19,7 @@
         </el-col>
       </el-row>
       <el-row class="moiveImgBox">
-        <el-row class="padding24">
+        <el-row class="padding30">
           <el-col v-if="false" class="leftMi">
             <video
               controls
@@ -66,6 +66,12 @@
             </div>
           </el-col>
         </el-row>
+        <el-row class="consultingBox">
+          <span>咨询留言</span>
+          <span>加入收藏</span>
+        </el-row>
+      </el-row>
+      <el-row>
       </el-row>
       id是{{ $route.params.id }}
     </div>
@@ -89,5 +95,107 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  .moiveImgBox{
+    width: 100%;
+    overflow: hidden;
+    margin-top: 20px;
+    background: #ffffff;
+    .padding30{
+      width: 100%;
+      position: relative;
+      display: flex;
+      .leftMi{
+        width: 749px;
+        height: 546px;
+        min-width: 600px;
+        border: 1px solid $borderE7;
+        box-sizing: border-box;
+        video{
+          display: block;
+          margin: 0 auto;
+          height: 100%;
+          width: 100%;
+        }
+      }
+      .changMVIMG{
+        position: absolute;
+        bottom: 60px;
+        left: 24px;
+        width: 749px;
+        z-index: 99;
+        text-align: center;
+        button{
+          display: inline-block;
 
+          &.active{
+            background: $redColor;
+            color: #ffffff;
+          }
+          &:hover{
+            background: $redColor;
+            color: #ffffff;
+          }
+        };
+
+      }
+      .fRight{
+        flex: 1;
+        margin-left: 50px;
+        .nameTit{
+          width: 100%;
+          height: 28px;
+          font-size: 28px;
+          color: #333333;
+          line-height: 28px;
+        }
+        .addrName{
+          overflow: hidden;
+          width: 100%;
+          margin-top: 30px;
+          ul{
+            width: 100%;
+            li{
+              width: 100%;
+              @include over;
+              height: 58px;
+              line-height: 58px;
+              font-size:20px ;
+              color: #333333;
+              text-indent: .5em;
+              &:nth-child(odd){
+                background: #ebebeb;
+              }
+            }
+          }
+        }
+      }
+    }
+    .consultingBox{
+      width: 100%;
+      margin:20px auto 50px;
+      padding: 0 30px;
+      overflow: hidden;
+      span{
+        display: inline-block;
+        cursor: pointer;
+        height:70px ;
+        line-height: 70px;
+        font-size: 28px;
+        padding: 0 60px;
+        color: $redColor;
+        margin-right: 30px;
+        border: 1px solid $redColor;
+        &:active{
+          background: #ff7206;
+        }
+        &:nth-child(1){
+          background: $redColor;
+          color: #ffffFF;
+          &:active{
+            background: #ff4300;
+          }
+        }
+      }
+    }
+  }
 </style>

@@ -34,8 +34,8 @@ export default {
     { src: '~/plugins/nuxt-swiper-plugin.js', ssr: false },
     { src: '~/plugins/ElementUI.js', ssr: true }, // ssr:true代表在服务端渲染,客户端不渲染
     { src: '~/plugins/babel-polyfill.js', ssr: true },
-    { src: '~/plugins/lazyload.js', ssr: false },
-    { src: '~/plugins/video-player.js', ssr: false }
+    { src: '~/plugins/lazyload.js', ssr: false }
+
   ],
   /*
     ** Nuxt.js dev-modules
