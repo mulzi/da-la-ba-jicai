@@ -1,6 +1,8 @@
 <template>
-  <div>
-    id是{{ $route.params.id }}
+  <div class="supplierBody">
+    <div class="bodyBox">
+      ss
+    </div>
   </div>
 </template>
 
