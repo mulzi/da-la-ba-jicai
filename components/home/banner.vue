@@ -1,6 +1,6 @@
 <template>
   <div class="banner">
-    <el-carousel :interval="5000" arrow="always" :height="bannerHeight">
+    <el-carousel :interval="5000" arrow="hover" :height="bannerHeight">
       <el-carousel-item v-for="item in banners" :key="item.picUrl">
         <nuxt-link :to="item.url">
           <img v-lazy="item.picUrl" alt="">
@@ -30,8 +30,14 @@ export default {
 <style scoped lang="scss">
  .banner{
    width: 100%;
-   img{
-     @include img;
+   .el-carousel{
+     .el-carousel__container{
+       .el-carousel__arrow{
+       }
+       img{
+         @include img;
+       }
+     }
    }
  }
 </style>

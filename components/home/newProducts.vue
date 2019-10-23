@@ -2,24 +2,23 @@
   <div class="newsProducts">
     <div class="title">
       <span>新品推荐</span>
-      <a href="">
+      <nuxt-link to="/">
         更多>
-      </a>
+      </nuxt-link>
     </div>
     <div class="bottomList">
-      <a v-for="(item,index) in newProducts.works" :key="index" href="">
+      <nuxt-link v-for="(item,index) in newProducts.works" :key="index" to="/">
         <div class="img">
-          <img :key="index ++ " v-lazy="item.cover"  alt="">
+          <img :key="index ++ " v-lazy="item.cover" alt="">
         </div>
         <div class="b_list">
           <p>{{ item.theme }}</p>
           <p>{{ item.name }}</p>
           <p>
-            <i class="el-icon-view"> </i>{{ item.supplierId }}
-            <i class="el-icon-chat-dot-square"></i>{{item.userId }}
+            <i class="el-icon-view" />{{ item.supplierId }}
+            <i class="el-icon-chat-dot-square" />{{ item.userId }}
             <i class="iconfont">&#xe680;</i>{{ item.userId }}
           </p>
-
         </div>
         <div class="b_name">
           <div class="l_img">
@@ -30,13 +29,14 @@
             <em>{{ item.createdAtStr }}</em>
           </div>
         </div>
-      </a>
+      </nuxt-link>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  // eslint-disable-next-line vue/require-prop-types
   props: ['newProducts'],
   data () {
     return {}
@@ -60,7 +60,7 @@ export default {
                 display: inline-block;
                 flex: 1;
                 -ms-flex: 1;
-                font-size: 22px;
+                font-size: 18px;
                 margin-left: 20px;
                 font-weight: bold;
             }
@@ -68,7 +68,7 @@ export default {
                 width: 60px;
                 text-align: center;
                 margin-right: 20px;
-                font-size: 18px;
+                font-size: 16px;
                 color: #ffffff;
             }
         }

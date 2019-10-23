@@ -9,7 +9,7 @@
 
         <el-carousel
           class="rightRollList"
-          height="19px"
+          height="20px"
           direction="vertical"
           :autoplay="true"
           loop
@@ -29,7 +29,7 @@
         </div>
         <el-carousel
           class="rightRollList"
-          height="19px"
+          height="20px"
           direction="vertical"
           :autoplay="true"
           loop
@@ -49,7 +49,7 @@
         </div>
         <el-carousel
           class="rightRollList"
-          height="19px"
+          height="20px"
           direction="vertical"
           :autoplay="true"
           loop
@@ -67,6 +67,7 @@
 <script>
 
 export default {
+  // eslint-disable-next-line vue/require-prop-types
   props: ['rollNews'],
   data () {
     return {
@@ -97,8 +98,8 @@ export default {
         display: flex;
         font-size: 0;
         img{
-          width: 19px;
-          height: 19px;
+          width: 20px;
+          height: 20px;
         }
         span{
           margin-left: 12px;
@@ -113,7 +114,7 @@ export default {
         flex: 1;
         margin-right: 60px;
         overflow: hidden;
-        height: 19px;
+        height: 20px;
         line-height: 20px;
         span{
           width: 100%;
@@ -121,8 +122,8 @@ export default {
           display: block;
           font-size: 13px;
           color: #666666;
-          height: 19px;
-          line-height: 19px;
+          height: 20px;
+          line-height: 21px;
           cursor: pointer;
         }
       }
