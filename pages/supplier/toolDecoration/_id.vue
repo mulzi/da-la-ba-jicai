@@ -87,7 +87,7 @@
             </li>
             <li>
               <span>
-                公司资质
+                公司资讯
               </span>
             </li>
             <li>
@@ -97,9 +97,11 @@
         </el-row>
         <product-line />
         <engineering-works />
+        <company-introduction />
         <CompanyInfo />
         <Evaluate />
       </el-row>
+      <message-module-one />
       <!--      id是{{ $route.params.id }}-->
     </div>
   </div>
@@ -112,6 +114,8 @@ import productLine from '@/components/supplier/productLine'
 import EngineeringWorks from '@/components/supplier/EngineeringWorks'
 import CompanyInfo from '@/components/supplier/CompanyInfo'
 import Evaluate from '@/components/supplier/Evaluate'
+import companyIntroduction from '@/components/supplier/companyIntroduction'
+import messageModuleOne from '@/components/publicModule/messageModuleOne'
 export default {
   layout: 'main',
   components: {
@@ -119,7 +123,10 @@ export default {
     productLine,
     EngineeringWorks,
     CompanyInfo,
-    Evaluate
+    Evaluate,
+    companyIntroduction,
+    messageModuleOne
+
   },
 
   data () {
