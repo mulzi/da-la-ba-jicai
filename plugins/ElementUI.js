@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 import { Button, Input, Carousel, Container, Icon, Col, Row, CarouselItem, Pagination, BreadcrumbItem,
-  Breadcrumb, Tooltip, Rate
+  Breadcrumb, Tooltip, Rate, Radio, RadioButton, InfiniteScroll
 } from 'element-ui'
 Vue.use(CarouselItem)
 Vue.use(Col)
@@ -16,3 +16,6 @@ Vue.use(Breadcrumb)
 Vue.use(Tooltip)
 Vue.use(BreadcrumbItem)
 Vue.use(Rate)
+Vue.use(Radio)
+Vue.use(RadioButton)
+Vue.use(InfiniteScroll)

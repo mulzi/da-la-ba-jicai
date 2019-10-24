@@ -9,7 +9,7 @@
     </div>
     <good-news :good-news="home" />
     <new-products :new-products="home" />
-    <div class="homeNewsBox marginBottom130">
+    <div class="homeNewsBox marginBottom100">
       <div class="title">
         <span>新闻资讯</span>
         <a href="">

@@ -71,9 +71,36 @@
           <span>加入收藏</span>
         </el-row>
       </el-row>
-      <el-row>
+      <el-row class="bottomModuleBox">
+        <el-row class="topMenuBox">
+          <ul>
+            <li class="active">
+              <span>产品系列</span>
+            </li>
+            <li>
+              <span>工程案列</span>
+            </li>
+            <li>
+              <span>
+                公司介绍
+              </span>
+            </li>
+            <li>
+              <span>
+                公司资质
+              </span>
+            </li>
+            <li>
+              <span>评价留言</span>
+            </li>
+          </ul>
+        </el-row>
+        <product-line />
+        <engineering-works />
+        <CompanyInfo />
+        <Evaluate />
       </el-row>
-      id是{{ $route.params.id }}
+      <!--      id是{{ $route.params.id }}-->
     </div>
   </div>
 </template>
@@ -81,11 +108,18 @@
 <script>
 
 import banner from '@/components/supplier/banner'
-
+import productLine from '@/components/supplier/productLine'
+import EngineeringWorks from '@/components/supplier/EngineeringWorks'
+import CompanyInfo from '@/components/supplier/CompanyInfo'
+import Evaluate from '@/components/supplier/Evaluate'
 export default {
   layout: 'main',
   components: {
-    banner
+    banner,
+    productLine,
+    EngineeringWorks,
+    CompanyInfo,
+    Evaluate
   },
 
   data () {
@@ -198,4 +232,65 @@ export default {
       }
     }
   }
+  .bottomModuleBox{
+    width: 100%;
+    overflow: hidden;
+    margin-top: 20px;
+    .topMenuBox{
+      width: 100%;
+      background: #ffffff;
+      ul{
+        overflow: hidden;
+        line-height: 80px;
+        border-bottom: 1px solid $borderE7;
+        height: 80px;
+        margin-top: 10px;
+        display: flex;
+        display: -ms-flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+        li{
+          font-size: 26px;
+          color: #333333;
+          position: relative;
+          &:first-child{
+            margin-left: 30px;
+          }
+          &:last-child{
+            margin-right: 20px;
+          }
+          &:hover{
+            cursor: pointer;
+            color: $redColor;
+            &::before{
+              width: 100%;
+              content: "";
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              height: 3px;
+              background: $redColor;
+            }
+
+          }
+          &.active{
+            cursor: pointer;
+            color: $redColor;
+            &::before{
+              width: 100%;
+              content: "";
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              height: 3px;
+              background: $redColor;
+            }
+          }
+        }
+      }
+    }
+  }
+
 </style>
