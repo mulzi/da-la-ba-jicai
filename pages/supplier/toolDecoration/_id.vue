@@ -67,7 +67,7 @@
           </el-col>
         </el-row>
         <el-row class="consultingBox">
-          <span>咨询留言</span>
+          <span @click="messageShow">咨询留言</span>
           <span>加入收藏</span>
         </el-row>
       </el-row>
@@ -85,7 +85,7 @@
                 公司介绍
               </span>
             </li>
-            <li :class="fourListShow ? 'active':''" @click="fourChangeShow">
+            <li v-if="false" :class="fourListShow ? 'active':''" @click="fourChangeShow">
               <span>
                 公司资讯
               </span>
@@ -95,13 +95,13 @@
             </li>
           </ul>
         </el-row>
-        <product-line :list="date.product" v-if="oneListShow" />
+        <product-line v-if="oneListShow" :list="date.product" />
         <engineering-works v-if="twoListShow" />
-        <company-introduction :list="date" v-if="threeListShow" />
+        <company-introduction v-if="threeListShow" :list="date" />
         <CompanyInfo v-if="fourListShow" />
         <Evaluate v-if="fiveListShow" />
       </el-row>
-      <message-module-one v-if="false" />
+      <message-module-one v-if="$store.state.home.messageShow" />
       <!--      id是{{ $route.params.id }}-->
     </div>
   </div>
@@ -160,6 +160,9 @@ export default {
     }
   },
   methods: {
+    messageShow () {
+      this.$store.commit('home/changeMesShow')
+    },
     oneChangeShow () {
       this.oneListShow = true
       this.twoListShow = false

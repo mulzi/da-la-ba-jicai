@@ -1,6 +1,6 @@
 <template>
   <div class="companyIntroduction">
-    <div class="ones">
+    <div v-if="this.list.introduce" class="ones">
       <div class="titName">
         <span>品牌概况</span>
       </div>
@@ -10,117 +10,66 @@
         </P>
       </div>
     </div>
-    <div class="ones">
+    <div v-if="this.list.companyIntroduce" class="ones">
       <div class="titName">
         <span>公司介绍</span>
       </div>
       <div class="bottomP">
-        <P>
-          誉辉陶瓷，始创于2007年，营销总部位于陶瓷之都—广东 • 佛山，面积近10000㎡，是一家集研发、设计、生产、销售为一体的现代化大型综合企业。广东省内拥有四大生产基地，占地面积超过3000亩，拥有数十条世界先进的现代化生产线，产品涵盖广泛：大瓷板、12°缎光砖、1336大理石、全瓷墙砖、厨卫地砖、完全玻化石等全品类共计1000多款花色品种及配套。先后通过ISO14001环境标志管理体系认证、中国国.
-        </P>
-        <P>
-          誉辉陶瓷，始创于2007年，营销总部位于陶瓷之都—广东 • 佛山，面积近10000㎡，是一家集研发、设计、生产、销售为一体的现代化大型综合企业。广东省内拥有四大生产基地，占地面积超过3000亩，拥有数十条世界先进的现代化生产线，产品涵盖广泛：大瓷板、12°缎光砖、1336大理石、全瓷墙砖、厨卫地砖、完全玻化石等全品类共计1000多款花色品种及配套。先后通过ISO14001环境标志管理体系认证、中国国家强制性产品认证（简称3C认证）、ISO9001：2015国际质量管理体系认证。
-        </P>
+        <p v-for="(t,i) in companyIntroduce" :key="i">
+          {{ t }}
+        </p>
       </div>
     </div>
-    <div class="ones">
+    <div class="ones" v-if="this.list.credentialImages">
       <div class="titName">
         <span>公司资质</span>
       </div>
       <div class="banner">
         <el-carousel :interval="4000" type="card" height="340px">
-          <el-carousel-item v-for="(item,index) in banner" :key="index">
-            <img preview :src="item" alt="">
+          <el-carousel-item v-for="(item,index) in lists.credentialImages" :key="index">
+            <img preview :src="item.pic" alt="">
           </el-carousel-item>
         </el-carousel>
       </div>
     </div>
-    <div class="ones">
+    <div v-if="this.list.advantage" class="ones">
       <div class="titName">
         <span>产品优势</span>
       </div>
       <div class="bottomP">
-        <P>
-          誉辉陶瓷，始创于2007年，营销总部位于陶瓷之都—广东 • 佛山，面积近10000㎡，是一家集研发、设计、生产、销售为一体的现代化大型综合企业。广东省内拥有四大生产基地，占地面积超过3000亩，拥有数十条世界先进的现代化生产线，产品涵盖广泛：大瓷板、12°缎光砖、1336大理石、全瓷墙砖、厨卫地砖、完全玻化石等全品类共计1000多款花色品种及配套。先后通过ISO14001环境标志管理体系认证、中国国.
-        </P>
-        <P>
-          誉辉陶瓷，始创于2007年，营销总部位于陶瓷之都—广东 • 佛山，面积近10000㎡，是一家集研发、设计、生产、销售为一体的现代化大型综合企业。广东省内拥有四大生产基地，占地面积超过3000亩，拥有数十条世界先进的现代化生产线，产品涵盖广泛：大瓷板、12°缎光砖、1336大理石、全瓷墙砖、厨卫地砖、完全玻化石等全品类共计1000多款花色品种及配套。先后通过ISO14001环境标志管理体系认证、中国国家强制性产品认证（简称3C认证）、ISO9001：2015国际质量管理体系认证。
-        </P>
+        <p v-for="(t,i) in advantage" :key="i">
+          {{ t }}
+        </p>
       </div>
     </div>
-    <div class="ones">
+    <div class="ones" v-if="this.list.constructionExplain">
       <div class="titName">
         <span>施工说明</span>
       </div>
       <div class="bottomP">
-        <P>
-          誉辉陶瓷，始创于2007年，营销总部位于陶瓷之都—广东 • 佛山，面积近10000㎡，是一家集研发、设计、生产、销售为一体的现代化大型综合企业。广东省内拥有四大生产基地，占地面积超过3000亩，拥有数十条世界先进的现代化生产线，产品涵盖广泛：大瓷板、12°缎光砖、1336大理石、全瓷墙砖、厨卫地砖、完全玻化石等全品类共计1000多款花色品种及配套。先后通过ISO14001环境标志管理体系认证、中国国.
-        </P>
-        <P>
-          誉辉陶瓷，始创于2007年，营销总部位于陶瓷之都—广东 • 佛山，面积近10000㎡，是一家集研发、设计、生产、销售为一体的现代化大型综合企业。广东省内拥有四大生产基地，占地面积超过3000亩，拥有数十条世界先进的现代化生产线，产品涵盖广泛：大瓷板、12°缎光砖、1336大理石、全瓷墙砖、厨卫地砖、完全玻化石等全品类共计1000多款花色品种及配套。先后通过ISO14001环境标志管理体系认证、中国国家强制性产品认证（简称3C认证）、ISO9001：2015国际质量管理体系认证。
-        </P>
+        <p v-for="(t,i) in constructionExplain" :key="i">
+          {{ t }}
+        </p>
       </div>
     </div>
-    <div class="ones">
+    <div v-if="this.list.contacts" class="ones">
       <div class="titName">
         <span>联系方式</span>
       </div>
       <div class="aboutList">
         <ul>
-          <li>
+          <li v-for="(t,i) in lists.contacts" :key="i">
             <div class="li">
-              <span>联系人：</span><em v-if="hideMessage">***</em><em v-if="showMessage">王二麻子</em>
+              <span>联系人：</span><em>{{t.name}}</em>
             </div>
             <div class="li">
-              <span>部门：</span><em v-if="hideMessage">***</em><em v-if="showMessage">王二麻子</em>
+              <span>部门：</span><em >***</em>
             </div>
             <div class="li">
-              <span>职位：</span><em v-if="hideMessage">***</em><em v-if="showMessage">王二麻子</em>
+              <span>职位：</span><em>{{t.positionLevel}}</em>
             </div>
             <div class="li">
-              <span>电话：</span><em v-if="hideMessage" class="red">***</em><em v-if="showMessage" class="red">18216633973</em>
-            </div>
-          </li>
-          <li>
-            <div class="li">
-              <span>联系人：</span><em v-if="hideMessage">***</em><em v-if="showMessage">王二麻子</em>
-            </div>
-            <div class="li">
-              <span>部门：</span><em v-if="hideMessage">***</em><em v-if="showMessage">王二麻子</em>
-            </div>
-            <div class="li">
-              <span>职位：</span><em v-if="hideMessage">***</em><em v-if="showMessage">王二麻子</em>
-            </div>
-            <div class="li">
-              <span>电话：</span><em v-if="hideMessage" class="red">***</em><em v-if="showMessage" class="red">18216633973</em>
-            </div>
-          </li>
-          <li>
-            <div class="li">
-              <span>联系人：</span><em v-if="hideMessage">***</em><em v-if="showMessage">王二麻子</em>
-            </div>
-            <div class="li">
-              <span>部门：</span><em v-if="hideMessage">***</em><em v-if="showMessage">王二麻子</em>
-            </div>
-            <div class="li">
-              <span>职位：</span><em v-if="hideMessage">***</em><em v-if="showMessage">王二麻子</em>
-            </div>
-            <div class="li">
-              <span>电话：</span><em v-if="hideMessage" class="red">***</em><em v-if="showMessage" class="red">18216633973</em>
-            </div>
-          </li>
-          <li>
-            <div class="li">
-              <span>联系人：</span><em v-if="hideMessage">***</em><em v-if="showMessage">王二麻子</em>
-            </div>
-            <div class="li">
-              <span>部门：</span><em v-if="hideMessage">***</em><em v-if="showMessage">王二麻子</em>
-            </div>
-            <div class="li">
-              <span>职位：</span><em v-if="hideMessage">***</em><em v-if="showMessage">王二麻子</em>
-            </div>
-            <div class="li">
-              <span>电话：</span><em v-if="hideMessage" class="red">***</em><em v-if="showMessage" class="red">18216633973</em>
+              <span>电话：</span><em class="red">{{t.phone}}</em>
             </div>
           </li>
         </ul>
@@ -142,7 +91,11 @@ export default {
   data () {
     return {
       lists: this.list,
-      introduceList: [ ],
+      introduceList: [ ], // 品牌简介
+      companyIntroduce: [], // 公司介绍
+      advantage: [], // 产品优势
+      constructionExplain: [], // 施工说明
+
       banner: [
         '/_nuxt/assets/img/0123.jpg',
         'https://dalabajicai-prod.oss-cn-chengdu.aliyuncs.com/files/dalaba/file/80ADA7777A9B41D7AD04DEF7658A0C22.jpg?x-oss-process=style/watermark\n',
@@ -156,8 +109,26 @@ export default {
     }
   },
   mounted () {
-    this.introduceList = this.list.introduce.split('\n')
-    console.log(this.introduceList)
+    if (this.list.introduce !== null || undefined || '') {
+      this.introduceList = this.list.introduce.split('\n')
+    } else {
+      this.introduceList = null
+    }
+    if (this.list.companyIntroduce !== null || undefined || '') {
+      this.companyIntroduce = this.list.companyIntroduce.split('\n')
+    } else {
+      this.companyIntroduce = null
+    }
+    if (this.list.advantage !== null || undefined || '') {
+      this.advantage = this.list.advantage.split('\n')
+    } else {
+      this.advantage = null
+    }
+    if (this.list.constructionExplain !== null || undefined || '') {
+      this.constructionExplain = this.list.constructionExplain.split('\n')
+    } else {
+      this.constructionExplain = null
+    }
   }
 }
 </script>
@@ -232,7 +203,7 @@ export default {
             }
             .li{
               flex: 1;
-              font-size: 16px;
+              font-size: 15px;
               display: flex;
               justify-items: center;
               align-items: center;
@@ -244,6 +215,7 @@ export default {
                 margin-left: 20px;
               }
               &:last-child{
+                min-width: 180px;
                 margin-right: 20px;
               }
             }

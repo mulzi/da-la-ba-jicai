@@ -1,8 +1,12 @@
 export const state = () => ({
-  home: 1
+  home: 1,
+  messageShow: false
 })
 export const mutations = {
-  addhome (state, pylod) {
-    state.home = pylod
+  addhome (state, pyload) {
+    state.home = pyload
+  },
+  changeMesShow (state, pyload) {
+    state.messageShow = !state.messageShow
   }
 }

@@ -4,7 +4,7 @@
       <div class="box">
         <div class="closeBox">
           <span>预约到店</span>
-          <em class="el-icon-close" />
+          <em class="el-icon-close" @click="messageShow" />
         </div>
         <div class="form">
           <form action="">
@@ -36,7 +36,13 @@
 
 <script>
 export default {
-  name: 'MessageModuleOne'
+  mounted () {
+  },
+  methods: {
+    messageShow () {
+      this.$store.commit('home/changeMesShow')
+    }
+  }
 }
 </script>
 
