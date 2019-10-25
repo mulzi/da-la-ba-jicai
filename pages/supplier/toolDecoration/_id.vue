@@ -20,18 +20,18 @@
       </el-row>
       <el-row class="moiveImgBox">
         <el-row class="padding30">
-          <el-col v-if="false" class="leftMi">
+          <el-col v-if="videoShow" class="leftMi">
             <video
               controls
-              src="https://dalabajicai-prod.oss-cn-chengdu.aliyuncs.com/files/dalaba/file/EC5ED634619043528FE73F1AF9C61B08.mp4"
+              :src="date.videoUri"
             />
           </el-col>
-          <banner />
+          <banner v-if="bannerShow" :banner="date.bannerImages" />
           <div class="changMVIMG">
-            <el-button class="active" round icon="el-icon-video-play">
+            <el-button v-if="videoShowTwo" :class=" videoShow ? 'active': '' " round icon="el-icon-video-play" @click="videoChange">
               视频
             </el-button>
-            <el-button round icon="el-icon-picture-outline">
+            <el-button v-if="videoShowTwo" round :class=" bannerShow ? 'active': '' " icon="el-icon-picture-outline" @click="bannerChange">
               图片
             </el-button>
           </div>
@@ -42,25 +42,25 @@
             <div class="addrName">
               <ul>
                 <li>
-                  品牌：东鹏
+                  品牌：{{ date.brand.brand }}
                 </li>
                 <li>
-                  品牌来源：中国广东
+                  品牌来源：{{ date.brand.origin }}
                 </li>
                 <li>
-                  品牌产地：佛山、清远
+                  品牌产地：{{ date.brand.source }}
                 </li>
                 <li>
-                  成立日期：199s
+                  成立日期：{{ date.brand.brandCreatedTime }}
                 </li>
                 <li>
-                  重庆代理商：重庆市民公司
+                  重庆代理商：{{ date.brand.agent }}
                 </li>
                 <li>
-                  注册资金：200万
+                  注册资金：{{ date.brand.registeredCapital }}
                 </li>
-                <li>
-                  官方网址：dalabajicai.com
+                <li nofloow>
+                  官方网址：{{ date.brand.portalUrl }}
                 </li>
               </ul>
             </div>
@@ -74,41 +74,41 @@
       <el-row class="bottomModuleBox">
         <el-row class="topMenuBox">
           <ul>
-            <li class="active">
+            <li :class="oneListShow ? 'active':''" @click="oneChangeShow">
               <span>产品系列</span>
             </li>
-            <li>
+            <li :class="twoListShow ? 'active':''" @click="twoChangeShow">
               <span>工程案列</span>
             </li>
-            <li>
+            <li :class="threeListShow ? 'active':''" @click="threeChangeShow">
               <span>
                 公司介绍
               </span>
             </li>
-            <li>
+            <li :class="fourListShow ? 'active':''" @click="fourChangeShow">
               <span>
                 公司资讯
               </span>
             </li>
-            <li>
+            <li :class="fiveListShow ? 'active':''" @click="fiveChangeShow">
               <span>评价留言</span>
             </li>
           </ul>
         </el-row>
-        <product-line />
-        <engineering-works />
-        <company-introduction />
-        <CompanyInfo />
-        <Evaluate />
+        <product-line :list="date.product" v-if="oneListShow" />
+        <engineering-works v-if="twoListShow" />
+        <company-introduction :list="date" v-if="threeListShow" />
+        <CompanyInfo v-if="fourListShow" />
+        <Evaluate v-if="fiveListShow" />
       </el-row>
-      <message-module-one />
+      <message-module-one v-if="false" />
       <!--      id是{{ $route.params.id }}-->
     </div>
   </div>
 </template>
 
 <script>
-
+import { HomeService } from '@/services/home'
 import banner from '@/components/supplier/banner'
 import productLine from '@/components/supplier/productLine'
 import EngineeringWorks from '@/components/supplier/EngineeringWorks'
@@ -128,9 +128,81 @@ export default {
     messageModuleOne
 
   },
-
   data () {
-    return {}
+    return {
+      oneListShow: true, // 产品系列列表显示
+      twoListShow: false, // 工程案列列表显示
+      threeListShow: false, // 公司介绍列表显示
+      fourListShow: false, // 公司资讯列表显示
+      fiveListShow: false, // 评价留言显示
+      date: [ ], // 主数据
+      bannerShow: false,
+      videoShow: true,
+      videoShowTwo: true
+    }
+  },
+  asyncData (context) {
+    const { params } = context
+    const homeService = new HomeService(context)
+    // eslint-disable-next-line no-undef
+    return homeService.SupplierListParticulars({ supplierId: params.id }).then((res) => {
+      console.log(res.data)
+      return { date: res.data || {} }
+    })
+  },
+  created () {
+    if (this.date.videoUri !== null || undefined) {
+      this.videoShowTwo = true
+    } else {
+      this.videoShowTwo = false
+      this.bannerShow = true
+      this.videoShow = false
+    }
+  },
+  methods: {
+    oneChangeShow () {
+      this.oneListShow = true
+      this.twoListShow = false
+      this.threeListShow = false
+      this.fourListShow = false
+      this.fiveListShow = false
+    },
+    twoChangeShow () {
+      this.oneListShow = false
+      this.twoListShow = true
+      this.threeListShow = false
+      this.fourListShow = false
+      this.fiveListShow = false
+    },
+    threeChangeShow () {
+      this.oneListShow = false
+      this.twoListShow = false
+      this.threeListShow = true
+      this.fourListShow = false
+      this.fiveListShow = false
+    },
+    fourChangeShow () {
+      this.oneListShow = false
+      this.twoListShow = false
+      this.threeListShow = false
+      this.fourListShow = true
+      this.fiveListShow = false
+    },
+    fiveChangeShow () {
+      this.oneListShow = false
+      this.twoListShow = false
+      this.threeListShow = false
+      this.fourListShow = false
+      this.fiveListShow = true
+    },
+    videoChange () {
+      this.videoShow = true
+      this.bannerShow = false
+    },
+    bannerChange () {
+      this.videoShow = false
+      this.bannerShow = true
+    }
   }
 }
 </script>
@@ -160,7 +232,7 @@ export default {
       }
       .changMVIMG{
         position: absolute;
-        bottom: 60px;
+        bottom: 100px;
         left: 24px;
         width: 749px;
         z-index: 99;

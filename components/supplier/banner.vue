@@ -1,10 +1,8 @@
 <template>
   <el-col :span="14" class="leftMi">
     <el-carousel height="546px">
-      <el-carousel-item v-for="item in 4" :key="item">
-        <h3 class="small">
-          {{ item }}
-        </h3>
+      <el-carousel-item v-for="(item, index) in banner" :key="index">
+        <img :src="item.pic" alt="">
       </el-carousel-item>
     </el-carousel>
   </el-col>
@@ -12,6 +10,8 @@
 
 <script>
 export default {
+  // eslint-disable-next-line vue/require-prop-types
+  props: [ 'banner' ],
   data () {
     return {}
   }
@@ -22,7 +22,6 @@ export default {
 .leftMi{
   height: 546px;
   width: 749px;
-  texta
   img{
     @include img;
   }

@@ -5,11 +5,8 @@
         <span>品牌概况</span>
       </div>
       <div class="bottomP">
-        <P>
-          誉辉陶瓷，始创于2007年，营销总部位于陶瓷之都—广东 • 佛山，面积近10000㎡，是一家集研发、设计、生产、销售为一体的现代化大型综合企业。广东省内拥有四大生产基地，占地面积超过3000亩，拥有数十条世界先进的现代化生产线，产品涵盖广泛：大瓷板、12°缎光砖、1336大理石、全瓷墙砖、厨卫地砖、完全玻化石等全品类共计1000多款花色品种及配套。先后通过ISO14001环境标志管理体系认证、中国国.
-        </P>
-        <P>
-          誉辉陶瓷，始创于2007年，营销总部位于陶瓷之都—广东 • 佛山，面积近10000㎡，是一家集研发、设计、生产、销售为一体的现代化大型综合企业。广东省内拥有四大生产基地，占地面积超过3000亩，拥有数十条世界先进的现代化生产线，产品涵盖广泛：大瓷板、12°缎光砖、1336大理石、全瓷墙砖、厨卫地砖、完全玻化石等全品类共计1000多款花色品种及配套。先后通过ISO14001环境标志管理体系认证、中国国家强制性产品认证（简称3C认证）、ISO9001：2015国际质量管理体系认证。
+        <P v-for="(t,i) in introduceList" :key="i">
+          {{ t }}
         </P>
       </div>
     </div>
@@ -140,8 +137,12 @@
 
 <script>
 export default {
+  // eslint-disable-next-line vue/require-prop-types
+  props: ['list'],
   data () {
     return {
+      lists: this.list,
+      introduceList: [ ],
       banner: [
         '/_nuxt/assets/img/0123.jpg',
         'https://dalabajicai-prod.oss-cn-chengdu.aliyuncs.com/files/dalaba/file/80ADA7777A9B41D7AD04DEF7658A0C22.jpg?x-oss-process=style/watermark\n',
@@ -153,6 +154,10 @@ export default {
       showMessage: false
 
     }
+  },
+  mounted () {
+    this.introduceList = this.list.introduce.split('\n')
+    console.log(this.introduceList)
   }
 }
 </script>

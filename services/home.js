@@ -59,4 +59,17 @@ export class HomeService {
       params
     })
   }
+  async SupplierListParticulars (params) { // 材料供应商列表数据详情
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/supplier/open/details.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
 }

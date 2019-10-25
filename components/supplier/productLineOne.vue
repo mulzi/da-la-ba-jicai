@@ -1,55 +1,20 @@
 <template>
-  <el-row class="productLineBox">
-    <div id="topListBox" class="topListBox padding30">
-      <div class="listOne" v-for="(item,index) in lists" :key="index">
-        <div class="titNameChange">
-          <span class="span">{{item.name}}</span><i class="i el-icon-caret-right" />
-        </div>
-        <div ref="viewer" v-viewer="{movable: false}" class="boLiList images">
-          <div class="a" v-for="(t, i) in item.products" :key="i">
-            <div class="img">
-              <img :src="t.productPics[0].picUrl" alt="">
-              <div class="imgTips" @click="show">
-                -->
-                <em class="iconfont">&#xe601;</em>-->
-                <p>点击图片放大</p>-->
-              </div>
-            </div>
-            <div class="name">
-              {{t.name}}
-            </div>
-            <div class="Property">
-              <p v-for="(te,ie) in t.productAttributeAndValues" :key="ie">
-                {{ te.attributeName }}：<em>{{ te.name }}</em>
-              </p>
-            </div>
-            <div class="money">
-              价格：<em><i>{{t.previousPrice}}</i></em>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="moneyState ">
-      价格说明：用户自己输入
-    </div>
-    <div class="tips">
-      温馨提示：平台提倡公平交易，为保障各位消费者合法权益，请各位切勿相信口头承诺，一定要写到合作协议里面或者将承诺签字录音等！
-    </div>
-  </el-row>
+
 </template>
 
 <script>
 import $ from 'jquery'
 export default {
   // eslint-disable-next-line vue/require-prop-types
-  props: [ 'list' ],
+  props: ['dates'],
   data () {
     return {
-      lists: this.list
+      imagesBox: [],
+      date: this.dates
     }
   },
   mounted () {
+    console.log(this.date)
     $(function () {
       $('#topListBox').children().first().children('.titNameChange').addClass('active')
       $('#topListBox').children().first().children('.titNameChange').children('i').removeClass('el-icon-caret-right')

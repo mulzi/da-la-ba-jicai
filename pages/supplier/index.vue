@@ -258,7 +258,7 @@ export default {
     getSupplierList (parmes) {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.SupplierList(parmes).then((res) => {
-        // console.log('s', res.data)
+        console.log('s', res.data)
         this.getSupplierLiList = res.data.results
         this.totalCount = res.data.totalCount
       })
