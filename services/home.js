@@ -72,4 +72,43 @@ export class HomeService {
       params
     })
   }
+  async getComment (params) { // 获取全部评论接口
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/basic/open/assessments.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
+  async getGoodComment (params) { // 获取好评接口
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/basic/open/good/assessments.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
+  async getBadComment (params) { // 获取差评接口
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/basic/open/bad/assessments.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
 }

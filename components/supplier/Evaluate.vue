@@ -21,184 +21,37 @@
     <div class="evaluatelIST">
       <div class="top">
         <ul id="evaluateChang">
-          <li class="active">
-            全部(123)
+          <li class="active" @click="changeFlagOne, getComment({ otherId: $route.params.id, type: 1, page: pagesOne, size: 10 })">
+            全部({{ this.ones }})
           </li>
-          <li>
-            好评(222)
+          <li @click="changeFlagTwo,getGoodComment({ otherId: $route.params.id, type: 1, page: pagesTwo, size: 10 })">
+            好评({{ this.twos }})
           </li>
-          <li>
-            差评(555)
+          <li @click="changeFlagThree,getBadComment({ otherId: $route.params.id, type: 1, page: pagesThree, size: 10 })">
+            差评({{ this.threes }})
           </li>
         </ul>
       </div>
       <div class="list">
         <ul v-infinite-scroll="load">
-          <li>
+          <li v-for="(t,i) in CommentsTotal" :key="i">
             <div class="leftImg">
               <div class="img">
-                <img src="@/assets/img/0123.jpg" alt="">
+                <img :src="t.headUri" alt="">
               </div>
               <div class="name">
-                用户名称sdsd
+                {{ t.nickName }}
               </div>
             </div>
             <div class="rightText">
               <p>
-                <em>差评：</em>
+                <em v-if="t.comment===2">差评：</em>
                 <span>
-
-                  从有限到无限，从有差别到无差别，从有疆界到无疆界，任何人、任何时间、任何地点、用任意货币买卖任意商品，这就是这套全球商业这就是这套全球商业这就是这套全球商业操作系统带来的巨带来的巨变带来的巨变变！
-                  带来的巨变带来的巨变
-
+                  {{ t.content }}
                 </span>
               </p>
               <p>
-                2019年11月12日 18:21
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="leftImg">
-              <div class="img">
-                <img src="@/assets/img/0123.jpg" alt="">
-              </div>
-              <div class="name">
-                用户名称sdsd
-              </div>
-            </div>
-            <div class="rightText">
-              <p>
-                <em>差评：</em>
-                <span>
-
-                  从有限到无限，从有差别到无差别，从有疆界到无疆界，任何人、任何时间、任何地点、用任意货币买卖任意商品，这就是这套全球商业这就是这套全球商业这就是这套全球商业操作系统带来的巨带来的巨变带来的巨变变！
-                  带来的巨变带来的巨变
-
-                </span>
-              </p>
-              <p>
-                2019年11月12日 18:21
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="leftImg">
-              <div class="img">
-                <img src="@/assets/img/0123.jpg" alt="">
-              </div>
-              <div class="name">
-                用户名称sdsd
-              </div>
-            </div>
-            <div class="rightText">
-              <p>
-                <em>差评：</em>
-                <span>
-
-                  从有限到无限，从有差别到无差别，从有疆界到无疆界，任何人、任何时间、任何地点、用任意货币买卖任意商品，这就是这套全球商业这就是这套全球商业这就是这套全球商业操作系统带来的巨带来的巨变带来的巨变变！
-                  带来的巨变带来的巨变
-
-                </span>
-              </p>
-              <p>
-                2019年11月12日 18:21
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="leftImg">
-              <div class="img">
-                <img src="@/assets/img/0123.jpg" alt="">
-              </div>
-              <div class="name">
-                用户名称sdsd
-              </div>
-            </div>
-            <div class="rightText">
-              <p>
-                <em>差评：</em>
-                <span>
-
-                  从有限到无限，从有差别到无差别，从有疆界到无疆界，任何人、任何时间、任何地点、用任意货币买卖任意商品，这就是这套全球商业这就是这套全球商业这就是这套全球商业操作系统带来的巨带来的巨变带来的巨变变！
-                  带来的巨变带来的巨变
-
-                </span>
-              </p>
-              <p>
-                2019年11月12日 18:21
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="leftImg">
-              <div class="img">
-                <img src="@/assets/img/0123.jpg" alt="">
-              </div>
-              <div class="name">
-                用户名称sdsd
-              </div>
-            </div>
-            <div class="rightText">
-              <p>
-                <em>差评：</em>
-                <span>
-
-                  从有限到无限，从有差别到无差别，从有疆界到无疆界，任何人、任何时间、任何地点、用任意货币买卖任意商品，这就是这套全球商业这就是这套全球商业这就是这套全球商业操作系统带来的巨带来的巨变带来的巨变变！
-                  带来的巨变带来的巨变
-
-                </span>
-              </p>
-              <p>
-                2019年11月12日 18:21
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="leftImg">
-              <div class="img">
-                <img src="@/assets/img/0123.jpg" alt="">
-              </div>
-              <div class="name">
-                用户名称sdsd
-              </div>
-            </div>
-            <div class="rightText">
-              <p>
-                <em>差评：</em>
-                <span>
-
-                  从有限到无限，从有差别到无差别，从有疆界到无疆界，任何人、任何时间、任何地点、用任意货币买卖任意商品，这就是这套全球商业这就是这套全球商业这就是这套全球商业操作系统带来的巨带来的巨变带来的巨变变！
-                  带来的巨变带来的巨变
-
-                </span>
-              </p>
-              <p>
-                2019年11月12日 18:21
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="leftImg">
-              <div class="img">
-                <img src="@/assets/img/0123.jpg" alt="">
-              </div>
-              <div class="name">
-                用户名称sdsd
-              </div>
-            </div>
-            <div class="rightText">
-              <p>
-                <em>差评：</em>
-                <span>
-
-                  从有限到无限，从有差别到无差别，从有疆界到无疆界，任何人、任何时间、任何地点、用任意货币买卖任意商品，这就是这套全球商业这就是这套全球商业这就是这套全球商业操作系统带来的巨带来的巨变带来的巨变变！
-                  带来的巨变带来的巨变
-
-                </span>
-              </p>
-              <p>
-                2019年11月12日 18:21
+                {{ t.createdAtStr }}
               </p>
             </div>
           </li>
@@ -210,11 +63,24 @@
 
 <script>
 import $ from 'jquery'
+import { HomeService } from '@/services/home'
 export default {
   data () {
     return {
       radio: '1',
-      count: 0
+      count: 0,
+      ones: 0,
+      twos: 0,
+      threes: 0,
+      pagesOne: 0,
+      pagesTwo: 0,
+      pagesThree: 0,
+      flagOne: true,
+      flagTwo: false,
+      flagThree: false,
+      CommentsTotal: [ ], // 全部评论
+      goodComments: [], // 好评
+      badComments: [] // 差评
     }
   },
   mounted () {
@@ -224,10 +90,71 @@ export default {
         $(this).addClass('active')
       })
     })
+    this.getComment({ otherId: this.$route.params.id, type: 1, page: 0, size: 10 })
+    this.getGoodComments({ otherId: this.$route.params.id, type: 1, page: 0, size: 10 })
+    this.getBadComments({ otherId: this.$route.params.id, type: 1, page: 0, size: 10 })
   },
   methods: {
     load () {
-      this.count += 2
+      if (this.flagOne) {
+        this.getComment({ otherId: this.$route.params.id, type: 1, page: this.pagesOne, size: 10 })
+        this.pagesOne++
+      }
+      if (this.flagTwo) {
+        this.getGoodComment({ otherId: this.$route.params.id, type: 1, page: this.pagesTwo, size: 10 })
+        this.pagesTwo++
+      }
+      if (this.flagThree) {
+        this.getBadComment({ otherId: this.$route.params.id, type: 1, page: this.pagesThree, size: 10 })
+        this.pagesThree++
+      }
+    },
+    getComment (params) {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getComment(params).then((res) => {
+        this.CommentsTotal = res.data.results
+        console.log(res.data)
+        this.ones = res.data.totalCount
+      })
+    },
+    getGoodComment (params) { // 获取好评
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getGoodComment(params).then((res) => {
+        this.CommentsTotal = res.data.results
+      })
+    },
+    getBadComment (params) { // 获取差评
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getBadComment(params).then((res) => {
+        this.CommentsTotal = res.data.results
+      })
+    },
+    getGoodComments (params) { // 获取好评总数
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getGoodComment(params).then((res) => {
+        this.twos = res.data.totalCount
+      })
+    },
+    getBadComments (params) { // 获取差评总数
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getBadComment(params).then((res) => {
+        this.threes = res.data.totalCount
+      })
+    },
+    changeFlagOne () {
+      this.flagOne = true
+      this.flagTwo = false
+      this.flagThree = false
+    },
+    changeFlagTwo () {
+      this.flagOne = false
+      this.flagTwo = true
+      this.flagThree = false
+    },
+    changeFlagThree () {
+      this.flagOne = false
+      this.flagTwo = false
+      this.flagThree = true
     }
   }
 }
@@ -312,7 +239,7 @@ export default {
         margin: 30px 0 0;
         overflow: hidden;
         ul{
-          max-height: 600px;
+          height: 600px;
           width: 100%;
           overflow-y: auto;
           li{
@@ -323,6 +250,8 @@ export default {
             margin-bottom: 20px;
             .leftImg{
               width:110px ;
+              margin-bottom: 15px;
+              margin-left: 10px;
               .img{
                 width: 40px;
                 height: 40px;
@@ -358,7 +287,6 @@ export default {
                 &:nth-child(2){
                   color: #D3D3D3;
                   margin-top: 6px;
-                  margin-bottom: 15px;
                 }
               }
             }

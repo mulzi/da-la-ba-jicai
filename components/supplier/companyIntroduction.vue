@@ -94,17 +94,7 @@ export default {
       introduceList: [ ], // 品牌简介
       companyIntroduce: [], // 公司介绍
       advantage: [], // 产品优势
-      constructionExplain: [], // 施工说明
-
-      banner: [
-        '/_nuxt/assets/img/0123.jpg',
-        'https://dalabajicai-prod.oss-cn-chengdu.aliyuncs.com/files/dalaba/file/80ADA7777A9B41D7AD04DEF7658A0C22.jpg?x-oss-process=style/watermark\n',
-        'https://dalabajicai-prod.oss-cn-chengdu.aliyuncs.com/files/dalaba/file/892912EF2BFA427CABA3385ECD3FF236.png?x-oss-process=style/watermark\n',
-        '/_nuxt/assets/img/0123.jpg',
-        '/_nuxt/assets/img/0123.jpg',
-        '/_nuxt/assets/img/0123.jpg'],
-      hideMessage: true,
-      showMessage: false
+      constructionExplain: [] // 施工说明
 
     }
   },
