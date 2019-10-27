@@ -51,7 +51,8 @@ export class Auth {
       refresh_token: refreshToken
     }
     const res = await this.fetchToken(params)
-    setUserToken(this.cookies, res.data)
+    const userToken = setUserToken(this.cookies, res.data)
+    return Promise.resolve(userToken)
   }
 
   async visitorLogin (visitorIdentity) {
@@ -60,17 +61,11 @@ export class Auth {
       grant_type: VISITOR_IDENTITY,
       visitor_identity: visitorIdentity
     }
-    const promise = this.fetchToken(params)
-      .then((tokenRes) => {
-        setUserToken(this.cookies, tokenRes.data)
-        return tokenRes
-      })
-      .then((tokenRes) => {
-        return this.fetchUserInfo({ accessToken: tokenRes.data.access_token })
-      }).then((userRes) => {
-        setUserInfo(this.cookies, userRes.data)
-      })
-    await promise
+    const tokenRes = await this.fetchToken(params)
+    const userToken = setUserToken(this.cookies, tokenRes.data)
+    const userRes = await this.fetchUserInfo({ accessToken: userToken.accessToken })
+    setUserInfo(this.cookies, userRes.data)
+    return Promise.resolve(userToken)
   }
 
   async checkAndRefreshToken () {
@@ -80,20 +75,20 @@ export class Auth {
       deviceId = uuid()
       setDeviceId(this.cookies, deviceId)
     }
-    const userToken = getUserToken(this.cookies)
+    let userToken = getUserToken(this.cookies)
     const userInfo = getUserInfo(this.cookies)
     if (userToken === undefined || userInfo === undefined) {
       // 游客登录
-      await this.visitorLogin(deviceId)
+      userToken = await this.visitorLogin(deviceId)
     }
 
     // token是否过期
     const current = new Date().getTime()
     if (current >= userToken.expiredAt) {
       // 刷新令牌
-      await this.refreshToken(userToken.refreshToken)
+      userToken = await this.refreshToken(userToken.refreshToken)
     }
 
-    return getUserToken(this.cookies)
+    return userToken
   }
 }
