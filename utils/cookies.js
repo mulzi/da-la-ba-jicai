@@ -12,6 +12,7 @@ export function getDeviceId (cookies) {
 
 export function setDeviceId (cookies, deviceId) {
   cookies.set(DEVICE_ID, deviceId, { path: '/', maxAge: DAY_MAX_AGE * 1000 })
+  return deviceId
 }
 
 export function getUserToken (cookies) {
@@ -26,6 +27,7 @@ export function setUserToken (cookies, userToken) {
     expiredAt: new Date().getTime() + userToken.expires_in * 1000 - 2 * 60 * 1000
   }
   cookies.set(USER_TOKEN, JSON.stringify(token), { path: '/', maxAge: DAY_MAX_AGE * 29 })
+  return token
 }
 
 export function getUserInfo (cookies) {
@@ -34,4 +36,5 @@ export function getUserInfo (cookies) {
 
 export function setUserInfo (cookies, userInfo) {
   cookies.set(USER_INFO, JSON.stringify(userInfo), { path: '/', maxAge: DAY_MAX_AGE * 29 })
+  return userInfo
 }
