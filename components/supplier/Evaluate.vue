@@ -55,15 +55,18 @@
               </p>
             </div>
           </li>
-          <div class="loading ">
-            <span class="el-icon-loading"></span>
+          <div v-if="loading" class="EvaLoading ">
+            <span class="el-icon-loading" />
+          </div>
+          <div v-if="noMoreOne" class="Nomore">
+            没有更多数据了哦~~~
           </div>
           <div v-if="ones===0" class="NoMessage">
             <img src="@/assets/img/nodata.png" alt="">
             <p>空空如也哦~~~</p>
           </div>
         </ul>
-        <ul v-if="flagTwo" v-infinite-scroll="loadTwo" infinite-scroll-immediate="false">
+        <ul v-if="flagTwo" v-infinite-scroll="loadTwo" infinite-scroll-immediate="false" infinite-scroll-disabled="disabledTwo">
           <li v-for="(t,i) in goodComments" :key="i">
             <div class="leftImg">
               <div class="img">
@@ -85,12 +88,18 @@
               </p>
             </div>
           </li>
+          <div v-if="loadingTwo" class="EvaLoading ">
+            <span class="el-icon-loading" />
+          </div>
+          <div v-if="noMoreTwo" class="Nomore">
+            没有更多数据了哦~~~
+          </div>
           <div v-if="twos===0" class="NoMessage">
             <img src="@/assets/img/nodata.png" alt="">
             <p>空空如也哦~~~</p>
           </div>
         </ul>
-        <ul v-if="flagThree" v-infinite-scroll="loadThree" infinite-scroll-immediate="false">
+        <ul v-if="flagThree" v-infinite-scroll="loadThree" infinite-scroll-immediate="false" infinite-scroll-disabled="disabledThree">
           <li v-for="(t,i) in badComments" :key="i">
             <div class="leftImg">
               <div class="img">
@@ -112,6 +121,12 @@
               </p>
             </div>
           </li>
+          <div v-if="loadingThree" class="EvaLoading ">
+            <span class="el-icon-loading" />
+          </div>
+          <div v-if="noMoreThree" class="Nomore">
+            没有更多数据了哦~~~
+          </div>
           <div v-if="threes===0" class="NoMessage">
             <img src="@/assets/img/nodata.png" alt="">
             <p>空空如也哦~~~</p>
@@ -139,9 +154,32 @@ export default {
       flagOne: true,
       flagTwo: false,
       flagThree: false,
+      loading: false,
+      loadingTwo: false,
+      loadingThree: false,
       CommentsTotal: [ ], // 全部评论
       goodComments: [], // 好评
       badComments: [] // 差评
+    }
+  },
+  computed: {
+    noMoreOne () {
+      return this.CommentsTotal.length >= this.ones
+    },
+    noMoreTwo () {
+      return this.goodComments.length >= this.twos
+    },
+    noMoreThree () {
+      return this.badComments.length >= this.threes
+    },
+    disabled () {
+      return this.loading || this.noMoreOne
+    },
+    disabledTwo () {
+      return this.loadingTwo || this.noMoreTwo
+    },
+    disabledThree () {
+      return this.loadingThree || this.noMoreThree
     }
   },
   mounted () {
@@ -151,22 +189,34 @@ export default {
   },
   methods: {
     loadOne () {
-      if (this.flagOne) {
-        this.pagesOne++
-        this.getComment({ otherId: this.$route.params.id, type: 1, page: this.pagesOne, size: this.size })
-      }
+      this.loading = true
+      setTimeout(() => {
+        if (this.flagOne) {
+          this.pagesOne++
+          this.getComment({ otherId: this.$route.params.id, type: 1, page: this.pagesOne, size: this.size })
+        }
+        this.loading = false
+      }, 1500)
     },
     loadTwo () {
-      if (this.flagTwo) {
-        this.getGoodComment({ otherId: this.$route.params.id, type: 1, page: this.pagesTwo, size: this.size })
-        this.pagesTwo++
-      }
+      this.loadingTwo = true
+      setTimeout(() => {
+        if (this.flagTwo) {
+          this.pagesTwo++
+          this.getGoodComment({ otherId: this.$route.params.id, type: 1, page: this.pagesTwo, size: this.size })
+        }
+        this.loadingTwo = false
+      }, 1500)
     },
     loadThree () {
-      if (this.flagThree) {
-        this.getBadComment({ otherId: this.$route.params.id, type: 1, page: this.pagesThree, size: this.size })
-        this.pagesThree++
-      }
+      this.loadingThree = true
+      setTimeout(() => {
+        if (this.flagThree) {
+          this.pagesThree++
+          this.getBadComment({ otherId: this.$route.params.id, type: 1, page: this.pagesThree, size: this.size })
+        }
+      }, 1500)
+      this.loadingThree = false
     },
     getComment (params) {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
@@ -179,14 +229,14 @@ export default {
     getGoodComment (params) { // 获取好评
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getGoodComment(params).then((res) => {
-        this.goodComments = res.data.results
+        this.goodComments = this.goodComments.concat(res.data.results)
         this.twos = res.data.totalCount
       })
     },
     getBadComment (params) { // 获取差评
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getBadComment(params).then((res) => {
-        this.badComments = res.data.results
+        this.badComments = this.badComments.concat(res.data.results)
         this.threes = res.data.totalCount
       })
     },
@@ -367,6 +417,23 @@ export default {
               text-align: center;
               margin-top: 10px;
             }
+          }
+          .EvaLoading{
+            width: 100%;
+            height: 36px;
+            line-height: 36px;
+            font-size: 30px;
+            color: #5f5f5f;
+            text-align: center;
+          }
+          .Nomore{
+            text-align: center;
+            width: 100%;
+            height: 36px;
+            line-height: 36px;
+            font-size: 12px;
+            color: #323232;
+            margin-bottom: 20px;
           }
         }
       }
