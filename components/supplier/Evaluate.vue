@@ -21,19 +21,19 @@
     <div class="evaluatelIST">
       <div class="top">
         <ul id="evaluateChang">
-          <li class="active" @click="changeFlagOne, getComment({ otherId: $route.params.id, type: 1, page: pagesOne, size: 10 })">
+          <li :class="flagOne ? 'active' : '' " @click="changeFlagOne">
             全部({{ this.ones }})
           </li>
-          <li @click="changeFlagTwo,getGoodComment({ otherId: $route.params.id, type: 1, page: pagesTwo, size: 10 })">
+          <li :class="flagTwo ? 'active' : '' " @click="changeFlagTwo">
             好评({{ this.twos }})
           </li>
-          <li @click="changeFlagThree,getBadComment({ otherId: $route.params.id, type: 1, page: pagesThree, size: 10 })">
+          <li :class="flagThree ? 'active': '' " @click="changeFlagThree">
             差评({{ this.threes }})
           </li>
         </ul>
       </div>
       <div class="list">
-        <ul v-infinite-scroll="load">
+        <ul v-if="flagOne" v-infinite-scroll="loadOne" infinite-scroll-immediate="false" infinite-scroll-disabled="disabled">
           <li v-for="(t,i) in CommentsTotal" :key="i">
             <div class="leftImg">
               <div class="img">
@@ -55,6 +55,67 @@
               </p>
             </div>
           </li>
+          <div class="loading ">
+            <span class="el-icon-loading"></span>
+          </div>
+          <div v-if="ones===0" class="NoMessage">
+            <img src="@/assets/img/nodata.png" alt="">
+            <p>空空如也哦~~~</p>
+          </div>
+        </ul>
+        <ul v-if="flagTwo" v-infinite-scroll="loadTwo" infinite-scroll-immediate="false">
+          <li v-for="(t,i) in goodComments" :key="i">
+            <div class="leftImg">
+              <div class="img">
+                <img :src="t.headUri" alt="">
+              </div>
+              <div class="name">
+                {{ t.nickName }}
+              </div>
+            </div>
+            <div class="rightText">
+              <p>
+                <em v-if="t.comment===2">差评：</em>
+                <span>
+                  {{ t.content }}
+                </span>
+              </p>
+              <p>
+                {{ t.createdAtStr }}
+              </p>
+            </div>
+          </li>
+          <div v-if="twos===0" class="NoMessage">
+            <img src="@/assets/img/nodata.png" alt="">
+            <p>空空如也哦~~~</p>
+          </div>
+        </ul>
+        <ul v-if="flagThree" v-infinite-scroll="loadThree" infinite-scroll-immediate="false">
+          <li v-for="(t,i) in badComments" :key="i">
+            <div class="leftImg">
+              <div class="img">
+                <img :src="t.headUri" alt="">
+              </div>
+              <div class="name">
+                {{ t.nickName }}
+              </div>
+            </div>
+            <div class="rightText">
+              <p>
+                <em v-if="t.comment===2">差评：</em>
+                <span>
+                  {{ t.content }}
+                </span>
+              </p>
+              <p>
+                {{ t.createdAtStr }}
+              </p>
+            </div>
+          </li>
+          <div v-if="threes===0" class="NoMessage">
+            <img src="@/assets/img/nodata.png" alt="">
+            <p>空空如也哦~~~</p>
+          </div>
         </ul>
       </div>
     </div>
@@ -62,19 +123,19 @@
 </template>
 
 <script>
-import $ from 'jquery'
 import { HomeService } from '@/services/home'
 export default {
   data () {
     return {
       radio: '1',
       count: 0,
-      ones: 0,
-      twos: 0,
-      threes: 0,
+      ones: 0, // 评论总数
+      twos: 0, // 好评总数
+      threes: 0, // 差评总数
       pagesOne: 0,
       pagesTwo: 0,
       pagesThree: 0,
+      size: 3,
       flagOne: true,
       flagTwo: false,
       flagThree: false,
@@ -84,35 +145,33 @@ export default {
     }
   },
   mounted () {
-    $(function () {
-      $('#evaluateChang li').on('click', function () {
-        $(this).siblings().removeClass('active')
-        $(this).addClass('active')
-      })
-    })
-    this.getComment({ otherId: this.$route.params.id, type: 1, page: 0, size: 10 })
-    this.getGoodComments({ otherId: this.$route.params.id, type: 1, page: 0, size: 10 })
-    this.getBadComments({ otherId: this.$route.params.id, type: 1, page: 0, size: 10 })
+    this.getComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
+    this.getGoodComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
+    this.getBadComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
   },
   methods: {
-    load () {
+    loadOne () {
       if (this.flagOne) {
-        this.getComment({ otherId: this.$route.params.id, type: 1, page: this.pagesOne, size: 10 })
         this.pagesOne++
+        this.getComment({ otherId: this.$route.params.id, type: 1, page: this.pagesOne, size: this.size })
       }
+    },
+    loadTwo () {
       if (this.flagTwo) {
-        this.getGoodComment({ otherId: this.$route.params.id, type: 1, page: this.pagesTwo, size: 10 })
+        this.getGoodComment({ otherId: this.$route.params.id, type: 1, page: this.pagesTwo, size: this.size })
         this.pagesTwo++
       }
+    },
+    loadThree () {
       if (this.flagThree) {
-        this.getBadComment({ otherId: this.$route.params.id, type: 1, page: this.pagesThree, size: 10 })
+        this.getBadComment({ otherId: this.$route.params.id, type: 1, page: this.pagesThree, size: this.size })
         this.pagesThree++
       }
     },
     getComment (params) {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getComment(params).then((res) => {
-        this.CommentsTotal = res.data.results
+        this.CommentsTotal = this.CommentsTotal.concat(res.data.results)
         console.log(res.data)
         this.ones = res.data.totalCount
       })
@@ -120,13 +179,15 @@ export default {
     getGoodComment (params) { // 获取好评
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getGoodComment(params).then((res) => {
-        this.CommentsTotal = res.data.results
+        this.goodComments = res.data.results
+        this.twos = res.data.totalCount
       })
     },
     getBadComment (params) { // 获取差评
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getBadComment(params).then((res) => {
-        this.CommentsTotal = res.data.results
+        this.badComments = res.data.results
+        this.threes = res.data.totalCount
       })
     },
     getGoodComments (params) { // 获取好评总数
@@ -138,7 +199,6 @@ export default {
     getBadComments (params) { // 获取差评总数
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getBadComment(params).then((res) => {
-        this.threes = res.data.totalCount
       })
     },
     changeFlagOne () {
@@ -238,8 +298,9 @@ export default {
         width: 100%;
         margin: 30px 0 0;
         overflow: hidden;
+        height: 600px;
         ul{
-          height: 600px;
+          height: 200px;
           width: 100%;
           overflow-y: auto;
           li{
@@ -289,6 +350,22 @@ export default {
                   margin-top: 6px;
                 }
               }
+            }
+          }
+          .NoMessage{
+            width: 100%;
+            margin-top: 100px;
+            img{
+              display: block;
+              width: 200px;
+              height: 200px;
+              margin: 0 auto;
+            }
+            p{
+              font-size: 14px;
+              color: #333333;
+              text-align: center;
+              margin-top: 10px;
             }
           }
         }

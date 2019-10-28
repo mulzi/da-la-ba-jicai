@@ -71,7 +71,7 @@ export default {
 
   proxy: {
     '/api': {
-      target: 'http://www.dalabajicai.com',
+      target: 'http://qy.cqsudu.com:20200/',
       pathRewrite: {
         '^/api': '/api'
       }
