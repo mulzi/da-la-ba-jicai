@@ -7,27 +7,27 @@
           <em class="el-icon-close" @click="messageShow" />
         </div>
         <div class="form">
-          <form action="">
-            <div class="phoneBox">
-              <div class="left">
-                <span> <em>*</em>联系人：</span>
-                <input type="text">
-              </div>
-              <div class="right">
-                <span> <em>*</em>联系人手机号码：</span>
-                <input type="text">
-              </div>
+          <div class="phoneBox">
+            <div class="left">
+              <span> <em>*</em>联系人：</span>
+              <input v-model="name" type="text">
             </div>
-            <div class="state">
-              <span>
-                咨询说明：
-              </span>
-              <textarea />
+            <div class="right">
+              <span> <em>*</em>联系人手机号码：</span>
+              <input v-model="phone" maxlength="11" type="text">
             </div>
-            <div class="sub">
-              <input type="button" value="提交">
-            </div>
-          </form>
+          </div>
+          <div class="state">
+            <span>
+              咨询说明：
+            </span>
+            <textarea v-model="text" />
+          </div>
+          <div class="sub">
+            <button @click="subOrder">
+              提交
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -35,11 +35,44 @@
 </template>
 
 <script>
+import { HomeService } from '@/services/home.js'
 export default {
+  data () {
+    return {
+      name: '',
+      phone: '',
+      text: ''
+    }
+  },
   mounted () {
   },
   methods: {
     messageShow () {
+      this.$store.commit('home/changeMesShow')
+    },
+    order (params) {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.order(params).then((res) => {
+        console.log(res)
+        if (res.status === 200) {
+          this.$message({
+            showClose: true,
+            message: '留言成功！等待回访',
+            type: 'success'
+          })
+        }
+      })
+    },
+    subOrder () {
+      const params = {
+        supplierId: this.$route.params.id,
+        name: this.name,
+        mobile: this.phone,
+        supplement: this.text }
+      if (this.name === '' || null) {
+        return
+      }
+      this.order(params)
       this.$store.commit('home/changeMesShow')
     }
   }
@@ -95,9 +128,7 @@ export default {
                 .form{
                     margin-top: 30px;
                     width: 100%;
-                    form{
-                        width: 100%;
-                        display: block;
+
                         .phoneBox{
                             width: 100%;
                             display: flex;
@@ -184,7 +215,7 @@ export default {
                             width: 100%;
                             overflow: hidden;
                             margin-top: 30px;
-                            input{
+                            button{
                                 background: $redColor;
                                 height:30px ;
                                 line-height: 30px;
@@ -200,7 +231,7 @@ export default {
                                 }
                             }
                         }
-                    }
+
                 }
             }
         }

@@ -111,4 +111,18 @@ export class HomeService {
       params
     })
   }
+  async order (params) { // 提交留言
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/supplier/open/createConsultation.json`,
+      method: 'POST',
+      headers: {
+        Authorization: token.accessToken,
+        'Content-type': 'application/json'
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      data: params
+    })
+  }
 }

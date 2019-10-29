@@ -33,113 +33,25 @@
         </ul>
       </div>
       <div class="list">
-        <ul v-if="flagOne" v-infinite-scroll="loadOne" infinite-scroll-immediate="false" infinite-scroll-disabled="disabled">
-          <li v-for="(t,i) in CommentsTotal" :key="i">
-            <div class="leftImg">
-              <div class="img">
-                <img :src="t.headUri" alt="">
-              </div>
-              <div class="name">
-                {{ t.nickName }}
-              </div>
-            </div>
-            <div class="rightText">
-              <p>
-                <em v-if="t.comment===2">差评：</em>
-                <span>
-                  {{ t.content }}
-                </span>
-              </p>
-              <p>
-                {{ t.createdAtStr }}
-              </p>
-            </div>
-          </li>
-          <div v-if="loading" class="EvaLoading ">
-            <span class="el-icon-loading" />
-          </div>
-          <div v-if="noMoreOne" class="Nomore">
-            没有更多数据了哦~~~
-          </div>
-          <div v-if="ones===0" class="NoMessage">
-            <img src="@/assets/img/nodata.png" alt="">
-            <p>空空如也哦~~~</p>
-          </div>
-        </ul>
-        <ul v-if="flagTwo" v-infinite-scroll="loadTwo" infinite-scroll-immediate="false" infinite-scroll-disabled="disabledTwo">
-          <li v-for="(t,i) in goodComments" :key="i">
-            <div class="leftImg">
-              <div class="img">
-                <img :src="t.headUri" alt="">
-              </div>
-              <div class="name">
-                {{ t.nickName }}
-              </div>
-            </div>
-            <div class="rightText">
-              <p>
-                <em v-if="t.comment===2">差评：</em>
-                <span>
-                  {{ t.content }}
-                </span>
-              </p>
-              <p>
-                {{ t.createdAtStr }}
-              </p>
-            </div>
-          </li>
-          <div v-if="loadingTwo" class="EvaLoading ">
-            <span class="el-icon-loading" />
-          </div>
-          <div v-if="noMoreTwo" class="Nomore">
-            没有更多数据了哦~~~
-          </div>
-          <div v-if="twos===0" class="NoMessage">
-            <img src="@/assets/img/nodata.png" alt="">
-            <p>空空如也哦~~~</p>
-          </div>
-        </ul>
-        <ul v-if="flagThree" v-infinite-scroll="loadThree" infinite-scroll-immediate="false" infinite-scroll-disabled="disabledThree">
-          <li v-for="(t,i) in badComments" :key="i">
-            <div class="leftImg">
-              <div class="img">
-                <img :src="t.headUri" alt="">
-              </div>
-              <div class="name">
-                {{ t.nickName }}
-              </div>
-            </div>
-            <div class="rightText">
-              <p>
-                <em v-if="t.comment===2">差评：</em>
-                <span>
-                  {{ t.content }}
-                </span>
-              </p>
-              <p>
-                {{ t.createdAtStr }}
-              </p>
-            </div>
-          </li>
-          <div v-if="loadingThree" class="EvaLoading ">
-            <span class="el-icon-loading" />
-          </div>
-          <div v-if="noMoreThree" class="Nomore">
-            没有更多数据了哦~~~
-          </div>
-          <div v-if="threes===0" class="NoMessage">
-            <img src="@/assets/img/nodata.png" alt="">
-            <p>空空如也哦~~~</p>
-          </div>
-        </ul>
-      </div>000
+        <comments v-if="flagOne" />
+        <comments-two v-if="flagTwo" />
+        <comments-three v-if="flagThree" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import comments from './reviews/comments'
+import commentsTwo from './reviews/commentsTwo'
+import commentsThree from './reviews/commentsThree'
 import { HomeService } from '@/services/home'
 export default {
+  components: {
+    comments,
+    commentsTwo,
+    commentsThree
+  },
   data () {
     return {
       radio: '1',
@@ -156,30 +68,7 @@ export default {
       flagThree: false,
       loading: false,
       loadingTwo: false,
-      loadingThree: false,
-      CommentsTotal: [ ], // 全部评论
-      goodComments: [], // 好评
-      badComments: [] // 差评
-    }
-  },
-  computed: {
-    noMoreOne () {
-      return this.CommentsTotal.length >= this.ones
-    },
-    noMoreTwo () {
-      return this.goodComments.length >= this.twos
-    },
-    noMoreThree () {
-      return this.badComments.length >= this.threes
-    },
-    disabled () {
-      return this.loading || this.noMoreOne
-    },
-    disabledTwo () {
-      return this.loadingTwo || this.noMoreTwo
-    },
-    disabledThree () {
-      return this.loadingThree || this.noMoreThree
+      loadingThree: false
     }
   },
   mounted () {
@@ -188,67 +77,22 @@ export default {
     this.getBadComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
   },
   methods: {
-    loadOne () {
-      this.loading = true
-      setTimeout(() => {
-        if (this.flagOne) {
-          this.pagesOne++
-          this.getComment({ otherId: this.$route.params.id, type: 1, page: this.pagesOne, size: this.size })
-        }
-        this.loading = false
-      }, 1500)
-    },
-    loadTwo () {
-      this.loadingTwo = true
-      setTimeout(() => {
-        if (this.flagTwo) {
-          this.pagesTwo++
-          this.getGoodComment({ otherId: this.$route.params.id, type: 1, page: this.pagesTwo, size: this.size })
-        }
-        this.loadingTwo = false
-      }, 1500)
-    },
-    loadThree () {
-      this.loadingThree = true
-      setTimeout(() => {
-        if (this.flagThree) {
-          this.pagesThree++
-          this.getBadComment({ otherId: this.$route.params.id, type: 1, page: this.pagesThree, size: this.size })
-        }
-      }, 1500)
-      this.loadingThree = false
-    },
     getComment (params) {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getComment(params).then((res) => {
-        this.CommentsTotal = this.CommentsTotal.concat(res.data.results)
-        console.log(res.data)
         this.ones = res.data.totalCount
       })
     },
     getGoodComment (params) { // 获取好评
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getGoodComment(params).then((res) => {
-        this.goodComments = this.goodComments.concat(res.data.results)
         this.twos = res.data.totalCount
       })
     },
     getBadComment (params) { // 获取差评
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getBadComment(params).then((res) => {
-        this.badComments = this.badComments.concat(res.data.results)
         this.threes = res.data.totalCount
-      })
-    },
-    getGoodComments (params) { // 获取好评总数
-      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.getGoodComment(params).then((res) => {
-        this.twos = res.data.totalCount
-      })
-    },
-    getBadComments (params) { // 获取差评总数
-      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.getBadComment(params).then((res) => {
       })
     },
     changeFlagOne () {
@@ -350,7 +194,7 @@ export default {
         overflow: hidden;
         height: 600px;
         ul{
-          height: 200px;
+          height: 600px;
           width: 100%;
           overflow-y: auto;
           li{

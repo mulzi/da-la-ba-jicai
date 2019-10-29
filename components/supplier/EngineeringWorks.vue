@@ -1,51 +1,15 @@
 <template>
   <div class="engineeringWorks padding30 marginBottom100">
-    <nuxt-link to="">
+    <nuxt-link to="" v-for="(t,i) in list" :key="i">
       <div class="img">
-        <img src="@/assets/img/0123.jpg" alt="">
+        <img :src="t.coverPic" alt="">
         <div class="flext">
-          <span>上海</span>
-          <span>上海东杜普酒店</span>
+          <span></span>
+          <span>{{t.projectName}}</span>
         </div>
       </div>
       <div class="name">
-        上海东杜普酒店
-      </div>
-    </nuxt-link>
-    <nuxt-link to="">
-      <div class="img">
-        <img src="@/assets/img/0123.jpg" alt="">
-        <div class="flext">
-          <span>上海</span>
-          <span>上海东杜普酒店</span>
-        </div>
-      </div>
-      <div class="name">
-        上海东杜普酒店
-      </div>
-    </nuxt-link>
-    <nuxt-link to="">
-      <div class="img">
-        <img src="@/assets/img/0123.jpg" alt="">
-        <div class="flext">
-          <span>上海</span>
-          <span>上海东杜普酒店</span>
-        </div>
-      </div>
-      <div class="name">
-        上海东杜普酒店
-      </div>
-    </nuxt-link>
-    <nuxt-link to="">
-      <div class="img">
-        <img src="@/assets/img/0123.jpg" alt="">
-        <div class="flext">
-          <span>上海</span>
-          <span>上海东杜普酒店</span>
-        </div>
-      </div>
-      <div class="name">
-        上海东杜普酒店
+        {{t.projectName}}
       </div>
     </nuxt-link>
   </div>
@@ -53,8 +17,12 @@
 
 <script>
 export default {
+  // eslint-disable-next-line vue/require-prop-types
+  props: [ 'list' ],
   data () {
-    return {}
+    return {
+
+    }
   }
 }
 </script>

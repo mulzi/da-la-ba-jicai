@@ -96,7 +96,7 @@
           </ul>
         </el-row>
         <product-line v-if="oneListShow" :list="date.product" />
-        <engineering-works v-if="twoListShow" />
+        <engineering-works v-if="twoListShow" :list="date.cases" />
         <company-introduction v-if="threeListShow" :list="date" />
         <CompanyInfo v-if="fourListShow" />
         <Evaluate v-if="fiveListShow" />
@@ -146,7 +146,7 @@ export default {
     const homeService = new HomeService(context)
     // eslint-disable-next-line no-undef
     return homeService.SupplierListParticulars({ supplierId: params.id }).then((res) => {
-      console.log(res.data)
+      // console.log(res.data.cases)
       return { date: res.data || {} }
     })
   },
