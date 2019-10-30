@@ -1,34 +1,45 @@
 <template>
   <div class="background">
-    <div class="bodyBox">
+    <div class="BG" @click="backgroundClose" />
+    <div ref="ruleForm" class="bodyBox">
       <div class="box">
         <div class="closeBox">
           <span>预约到店</span>
           <em class="el-icon-close" @click="messageShow" />
         </div>
-        <div class="form">
+        <el-form ref="ruleForm" :model="ruleForm" :rules="rules" class="form">
           <div class="phoneBox">
             <div class="left">
-              <span> <em>*</em>联系人：</span>
-              <input v-model="name" type="text">
+              <span>
+                <em>*</em>姓名:
+              </span>
+              <el-form-item prop="name" class="ones">
+                <el-input v-model="ruleForm.name" type="text" autocomplete="off" />
+              </el-form-item>
             </div>
             <div class="right">
-              <span> <em>*</em>联系人手机号码：</span>
-              <input v-model="phone" maxlength="11" type="text">
+              <span>
+                <em>*</em>电话号码:
+              </span>
+              <el-form-item prop="phone">
+                <el-input v-model="ruleForm.phone" type="text" autocomplete="off" />
+              </el-form-item>
             </div>
           </div>
           <div class="state">
             <span>
-              咨询说明：
+              咨询说明:
             </span>
-            <textarea v-model="text" />
+            <el-form-item prop="text">
+              <el-input v-model="ruleForm.text" type="text" autocomplete="off" />
+            </el-form-item>
           </div>
           <div class="sub">
-            <button @click="subOrder">
+            <span @click="subOrder()">
               提交
-            </button>
+            </span>
           </div>
-        </div>
+        </el-form>
       </div>
     </div>
   </div>
@@ -38,10 +49,26 @@
 import { HomeService } from '@/services/home.js'
 export default {
   data () {
+    const checkPhone = (rule, value, callback) => {
+      const mobile = /^((13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})|(19[0-9]{9}))$/
+      const tel = /^\d{3,4}-\d{7,9}$/
+      if (!mobile.test(value) && !tel.test(value)) {
+        return callback(new Error('请输入正确的电话'))
+      } else {
+        callback()
+      }
+    }
     return {
-      name: '',
-      phone: '',
-      text: ''
+      ruleForm: {
+        name: '',
+        phone: '',
+        text: ''
+      },
+      rules: {
+        phone: [{ required: true, trigger: 'blur', validator: checkPhone }],
+        name: [{ required: true, trigger: 'blur', message: '请填写姓名' }],
+        text: [{ required: true, trigger: 'blur', message: '请填写咨询说明' }]
+      }
     }
   },
   mounted () {
@@ -66,13 +93,21 @@ export default {
     subOrder () {
       const params = {
         supplierId: this.$route.params.id,
-        name: this.name,
-        mobile: this.phone,
-        supplement: this.text }
-      if (this.name === '' || null) {
-        return
-      }
-      this.order(params)
+        name: this.ruleForm.name,
+        mobile: this.ruleForm.phone,
+        supplement: this.ruleForm.text }
+      this.$refs.ruleForm.validate((valid) => {
+        if (!valid) {
+          console.log('error submit!!')
+          return
+        }
+        alert('submit!')
+        this.order(params)
+        this.$refs.ruleForm.resetFields()
+        this.$store.commit('home/changeMesShow')
+      })
+    },
+    backgroundClose () {
       this.$store.commit('home/changeMesShow')
     }
   }
@@ -81,16 +116,24 @@ export default {
 
 <style scoped lang="scss">
     .background{
-        background: rgba(0,0,0,.6);
         height: 100%;
         width: 100%;
         position: fixed;
         top: 0;
         left: 0;
         z-index: 990;
+         .BG{
+           position: absolute;
+           top: 0;
+           left: 0;
+           height: 100%;
+           width: 100%;
+           background: rgba(0,0,0,.6);
+           z-index: 901;
+         }
         .bodyBox{
+           z-index: 902;
             width: 550px;
-            height: 250px;
             background: #ffffff;
             border-radius: 4px;
             position: absolute;
@@ -136,12 +179,16 @@ export default {
                             justify-items: center;
                             align-items: center;
                             .left{
-                                flex: 1;
                                 display: flex;
                                 display: -ms-flex;
                                 justify-items: center;
                                 align-items: center;
                                 margin-right: 20px;
+                               .el-form-item{
+                                margin-bottom: 0;
+                                 width: 120px;
+                                 margin-left: 10px;
+                              }
                                 span{
                                     width: 80px;
                                     text-align: right;
@@ -167,6 +214,11 @@ export default {
                                 display: -ms-flex;
                                 justify-items: center;
                                 align-items: center;
+                              .el-form-item{
+                                margin-bottom: 0;
+                                margin-left: 10px;
+
+                              }
                                 span{
                                     width: 120px;
                                     text-align: right;
@@ -191,7 +243,17 @@ export default {
                             display: flex;
                             justify-items: center;
                             align-items: center;
-                            margin-top: 25px;
+                            margin-top: 35px;
+                          .el-form-item{
+                            flex: 1;
+                            margin-bottom: 0;
+                            margin-left: 10px;
+                            input{
+                              height: 36px;
+                              line-height: 36px;
+                            }
+
+                          }
                             span{
                                 width: 80px;
                                 text-align: right;
@@ -200,22 +262,13 @@ export default {
                                 font-size: 14px;
                                 color:#666666;
                             }
-                            textarea{
-                                flex: 1;
-                                resize: none;
-                                height: 30px;
-                                line-height: 30px;
-                                font-size: 14px;
-                                color: #333333;
-                                border: solid 1px $borderE7;
-                                text-indent: 1em;
-                            }
                         }
                         .sub{
                             width: 100%;
                             overflow: hidden;
                             margin-top: 30px;
-                            button{
+                            span{
+                              display: inline-block;
                                 background: $redColor;
                                 height:30px ;
                                 line-height: 30px;
@@ -223,7 +276,7 @@ export default {
                                 text-align: center;
                                 font-size: 14px;
                                 color: #ffffff;
-                                margin-left: 80px;
+                                margin-left: 90px;
                                 outline: none;
                                 cursor: pointer;
                                 &:active{
@@ -236,4 +289,9 @@ export default {
             }
         }
     }
+   .el-input__inner{
+    border: 0;
+     height: 36px;
+     line-height: 36px;
+   }
 </style>
