@@ -12,9 +12,9 @@
     <div class="homeNewsBox marginBottom100">
       <div class="title">
         <span>新闻资讯</span>
-        <a href="">
+        <nuxt-link to="">
           更多>
-        </a>
+        </nuxt-link>
       </div>
       <news :newslist="home.platformNews" />
       <news :newslist="home.industryNews" />

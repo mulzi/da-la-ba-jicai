@@ -68,7 +68,7 @@
         </el-row>
         <el-row class="consultingBox">
           <span @click="messageShow">咨询留言</span>
-          <span v-if="date.collection === false" @click="getSupplierList">加入收藏</span>
+          <span v-if="date.collection === false" @click="getCollection">加入收藏</span>
           <span v-if="date.collection === true">取消收藏</span>
         </el-row>
       </el-row>
@@ -170,6 +170,12 @@ export default {
       homeService.SupplierListParticulars({ supplierId: this.$route.params.id }).then((res) => {
         console.log(res.data)
         this.date = res.data
+      })
+    },
+    getCollection () {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.createCollection({ type: 0, id: parseInt(this.$route.params.id) }).then((res) => {
+        console.log(res)
       })
     },
     messageShow () {

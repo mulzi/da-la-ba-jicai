@@ -80,6 +80,7 @@ export default {
     order (params) {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.order(params).then((res) => {
+        // eslint-disable-next-line no-console
         console.log(res)
         if (res.status === 200) {
           this.$message({

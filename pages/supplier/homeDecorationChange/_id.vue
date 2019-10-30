@@ -57,15 +57,43 @@
                   地址：{{ date.brand.registeredCapital }}
                 </li>
                 <li nofloow>
-                  VR地址：{{ date.brand.portalUrl }}
+                  VR地址：{{ date.brand.vrUrl }}
                 </li>
               </ul>
+            </div>
+            <div class="privilege">
+              <span>优惠买单</span>
             </div>
           </el-col>
         </el-row>
         <el-row class="consultingBox">
-          <span @click="messageShow">一键咨询底价</span>
+          <span>一键咨询底价</span>
           <span>加入收藏</span>
+        </el-row>
+        <el-row class="safeguard" :gutter="20">
+          <el-col v-if="date.deposit" :span="12" class="span">
+            <span>保障：</span>
+            服务商已经缴纳保证金<em>{{ date.deposit }}</em>
+            元，承诺交易出问题，保证金赔付
+          </el-col>
+          <el-col v-if="date.rebate " :span="12" class="span">
+            <span>返利：</span>
+            通过平台优惠买单，平台将对消费者进行现金返利 <em>{{ date.rebate }}%</em>
+          </el-col>
+        </el-row>
+        <el-row class="topAdds" v-if="date.agentAddresses">
+          <div class="nameS">
+            展厅地址
+          </div>
+          <el-row class="addsE">
+            <el-col :span="24" class="li" v-for="(t,i) in date.agentAddresses" :key="i">
+              <i class="iconfont">&#xe62e;</i>
+              <span>
+                展厅地址：{{ t.agentAddress }}  {{t.telephone}}
+              </span>
+            </el-col>
+
+          </el-row>
         </el-row>
       </el-row>
       <el-row class="bottomModuleBox">
@@ -140,7 +168,8 @@ export default {
     const homeService = new HomeService(context)
     // eslint-disable-next-line no-undef
     return homeService.SupplierListParticulars({ supplierId: params.id }).then((res) => {
-      // console.log(res.data.cases)
+      // eslint-disable-next-line no-console
+      console.log(res.data)
       return { date: res.data || {} }
     })
   },
@@ -202,109 +231,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .moiveImgBox{
-        width: 100%;
-        overflow: hidden;
-        margin-top: 20px;
-        background: #ffffff;
-        .padding30{
-            width: 100%;
-            position: relative;
-            display: flex;
-            .leftMi{
-                width: 749px;
-                height: 546px;
-                min-width: 600px;
-                border: 1px solid $borderE7;
-                box-sizing: border-box;
-                video{
-                    display: block;
-                    margin: 0 auto;
-                    height: 100%;
-                    width: 100%;
-                }
-            }
-            .changMVIMG{
-                position: absolute;
-                bottom: 100px;
-                left: 24px;
-                width: 749px;
-                z-index: 99;
-                text-align: center;
-                button{
-                    display: inline-block;
 
-                    &.active{
-                        background: $redColor;
-                        color: #ffffff;
-                    }
-                    &:hover{
-                        background: $redColor;
-                        color: #ffffff;
-                    }
-                };
-
-            }
-            .fRight{
-                flex: 1;
-                margin-left: 50px;
-                .nameTit{
-                    width: 100%;
-                    height: 28px;
-                    font-size: 28px;
-                    color: #333333;
-                    line-height: 28px;
-                }
-                .addrName{
-                    overflow: hidden;
-                    width: 100%;
-                    margin-top: 30px;
-                    ul{
-                        width: 100%;
-                        li{
-                            width: 100%;
-                            @include over;
-                            height: 58px;
-                            line-height: 58px;
-                            font-size:20px ;
-                            color: #333333;
-                            text-indent: .5em;
-                            &:nth-child(odd){
-                                background: #ebebeb;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        .consultingBox{
-            width: 100%;
-            margin:20px auto 50px;
-            padding: 0 30px;
-            overflow: hidden;
-            span{
-                display: inline-block;
-                cursor: pointer;
-                height:70px ;
-                line-height: 70px;
-                font-size: 28px;
-                padding: 0 60px;
-                color: $redColor;
-                margin-right: 30px;
-                border: 1px solid $redColor;
-                &:active{
-                    background: #ff7206;
-                }
-                &:nth-child(1){
-                    background: $redColor;
-                    color: #ffffFF;
-                    &:active{
-                        background: #ff4300;
-                    }
-                }
-            }
-        }
-    }
     .bottomModuleBox{
         width: 100%;
         overflow: hidden;

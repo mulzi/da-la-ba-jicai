@@ -1,15 +1,15 @@
 <template>
   <div class="engineeringWorks padding30 marginBottom100">
-    <nuxt-link to="" v-for="(t,i) in list" :key="i">
+    <nuxt-link v-for="(t,i) in list" :key="i" to="">
       <div class="img">
         <img :src="t.coverPic" alt="">
         <div class="flext">
-          <span></span>
-          <span>{{t.projectName}}</span>
+          <span />
+          <span>{{ t.projectName }}</span>
         </div>
       </div>
       <div class="name">
-        {{t.projectName}}
+        {{ t.projectName }}
       </div>
     </nuxt-link>
   </div>
