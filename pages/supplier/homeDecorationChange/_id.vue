@@ -14,7 +14,7 @@
               材料供应商
             </nuxt-link>
             <span class="iconfont right">&#xe603;</span>
-            <span>公装</span>
+            <span>家装</span>
           </div>
         </el-col>
       </el-row>
@@ -51,25 +51,21 @@
                   品牌产地：{{ date.brand.source }}
                 </li>
                 <li>
-                  成立日期：{{ date.brand.brandCreatedTime }}
-                </li>
-                <li>
                   重庆代理商：{{ date.brand.agent }}
                 </li>
                 <li>
-                  注册资金：{{ date.brand.registeredCapital }}
+                  地址：{{ date.brand.registeredCapital }}
                 </li>
                 <li nofloow>
-                  官方网址：{{ date.brand.portalUrl }}
+                  VR地址：{{ date.brand.portalUrl }}
                 </li>
               </ul>
             </div>
           </el-col>
         </el-row>
         <el-row class="consultingBox">
-          <span @click="messageShow">咨询留言</span>
-          <span v-if="date.collection === false" @click="getSupplierList">加入收藏</span>
-          <span v-if="date.collection === true">取消收藏</span>
+          <span @click="messageShow">一键咨询底价</span>
+          <span>加入收藏</span>
         </el-row>
       </el-row>
       <el-row class="bottomModuleBox">
@@ -102,7 +98,6 @@
         <CompanyInfo v-if="fourListShow" />
         <Evaluate v-if="fiveListShow" />
       </el-row>
-      <message-module-one v-if="$store.state.home.messageShow" />
       <!--      id是{{ $route.params.id }}-->
     </div>
   </div>
@@ -116,7 +111,6 @@ import EngineeringWorks from '@/components/supplier/EngineeringWorks'
 import CompanyInfo from '@/components/supplier/CompanyInfo'
 import Evaluate from '@/components/supplier/Evaluate'
 import companyIntroduction from '@/components/supplier/companyIntroduction'
-import messageModuleOne from '@/components/publicModule/messageModuleOne'
 export default {
   layout: 'main',
   components: {
@@ -125,8 +119,7 @@ export default {
     EngineeringWorks,
     CompanyInfo,
     Evaluate,
-    companyIntroduction,
-    messageModuleOne
+    companyIntroduction
 
   },
   data () {
@@ -147,13 +140,11 @@ export default {
     const homeService = new HomeService(context)
     // eslint-disable-next-line no-undef
     return homeService.SupplierListParticulars({ supplierId: params.id }).then((res) => {
-      console.log(res.data)
+      // console.log(res.data.cases)
       return { date: res.data || {} }
     })
   },
   created () {
-    // const that = this
-    // that.getSupplierList()
     if (this.date.videoUri !== null || undefined) {
       this.videoShowTwo = true
     } else {
@@ -162,19 +153,7 @@ export default {
       this.videoShow = false
     }
   },
-  mounted () {
-  },
   methods: {
-    getSupplierList () { // 获取详情数据
-      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.SupplierListParticulars({ supplierId: this.$route.params.id }).then((res) => {
-        console.log(res.data)
-        this.date = res.data
-      })
-    },
-    messageShow () {
-      this.$store.commit('home/changeMesShow')
-    },
     oneChangeShow () {
       this.oneListShow = true
       this.twoListShow = false
@@ -223,168 +202,168 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .moiveImgBox{
-    width: 100%;
-    overflow: hidden;
-    margin-top: 20px;
-    background: #ffffff;
-    .padding30{
-      width: 100%;
-      position: relative;
-      display: flex;
-      .leftMi{
-        width: 749px;
-        height: 546px;
-        min-width: 600px;
-        border: 1px solid $borderE7;
-        box-sizing: border-box;
-        video{
-          display: block;
-          margin: 0 auto;
-          height: 100%;
-          width: 100%;
-        }
-      }
-      .changMVIMG{
-        position: absolute;
-        bottom: 100px;
-        left: 24px;
-        width: 749px;
-        z-index: 99;
-        text-align: center;
-        button{
-          display: inline-block;
-
-          &.active{
-            background: $redColor;
-            color: #ffffff;
-          }
-          &:hover{
-            background: $redColor;
-            color: #ffffff;
-          }
-        };
-
-      }
-      .fRight{
-        flex: 1;
-        margin-left: 50px;
-        .nameTit{
-          width: 100%;
-          height: 28px;
-          font-size: 28px;
-          color: #333333;
-          line-height: 28px;
-        }
-        .addrName{
-          overflow: hidden;
-          width: 100%;
-          margin-top: 30px;
-          ul{
-            width: 100%;
-            li{
-              width: 100%;
-              @include over;
-              height: 58px;
-              line-height: 58px;
-              font-size:20px ;
-              color: #333333;
-              text-indent: .5em;
-              &:nth-child(odd){
-                background: #ebebeb;
-              }
-            }
-          }
-        }
-      }
-    }
-    .consultingBox{
-      width: 100%;
-      margin:20px auto 50px;
-      padding: 0 30px;
-      overflow: hidden;
-      span{
-        display: inline-block;
-        cursor: pointer;
-        height:70px ;
-        line-height: 70px;
-        font-size: 28px;
-        padding: 0 60px;
-        color: $redColor;
-        margin-right: 30px;
-        border: 1px solid $redColor;
-        &:active{
-          background: #ff7206;
-        }
-        &:nth-child(1){
-          background: $redColor;
-          color: #ffffFF;
-          &:active{
-            background: #ff4300;
-          }
-        }
-      }
-    }
-  }
-  .bottomModuleBox{
-    width: 100%;
-    overflow: hidden;
-    margin-top: 20px;
-    .topMenuBox{
-      width: 100%;
-      background: #ffffff;
-      ul{
+    .moiveImgBox{
+        width: 100%;
         overflow: hidden;
-        line-height: 80px;
-        border-bottom: 1px solid $borderE7;
-        height: 80px;
-        margin-top: 10px;
-        display: flex;
-        display: -ms-flex;
-        -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-        -webkit-justify-content: space-between;
-        justify-content: space-between;
-        li{
-          font-size: 26px;
-          color: #333333;
-          position: relative;
-          &:first-child{
-            margin-left: 30px;
-          }
-          &:last-child{
-            margin-right: 20px;
-          }
-          &:hover{
-            cursor: pointer;
-            color: $redColor;
-            &::before{
-              width: 100%;
-              content: "";
-              position: absolute;
-              bottom: 0;
-              left: 0;
-              height: 3px;
-              background: $redColor;
+        margin-top: 20px;
+        background: #ffffff;
+        .padding30{
+            width: 100%;
+            position: relative;
+            display: flex;
+            .leftMi{
+                width: 749px;
+                height: 546px;
+                min-width: 600px;
+                border: 1px solid $borderE7;
+                box-sizing: border-box;
+                video{
+                    display: block;
+                    margin: 0 auto;
+                    height: 100%;
+                    width: 100%;
+                }
             }
+            .changMVIMG{
+                position: absolute;
+                bottom: 100px;
+                left: 24px;
+                width: 749px;
+                z-index: 99;
+                text-align: center;
+                button{
+                    display: inline-block;
 
-          }
-          &.active{
-            cursor: pointer;
-            color: $redColor;
-            &::before{
-              width: 100%;
-              content: "";
-              position: absolute;
-              bottom: 0;
-              left: 0;
-              height: 3px;
-              background: $redColor;
+                    &.active{
+                        background: $redColor;
+                        color: #ffffff;
+                    }
+                    &:hover{
+                        background: $redColor;
+                        color: #ffffff;
+                    }
+                };
+
             }
-          }
+            .fRight{
+                flex: 1;
+                margin-left: 50px;
+                .nameTit{
+                    width: 100%;
+                    height: 28px;
+                    font-size: 28px;
+                    color: #333333;
+                    line-height: 28px;
+                }
+                .addrName{
+                    overflow: hidden;
+                    width: 100%;
+                    margin-top: 30px;
+                    ul{
+                        width: 100%;
+                        li{
+                            width: 100%;
+                            @include over;
+                            height: 58px;
+                            line-height: 58px;
+                            font-size:20px ;
+                            color: #333333;
+                            text-indent: .5em;
+                            &:nth-child(odd){
+                                background: #ebebeb;
+                            }
+                        }
+                    }
+                }
+            }
         }
-      }
+        .consultingBox{
+            width: 100%;
+            margin:20px auto 50px;
+            padding: 0 30px;
+            overflow: hidden;
+            span{
+                display: inline-block;
+                cursor: pointer;
+                height:70px ;
+                line-height: 70px;
+                font-size: 28px;
+                padding: 0 60px;
+                color: $redColor;
+                margin-right: 30px;
+                border: 1px solid $redColor;
+                &:active{
+                    background: #ff7206;
+                }
+                &:nth-child(1){
+                    background: $redColor;
+                    color: #ffffFF;
+                    &:active{
+                        background: #ff4300;
+                    }
+                }
+            }
+        }
     }
-  }
+    .bottomModuleBox{
+        width: 100%;
+        overflow: hidden;
+        margin-top: 20px;
+        .topMenuBox{
+            width: 100%;
+            background: #ffffff;
+            ul{
+                overflow: hidden;
+                line-height: 80px;
+                border-bottom: 1px solid $borderE7;
+                height: 80px;
+                margin-top: 10px;
+                display: flex;
+                display: -ms-flex;
+                -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                -webkit-justify-content: space-between;
+                justify-content: space-between;
+                li{
+                    font-size: 26px;
+                    color: #333333;
+                    position: relative;
+                    &:first-child{
+                        margin-left: 30px;
+                    }
+                    &:last-child{
+                        margin-right: 20px;
+                    }
+                    &:hover{
+                        cursor: pointer;
+                        color: $redColor;
+                        &::before{
+                            width: 100%;
+                            content: "";
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            height: 3px;
+                            background: $redColor;
+                        }
+
+                    }
+                    &.active{
+                        cursor: pointer;
+                        color: $redColor;
+                        &::before{
+                            width: 100%;
+                            content: "";
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            height: 3px;
+                            background: $redColor;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 </style>

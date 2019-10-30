@@ -1,7 +1,7 @@
 <template>
   <div class="evaluateBox marginBottom100">
     <div class="formBox">
-      <form action="">
+      <form action="" onsubmit=" return false">
         <div class="top">
           <el-radio v-model="radio" label="1">
             好评
@@ -11,10 +11,12 @@
           </el-radio>
         </div>
         <div class="text">
-          <textarea placeholder="请输入..." />
+          <textarea placeholder="请输入..." v-model="text" />
         </div>
         <div class="sub">
-          <button>提交</button>
+          <button @click="clickComment">
+            提交
+          </button>
         </div>
       </form>
     </div>
@@ -55,6 +57,7 @@ export default {
   data () {
     return {
       radio: '1',
+      text: '',
       count: 0,
       ones: 0, // 评论总数
       twos: 0, // 好评总数
@@ -77,6 +80,31 @@ export default {
     this.getBadComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
   },
   methods: {
+    clickComment () {
+      if (this.text === null || this.text === '') {
+        this.$message.error('没有留言内容哦')
+        return
+      }
+      const params = {
+        type: 1,
+        otherId: parseInt(this.$route.params.id),
+        comment: parseInt(this.radio),
+        content: this.text
+      }
+      this.postComment(params)
+    },
+    postComment (params) { // 提交评论
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.PostComment(params).then((res) => {
+        if (res.status === 200) {
+          this.$message({
+            message: '恭喜你，提交成功~',
+            type: 'success'
+          })
+        }
+      })
+      this.text = ''
+    },
     getComment (params) {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getComment(params).then((res) => {

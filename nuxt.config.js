@@ -35,7 +35,6 @@ export default {
     { src: '~/plugins/ElementUI.js', ssr: true }, // ssr:true代表在服务端渲染,客户端不渲染
     { src: '~/plugins/babel-polyfill.js', ssr: true },
     { src: '~/plugins/lazyload.js', ssr: false },
-    { src: '~/plugins/pohot-preview.js', ssr: false },
     { src: '~/plugins/viewer.js', ssr: false }
 
   ],
@@ -71,7 +70,7 @@ export default {
 
   proxy: {
     '/api': {
-      target: 'http://www.dalabajicai.com/',
+      target: 'http://qy.cqsudu.com:20200/',
       pathRewrite: {
         '^/api': '/api'
       }

@@ -125,4 +125,43 @@ export class HomeService {
       data: params
     })
   }
+  async PostComment (params) { // 提交评论
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/basic/open/assessment.json`,
+      method: 'POST',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      data: params
+    })
+  }
+  async createCollection (params) { // 加入收藏
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/supplier/open/createCollection.json`,
+      method: 'POST',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
+  async deletelCollection (params) { // 取消
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/supplier/open/deleteCollection.json`,
+      method: 'POST',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
 }

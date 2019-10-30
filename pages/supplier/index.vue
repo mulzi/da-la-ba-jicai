@@ -66,7 +66,7 @@
           </div>
         </div>
         <div v-if="getSupplierLiList.length !== 0 " class="contentList">
-          <nuxt-link v-for="(item, index) in getSupplierLiList" :key="index" :to="`/supplier/toolDecoration/${item.supplierId}`">
+          <nuxt-link v-for="(item, index) in getSupplierLiList" :key="index" :to="`/supplier/${categoryIdNu === 66 ? 'homeDecorationChange' : 'toolDecoration' }/${item.supplierId}`">
             <p>
               <img :src="item.logo" alt="">
             </p>

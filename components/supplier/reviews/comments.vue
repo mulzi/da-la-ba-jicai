@@ -50,7 +50,7 @@ export default {
   },
   computed: {
     noMoreOne () {
-      return this.CommentsTotal.length >= this.ones
+      return this.CommentsTotal.length >= this.ones && this.CommentsTotal.length !== 0
     },
     disabled () {
       return this.loading || this.noMoreOne

@@ -1,20 +1,20 @@
 <template>
   <div class="background">
-    <div class="BG" @click="backgroundClose" />
+    <div class="BG" @click="messageShow" />
     <div ref="ruleForm" class="bodyBox">
       <div class="box">
         <div class="closeBox">
           <span>预约到店</span>
           <em class="el-icon-close" @click="messageShow" />
         </div>
-        <el-form ref="ruleForm" :model="ruleForm" :rules="rules" class="form">
+        <el-form ref="ruleFormes" :model="ruleForm" :rules="rules" class="form" onsubmit="return false">
           <div class="phoneBox">
             <div class="left">
               <span>
                 <em>*</em>姓名:
               </span>
               <el-form-item prop="name" class="ones">
-                <el-input v-model="ruleForm.name" type="text" autocomplete="off" />
+                <el-input v-model="ruleForm.name" type="text" maxlength="8" autocomplete="off" />
               </el-form-item>
             </div>
             <div class="right">
@@ -22,7 +22,7 @@
                 <em>*</em>电话号码:
               </span>
               <el-form-item prop="phone">
-                <el-input v-model="ruleForm.phone" type="text" autocomplete="off" />
+                <el-input v-model="ruleForm.phone" type="text" maxlength="11" autocomplete="off" />
               </el-form-item>
             </div>
           </div>
@@ -96,19 +96,19 @@ export default {
         name: this.ruleForm.name,
         mobile: this.ruleForm.phone,
         supplement: this.ruleForm.text }
-      this.$refs.ruleForm.validate((valid) => {
+      this.$refs.ruleFormes.validate((valid) => {
         if (!valid) {
-          console.log('error submit!!')
+          this.$message({
+            showClose: true,
+            message: '你填写的信息不完整哦！~~~',
+            type: 'warning'
+          })
           return
         }
-        alert('submit!')
         this.order(params)
-        this.$refs.ruleForm.resetFields()
+        this.$refs.ruleFormes.resetFields()
         this.$store.commit('home/changeMesShow')
       })
-    },
-    backgroundClose () {
-      this.$store.commit('home/changeMesShow')
     }
   }
 }
