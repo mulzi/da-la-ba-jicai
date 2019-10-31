@@ -237,6 +237,9 @@ export default {
         font-size: 16px;
         margin: 20px 0 40px;
       }
+      &:last-child{
+        margin-bottom: 100px;
+      }
     }
   }
 </style>

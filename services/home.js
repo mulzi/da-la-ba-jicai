@@ -151,11 +151,11 @@ export class HomeService {
       params
     })
   }
-  async deletelCollection (params) { // 取消
+  async deletelCollection (params) { // 取消收藏
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
       url: `/api/supplier/open/deleteCollection.json`,
-      method: 'POST',
+      method: 'PUT',
       headers: {
         Authorization: token.accessToken
       },

@@ -68,7 +68,8 @@
         </el-row>
         <el-row class="consultingBox">
           <span>一键咨询底价</span>
-          <span>加入收藏</span>
+          <span v-if="date.collection === false" @click="getCollection">加入收藏</span>
+          <span v-if="date.collection === true" @click="createCollection">取消收藏</span>
         </el-row>
         <el-row class="safeguard" :gutter="20">
           <el-col v-if="date.deposit" :span="12" class="span">
@@ -81,18 +82,17 @@
             通过平台优惠买单，平台将对消费者进行现金返利 <em>{{ date.rebate }}%</em>
           </el-col>
         </el-row>
-        <el-row class="topAdds" v-if="date.agentAddresses">
+        <el-row v-if="date.agentAddresses" class="topAdds">
           <div class="nameS">
             展厅地址
           </div>
           <el-row class="addsE">
-            <el-col :span="24" class="li" v-for="(t,i) in date.agentAddresses" :key="i">
+            <el-col v-for="(t,i) in date.agentAddresses" :key="i" :span="24" class="li">
               <i class="iconfont">&#xe62e;</i>
               <span>
-                展厅地址：{{ t.agentAddress }}  {{t.telephone}}
+                展厅地址：{{ t.agentAddress }}  {{ t.telephone }}
               </span>
             </el-col>
-
           </el-row>
         </el-row>
       </el-row>
@@ -100,14 +100,14 @@
         <el-row class="topMenuBox">
           <ul>
             <li :class="oneListShow ? 'active':''" @click="oneChangeShow">
-              <span>产品系列</span>
+              <span>特价爆款</span>
             </li>
             <li :class="twoListShow ? 'active':''" @click="twoChangeShow">
-              <span>工程案列</span>
+              <span>产品系列</span>
             </li>
             <li :class="threeListShow ? 'active':''" @click="threeChangeShow">
               <span>
-                公司介绍
+                品牌介绍
               </span>
             </li>
             <li v-if="false" :class="fourListShow ? 'active':''" @click="fourChangeShow">
@@ -120,11 +120,11 @@
             </li>
           </ul>
         </el-row>
-        <product-line v-if="oneListShow" :list="date.product" />
-        <engineering-works v-if="twoListShow" :list="date.cases" />
-        <company-introduction v-if="threeListShow" :list="date" />
+        <sale v-if="oneListShow" />
+        <product-line v-if="twoListShow" :list="date.product" />
+        <company v-if="threeListShow" :list="date" />
         <CompanyInfo v-if="fourListShow" />
-        <Evaluate v-if="fiveListShow" />
+        <evaluate v-if="fiveListShow" />
       </el-row>
       <!--      id是{{ $route.params.id }}-->
     </div>
@@ -135,19 +135,19 @@
 import { HomeService } from '@/services/home'
 import banner from '@/components/supplier/banner'
 import productLine from '@/components/supplier/productLine'
-import EngineeringWorks from '@/components/supplier/EngineeringWorks'
 import CompanyInfo from '@/components/supplier/CompanyInfo'
-import Evaluate from '@/components/supplier/Evaluate'
-import companyIntroduction from '@/components/supplier/companyIntroduction'
+import evaluate from '@/components/supplier/homeDecoration/evaluate'
+import company from '@/components/supplier/homeDecoration/company'
+import sale from '@/components/supplier/homeDecoration/sale'
 export default {
   layout: 'main',
   components: {
     banner,
     productLine,
-    EngineeringWorks,
     CompanyInfo,
-    Evaluate,
-    companyIntroduction
+    evaluate,
+    company,
+    sale
 
   },
   data () {
@@ -158,6 +158,7 @@ export default {
       fourListShow: false, // 公司资讯列表显示
       fiveListShow: false, // 评价留言显示
       date: [ ], // 主数据
+      collectionFlag: true, // 点击收藏的锁
       bannerShow: false,
       videoShow: true,
       videoShowTwo: true
@@ -183,6 +184,48 @@ export default {
     }
   },
   methods: {
+    getSupplierList () { // 获取详情数据
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.SupplierListParticulars({ supplierId: this.$route.params.id }).then((res) => {
+        console.log(res.data)
+        this.date = res.data
+      })
+    },
+    getCollection () { // 点击收藏
+      if (this.collectionFlag) {
+        this.collectionFlag = false
+        const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+        homeService.createCollection({ type: 0, id: this.$route.params.id }).then((res) => {
+          // console.log(res)
+          if (res.status === 200) {
+            this.$message({
+              message: '收藏成功',
+              type: 'success'
+            })
+          }
+        })
+        this.getSupplierList()
+        setTimeout(() => {
+          this.collectionFlag = true
+        }, 5000)
+      } else {
+        this.$message({ message: '你点击太快了哦~~~', type: 'warning'
+        })
+      }
+    },
+    createCollection () { // 取消收藏
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.deletelCollection({ type: 0, id: this.$route.params.id }).then((res) => {
+        // console.log(res)
+        if (res.status === 200) {
+          this.$message({
+            message: '取消成功',
+            type: 'success'
+          })
+        }
+      })
+      this.getSupplierList()
+    },
     oneChangeShow () {
       this.oneListShow = true
       this.twoListShow = false
@@ -287,6 +330,183 @@ export default {
                             height: 3px;
                             background: $redColor;
                         }
+                    }
+                }
+            }
+        }
+    }
+    .moiveImgBox{
+        width: 100%;
+        overflow: hidden;
+        margin-top: 20px;
+        background: #ffffff;
+        .padding30{
+            width: 100%;
+            position: relative;
+            display: flex;
+            .leftMi{
+                width: 749px;
+                height: 546px;
+                min-width: 600px;
+                border: 1px solid $borderE7;
+                box-sizing: border-box;
+                video{
+                    display: block;
+                    margin: 0 auto;
+                    height: 100%;
+                    width: 100%;
+                }
+            }
+            .changMVIMG{
+                position: absolute;
+                bottom: 100px;
+                left: 24px;
+                width: 749px;
+                z-index: 99;
+                text-align: center;
+                button{
+                    display: inline-block;
+
+                    &.active{
+                        background: $redColor;
+                        color: #ffffff;
+                    }
+                    &:hover{
+                        background: $redColor;
+                        color: #ffffff;
+                    }
+                };
+
+            }
+            .fRight{
+                flex: 1;
+                margin-left: 50px;
+                .nameTit{
+                    width: 100%;
+                    height: 28px;
+                    font-size: 28px;
+                    color: #333333;
+                    line-height: 28px;
+                }
+                .addrName{
+                    overflow: hidden;
+                    width: 100%;
+                    margin-top: 30px;
+                    ul{
+                        width: 100%;
+                        li{
+                            width: 100%;
+                            @include over;
+                            height: 58px;
+                            line-height: 58px;
+                            font-size:20px ;
+                            color: #333333;
+                            text-indent: .5em;
+                            &:nth-child(odd){
+                                background: #ebebeb;
+                            }
+                        }
+                    }
+                }
+                .privilege{
+                    width: 100%;
+                    overflow: hidden;
+                    margin-top: 20px;
+                    span{
+                        width:250px ;
+                        height: 70px;
+                        line-height: 70px;
+                        text-align: center;
+                        font-size: 28px;
+                        color: #ffffFF;
+                        display: inline-block;
+                        background: $redColor;
+                        cursor: pointer;
+                        &:active{
+                            background: #ff2100;
+                        }
+                    }
+                }
+            }
+        }
+        .consultingBox{
+            width: 100%;
+            margin:20px auto 0;
+            padding: 0 30px;
+            overflow: hidden;
+            span{
+                display: inline-block;
+                cursor: pointer;
+                height:70px ;
+                line-height: 70px;
+                font-size: 28px;
+                padding: 0 60px;
+                color: $redColor;
+                margin-right: 30px;
+                border: 1px solid $redColor;
+                &:active{
+                    background: #ff7206;
+                }
+                &:nth-child(1){
+                    background: $redColor;
+                    color: #ffffFF;
+                    &:active{
+                        background: #ff4300;
+                    }
+                }
+            }
+        }
+        .safeguard{
+            padding: 0 30px;
+            overflow: hidden;
+            margin-top: 30px;
+            .span{
+                font-size: 14px;
+                color: #818181;
+                height: 26px;
+                line-height: 26px;
+                @include over;
+                span{
+                    color: #333333;
+                    font-weight: bold;
+                }
+                em{
+                    color: $redColor;
+                }
+            }
+        }
+        .topAdds{
+            overflow: hidden;
+            padding: 0 30px;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            .nameS{
+                border-left:5px solid $redColor;
+                height: 24px;
+                line-height: 24px;
+                color: #333333;
+                font-size: 24px;
+                text-indent: .6em;
+                font-weight: bold;
+            }
+            .addsE{
+                width: 100%;
+                margin-top: 16px;
+                .li{
+                    width: 100%;
+                    @include over;
+                    font-size: 16px;
+                    color: #474747;
+                    height: 40px;
+                    line-height: 40px;
+                    margin-bottom: 10px;
+                    i{
+                        color: #999999;
+                        font-size: 26px;
+                        vertical-align: middle;
+                    }
+                    span{
+                        vertical-align: middle;
                     }
                 }
             }

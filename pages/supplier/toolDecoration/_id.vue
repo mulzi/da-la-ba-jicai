@@ -69,7 +69,7 @@
         <el-row class="consultingBox">
           <span @click="messageShow">咨询留言</span>
           <span v-if="date.collection === false" @click="getCollection">加入收藏</span>
-          <span v-if="date.collection === true">取消收藏</span>
+          <span v-if="date.collection === true" @click="createCollection">取消收藏</span>
         </el-row>
       </el-row>
       <el-row class="bottomModuleBox">
@@ -137,6 +137,7 @@ export default {
       fourListShow: false, // 公司资讯列表显示
       fiveListShow: false, // 评价留言显示
       date: [ ], // 主数据
+      collectionFlag: true, // 点击收藏的锁
       bannerShow: false,
       videoShow: true,
       videoShowTwo: true
@@ -147,8 +148,8 @@ export default {
     const homeService = new HomeService(context)
     // eslint-disable-next-line no-undef
     return homeService.SupplierListParticulars({ supplierId: params.id }).then((res) => {
-      console.log(res.data)
-      return { date: res.data || {} }
+      // console.log(res.data)
+      return { date: res.data }
     })
   },
   created () {
@@ -172,13 +173,42 @@ export default {
         this.date = res.data
       })
     },
-    getCollection () {
-      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.createCollection({ type: 0, id: parseInt(this.$route.params.id) }).then((res) => {
-        console.log(res)
-      })
+    getCollection () { // 点击收藏
+      if (this.collectionFlag) {
+        this.collectionFlag = false
+        const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+        homeService.createCollection({ type: 0, id: this.$route.params.id }).then((res) => {
+          // console.log(res)
+          if (res.status === 200) {
+            this.$message({
+              message: '收藏成功',
+              type: 'success'
+            })
+          }
+        })
+        this.getSupplierList()
+        setTimeout(() => {
+          this.collectionFlag = true
+        }, 5000)
+      } else {
+        this.$message({ message: '你点击太快了哦~~~', type: 'warning'
+        })
+      }
     },
-    messageShow () {
+    createCollection () { // 取消收藏
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.deletelCollection({ type: 0, id: this.$route.params.id }).then((res) => {
+        // console.log(res)
+        if (res.status === 200) {
+          this.$message({
+            message: '取消成功',
+            type: 'success'
+          })
+        }
+      })
+      this.getSupplierList()
+    },
+    messageShow () { // 切换留言框
       this.$store.commit('home/changeMesShow')
     },
     oneChangeShow () {
