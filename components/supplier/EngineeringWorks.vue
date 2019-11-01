@@ -1,27 +1,48 @@
 <template>
-  <div class="engineeringWorks padding30 marginBottom100">
-    <nuxt-link v-for="(t,i) in list" :key="i" to="">
-      <div class="img">
-        <img :src="t.coverPic" alt="">
-        <div class="flext">
-          <span />
-          <span>{{ t.projectName }}</span>
+  <el-row>
+    <div class="engineeringWorks padding30 marginBottom100">
+      <div v-for="(t,i) in list" :key="i" class="a" @click="getEngeering(t.id)">
+        <div class="img">
+          <img :src="t.coverPic" alt="">
+          <div class="flext">
+            <span />
+            <span>{{ t.projectName }}</span>
+          </div>
+        </div>
+        <div class="name">
+          {{ t.projectName }}
         </div>
       </div>
-      <div class="name">
-        {{ t.projectName }}
-      </div>
-    </nuxt-link>
-  </div>
+    </div>
+    <engineering v-if="$store.state.supplier.engineering" :list="date"/>
+  </el-row>
 </template>
 
 <script>
+import { HomeService } from '@/services/home'
+import engineering from '@/components/publicModule/engineeringWorks'
 export default {
+  components: {
+    engineering
+  },
   // eslint-disable-next-line vue/require-prop-types
   props: [ 'list' ],
   data () {
     return {
+      date: ''
 
+    }
+  },
+  methods: {
+    getEngeering (id) {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getCase(id).then((res) => {
+        console.log(res)
+        this.date = res.data.result
+        if (res.status === 200) {
+          this.$store.commit('supplier/changeEngineering')
+        }
+      })
     }
   }
 }
@@ -30,9 +51,9 @@ export default {
 <style scoped lang="scss">
     .engineeringWorks{
         background: #ffffff;
-        overflow: hidden;
-        a{
+        .a{
             float: left;
+            cursor: pointer;
             width: 23.5%;
             margin-right: 2%;
             margin-bottom: 26px;
@@ -89,6 +110,13 @@ export default {
                     }
                 }
             }
+        }
+        &::after{
+          content: "";
+          display: block;
+          visibility: hidden;
+          height: 0;
+          clear: both;
         }
     }
 </style>

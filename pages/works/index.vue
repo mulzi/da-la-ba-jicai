@@ -10,21 +10,460 @@
               首页
             </nuxt-link>
             <span class="iconfont right">&#xe603;</span>
-            <span>材料供应商</span>
+            <span>作品精选</span>
           </div>
         </el-col>
       </el-row>
+      <div class="topMenuBox">
+        <div class="contentBox">
+          <div class="defaultBox">
+            <div class="leftText">
+              供应商：
+            </div>
+            <div class="rightList">
+              <span
+                v-for="(item,index) in supplierOneTit"
+                :id="item.id"
+                :key="index"
+                :class="supplierOne === index ? 'active':'' "
+                @click="changeOne (index), getFilterBySupplier({id:item.id,type:0}) , changeCategoryIdNuOne (item.id), getSupplierList({ type: 0, categoryId: item.id, materialId: null, projectTypeId: null, grade: null, page: 0, size: 20 })"
+              >{{ item.name }}</span>
+            </div>
+          </div>
+          <div class="defaultBox">
+            <div class="leftText">
+              项目类别：
+            </div>
+            <div class="rightList">
+              <span v-for="(item,index) in projectTypes" :id="item.id" :key="index" :class="supplierTwo === index ? 'active':'' " @click="changeTwo (index),changeMaterialIdNuOne( item.id || null) ,getSupplierList({ type: 0, categoryId: categoryIdNu, materialId: projectTypeIdNu, projectTypeId: materialIdNu, grade: gradeNu, page: pageID, size: sizeID })">{{ item.name }}</span>
+            </div>
+          </div>
+          <div class="defaultBox">
+            <div class="leftText">
+              材料类别：
+            </div>
+            <div class="rightList">
+              <span v-for="(item,index) in materialTypes" :id="item.id" :key="index" :class="supplierThree === index ? 'active':'' " @click="changeThree (index),changeProjectTypeIdNuOne(item.id || null) , getSupplierList({ type: 0, categoryId: categoryIdNu, materialId: projectTypeIdNu, projectTypeId: materialIdNu, grade: gradeNu, page: pageID, size: sizeID })">{{ item.name }}</span>
+            </div>
+          </div>
+          <div class="defaultBoxTwo">
+            <div class="contentx">
+              <span v-for="(item,index) in brandLevels" :key="index" :class="supplierFour === index ? 'active':'' " @click="changeFour (index) ,changeGradeNuOne (item.id || null ),getSupplierList({ type: 0, categoryId: categoryIdNu, materialId: projectTypeIdNu, projectTypeId: materialIdNu, grade: gradeNu, page: pageID, size: sizeID})">{{ item.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bottomListBox">
+        <div v-if="getSupplierLiList.length === 0 " class="NoData marginBottom40">
+          <div class="img">
+            <img src="@/assets/img/nodata.png" alt="">
+          </div>
+          <div class="text">
+            没有数据
+          </div>
+        </div>
+        <div v-if="getSupplierLiList.length !== 0 " class="contentList">
+          <nuxt-link v-for="(item, index) in getSupplierLiList" :key="index" :to="`/works/worksPage/${item.supplierId}`">
+            <p>
+              <img :src="item.logo" alt="">
+            </p>
+            <el-row class="topNameBox">
+              <el-row class="oneName">
+                主题：{{ item.brand }}
+              </el-row>
+              <el-row class="twoName">
+                项目名称：{{ item.agent }}
+              </el-row>
+              <el-row class="numbers">
+                <i class="el-icon-view">88</i>
+                <i class="el-icon-chat-dot-square">55</i>
+                <i class="iconfont">&#xe680;88</i>
+                <span>2018-10-10</span>
+              </el-row>
+            </el-row>
+            <el-row class="b_name">
+              <img v-lazy="item.logo" alt="">
+              <span :title="item.agent">
+                {{ item.agent }}
+              </span>
+            </el-row>
+          </nuxt-link>
+        </div>
+        <div v-if="getSupplierLiList.length !== 0 " class="pageSbox">
+          <el-pagination
+            background
+            :current-page="currentPage4"
+            :page-sizes="[10, 20, 30, 50]"
+            :page-size="sizeID"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="totalCount"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { HomeService } from '@/services/home'
+
 export default {
   layout: 'main',
-  name: 'Index'
+  data () {
+    return {
+      supplierOneTit: '',
+      projectTypes: [ // 项目类别
+        {
+          id: null,
+          name: '不限'
+        }
+      ],
+      materialTypes: [ // 材料类别
+        {
+          id: null,
+          name: '不限'
+        }
+      ],
+      brandLevels: [
+        {
+          name: '全部',
+          id: null
+        },
+        {
+          name: '最新',
+          id: '1'
+        },
+        {
+          name: '推荐',
+          id: '2'
+        },
+        {
+          name: '热门',
+          id: '3'
+        }
+      ],
+      getSupplierLiList: [],
+      supplierOne: 0, // 选项1样式记录
+      supplierTwo: 0, // 选项2样式记录
+      supplierThree: 0, // 选项3样式记录
+      supplierFour: 0, // 选项4样式记录
+      categoryIdNu: 1, // 供应商ID临时存储
+      materialIdNu: null, // 材料类别ID临时存储
+      projectTypeIdNu: null, // 项目类别ID临时存储
+      gradeNu: null, // 品牌档次ID临时存储
+      pageID: 0, // 分页第几页
+      sizeID: 20, // 分页数量
+      totalCount: 0, // 获取的总数
+      currentPage4: 1
+    }
+  },
+  async asyncData (context) { // 获取一级类别
+    const homeService = new HomeService(context)
+    // eslint-disable-next-line no-return-await
+    return await homeService.supplierType({ type: 0 }).then((res) => {
+      // console.log(res.data.result.firstCategories)
+      return { supplierOneTit: res.data.result.firstCategories }
+    })
+  },
+
+  created () {
+    const _this = this
+    _this.getFilterBySupplier({ id: 1, type: 0 })
+    // eslint-disable-next-line no-undef
+    _this.getSupplierList({ type: 0, categoryId: _this.categoryIdNu, materialId: _this.projectTypeIdNu, projectTypeId: _this.materialIdNu, grade: _this.gradeNu, page: _this.pageID, size: _this.sizeID })
+  },
+  methods: {
+    changeOne (index) {
+      this.currentPage4 = 1
+      this.supplierOne = index
+    },
+    changeTwo (index) {
+      this.supplierTwo = index
+    },
+    changeThree (index) {
+      this.supplierThree = index
+    },
+    changeFour (index) {
+      this.supplierFour = index
+    },
+    changeCategoryIdNuOne (index) {
+      this.categoryIdNu = index
+    },
+    changeMaterialIdNuOne (index) {
+      this.materialIdNu = index
+    },
+    changeProjectTypeIdNuOne (index) {
+      this.projectTypeIdNu = index
+    },
+    changeGradeNuOne (index) {
+      this.gradeNu = index
+    },
+    handleSizeChange (val) {
+      const _this = this
+      _this.sizeID = val
+      _this.getSupplierList({ type: 0, categoryId: _this.categoryIdNu, materialId: _this.projectTypeIdNu, projectTypeId: _this.materialIdNu, grade: _this.gradeNu, page: _this.pageID, size: _this.sizeID })
+    },
+    handleCurrentChange (val) {
+      const _this = this
+      _this.currentPage4 = val
+      this.pageID = val - 1
+      _this.getSupplierList({ type: 0, categoryId: _this.categoryIdNu, materialId: _this.projectTypeIdNu, projectTypeId: _this.materialIdNu, grade: _this.gradeNu, page: _this.pageID, size: _this.sizeID })
+    },
+    getFilterBySupplier (parmes) { // 获取二级三级类别
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.filterBySupplier(parmes).then((res) => {
+        // console.log('ss', res.data.result)
+        const projectTypes = [{ id: null, name: '不限' }]
+        const materialTypes = [{ id: null, name: '不限' }]
+        this.materialTypes = res.data.result.materials ? materialTypes.concat(res.data.result.materials) : materialTypes
+        this.projectTypes = res.data.result.projectTypes ? projectTypes.concat(res.data.result.projectTypes) : projectTypes
+        this.supplierTwo = 0
+        this.supplierThree = 0
+        this.supplierFour = 0
+        // this.$store.commit('supplier/changeCategoryIdNu', 1)
+        this.materialIdNu = null
+        this.projectTypeIdNu = null
+        this.gradeNu = null
+        this.pageID = 0
+        this.sizeID = 20
+        this.currentPage4 = 1
+      })
+    },
+    getSupplierList (parmes) {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.SupplierList(parmes).then((res) => {
+        console.log('s', res.data)
+        this.getSupplierLiList = res.data.results
+        this.totalCount = res.data.totalCount
+      })
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
+  .supplierBody{
+    width: 100%;
+    background: #f0f3ef;
+    overflow: hidden;
+    .bodyBox{
+      width: 75%;
+      max-width: 1400px;
+      margin: 0 auto;
+      overflow: hidden;
+      .HeaderBreadcrumb{
+        width: 100%;
+        margin-top: 20px;
+        .breadcrumb{
+          overflow: hidden;
+          height: 20px;
+          line-height: 20px;
+          span{
+            display: block;
+            float: left;
+            font-size: 14px;
+            color: #333333;
+            margin-right: 6px;
+            &.right{
+              font-size: 12px;
+            }
+          }
+          a{
+            font-size: 14px;
+            display: block;
+            float: left;
+            color: #8e8e8e;
+            margin-right: 6px;
+          }
+          .iconfont{
+            color:#9a9a9a ;
+            font-size: 20px;
+          }
+        }
 
+      }
+      .topMenuBox{
+        background: #ffffff;
+        width: 100%;
+        overflow: hidden;
+        margin-top: 20px;
+        .contentBox{
+          width:92% ;
+          max-width: 1342px;
+          margin: 40px auto 0;
+          .defaultBox{
+            width: 100%;
+            margin-bottom: 20px;
+            border-bottom: 1px solid $borderE7;
+            display: flex;
+            display: -ms-flex;
+            .leftText{
+              width: 80px;
+              height: 30px;
+              line-height: 30px;
+              margin-bottom: 16px;
+              text-align: right;
+              font-size: 16px;
+              font-weight: bold;
+              color: #333333;
+            }
+            .rightList{
+              flex: 1;
+              -ms-flex: 1;
+              span{
+                display: inline-block;
+                height: 26px;
+                line-height: 26px;
+                font-size: 16px;
+                color: #666666;
+                margin: 0 30px 10px 0;
+                padding: 2px 10px;
+                cursor: pointer;
+                &.active{
+                  color: #ffffff;
+                  background: $redColor;
+                }
+                &:hover{
+                  color: #ffffff;
+                  background: $redColor;
+                  @include triText;
+                }
+              }
+            }
+          }
+          .defaultBoxTwo{
+            width: 100%;
+            margin-bottom: 20px;
+            .contentx{
+              width: 100%;
+              text-align: center;
+              span{
+                font-size: 16px;
+                display: inline-block;
+                margin-right: 60px;
+                cursor: pointer;
+                &:hover{
+                  color: $redColor;
+                }
+                &.active{
+                  color: $redColor;
+                }
+              }
+            }
+          }
+        }
+      }
+      .bottomListBox{
+        margin-top: 30px;
+        overflow: hidden;
+        width: 100%;
+
+        .contentList{
+          width: 100%;
+          overflow: hidden;
+          a{
+            width:19% ;
+            float: left;
+            margin-right: 1.25%;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            background: #ffffff;
+            >p{
+              width: 100%;
+              height:258px ;
+              img{
+                @include img;
+              }
+            }
+            &:nth-child(5n){
+              margin-right: 0;
+            }
+            .topNameBox{
+              width: 100%;
+              margin: 0 auto;
+              border-bottom: 1px solid $borderE7;
+              .oneName{
+                width: 90%;
+                margin: 10px auto 0;
+                height: 20px;
+                line-height: 20px;
+                color: #333333;
+                font-size: 14px;
+
+              }
+              .twoName{
+                width: 90%;
+                margin: 10px auto 0;
+                height: 18px;
+                line-height: 18px;
+                color: #333333;
+                font-size: 12px;
+                @include over;
+              }
+              .numbers{
+                width: 90%;
+                margin: 14px auto ;
+                font-size: 12px;
+                color: #bfbfbf;
+                @include over;
+                i{
+                  font-size: 12px;
+                  margin-right: 6px;
+                }
+                span{
+                  margin-left: 10px;
+                }
+              }
+            }
+            .b_name{
+              width: 90%;
+              margin: 10px auto;
+              display: flex;
+              display: -ms-flex;
+              justify-items: center;
+              align-items: center;
+              img{
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+              }
+              span{
+                flex: 1;
+                display: block;
+                -ms-flex: 1;
+                @include over;
+                margin-left: 10px;
+                font-size:12px ;
+                color: #333333;
+              }
+            }
+
+          }
+        }
+        .NoData{
+          background: #ffffff;
+          width: 100%;
+          height: 600px;
+          overflow: hidden;
+          .img{
+            width: 200px;
+            height: 200px;
+            margin: 100px auto;
+            img{
+              @include img;
+            }
+
+          }
+          .text{
+            font-size: 13px;
+            color: #333333;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
 </style>

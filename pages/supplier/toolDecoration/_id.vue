@@ -148,7 +148,7 @@ export default {
     const homeService = new HomeService(context)
     // eslint-disable-next-line no-undef
     return homeService.SupplierListParticulars({ supplierId: params.id }).then((res) => {
-      // console.log(res.data)
+      console.log(res.data)
       return { date: res.data }
     })
   },
@@ -169,7 +169,7 @@ export default {
     getSupplierList () { // 获取详情数据
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.SupplierListParticulars({ supplierId: this.$route.params.id }).then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
         this.date = res.data
       })
     },

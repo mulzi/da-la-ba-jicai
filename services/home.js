@@ -164,4 +164,16 @@ export class HomeService {
       params
     })
   }
+  async getCase (params) { // 获取工程案列详情
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/supplier/open/detail/getCase/${params}.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT
+      // eslint-disable-next-line no-undef
+    })
+  }
 }

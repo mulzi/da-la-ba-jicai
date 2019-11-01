@@ -3,6 +3,7 @@ export const state = () => ({
   supplierTwo: 0,
   supplierThree: 0,
   supplierFour: 0,
+  engineering: false, // 工程案列显示判断
   categoryIdNu: 1, // 供应商ID临时存储
   materialIdNu: null, // 材料类别ID临时存储
   projectTypeIdNu: null, // 项目类别ID临时存储
@@ -34,6 +35,9 @@ export const mutations = {
   },
   changeGradeNu (state, pyload) {
     state.gradeNu = pyload
+  },
+  changeEngineering (state) {
+    state.engineering = !state.engineering
   }
 }
 export const actions = {

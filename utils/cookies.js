@@ -21,7 +21,7 @@ export function getUserToken (cookies) {
 
 export function setUserToken (cookies, userToken) {
   const token = {
-    accessToken: '0b14a0a4-7f00-4f41-ba88-0a093c9ff03b', // userToken.access_token,
+    accessToken: userToken.access_token, // , 0b14a0a4-7f00-4f41-ba88-0a093c9ff03b
     refreshToken: userToken.refresh_token,
     expiresIn: userToken.expires_in,
     expiredAt: new Date().getTime() + userToken.expires_in * 1000 - 2 * 60 * 1000
