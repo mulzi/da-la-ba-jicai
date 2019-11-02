@@ -176,36 +176,23 @@
           </el-row>
         </el-row>
       </el-row>
-      <el-row class="fxiedComment">
-        <div class="BG">
-        </div>
-        <div class="comment">
-          <div class="bodyContent">
-            <div class="close">
-              <span class="el-icon-close"></span>
-            </div>
-            <div class="name">
-              你想对 <span>用户名字</span>说什么
-            </div>
-            <div class="text">
-              <textarea placeholder="写点什么吧"/>
-            </div>
-            <div class="sub">
-                 <span>提交</span>
-            </div>
-          </div>
-        </div>
-      </el-row>
+      <message v-if="$store.state.works.messageBox"/>
     </div>
   </div>
 </template>
 
 <script>
 import Comment from '@/components/works/Comment'
+import Message from '@/components/works/message'
 export default {
-  components: { Comment },
+  components: { Message, Comment },
 
-  layout: 'main'
+  layout: 'main',
+  methods: {
+    showMessageBox () {
+      this.$store.commit('works/changeMsg')
+    }
+  }
 }
 </script>
 

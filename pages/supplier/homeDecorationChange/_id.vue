@@ -187,6 +187,7 @@ export default {
     getSupplierList () { // 获取详情数据
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.SupplierListParticulars({ supplierId: this.$route.params.id }).then((res) => {
+        // eslint-disable-next-line no-console
         console.log(res.data)
         this.date = res.data
       })

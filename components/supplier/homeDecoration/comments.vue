@@ -16,7 +16,7 @@
             {{ t.content }}
           </span>
         </p>
-         <comments-img :list="t.assessmentPicList"/>
+        <comments-img :list="t.assessmentPicList" />
         <p class="two">
           {{ t.createdAtStr }}
         </p>

@@ -11,7 +11,7 @@
         <div class="l_time">
           今天 11:00
         </div>
-        <div class="r_click_Reply">
+        <div class="r_click_Reply" @click="showMessageBox">
           回复
         </div>
       </div>
@@ -28,7 +28,7 @@
               <div class="l_time">
                 今天 11:00
               </div>
-              <div class="r_click_Reply">
+              <div class="r_click_Reply" @click="showMessageBox">
                 回复
               </div>
             </div>
@@ -46,7 +46,7 @@
               <div class="l_time">
                 今天 11:00
               </div>
-              <div class="r_click_Reply">
+              <div class="r_click_Reply" @click="showMessageBox">
                 回复
               </div>
             </div>
@@ -64,7 +64,7 @@
               <div class="l_time">
                 今天 11:00
               </div>
-              <div class="r_click_Reply">
+              <div class="r_click_Reply" @click="showMessageBox">
                 回复
               </div>
             </div>
@@ -82,7 +82,7 @@
               <div class="l_time">
                 今天 11:00
               </div>
-              <div class="r_click_Reply">
+              <div class="r_click_Reply" @click="showMessageBox">
                 回复
               </div>
             </div>
@@ -103,7 +103,12 @@
 
 <script>
 export default {
-  name: 'Comment'
+  name: 'Comment',
+  methods: {
+    showMessageBox () {
+      this.$store.commit('works/changeMsg')
+    }
+  }
 }
 </script>
 
