@@ -1,8 +1,8 @@
 <template>
   <div class="headTopBox">
     <el-row class="headTop">
-      <el-col :span="12">
-        <div class="">
+      <div class="widthMx">
+        <div class="leftCity">
           <div class="changeCity">
             <i class="el-icon-location-outline" />
             <span>重庆</span>
@@ -22,8 +22,6 @@
             </nuxt-link>
           </div>
         </div>
-      </el-col>
-      <el-col :span="12">
         <div class="rightShops">
           <nuxt-link to="">
             首页
@@ -41,7 +39,7 @@
             商家入驻
           </nuxt-link>
         </div>
-      </el-col>
+      </div>
     </el-row>
   </div>
 </template>
