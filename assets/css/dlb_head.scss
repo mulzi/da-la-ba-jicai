@@ -355,172 +355,75 @@ html, body {
 
 }
 
-.supplierBody {
+.moiveImgBox{
   width: 100%;
-  background: #f0f3ef;
   overflow: hidden;
-
-  .bodyBox {
-    width: 75%;
-    max-width: 1400px;
-    margin: 0 auto;
-    overflow: hidden;
-
-    .topMenuBox {
-      background: #ffffff;
-      width: 100%;
+  margin-top: 20px;
+  background: #ffffff;
+  .padding30{
+    width: 100%;
+    position: relative;
+    display: flex;
+    .l_banner{
+      width:910px ;
+      height: 606px;
       overflow: hidden;
-      margin-top: 20px;
-
-      .contentBox {
-        width: 92%;
-        max-width: 1342px;
-        margin: 40px auto 0;
-
-        .defaultBox {
+    }
+    .fRight{
+      flex: 1;
+      margin-left: 50px;
+      .nameTit{
+        width: 100%;
+        height: 28px;
+        font-size: 28px;
+        color: #333333;
+        line-height: 28px;
+      }
+      .addrName{
+        overflow: hidden;
+        width: 100%;
+        margin-top: 30px;
+        ul{
           width: 100%;
-          margin-bottom: 20px;
-          border-bottom: 1px solid $borderE7;
-          display: flex;
-          display: -ms-flex;
-
-          .leftText {
-            width: 100px;
-            height: 30px;
-            line-height: 30px;
-            margin-bottom: 16px;
-            text-align: right;
-            font-size: 16px;
-            font-weight: bold;
-            color: #333333;
-          }
-
-          .rightList {
-            flex: 1;
-            -ms-flex: 1;
-
-            span {
-              display: inline-block;
-              height: 26px;
-              line-height: 26px;
-              font-size: 16px;
-              color: #666666;
-              margin: 0 30px 10px 0;
-              padding: 2px 10px;
-              cursor: pointer;
-
-              &.active {
-                color: #ffffff;
-                background: $redColor;
-              }
-
-              &:hover {
-                color: #ffffff;
-                background: $redColor;
-                @include triText;
-              }
-            }
-          }
-        }
-
-        .defaultBoxTwo {
-          width: 100%;
-          margin-bottom: 20px;
-
-          .contentx {
+          li{
             width: 100%;
-            text-align: center;
-
-            span {
-              font-size: 16px;
-              display: inline-block;
-              margin-right: 60px;
-              cursor: pointer;
-
-              &:hover {
-                color: $redColor;
-              }
-
-              &.active {
-                color: $redColor;
-              }
+            @include over;
+            height: 58px;
+            line-height: 58px;
+            font-size:20px ;
+            color: #333333;
+            text-indent: .5em;
+            &:nth-child(odd){
+              background: #ebebeb;
             }
           }
         }
       }
     }
-
-    .bottomListBox {
-      margin-top: 30px;
-      overflow: hidden;
-      width: 100%;
-
-      .contentList {
-        width: 100%;
-        overflow: hidden;
-
-        a {
-          width: 19%;
-          float: left;
-          margin-right: 1.25%;
-          border-radius: 6px;
-          margin-bottom: 20px;
-          overflow: hidden;
-          background: #ffffff;
-
-          > p {
-            width: 100%;
-            height: 258px;
-
-            img {
-              @include img;
-            }
-          }
-
-          &:nth-child(5n) {
-            margin-right: 0;
-          }
-
-          .companyName {
-            padding: 0 20px;
-            margin: 10px auto 20px;
-
-            span {
-              display: block;
-              color: #333333;
-              font-size: 15px;
-              @include over;
-
-              &:nth-child(1) {
-                margin-bottom: 10px;
-                font-size: 16px;
-              }
-            }
-          }
-        }
+  }
+  .consultingBox{
+    width: 100%;
+    margin:20px auto 50px;
+    padding: 0 30px;
+    overflow: hidden;
+    span{
+      display: inline-block;
+      cursor: pointer;
+      height:70px ;
+      line-height: 70px;
+      font-size: 28px;
+      padding: 0 60px;
+      color: $redColor;
+      margin-right: 30px;
+      border: 1px solid $redColor;
+      &:active{
+        background: #ff7206;
       }
-
-      .NoData {
-        background: #ffffff;
-        width: 100%;
-        height: 600px;
-        overflow: hidden;
-
-        .img {
-          width: 200px;
-          height: 200px;
-          margin: 100px auto;
-
-          img {
-            @include img;
-          }
-
-        }
-
-        .text {
-          font-size: 13px;
-          color: #333333;
-          text-align: center;
+      &:nth-child(1){
+        background: $redColor;
+        color: #ffffFF;
+        &:active{
+          background: #ff4300;
         }
       }
     }

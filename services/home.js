@@ -49,7 +49,7 @@ export class HomeService {
   async SupplierList (params) { // 材料供应商列表数据
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
-      url: `/api/supplier/open/condition.json`,
+      url: `/api/supplier/open/mini/condition.json`,
       method: 'GET',
       headers: {
         Authorization: token.accessToken
@@ -168,6 +168,56 @@ export class HomeService {
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
       url: `/api/supplier/open/detail/getCase/${params}.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT
+      // eslint-disable-next-line no-undef
+    })
+  }
+  async getWorksOneList () { // 获取作品第一级栏目
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/works/open/allWorksSource.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT
+      // eslint-disable-next-line no-undef
+    })
+  }
+  async getWorksTwoList (params) { // 获取作品第二级栏目
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/works/open/navigation.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
+  async getWorksContList (params) { // 获取作品
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/works/open/condition.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
+  async getWorksDetails (params) { // 获取工程案列详情
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/works/open/details/${params}.json`,
       method: 'GET',
       headers: {
         Authorization: token.accessToken

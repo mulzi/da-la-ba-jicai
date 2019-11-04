@@ -18,37 +18,38 @@
         <div class="contentBox">
           <div class="defaultBox">
             <div class="leftText">
-              供应商：
+              板块：
             </div>
             <div class="rightList">
+              <span :class="supplierOne === 999 ? 'active': '' " @click="changeOne(999), getWorksOneList() ,changeCategoryIdNuOne(0),getSupplierList({ sourceId: 0, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })">全部</span>
               <span
                 v-for="(item,index) in supplierOneTit"
                 :id="item.id"
                 :key="index"
                 :class="supplierOne === index ? 'active':'' "
-                @click="changeOne (index), getFilterBySupplier({id:item.id,type:0}) , changeCategoryIdNuOne (item.id), getSupplierList({ type: 0, categoryId: item.id, materialId: null, projectTypeId: null, grade: null, page: 0, size: 20 })"
+                @click=" changeOne (index), getFilterBySupplier({id:item.id}) , changeCategoryIdNuOne (item.id), getSupplierList({ sourceId: sourceId, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })"
               >{{ item.name }}</span>
             </div>
           </div>
           <div class="defaultBox">
             <div class="leftText">
-              项目类别：
+              分类：
             </div>
             <div class="rightList">
-              <span v-for="(item,index) in projectTypes" :id="item.id" :key="index" :class="supplierTwo === index ? 'active':'' " @click="changeTwo (index),changeMaterialIdNuOne( item.id || null) ,getSupplierList({ type: 0, categoryId: categoryIdNu, materialId: projectTypeIdNu, projectTypeId: materialIdNu, grade: gradeNu, page: pageID, size: sizeID })">{{ item.name }}</span>
+              <span v-for="(item,index) in projectTypes" :id="item.id" :key="index" :class="supplierTwo === index ? 'active':'' " @click="changeTwo (index),changeMaterialIdNuOne( item.id || null) ,getSupplierList({ sourceId: sourceId, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })">{{ item.name }}</span>
             </div>
           </div>
           <div class="defaultBox">
             <div class="leftText">
-              材料类别：
+              风格：
             </div>
             <div class="rightList">
-              <span v-for="(item,index) in materialTypes" :id="item.id" :key="index" :class="supplierThree === index ? 'active':'' " @click="changeThree (index),changeProjectTypeIdNuOne(item.id || null) , getSupplierList({ type: 0, categoryId: categoryIdNu, materialId: projectTypeIdNu, projectTypeId: materialIdNu, grade: gradeNu, page: pageID, size: sizeID })">{{ item.name }}</span>
+              <span v-for="(item,index) in materialTypes" :id="item.id" :key="index" :class="supplierThree === index ? 'active':'' " @click="changeThree (index),changeProjectTypeIdNuOne(item.id || null) , getSupplierList({ sourceId: sourceId, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })">{{ item.name }}</span>
             </div>
           </div>
           <div class="defaultBoxTwo">
             <div class="contentx">
-              <span v-for="(item,index) in brandLevels" :key="index" :class="supplierFour === index ? 'active':'' " @click="changeFour (index) ,changeGradeNuOne (item.id || null ),getSupplierList({ type: 0, categoryId: categoryIdNu, materialId: projectTypeIdNu, projectTypeId: materialIdNu, grade: gradeNu, page: pageID, size: sizeID})">{{ item.name }}</span>
+              <span v-for="(item,index) in brandLevels" :key="index" :class="supplierFour === index ? 'active':'' " @click="changeFour (index) ,changeGradeNuOne (item.id || null ),getSupplierList({ sourceId: sourceId, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })">{{ item.name }}</span>
             </div>
           </div>
         </div>
@@ -63,26 +64,26 @@
           </div>
         </div>
         <div v-if="getSupplierLiList.length !== 0 " class="contentList">
-          <nuxt-link v-for="(item, index) in getSupplierLiList" :key="index" :to="`/works/worksPage/${item.supplierId}`">
+          <nuxt-link v-for="(item, index) in getSupplierLiList" :key="index" :to="`/works/worksPage/${item.id}`">
             <p>
-              <img :src="item.logo" alt="">
+              <img :src="item.cover" alt="">
             </p>
             <el-row class="topNameBox">
               <el-row class="oneName">
-                主题：{{ item.brand }}
+                主题：{{ item.theme }}
               </el-row>
               <el-row class="twoName">
-                项目名称：{{ item.agent }}
+                项目名称：{{ item.name }}
               </el-row>
               <el-row class="numbers">
-                <i class="el-icon-view">88</i>
-                <i class="el-icon-chat-dot-square">55</i>
-                <i class="iconfont">&#xe680;88</i>
-                <span>2018-10-10</span>
+                <i class="el-icon-view">{{item.browser}}</i>
+                <i class="el-icon-chat-dot-square">{{item.comment}}</i>
+                <i class="iconfont">&#xe680; {{item.likes}}</i>
+                <span>{{item.createdAtStr}}</span>
               </el-row>
             </el-row>
             <el-row class="b_name">
-              <img v-lazy="item.logo" alt="">
+              <img v-lazy="item.cover" alt="">
               <span :title="item.agent">
                 {{ item.agent }}
               </span>
@@ -113,17 +114,17 @@ export default {
   layout: 'main',
   data () {
     return {
-      supplierOneTit: '',
-      projectTypes: [ // 项目类别
+      supplierOneTit: [],
+      projectTypes: [ // 分类
         {
           id: null,
-          name: '不限'
+          name: '全部'
         }
       ],
-      materialTypes: [ // 材料类别
+      materialTypes: [ // 风格
         {
           id: null,
-          name: '不限'
+          name: '全部'
         }
       ],
       brandLevels: [
@@ -145,34 +146,39 @@ export default {
         }
       ],
       getSupplierLiList: [],
-      supplierOne: 0, // 选项1样式记录
+      supplierOne: 999, // 选项1样式记录
       supplierTwo: 0, // 选项2样式记录
       supplierThree: 0, // 选项3样式记录
       supplierFour: 0, // 选项4样式记录
-      categoryIdNu: 1, // 供应商ID临时存储
-      materialIdNu: null, // 材料类别ID临时存储
-      projectTypeIdNu: null, // 项目类别ID临时存储
-      gradeNu: null, // 品牌档次ID临时存储
+      sourceId: 0, // 板块临时存储
+      typeId: 0, // 产品类型临时存储
+      styleId: 0, // 作品风格临时存储
+      searchId: 0, // 搜索类型临时存储
       pageID: 0, // 分页第几页
       sizeID: 20, // 分页数量
       totalCount: 0, // 获取的总数
       currentPage4: 1
     }
   },
-  async asyncData (context) { // 获取一级类别
-    const homeService = new HomeService(context)
-    // eslint-disable-next-line no-return-await
-    return await homeService.supplierType({ type: 0 }).then((res) => {
-      // console.log(res.data.result.firstCategories)
-      return { supplierOneTit: res.data.result.firstCategories }
-    })
-  },
+  // async asyncData (context) { // 获取一级类别
+  //   const supplierOneTit = [{
+  //     id: 0,
+  //     name: '全部'
+  //   }]
+  //   const homeService = new HomeService(context)
+  //   // eslint-disable-next-line no-return-await
+  //   return await homeService.getWorksOneList().then((res) => {
+  //     console.log(res.data.result)
+  //     return { supplierOneTit: supplierOneTit.concat(res.data.result.worksSources) }
+  //   })
+  // },
 
   created () {
     const _this = this
-    _this.getFilterBySupplier({ id: 1, type: 0 })
+    _this.getWorksOneList()
+    // _this.getFilterBySupplier({ id: 0 })
     // eslint-disable-next-line no-undef
-    _this.getSupplierList({ type: 0, categoryId: _this.categoryIdNu, materialId: _this.projectTypeIdNu, projectTypeId: _this.materialIdNu, grade: _this.gradeNu, page: _this.pageID, size: _this.sizeID })
+    _this.getSupplierList({ sourceId: _this.sourceId, typeId: _this.typeId, styleId: _this.styleId, searchId: _this.searchId, page: _this.pageID, size: _this.sizeID })
   },
   methods: {
     changeOne (index) {
@@ -189,43 +195,54 @@ export default {
       this.supplierFour = index
     },
     changeCategoryIdNuOne (index) {
-      this.categoryIdNu = index
+      this.sourceId = index
     },
     changeMaterialIdNuOne (index) {
-      this.materialIdNu = index
+      this.typeId = index
     },
     changeProjectTypeIdNuOne (index) {
-      this.projectTypeIdNu = index
+      this.styleId = index
     },
     changeGradeNuOne (index) {
-      this.gradeNu = index
+      this.searchId = index
     },
     handleSizeChange (val) {
       const _this = this
       _this.sizeID = val
-      _this.getSupplierList({ type: 0, categoryId: _this.categoryIdNu, materialId: _this.projectTypeIdNu, projectTypeId: _this.materialIdNu, grade: _this.gradeNu, page: _this.pageID, size: _this.sizeID })
+      _this.getSupplierList({ sourceId: _this.sourceId, typeId: _this.typeId, styleId: _this.styleId, searchId: _this.searchId, page: _this.pageID, size: _this.sizeID })
     },
     handleCurrentChange (val) {
       const _this = this
       _this.currentPage4 = val
       this.pageID = val - 1
-      _this.getSupplierList({ type: 0, categoryId: _this.categoryIdNu, materialId: _this.projectTypeIdNu, projectTypeId: _this.materialIdNu, grade: _this.gradeNu, page: _this.pageID, size: _this.sizeID })
+      _this.getSupplierList({ sourceId: _this.sourceId, typeId: _this.typeId, styleId: _this.styleId, searchId: _this.searchId, page: _this.pageID, size: _this.sizeID })
+    },
+    getWorksOneList () { // 获取一级栏目
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getWorksOneList().then((res) => {
+        console.log('第一级', res.data.result)
+        this.supplierOneTit = res.data.result.worksSources
+        const projectTypes = [{ id: 0, name: '全部' }]
+        const materialTypes = [{ id: 0, name: '全部' }]
+        this.materialTypes = materialTypes.concat(res.data.result.worksStyles)
+        this.projectTypes = projectTypes.concat(res.data.result.worksTypes)
+      })
     },
     getFilterBySupplier (parmes) { // 获取二级三级类别
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.filterBySupplier(parmes).then((res) => {
-        // console.log('ss', res.data.result)
-        const projectTypes = [{ id: null, name: '不限' }]
-        const materialTypes = [{ id: null, name: '不限' }]
-        this.materialTypes = res.data.result.materials ? materialTypes.concat(res.data.result.materials) : materialTypes
-        this.projectTypes = res.data.result.projectTypes ? projectTypes.concat(res.data.result.projectTypes) : projectTypes
+      homeService.getWorksTwoList(parmes).then((res) => {
+        console.log('ss', res.data.result)
+        const projectTypes = [{ id: 0, name: '全部' }]
+        const materialTypes = [{ id: 0, name: '全部' }]
+        this.materialTypes = materialTypes.concat(res.data.result.worksStyles)
+        this.projectTypes = projectTypes.concat(res.data.result.worksTypes)
         this.supplierTwo = 0
         this.supplierThree = 0
         this.supplierFour = 0
         // this.$store.commit('supplier/changeCategoryIdNu', 1)
-        this.materialIdNu = null
-        this.projectTypeIdNu = null
-        this.gradeNu = null
+        this.typeId = 0
+        this.styleId = 0
+        this.searchId = 0
         this.pageID = 0
         this.sizeID = 20
         this.currentPage4 = 1
@@ -233,7 +250,7 @@ export default {
     },
     getSupplierList (parmes) {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.SupplierList(parmes).then((res) => {
+      homeService.getWorksContList(parmes).then((res) => {
         console.log('s', res.data)
         this.getSupplierLiList = res.data.results
         this.totalCount = res.data.totalCount
@@ -392,6 +409,7 @@ export default {
                 line-height: 20px;
                 color: #333333;
                 font-size: 14px;
+                @include over;
 
               }
               .twoName{

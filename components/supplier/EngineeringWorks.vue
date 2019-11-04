@@ -3,7 +3,7 @@
     <div class="engineeringWorks padding30 marginBottom100">
       <div v-for="(t,i) in list" :key="i" class="a" @click="getEngeering(t.id)">
         <div class="img">
-          <img :src="t.coverPic" alt="">
+          <img v-lazy="t.coverPic" alt="">
           <div class="flext">
             <span />
             <span>{{ t.projectName }}</span>

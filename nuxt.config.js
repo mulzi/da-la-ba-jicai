@@ -25,7 +25,8 @@ export default {
     'element-ui/lib/theme-chalk/index.css',
     '@/assets/css/dlb_head.scss',
     '@/assets/css/dlb_foot.scss',
-    '@/assets/css/@media.scss'
+    '@/assets/css/@media.scss',
+    'swiper/dist/css/swiper.css'
   ],
   /*
     ** Plugins to load before mounting the App
@@ -70,13 +71,14 @@ export default {
 
   proxy: {
     '/api': {
-      target: 'http://www.dalabajicai.com/',
+      target: 'http://www.dalabajicai.com',
       pathRewrite: {
         '^/api': '/api'
       }
     }
   },
   // http://qy.cqsudu.com:20200/
+  // http://www.dalabajicai.com/
   /*
     ** Build configuration
     */

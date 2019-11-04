@@ -23,23 +23,23 @@
           <el-row class="article_top">
             <el-row class="nameTit_box">
               <el-col class="name">
-                这个是文章标题
+                {{ date.theme }}
               </el-col>
-              <div class="span">
+              <div v-if="date.collectionTemp === false" class="span">
                 加入收藏
               </div>
-              <div class="span">
+              <div v-if="date.collectionTemp === true" class="span">
                 取消收藏
               </div>
             </el-row>
             <el-row class="Top_timeBox">
               <div class="L_time">
-                2018-551-551发布
+                {{ date.createdAtStr }}发布
               </div>
               <div class="number_icon">
-                <i class="el-icon-view">&nbsp;88</i>
-                <i class="el-icon-chat-dot-square">&nbsp;55</i>
-                <i class="iconfont">&#xe680;&nbsp;88</i>
+                <i class="el-icon-view">&nbsp;{{ date.browser }}</i>
+                <i class="el-icon-chat-dot-square">&nbsp;{{ date.comment }}</i>
+                <i class="iconfont">&#xe680;&nbsp;{{ date.thNumber }}</i>
               </div>
             </el-row>
           </el-row>
@@ -49,54 +49,41 @@
             </div>
             <div class="content_c">
               <p>
-                作品介绍作品介绍作品介绍作品介绍作品介绍作品介绍作品介绍作品介绍作品介绍作品介绍作品介绍作品介绍作品介绍作品介绍作品
-                品介绍作品介绍作品介绍作品介绍作品介绍作品介绍作品介绍作品介绍。
+                {{ date.introduce }}
               </p>
-              <p>
-                <img src="@/assets/img/0123.jpg" alt="">
+              <p v-for="(t,i) in date.worksExpands" :key="i">
+                <img :src="t.picUrl" alt="">
               </p>
             </div>
             <div class="content_b">
-              <p>项目名称：啊实打实大</p>
-              <p>项目地址：S大萨达</p>
-              <p>经典之处：S大萨达ad阿萨德</p>
+              <p>项目名称：{{ date.name }}</p>
+              <p>项目地址：{{ date.address }}</p>
+              <p>经典之处：{{ date.classic }}</p>
             </div>
             <div class="praise">
-              <div class="circle active">
+              <div class="circle" :class="date.temp === true ? 'active' :'' ">
                 <i class="iconfont">&#xe680;</i>
               </div>
-              <span>
+              <span v-if="date.temp === false">
                 点赞
               </span>
-              <span>
+              <span v-if="date.temp === true">
                 取消赞
               </span>
             </div>
           </el-row>
-          <el-row class="comment_box">
-            <div class="top_form">
-              <div class="text_Box">
-                <textarea placeholder="想说点什么呢..." />
-              </div>
-              <div class="sub">
-                <span>评&nbsp;&nbsp;论</span>
-              </div>
-            </div>
-            <div class="b_list_Box">
-              <comment />
-            </div>
-          </el-row>
+          <MessageOne />
         </el-row>
         <el-row class="r_content_box">
           <div class="top_img_box">
             <div class="img">
-              <img src="@/assets/img/0123.jpg" alt="">
+              <img :src="date.cover" alt="">
             </div>
             <div class="name">
-              加一几点设计
+              {{ date.agent }}
             </div>
             <div class="adds_a">
-              重庆 | 设计方
+              {{ date.supplierAddress }} | {{ date.categoryName }}
             </div>
             <nuxt-link to="" class="click">
               点击查看公司详情
@@ -169,28 +156,43 @@
               </nuxt-link>
             </div>
             <div class="moreList">
-              <nuxt-link to="">
+              <nuxt-link to="/works">
                 查看更多<i class="el-icon-arrow-right" />
               </nuxt-link>
             </div>
           </el-row>
         </el-row>
       </el-row>
-      <message v-if="$store.state.works.messageBox"/>
+      <message v-if="$store.state.works.messageBox" />
     </div>
   </div>
 </template>
 
 <script>
-import Comment from '@/components/works/Comment'
+import { HomeService } from '@/services/home'
+import MessageOne from '@/components/publicModule/MessageOne'
 import Message from '@/components/works/message'
 export default {
-  components: { Message, Comment },
-
+  components: { Message, MessageOne },
+  data () {
+    return {
+      date: ''
+    }
+  },
   layout: 'main',
+  mounted () {
+    this.getWorksDetails(this.$route.params.id)
+  },
   methods: {
     showMessageBox () {
       this.$store.commit('works/changeMsg')
+    },
+    getWorksDetails (pamars) { // 获取详情
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getWorksDetails(pamars).then((res) => {
+        console.log('详情', res.data.result)
+        this.date = res.data.result
+      })
     }
   }
 }
@@ -332,55 +334,7 @@ export default {
           }
         }
       }
-      .comment_box{
-        background: #ffffff;
-        margin: 40px auto 0;
-        width: 100%;
-        overflow: hidden;
-        .top_form{
-          width: 100%;
-          margin-top: 30px ;
-          .text_Box{
-            width: 94%;
-            margin: 0 auto;
-            border: 1px solid $borderE7;
-            border-radius: 6px;
-            textarea{
-              width: 94%;
-              margin: 20px auto;
-              height: 96px;
-              line-height: 24px;
-              font-size: 16px;
-              color: #333333;
-              display: block;
-              resize: none;
-              outline: none;
-            }
-          }
-          .sub{
-            width: 94%;
-            margin: 20px auto;
-            overflow: hidden;
-            span{
-              display: block;
-              float: right;
-              width: 100px;
-              height: 40px;
-              line-height: 40px;
-              text-align: center;
-              color: #ffffff;
-              background: $redColor;
-              cursor: pointer;
-            }
-          }
-        }
-        .b_list_Box{
-          width: 94%;
-          margin: 30px auto ;
-          overflow: hidden;
 
-        }
-      }
     }
     .r_content_box{
       width:326px ;
