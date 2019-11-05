@@ -1,61 +1,123 @@
 <template>
-  <div v-swiper:mySwiper="swiperOption">
-    <div class="swiper-wrapper">
-      <div v-for="(t,i) in banners" :key="i" class="swiper-slide">
-        <img :src="t">
-      </div>
+  <el-row class="imgBox">
+    <div class="img">
+      <img :src="imgUrl" alt="">
     </div>
-    <div class="swiper-button-next swiper-button-white"></div>
-    <div class="swiper-button-prev swiper-button-white"></div>
-  </div>
+    <div class="bottomI">
+      <div v-swiper:mySwiper="swiperOption">
+        <div class="swiper-wrapper">
+          <div v-for="(t,i) in banners" :key="i" class="swiper-slide" @click="changeImgUrl(t)">
+            <img :src="t">
+          </div>
+        </div>
+      </div>
+      <div class="el-icon-arrow-right right" />
+      <div class="el-icon-arrow-left left" />
+    </div>
+  </el-row>
 </template>
 
 <script>
 export default {
   name: 'Banner',
+  // eslint-disable-next-line vue/require-prop-types
+  props: [ 'list' ],
   data () {
     return {
-      banners: ['https://dalabajicai-prod.oss-cn-chengdu.aliyuncs.com/files/dalaba/file/A406B7B083E84406A61DE573A4499367.png',
-        'https://dalabajicai-prod.oss-cn-chengdu.aliyuncs.com/files/dalaba/file/A38F2BA788F944A6B1FE391D0895BBBC.png'
-      ],
+      imgUrl: '',
+      banners: this.list,
       swiperOption: {
-        loop: true,
-        spaceBetween: 10,
+        // eslint-disable-next-line no-undef
+        loop: false,
+        spaceBetween: 50,
         slidesPerView: 4,
         loopedSlides: 5, // looped slides should be the same
+        watchSlidesVisibility: true, /* 避免出现bug */
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
-        },
-        thumbs: {
-          // swiper:    // galleryThumbs
+          nextEl: '.right',
+          prevEl: '.left'
         }
       }
     }
   },
+  computed: {
+  },
   mounted () {
-
+    this.imgUrl = this.banners[0]
   },
   methods: {
     callback () {
       console.log(1)
+    },
+    changeImgUrl (img) {
+      this.imgUrl = img
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
+  .imgBox{
+    width: 100%;
+    height: 606px;
+    .bottomI{
+      position: relative;
+      .left{
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 50%;
+        background: rgba(0,0,0,.4);
+        left: 10px;
+        color: #ffffff;
+        font-size: 20px;
+        position: absolute;
+        top: 37px;
+        cursor: pointer;
+        outline: none;
+      }
+      .right{
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 50%;
+        background: rgba(0,0,0,.4);
+        right: 10px;
+        color: #ffffff;
+        font-size: 20px;
+        position: absolute;
+        top: 37px;
+        cursor: pointer;
+        outline: none;
+      }
+
+    }
+    .img{
+      width: 100%;
+      height: 100%;
+      img{
+        @include img;
+      }
+    }
+
+  }
     .swiper-container{
-        width: 910px;
-        height: 606px;
+        width: 820px;
+        height: 105px;
+        margin: 30px auto;
+
       .swiper-wrapper{
-        width: 100%;
+        width: 820px;
         height: 100%;
+        margin: 0 auto;
         .swiper-slide{
           width: 100%;
           height: 100%;
           img{
             @include img;
+            cursor: pointer;
           }
         }
     }

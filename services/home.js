@@ -226,4 +226,17 @@ export class HomeService {
       // eslint-disable-next-line no-undef
     })
   }
+  async getUserDetails (params) { // 获取设计施工方详情
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/supplier/open/design/details.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
 }

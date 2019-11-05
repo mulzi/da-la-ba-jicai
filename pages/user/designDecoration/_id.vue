@@ -20,31 +20,38 @@
       </el-row>
       <el-row class="moiveImgBox">
         <el-row class="padding30">
-          <el-col class="l_banner">
-            <banner />
-          </el-col>
-        </el-row>
-        <el-row class="consultingBox">
-          <span @click="messageShow">咨询留言</span>
-          <span v-if="date.collection === false" @click="getCollection">加入收藏</span>
-          <span v-if="date.collection === true" @click="createCollection">取消收藏</span>
+          <el-row class="l_banner">
+            <banner :list="date.bannerImages" />
+          </el-row>
+          <el-row class="rightTextBox">
+            <el-row class="topName">
+              <p>{{ date.name }}</p>
+              <p>公司官网：{{ date.portalUrl }}</p>
+              <p>地址：{{ date.address }}</p>
+            </el-row>
+            <el-row class="consultingBox">
+              <span @click="messageShow">咨询留言</span>
+              <span v-if="date.collection === false" @click="getCollection">加入收藏</span>
+              <span v-if="date.collection === true" @click="createCollection">取消收藏</span>
+            </el-row>
+          </el-row>
         </el-row>
       </el-row>
       <el-row class="bottomModuleBox">
         <el-row class="topMenuBox">
           <ul>
             <li :class="oneListShow ? 'active':''" @click="oneChangeShow">
-              <span>产品系列</span>
+              <span>公司介绍</span>
             </li>
-            <li :class="twoListShow ? 'active':''" @click="twoChangeShow">
-              <span>工程案列</span>
+            <li v-if="date.team.length > 0" :class="twoListShow ? 'active':''" @click="twoChangeShow">
+              <span>团队介绍</span>
             </li>
-            <li :class="threeListShow ? 'active':''" @click="threeChangeShow">
+            <li v-if="date.works.length > 0" :class="threeListShow ? 'active':''" @click="threeChangeShow">
               <span>
-                公司介绍
+                作品精选
               </span>
             </li>
-            <li v-if="false" :class="fourListShow ? 'active':''" @click="fourChangeShow">
+            <li v-if="date.newCases.length > 0" :class="fourListShow ? 'active':''" @click="fourChangeShow">
               <span>
                 公司资讯
               </span>
@@ -54,13 +61,14 @@
             </li>
           </ul>
         </el-row>
-        <product-line v-if="oneListShow" :list="date.product" />
-        <engineering-works v-if="twoListShow" :list="date.cases" />
-        <company-introduction v-if="threeListShow" :list="date" />
+        <company-introduction v-if="oneListShow" :list="date" />
+        <team v-if="twoListShow" :list="date.team"/>
+        <works v-if="threeListShow" :list="date.works"/>
         <CompanyInfo v-if="fourListShow" />
         <Evaluate v-if="fiveListShow" />
       </el-row>
       <message-module-one v-if="$store.state.home.messageShow" />
+      <popup v-if="$store.state.user.popup" />
       <!--      id是{{ $route.params.id }}-->
     </div>
   </div>
@@ -69,22 +77,24 @@
 <script>
 import { HomeService } from '@/services/home'
 import banner from '@/components/user/banner'
-import productLine from '@/components/supplier/productLine'
-import EngineeringWorks from '@/components/supplier/EngineeringWorks'
 import CompanyInfo from '@/components/supplier/CompanyInfo'
-import Evaluate from '@/components/supplier/Evaluate'
-import companyIntroduction from '@/components/supplier/companyIntroduction'
+import Evaluate from '@/components/user/Evaluate'
+import companyIntroduction from '@/components/user/companyIntroduction'
 import messageModuleOne from '@/components/publicModule/messageModuleOne'
+import team from '@/components/user/team'
+import works from '@/components/user/works'
+import popup from '@/components/user/popup'
 export default {
   layout: 'main',
   components: {
     banner,
-    productLine,
-    EngineeringWorks,
     CompanyInfo,
     Evaluate,
     companyIntroduction,
-    messageModuleOne
+    messageModuleOne,
+    team,
+    works,
+    popup
 
   },
   data () {
@@ -95,31 +105,22 @@ export default {
       fourListShow: false, // 公司资讯列表显示
       fiveListShow: false, // 评价留言显示
       date: [ ], // 主数据
-      collectionFlag: true, // 点击收藏的锁
-      bannerShow: false,
-      videoShow: true,
-      videoShowTwo: true
+      collectionFlag: true // 点击收藏的锁
+
     }
   },
   asyncData (context) {
     const { params } = context
     const homeService = new HomeService(context)
     // eslint-disable-next-line no-undef
-    return homeService.SupplierListParticulars({ supplierId: params.id }).then((res) => {
-      console.log(res.data)
-      return { date: res.data }
+    return homeService.getUserDetails({ supplierId: params.id }).then((res) => {
+      console.log('详情数据', res.data.result)
+      return { date: res.data.result }
     })
   },
+  computed: {
+  },
   created () {
-    // const that = this
-    // that.getSupplierList()
-    if (this.date.videoUri !== null || undefined) {
-      this.videoShowTwo = true
-    } else {
-      this.videoShowTwo = false
-      this.bannerShow = true
-      this.videoShow = false
-    }
   },
   mounted () {
   },
@@ -203,14 +204,6 @@ export default {
       this.threeListShow = false
       this.fourListShow = false
       this.fiveListShow = true
-    },
-    videoChange () {
-      this.videoShow = true
-      this.bannerShow = false
-    },
-    bannerChange () {
-      this.videoShow = false
-      this.bannerShow = true
     }
   }
 }
@@ -218,6 +211,84 @@ export default {
 
 <style scoped lang="scss">
 
+  .moiveImgBox{
+    width: 100%;
+    overflow: hidden;
+    margin-top: 20px;
+    background: #ffffff;
+    display: flex;
+    display: -ms-flex;
+    .padding30{
+      width: 100%;
+      position: relative;
+      display: flex;
+      .l_banner{
+        width:910px ;
+        height: 810px;
+        overflow: hidden;
+      }
+      .rightTextBox{
+        flex: 1;
+        overflow: hidden;
+        margin-left: 30px;
+        .topName{
+          width: 100%;
+          p{
+            &:nth-child(1){
+              margin-top: 34px;
+              height:30px ;
+              line-height: 30px;
+              font-size: 28px;
+              color: #333333;
+            }
+            &:nth-child(2){
+              margin-top: 40px;
+              height: 20px;
+              line-height: 20px;
+              font-size: 18px;
+              color: #474747;
+            }
+            &:nth-child(3){
+              margin-top: 40px;
+              height: 20px;
+              line-height: 20px;
+              font-size: 18px;
+              color: #474747;
+            }
+          }
+        }
+        .consultingBox{
+          width: 100%;
+          margin:100px auto 50px;
+          overflow: hidden;
+          span{
+            display: inline-block;
+            cursor: pointer;
+            height:70px ;
+            line-height: 70px;
+            max-width: 203px;
+            width: 46%;
+            text-align: center;
+            font-size: 28px;
+            color: $redColor;
+            margin-right: 10px;
+            border: 1px solid $redColor;
+            &:active{
+              background: #ff7206;
+            }
+            &:nth-child(1){
+              background: $redColor;
+              color: #ffffFF;
+              &:active{
+                background: #ff4300;
+              }
+            }
+          }
+        }
+      }
+    }
+
+  }
   .bottomModuleBox{
     width: 100%;
     overflow: hidden;

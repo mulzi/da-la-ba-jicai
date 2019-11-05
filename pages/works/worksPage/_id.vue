@@ -173,13 +173,13 @@ import { HomeService } from '@/services/home'
 import MessageOne from '@/components/publicModule/MessageOne'
 import Message from '@/components/works/message'
 export default {
+  layout: 'main',
   components: { Message, MessageOne },
   data () {
     return {
       date: ''
     }
   },
-  layout: 'main',
   mounted () {
     this.getWorksDetails(this.$route.params.id)
   },
