@@ -1,7 +1,8 @@
 import Vue from 'vue'
 
 import { Button, Input, Carousel, Container, Icon, Col, Row, CarouselItem, Pagination, BreadcrumbItem,
-  Breadcrumb, Tooltip, Rate, Radio, RadioButton, InfiniteScroll, Message, Form, FormItem, Calendar, Select, Cascader
+  Breadcrumb, Tooltip, Rate, Radio, RadioButton, InfiniteScroll, Message, Form, FormItem, Calendar, Select, Cascader,
+  Option
 } from 'element-ui'
 Vue.use(CarouselItem)
 Vue.use(Col)
@@ -23,6 +24,7 @@ Vue.use(FormItem)
 Vue.use(Calendar)
 Vue.use(Cascader)
 Vue.use(Select)
+Vue.use(Option)
 Vue.use(InfiniteScroll)
 Vue.use(Message)
 Vue.prototype.$message = Message

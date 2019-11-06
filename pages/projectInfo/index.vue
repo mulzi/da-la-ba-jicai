@@ -22,7 +22,7 @@
                 地区
               </el-col>
               <el-col :span="18">
-                <el-cascader :options="options" clearable />
+                <el-cascader v-model="valueOne" :options="options" :props="{ expandTrigger: 'hover' }" clearable />
               </el-col>
             </el-col>
             <el-col :span="8">
@@ -56,10 +56,48 @@
               </el-col>
             </el-col>
           </el-col>
-          <el-col :span="6">
-            ss
+          <el-col :span="6" class="rightSbox">
+            <el-col :span="19">
+              <el-input
+                v-model="searchText"
+                placeholder="请输入内容"
+                clearable
+              />
+            </el-col>
+            <el-col :span="5" class="el-icon-search searchSt" />
           </el-col>
         </el-row>
+      </el-row>
+      <el-row class="boxList">
+        <nuxt-link to="">
+          <el-row class="topBox">
+            <el-row class="one">
+              名字
+            </el-row>
+            <el-roe class="two">
+              简介
+            </el-roe>
+            <el-row class="three">
+              <el-col :span="18">
+                <el-col :span="9">
+                  sdssds
+                </el-col>
+                <el-col :span="9">
+                  sdssds
+                </el-col>
+                <el-col :span="6" class="red">
+                 精准情报
+                </el-col>
+              </el-col>
+              <el-col :span="6">
+                2019-01-26
+              </el-col>
+            </el-row>
+          </el-row>
+          <el-row class="right_top">
+            用户
+          </el-row>
+        </nuxt-link>
       </el-row>
     </div>
   </div>
@@ -271,7 +309,7 @@ export default {
             value: 'jiaohu',
             label: '组件交互文档'
           }]
-        }],
+        }], // 地区
       optionss: [
         {
           value: '选项1',
@@ -288,9 +326,11 @@ export default {
         }, {
           value: '选项5',
           label: '北京烤鸭'
-        }],
+        }], // 项目类别
+      valueOne: '',
       value: '',
-      values: ''
+      values: '',
+      searchText: '' // 搜索的值
     }
   },
   created () {
