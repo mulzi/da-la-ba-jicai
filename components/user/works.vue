@@ -13,8 +13,8 @@
             项目名称：{{ t.name }}
           </el-row>
           <el-row class="numbers">
-            <i class="el-icon-view">{{ t.browser }}</i>
-            <i class="el-icon-chat-dot-square">{{ t.comment }}</i>
+            <i class="el-icon-view">&nbsp;{{ t.browser }}</i>
+            <i class="el-icon-chat-dot-square">&nbsp;{{ t.comment }}</i>
             <i class="iconfont">&#xe680; {{ t.likes }}</i>
             <span>{{ t.createdAtStr }}</span>
           </el-row>

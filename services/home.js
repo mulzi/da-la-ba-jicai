@@ -239,4 +239,16 @@ export class HomeService {
       params
     })
   }
+  async getUserTeam (params) { // 获取设计施工方团队介绍详情
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/supplier/open/supplier/getTeam/${params}.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT
+      // eslint-disable-next-line no-undef
+    })
+  }
 }

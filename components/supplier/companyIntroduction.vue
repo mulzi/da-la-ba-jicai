@@ -1,15 +1,15 @@
 <template>
   <div class="companyIntroduction">
-    <div v-if="this.list.introduce" class="ones">
-      <div class="titName">
-        <span>品牌概况</span>
-      </div>
-      <div class="bottomP">
-        <P v-for="(t,i) in introduceList" :key="i">
-          {{ t }}
-        </P>
-      </div>
-    </div>
+    <!--    <div v-if="this.list.introduce" class="ones">-->
+    <!--      <div class="titName">-->
+    <!--        <span>品牌概况</span>-->
+    <!--      </div>-->
+    <!--      <div class="bottomP">-->
+    <!--        <P v-for="(t,i) in introduceList" :key="i">-->
+    <!--          {{ t }}-->
+    <!--        </P>-->
+    <!--      </div>-->
+    <!--    </div>-->
     <div v-if="this.list.companyIntroduce" class="ones">
       <div class="titName">
         <span>公司介绍</span>
@@ -20,7 +20,7 @@
         </p>
       </div>
     </div>
-    <div class="ones" v-if="this.list.credentialImages">
+    <div v-if="this.list.credentialImages" class="ones">
       <div class="titName">
         <span>公司资质</span>
       </div>
@@ -42,7 +42,7 @@
         </p>
       </div>
     </div>
-    <div class="ones" v-if="this.list.constructionExplain">
+    <div v-if="this.list.constructionExplain" class="ones">
       <div class="titName">
         <span>施工说明</span>
       </div>
@@ -60,16 +60,16 @@
         <ul>
           <li v-for="(t,i) in lists.contacts" :key="i">
             <div class="li">
-              <span>联系人：</span><em>{{t.name}}</em>
+              <span>联系人：</span><em>{{ t.name }}</em>
             </div>
             <div class="li">
-              <span>部门：</span><em >***</em>
+              <span>部门：</span><em>***</em>
             </div>
             <div class="li">
-              <span>职位：</span><em>{{t.positionLevel}}</em>
+              <span>职位：</span><em>{{ t.positionLevel }}</em>
             </div>
             <div class="li">
-              <span>电话：</span><em class="red">{{t.phone}}</em>
+              <span>电话：</span><em class="red">{{ t.phone }}</em>
             </div>
           </li>
         </ul>

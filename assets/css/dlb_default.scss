@@ -51,6 +51,13 @@ $borderE7: #e7e7e7; //默认边框线颜色
   text-overflow: ellipsis;
   overflow: hidden;
 }
+@mixin twoText { // 2行文字溢出
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+}
 
 @mixin triText{
   transition: .2s ease-in-out;

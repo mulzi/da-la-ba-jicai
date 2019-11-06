@@ -25,7 +25,7 @@
                 v-for="(item,index) in supplierOneTit"
                 :id="item.id"
                 :key="index"
-                :class="$store.state.supplier.supplierOne === index ? 'active':'' "
+                :class="supplierOne === index ? 'active':'' "
                 @click="changeOne (index), getFilterBySupplier({id:item.id,type:0}) , changeCategoryIdNuOne (item.id), getSupplierList({ type: 0, categoryId: item.id, materialId: null, projectTypeId: null, grade: null, page: 0, size: 20 })"
               >{{ item.name }}</span>
             </div>
@@ -35,7 +35,7 @@
               项目类别：
             </div>
             <div class="rightList">
-              <span v-for="(item,index) in projectTypes" :id="item.id" :key="index" :class="$store.state.supplier.supplierTwo === index ? 'active':'' " @click="changeTwo (index),changeMaterialIdNuOne( item.id || null) ,getSupplierList({ type: 0, categoryId: categoryIdNu, materialId: projectTypeIdNu, projectTypeId: materialIdNu, grade: gradeNu, page: pageID, size: sizeID })">{{ item.name }}</span>
+              <span v-for="(item,index) in projectTypes" :id="item.id" :key="index" :class="supplierTwo === index ? 'active':'' " @click="changeTwo (index),changeMaterialIdNuOne( item.id || null) ,getSupplierList({ type: 0, categoryId: categoryIdNu, materialId: projectTypeIdNu, projectTypeId: materialIdNu, grade: gradeNu, page: pageID, size: sizeID })">{{ item.name }}</span>
             </div>
           </div>
           <div class="defaultBox">
@@ -43,7 +43,7 @@
               材料类别：
             </div>
             <div class="rightList">
-              <span v-for="(item,index) in materialTypes" :id="item.id" :key="index" :class="$store.state.supplier.supplierThree === index ? 'active':'' " @click="changeThree (index),changeProjectTypeIdNuOne(item.id || null) , getSupplierList({ type: 0, categoryId: categoryIdNu, materialId: projectTypeIdNu, projectTypeId: materialIdNu, grade: gradeNu, page: pageID, size: sizeID })">{{ item.name }}</span>
+              <span v-for="(item,index) in materialTypes" :id="item.id" :key="index" :class="supplierThree === index ? 'active':'' " @click="changeThree (index),changeProjectTypeIdNuOne(item.id || null) , getSupplierList({ type: 0, categoryId: categoryIdNu, materialId: projectTypeIdNu, projectTypeId: materialIdNu, grade: gradeNu, page: pageID, size: sizeID })">{{ item.name }}</span>
             </div>
           </div>
           <div class="defaultBox">
@@ -51,7 +51,7 @@
               品牌档次：
             </div>
             <div class="rightList">
-              <span v-for="(item,index) in brandLevels" :key="index" :class="$store.state.supplier.supplierFour === index ? 'active':'' " @click="changeFour (index) ,changeGradeNuOne (item.id || null ),getSupplierList({ type: 0, categoryId: categoryIdNu, materialId: projectTypeIdNu, projectTypeId: materialIdNu, grade: gradeNu, page: pageID, size: sizeID})">{{ item.name }}</span>
+              <span v-for="(item,index) in brandLevels" :key="index" :class="supplierFour === index ? 'active':'' " @click="changeFour (index) ,changeGradeNuOne (item.id || null ),getSupplierList({ type: 0, categoryId: categoryIdNu, materialId: projectTypeIdNu, projectTypeId: materialIdNu, grade: gradeNu, page: pageID, size: sizeID})">{{ item.name }}</span>
             </div>
           </div>
         </div>
@@ -173,6 +173,10 @@ export default {
 
       ],
       getSupplierLiList: [],
+      supplierOne: 0, // 样式1
+      supplierTwo: 0, // 样式2
+      supplierThree: 0, // 样式3
+      supplierFour: 0, // 样式4
       categoryIdNu: 1, // 供应商ID临时存储
       materialIdNu: null, // 材料类别ID临时存储
       projectTypeIdNu: null, // 项目类别ID临时存储
@@ -201,16 +205,16 @@ export default {
   methods: {
     changeOne (index) {
       this.currentPage4 = 1
-      this.$store.commit('supplier/changeSupplinerOne', index)
+      this.supplierOne = index
     },
     changeTwo (index) {
-      this.$store.commit('supplier/changeSupplinerTwo', index)
+      this.supplierTwo = index
     },
     changeThree (index) {
-      this.$store.commit('supplier/changeSupplinerThree', index)
+      this.supplierThree = index
     },
     changeFour (index) {
-      this.$store.commit('supplier/changeSupplinerFour', index)
+      this.supplierFour = index
     },
     changeCategoryIdNuOne (index) {
       this.categoryIdNu = index
@@ -243,9 +247,9 @@ export default {
         const materialTypes = [{ id: null, name: '不限' }]
         this.materialTypes = res.data.result.materials ? materialTypes.concat(res.data.result.materials) : materialTypes
         this.projectTypes = res.data.result.projectTypes ? projectTypes.concat(res.data.result.projectTypes) : projectTypes
-        this.$store.commit('supplier/changeSupplinerTwo', 0)
-        this.$store.commit('supplier/changeSupplinerThree', 0)
-        this.$store.commit('supplier/changeSupplinerFour', 0)
+        this.supplierTwo = 0
+        this.supplierThree = 0
+        this.supplierFour = 0
         // this.$store.commit('supplier/changeCategoryIdNu', 1)
         this.materialIdNu = null
         this.projectTypeIdNu = null
@@ -258,7 +262,7 @@ export default {
     getSupplierList (parmes) {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.SupplierList(parmes).then((res) => {
-        console.log('s', res.data)
+        // console.log('s', res.data)
         this.getSupplierLiList = res.data.results
         this.totalCount = res.data.totalCount
       })

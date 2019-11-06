@@ -51,7 +51,7 @@
                 作品精选
               </span>
             </li>
-            <li v-if="date.newCases.length > 0" :class="fourListShow ? 'active':''" @click="fourChangeShow">
+            <li v-if="false" :class="fourListShow ? 'active':''" @click="fourChangeShow">
               <span>
                 公司资讯
               </span>
@@ -68,7 +68,6 @@
         <Evaluate v-if="fiveListShow" />
       </el-row>
       <message-module-one v-if="$store.state.home.messageShow" />
-      <popup v-if="$store.state.user.popup" />
       <!--      id是{{ $route.params.id }}-->
     </div>
   </div>
@@ -83,7 +82,6 @@ import companyIntroduction from '@/components/user/companyIntroduction'
 import messageModuleOne from '@/components/publicModule/messageModuleOne'
 import team from '@/components/user/team'
 import works from '@/components/user/works'
-import popup from '@/components/user/popup'
 export default {
   layout: 'main',
   components: {
@@ -93,8 +91,7 @@ export default {
     companyIntroduction,
     messageModuleOne,
     team,
-    works,
-    popup
+    works
 
   },
   data () {
@@ -114,7 +111,7 @@ export default {
     const homeService = new HomeService(context)
     // eslint-disable-next-line no-undef
     return homeService.getUserDetails({ supplierId: params.id }).then((res) => {
-      console.log('详情数据', res.data.result)
+      console.log('设计施工方详情数据', res.data.result.team)
       return { date: res.data.result }
     })
   },

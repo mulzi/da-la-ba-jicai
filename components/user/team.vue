@@ -1,53 +1,66 @@
 <template>
   <el-row class="teamBox marginBottom100">
     <el-row class="list">
-      <div v-for="(t,i) in this.list" :key="i" class="a" @click="changePopup">
+      <div v-for="(t,i) in this.list" :key="i" class="a" @click="getData(t.id)">
         <div class="leftImg">
-          <img src="" alt="">
+          <img v-lazy="t.selfImageList[0].pic" alt="">
         </div>
         <div class="rightText">
           <div class="topName">
             <div class="left_n">
-              <span>试试</span>
-              <span>设计师职称</span>
+              <span>{{ t.designersName }}</span>
+              <span>{{ t.designersPosition }}</span>
             </div>
             <div class="r_look">
               <span>查看详情</span>
-              <em><i /> <i /> <i /></em>
+              <em class="el-icon-more" />
             </div>
           </div>
           <div class="content">
-            个人介绍
+            {{ t.selfIntroduction }}
           </div>
           <div class="works">
             <div class="tit">
               作品集精选
             </div>
-            <div class="bot_img">
-              <li>
-                <img src="@/assets/img/0123.jpg" alt="">
-              </li>
-              <li>
-                <img src="@/assets/img/0123.jpg" alt="">
-              </li>
-              <li>
-                <img src="@/assets/img/0123.jpg" alt="">
-              </li>
-            </div>
+            <team-noe :list="t.portfolioList" />
           </div>
         </div>
       </div>
     </el-row>
+    <popup v-if="$store.state.user.popup" :list="bo_list"/>
   </el-row>
 </template>
 
 <script>
+import popup from './popup'
+import teamNoe from './team_one'
+import { HomeService } from '@/services/home'
 export default {
   name: 'Team',
+  components: {
+    teamNoe,
+    popup
+  },
+  // eslint-disable-next-line vue/require-prop-types
   props: ['list'],
+  data () {
+    return {
+      bo_list: []
+    }
+  },
+  created () {
+  },
   methods: {
-    changePopup () {
-      this.$store.commit('user/changePopup')
+    getData (id) {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getUserTeam(id).then((res) => {
+        console.log(res.data.result)
+        this.bo_list = res.data.result
+        if (res.status === 200) {
+          this.$store.commit('user/changePopup')
+        }
+      })
     }
   }
 }
@@ -120,21 +133,14 @@ export default {
                             em{
                                 vertical-align: middle;
                                 display: inline-block;
+                                text-align: center;
+                                color: #9a9a9a;
                                 height: 26px;
                                 line-height: 26px;
                                 width: 26px;
                                 border-radius: 50%;
                                 border: 1px solid #999999;
-                                font-size: 0;
-                                i{
-                                    display: inline-block;
-                                    text-align: center;
-                                    height: 4px;
-                                    width: 4px;
-                                    background: #999999;
-                                    margin: 0 2px;
-                                    vertical-align: middle;
-                                }
+                                font-size: 16px;
                             }
                         }
                     }
@@ -142,10 +148,10 @@ export default {
                         width:100% ;
                         line-height:24px ;
                       max-height: 48px;
-                      overflow: hidden;
                         font-size: 16px;
                         margin-top: 24px;
                         color: #666666;
+                      @include twoText;
 
                     }
                     .works{
@@ -157,23 +163,6 @@ export default {
                             line-height: 28px;
                             color: #333333;
                             font-size: 16px;
-                        }
-                        .bot_img{
-                            width: 100%;
-                            margin-top: 20px;
-                            overflow: hidden;
-                            li{
-                                float: left;
-                                width: 32%;
-                                height: 120px;
-                                margin-right: 2%;
-                                &:last-child{
-                                    margin-right: 0;
-                                }
-                                img{
-                                    @include  img;
-                                }
-                            }
                         }
                     }
                 }
