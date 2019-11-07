@@ -101,3 +101,23 @@ $borderE7: #e7e7e7; //默认边框线颜色
 .el-radio__input.is-checked+.el-radio__label{
   color: $redColor;
 }
+
+.bounce-enter-active {
+  animation: bounce-in .3s;
+}
+.bounce-leave-active {
+  opacity: 0;
+}
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: translateX(800px);
+  }
+  70% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

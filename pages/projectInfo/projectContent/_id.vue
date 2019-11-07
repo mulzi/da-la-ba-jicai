@@ -35,21 +35,29 @@
       </el-row>
       <el-row class="projIntBox">
         <el-row class="topTitChange">
-          <li class="active">
-            项目简介
+          <li class="active" @click="changeList">
+            <span>
+              项目简介
+            </span>
+
           </li>
-          <li>
+          <li @click="changeListTwo">
             联系方式
           </li>
-          <li>
+          <li @click="changeListThree">
             添加联系人
           </li>
         </el-row>
         <el-row class="bo_list">
-          <project-int />
-          <el-row class="two">
-            ss
-          </el-row>
+          <transition name="bounce">
+            <project-int  v-if="this.$store.state.projectInfo.projectOne"/>
+          </transition>
+          <transition name="bounce">
+            <el-row class="two"  v-if="this.$store.state.projectInfo.projectTwo">
+              ss
+            </el-row>
+          </transition>
+
         </el-row>
       </el-row>
     </div>
@@ -65,6 +73,17 @@ export default {
   data () {
     return {
       date: ''
+    }
+  },
+  methods: {
+    changeList () {
+      this.$store.commit('projectInfo/changeOne')
+    },
+    changeListTwo () {
+      this.$store.commit('projectInfo/changeTwo')
+    },
+    changeListThree () {
+      this.$store.commit('projectInfo/changeThree')
     }
   }
 

@@ -437,6 +437,10 @@ html, body {
         bottom: 0;
         left: 0;
       }
+      &:active{
+        transition: all 1.3s ease-in-out;
+        background: #333333;
+      }
     }
   }
   .bo_list{
