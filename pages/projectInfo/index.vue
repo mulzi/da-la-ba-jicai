@@ -67,16 +67,20 @@
             <el-col :span="5" class="el-icon-search searchSt" />
           </el-col>
         </el-row>
+        <nuxt-link class="addItem" to="">
+          <em class="iconfont">&#xe880;</em>
+          <span>发布项目</span>
+        </nuxt-link>
       </el-row>
       <el-row class="boxList">
-        <nuxt-link to="">
+        <nuxt-link :to="`/projectInfo/projectContent/sss`">
           <el-row class="topBox">
             <el-row class="one">
               名字
             </el-row>
-            <el-roe class="two">
-              简介
-            </el-roe>
+            <el-row class="two">
+              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
+            </el-row>
             <el-row class="three">
               <el-col :span="18">
                 <el-col :span="9">
@@ -86,7 +90,7 @@
                   sdssds
                 </el-col>
                 <el-col :span="6" class="red">
-                 精准情报
+                  精准情报
                 </el-col>
               </el-col>
               <el-col :span="6">
@@ -95,10 +99,148 @@
             </el-row>
           </el-row>
           <el-row class="right_top">
-            用户
+            <span>用户</span>
+          </el-row>
+        </nuxt-link>
+        <nuxt-link to="">
+          <el-row class="topBox">
+            <el-row class="one">
+              名字
+            </el-row>
+            <el-row class="two">
+              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
+            </el-row>
+            <el-row class="three">
+              <el-col :span="18">
+                <el-col :span="9">
+                  sdssds
+                </el-col>
+                <el-col :span="9">
+                  sdssds
+                </el-col>
+                <el-col :span="6" class="red">
+                  精准情报
+                </el-col>
+              </el-col>
+              <el-col :span="6">
+                2019-01-26
+              </el-col>
+            </el-row>
+          </el-row>
+          <el-row class="right_top">
+            <span>用户</span>
+          </el-row>
+        </nuxt-link>
+        <nuxt-link to="">
+          <el-row class="topBox">
+            <el-row class="one">
+              名字
+            </el-row>
+            <el-row class="two">
+              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
+            </el-row>
+            <el-row class="three">
+              <el-col :span="18">
+                <el-col :span="9">
+                  sdssds
+                </el-col>
+                <el-col :span="9">
+                  sdssds
+                </el-col>
+                <el-col :span="6" class="red">
+                  精准情报
+                </el-col>
+              </el-col>
+              <el-col :span="6">
+                2019-01-26
+              </el-col>
+            </el-row>
+          </el-row>
+          <el-row class="right_top">
+            <span>用户</span>
+          </el-row>
+        </nuxt-link>
+        <nuxt-link to="">
+          <el-row class="topBox">
+            <el-row class="one">
+              名字
+            </el-row>
+            <el-row class="two">
+              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
+            </el-row>
+            <el-row class="three">
+              <el-col :span="18">
+                <el-col :span="9">
+                  sdssds
+                </el-col>
+                <el-col :span="9">
+                  sdssds
+                </el-col>
+                <el-col :span="6" class="red">
+                  精准情报
+                </el-col>
+              </el-col>
+              <el-col :span="6">
+                2019-01-26
+              </el-col>
+            </el-row>
+          </el-row>
+          <el-row class="right_top">
+            <span>用户</span>
+          </el-row>
+        </nuxt-link>
+        <nuxt-link to="">
+          <el-row class="topBox">
+            <el-row class="one">
+              名字
+            </el-row>
+            <el-row class="two">
+              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
+            </el-row>
+            <el-row class="three">
+              <el-col :span="18">
+                <el-col :span="9">
+                  sdssds
+                </el-col>
+                <el-col :span="9">
+                  sdssds
+                </el-col>
+                <el-col :span="6" class="red">
+                  精准情报
+                </el-col>
+              </el-col>
+              <el-col :span="6">
+                2019-01-26
+              </el-col>
+            </el-row>
+          </el-row>
+          <el-row class="right_top">
+            <span>用户</span>
           </el-row>
         </nuxt-link>
       </el-row>
+      <div class="bottomListBox">
+        <div class="NoData marginBottom40">
+          <div class="img">
+            <img src="@/assets/img/nodata.png" alt="">
+          </div>
+          <div class="text">
+            没有数据
+          </div>
+        </div>
+        <div class="pageSbox">
+          <el-pagination
+            background
+            :current-page="currentPage4"
+            :page-sizes="[10, 20, 30, 50]"
+            :page-size="sizeID"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="totalCount"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -359,16 +501,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .supplierBody{
-        width: 100%;
-        background: #f0f3ef;
-        overflow: hidden;
-        .bodyBox{
-            width: 75%;
-            max-width: 1400px;
-            margin: 0 auto;
-            overflow: hidden;
-            .HeaderBreadcrumb{
+        .HeaderBreadcrumb{
                 width: 100%;
                 margin-top: 20px;
                 .breadcrumb{
@@ -399,187 +532,30 @@ export default {
                 }
 
             }
-            .topMenuBox{
-                background: #ffffff;
-                width: 100%;
-                overflow: hidden;
-                margin-top: 20px;
-                .contentBox{
-                    width:92% ;
-                    max-width: 1342px;
-                    margin: 40px auto 0;
-                    .defaultBox{
-                        width: 100%;
-                        margin-bottom: 20px;
-                        border-bottom: 1px solid $borderE7;
-                        display: flex;
-                        display: -ms-flex;
-                        .leftText{
-                            width: 80px;
-                            height: 30px;
-                            line-height: 30px;
-                            margin-bottom: 16px;
-                            text-align: right;
-                            font-size: 16px;
-                            font-weight: bold;
-                            color: #333333;
-                        }
-                        .rightList{
-                            flex: 1;
-                            -ms-flex: 1;
-                            span{
-                                display: inline-block;
-                                height: 26px;
-                                line-height: 26px;
-                                font-size: 16px;
-                                color: #666666;
-                                margin: 0 30px 10px 0;
-                                padding: 2px 10px;
-                                cursor: pointer;
-                                &.active{
-                                    color: #ffffff;
-                                    background: $redColor;
-                                }
-                                &:hover{
-                                    color: #ffffff;
-                                    background: $redColor;
-                                    @include triText;
-                                }
-                            }
-                        }
-                    }
-                    .defaultBoxTwo{
-                        width: 100%;
-                        margin-bottom: 20px;
-                        .contentx{
-                            width: 100%;
-                            text-align: center;
-                            span{
-                                font-size: 16px;
-                                display: inline-block;
-                                margin-right: 60px;
-                                cursor: pointer;
-                                &:hover{
-                                    color: $redColor;
-                                }
-                                &.active{
-                                    color: $redColor;
-                                }
-                            }
-                        }
-                    }
-                }
+        .bottomListBox{
+          margin-top: 30px;
+          overflow: hidden;
+          width: 100%;
+          .NoData{
+            background: #ffffff;
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+            .img{
+              width: 200px;
+              height: 200px;
+              margin: 100px auto;
+              img{
+                @include img;
+              }
+
             }
-            .bottomListBox{
-                margin-top: 30px;
-                overflow: hidden;
-                width: 100%;
-
-                .contentList{
-                    width: 100%;
-                    overflow: hidden;
-                    a{
-                        width:19% ;
-                        float: left;
-                        margin-right: 1.25%;
-                        border-radius: 6px;
-                        margin-bottom: 20px;
-                        overflow: hidden;
-                        background: #ffffff;
-                        >p{
-                            width: 100%;
-                            height:258px ;
-                            img{
-                                @include img;
-                            }
-                        }
-                        &:nth-child(5n){
-                            margin-right: 0;
-                        }
-                        .topNameBox{
-                            width: 100%;
-                            margin: 0 auto;
-                            border-bottom: 1px solid $borderE7;
-                            .oneName{
-                                width: 90%;
-                                margin: 10px auto 0;
-                                height: 20px;
-                                line-height: 20px;
-                                color: #333333;
-                                font-size: 14px;
-                                @include over;
-
-                            }
-                            .twoName{
-                                width: 90%;
-                                margin: 10px auto 0;
-                                height: 18px;
-                                line-height: 18px;
-                                color: #333333;
-                                font-size: 12px;
-                                @include over;
-                            }
-                            .numbers{
-                                width: 90%;
-                                margin: 14px auto ;
-                                font-size: 12px;
-                                color: #bfbfbf;
-                                @include over;
-                                i{
-                                    font-size: 12px;
-                                    margin-right: 6px;
-                                }
-                                span{
-                                    margin-left: 10px;
-                                }
-                            }
-                        }
-                        .b_name{
-                            width: 90%;
-                            margin: 10px auto;
-                            display: flex;
-                            display: -ms-flex;
-                            justify-items: center;
-                            align-items: center;
-                            img{
-                                width: 30px;
-                                height: 30px;
-                                border-radius: 50%;
-                            }
-                            span{
-                                flex: 1;
-                                display: block;
-                                -ms-flex: 1;
-                                @include over;
-                                margin-left: 10px;
-                                font-size:12px ;
-                                color: #333333;
-                            }
-                        }
-
-                    }
-                }
-                .NoData{
-                    background: #ffffff;
-                    width: 100%;
-                    height: 600px;
-                    overflow: hidden;
-                    .img{
-                        width: 200px;
-                        height: 200px;
-                        margin: 100px auto;
-                        img{
-                            @include img;
-                        }
-
-                    }
-                    .text{
-                        font-size: 13px;
-                        color: #333333;
-                        text-align: center;
-                    }
-                }
+            .text{
+              font-size: 13px;
+              color: #333333;
+              text-align: center;
             }
+          }
         }
-    }
+
 </style>
