@@ -557,5 +557,141 @@ export default {
             }
           }
         }
+        .topSearchBox{
+          width: 100%;
+          background: #ffffff;
+          margin-top: 20px;
+          box-shadow: 2px 4px 10px #e2e2e2;
+          position: relative;
+          .boxStyle{
+            padding: 0 30px;
+            margin: 30px 0;
+            .leftAddrsBox{
+              .leftText{
+                font-size:16px ;
+                color: #666666;
+                line-height: 40px;
+                text-align: center;
+              }
+            }
+            .rightSbox{
+              .searchSt{
+                background: #DA251D;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+                color: #ffffff;
+                cursor: pointer;
+                font-size: 24px;
+              }
+            }
+          }
+          .addItem{
+            position: absolute;
+            top: -40px;
+            right: 4px;
+            background: $redColor;
+            height: 36px;
+            color: #ffffff;
+            line-height: 36px;
+            font-size: 14px;
+            box-shadow: 2px 2px 10px #bdbdbd;
+            em{
+              font-size: 20px;
+              color: #ffffff;
+              margin-left: 20px;
+              margin-right: 4px;
+              vertical-align: middle;
+            }
+            span{
+              vertical-align: middle;
+              margin-right: 20px;
+              color: #ffffff;
+            }
+          }
 
+        }
+        .boxList{
+          width: 100%;
+          margin-top: 30px;
+          a{
+            float: left;
+            width: 49%;
+            margin-right: 2%;
+            background: #ffffff;
+            margin-bottom: 30px;
+            position: relative;
+            &:hover{
+              transition: .3s ease-in-out;
+              box-shadow: 2px 0px 10px #cccccc;
+            }
+            .topBox{
+              padding: 0 30px;
+              margin: 40px 0;
+              .one{
+                width: 100%;
+                @include over;
+                font-size: 16px;
+                color: #333333;
+                font-weight: bold;
+              }
+              .two{
+                width: 100%;
+                margin-top: 20px;
+                line-height: 24px;
+                @include twoText;
+                font-size: 14px;
+                color: #666666;
+              }
+              .three{
+                color: #999999;
+                font-size: 14px;
+                margin-top: 35px;
+                .red{
+                  color: $redColor;
+                }
+              }
+            }
+            .right_top{
+              position: absolute;
+              top: 0;
+              right: 20px;
+              width: 35px;
+              height: 50px;
+              background: $redColor;
+              span{
+                width: 100%;
+                height: 100%;
+                position: relative;
+                display: block;
+                color: #ffffff;
+                font-size: 14px;
+                text-align: center;
+                line-height: 34px;
+                &::after{
+                  content: "";
+                  display: block;
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  height: 0;
+                  border: 17.5px solid transparent;
+                  border-bottom-color: #ffffff;
+                  z-index: 900;
+                }
+              }
+            }
+
+            &:nth-child(2n){
+              margin-right: 0;
+            }
+          }
+          &::after{
+            content: "";
+            display: block;
+            clear: both;
+            visibility: hidden;
+            height: 0;
+          }
+        }
 </style>
