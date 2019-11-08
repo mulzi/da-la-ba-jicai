@@ -55,10 +55,13 @@
             <contact v-if="this.$store.state.projectInfo.projectTwo" />
           </transition>
           <transition name="bounce">
+            .
+
             <form-text v-if="this.$store.state.projectInfo.projectThree" />
           </transition>
         </el-row>
       </el-row>
+      <message-one  class="marginBottom100"/>
     </div>
   </div>
 </template>
@@ -68,9 +71,10 @@
 import projectInt from '@/components/projectInfo/projectInt'
 import contact from '@/components/projectInfo/contact'
 import formText from '@/components/projectInfo/formText'
+import MessageOne from '@/components/publicModule/MessageOne'
 export default {
   layout: 'main',
-  components: { projectInt, contact, formText },
+  components: { projectInt, contact, formText, MessageOne },
   data () {
     return {
       date: ''
