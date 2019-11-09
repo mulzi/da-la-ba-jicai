@@ -55,8 +55,6 @@
             <contact v-if="this.$store.state.projectInfo.projectTwo" />
           </transition>
           <transition name="bounce">
-            .
-
             <form-text v-if="this.$store.state.projectInfo.projectThree" />
           </transition>
         </el-row>

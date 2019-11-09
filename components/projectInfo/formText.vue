@@ -27,7 +27,7 @@
             <el-form-item label="项目阶段：" prop="name">
               <el-input v-model="fromBox.formO.name" placeholder="请输入项目阶段" />
             </el-form-item>
-            <el-form-item label="未定材料：" prop="name">
+            <el-form-item label="未定材料：" prop="name" class="label-ls">
               <el-input v-model="fromBox.formO.name" placeholder="请输入未定材料" />
             </el-form-item>
             <el-form-item label="项目图片:">
@@ -39,12 +39,12 @@
                 <el-row>
                   <el-row>
                     <el-upload
-                            action="/api/file/dalaba/file/upload.json"
-                            list-type="picture-card"
-                            :on-remove="(file, fileList)=>handleRemove(file, fileList,ii)"
-                            :limit="3"
-                            :on-success="(response, file, fileList)=>uploadPicture(response, file, fileList,ii)"
-                            :on-exceed="overList"
+                      action="/api/file/dalaba/file/upload.json"
+                      list-type="picture-card"
+                      :on-remove="(file, fileList)=>handleRemove(file, fileList,ii)"
+                      :limit="3"
+                      :on-success="(response, file, fileList)=>uploadPicture(response, file, fileList,ii)"
+                      :on-exceed="overList"
                     >
                       <i class="el-icon-plus" />
                     </el-upload>
@@ -52,16 +52,16 @@
                       <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
                     <el-dialog
-                            title="提示"
-                            :visible.sync="DialogVisibles"
-                            width="30%"
-                            center
+                      title="提示"
+                      :visible.sync="DialogVisibles"
+                      width="30%"
+                      center
                     >
                       <span>{{ tipsText }}</span>
                       <span slot="footer" class="dialog-footer">
-                      <el-button @click="centerDialogVisible">取 消</el-button>
-                      <el-button type="primary" @click="centerDialogVisible">确 定</el-button>
-                    </span>
+                        <el-button @click="centerDialogVisible">取 消</el-button>
+                        <el-button type="primary" @click="centerDialogVisible">确 定</el-button>
+                      </span>
                     </el-dialog>
                   </el-row>
                 </el-row>
@@ -70,9 +70,9 @@
           </el-row>
         </el-row>
         <el-row v-if="fromBox.formO.length === 1" class="addListTop">
-        <span @click="add">点击添加多个情报</span>
+          <span @click="add">点击添加多个情报</span>
         </el-row>
-        <el-row class="add_B_add" v-if="fromBox.formO.length > 1">
+        <el-row v-if="fromBox.formO.length > 1" class="add_B_add">
           <el-row class="boxwE">
             <span class="el-icon-circle-plus-outline" @click="add" />
             <span class="el-icon-remove-outline" @click="removeList" />
@@ -202,8 +202,7 @@ export default {
   }
 }
 </script>
-
-<style scoped lang="scss">
+<style  lang="scss">
   .AddIntelligence{
     width: 100%;
     .contentBox{
@@ -212,6 +211,7 @@ export default {
       .formBox{
         width: 100%;
         .ulAddList{
+          width: 100%;
           .topForm{
             width: 100%;
             margin-bottom: 40px;
@@ -222,12 +222,12 @@ export default {
             .el-form-item{
               display: flex;
               display: -ms-flex;
-              > label{
+              .el-form-item__label{
                 width: 180px;
                 text-align: right;
                 font-size: 18px;
               }
-              >.el-form-item__content{
+              .el-form-item__content{
                 flex: 1;
                 -ms-flex: 1;
                 overflow: hidden;
@@ -235,27 +235,6 @@ export default {
                   width: 100%;
                 }
               }
-              .titBoxStop{
-                width: 100%;
-                .titleTopBox{
-                  font-size: 16px;
-                  color: #333333;
-                  font-weight: bold;
-                }
-                .caption{
-                  color: #999999;
-                  font-size: 12px;
-                }
-              }
-              .el-upload-list--picture-card .el-upload-list__item{
-                width: 134px;
-                height: 134px;
-              }
-              .el-upload--picture-card{
-                width: 134px;
-                height: 134px;
-              }
-
             }
           }
         }
@@ -316,5 +295,25 @@ export default {
         }
       }
     }
+  }
+  .titBoxStop{
+    width: 100%;
+    .titleTopBox{
+      font-size: 16px;
+      color: #333333;
+      font-weight: bold;
+    }
+    .caption{
+      color: #999999;
+      font-size: 12px;
+    }
+  }
+  .el-upload-list--picture-card .el-upload-list__item{
+    width: 134px;
+    height: 134px;
+  }
+  .el-upload--picture-card{
+    width: 134px;
+    height: 134px;
   }
 </style>
