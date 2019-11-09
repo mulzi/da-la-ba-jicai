@@ -4,7 +4,7 @@ import { TIME_OUT } from '../utils/constants'
 import { getDeviceId, getUserInfo, getUserToken, setDeviceId, setUserInfo, setUserToken } from '../utils/cookies'
 
 const host = ''
-const CLIENT_ID = 'test_client_id'
+export const CLIENT_ID = 'test_client_id'
 export const VISITOR_IDENTITY = 'visitor_identity'
 export const REFRESH_TOKEN = 'refresh_token'
 
@@ -13,6 +13,21 @@ export class Auth {
     this.context = context
     this.axios = context.$axios
     this.cookies = context.app.$cookies
+  }
+
+  login (params) {
+    return this.axios({
+      url: `/api/authz/oauth2/token.json`,
+      method: 'POST',
+      timeout: TIME_OUT,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      params,
+      transformRequest: [function (data) {
+        return qs.stringify(data)
+      }]
+    })
   }
 
   fetchToken (params) {
@@ -55,6 +70,26 @@ export class Auth {
     return Promise.resolve(userToken)
   }
 
+  setUserToken (userToken) {
+    return setUserToken(this.cookies, userToken)
+  }
+
+  setUserInfo (userInfo) {
+    return setUserInfo(this.cookies, userInfo)
+  }
+
+  isLogin () {
+    const userToken = getUserToken(this.cookies)
+    if (!userToken) {
+      return false
+    }
+    const userInfo = getUserInfo(this.cookies)
+    if (!userInfo) {
+      return false
+    }
+    return userInfo.userType === 'register'
+  }
+
   async visitorLogin (visitorIdentity) {
     const params = {
       client_id: CLIENT_ID,
@@ -81,14 +116,13 @@ export class Auth {
       // 游客登录
       userToken = await this.visitorLogin(deviceId)
     }
-
     // token是否过期
     const current = new Date().getTime()
     if (current >= userToken.expiredAt) {
       // 刷新令牌
       userToken = await this.refreshToken(userToken.refreshToken)
     }
-
+    console.log(userToken)
     return userToken
   }
 }
