@@ -11,10 +11,13 @@
             </nuxt-link>
           </div>
           <div class="loginBox">
-            <nuxt-link to="/" class="active">
+            <nuxt-link v-if="!isLogin" to="/" class="active">
               立即登录
             </nuxt-link>
-            <nuxt-link to="/">
+            <nuxt-link v-if="isLogin" to="/" class="active">
+              退出登录
+            </nuxt-link>
+            <nuxt-link v-if="!isLogin" to="/">
               注册
             </nuxt-link>
             <nuxt-link to="/">
@@ -45,8 +48,20 @@
 </template>
 
 <script>
+import { Auth } from '@/services/auth'
+
 export default {
-  name: 'HeadTop'
+  name: 'HeadTop',
+  data () {
+    return {
+      isLogin: false
+    }
+  },
+  mounted () {
+    const vm = this
+    const auth = new Auth({ $axios: vm.$axios, app: { $cookies: vm.$cookies } })
+    vm.isLogin = auth.isLogin()
+  }
 }
 </script>
 

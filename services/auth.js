@@ -74,6 +74,22 @@ export class Auth {
     return setUserToken(this.cookies, userToken)
   }
 
+  setUserInfo (userInfo) {
+    return setUserInfo(this.cookies, userInfo)
+  }
+
+  isLogin () {
+    const userToken = getUserToken(this.cookies)
+    if (!userToken) {
+      return false
+    }
+    const userInfo = getUserInfo(this.cookies)
+    if (!userInfo) {
+      return false
+    }
+    return userInfo.userType === 'register'
+  }
+
   async visitorLogin (visitorIdentity) {
     const params = {
       client_id: CLIENT_ID,

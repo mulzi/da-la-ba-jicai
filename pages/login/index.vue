@@ -62,7 +62,13 @@ export default {
       }
       const auth = new Auth({ $axios: vm.$axios, app: { $cookies: vm.$cookies } })
       auth.login(params).then((res) => {
-        auth.setUserToken(res.data)
+        const token = auth.setUserToken(res.data)
+        auth.fetchUserInfo({ accessToken: token.accessToken }).then((userRes) => {
+          auth.setUserInfo(userRes.data)
+          vm.$router.push({ path: '/' })
+        }).catch((err) => {
+          console.log(err)
+        })
       }).catch((err) => {
         console.log(err)
       })
