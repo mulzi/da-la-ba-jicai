@@ -59,7 +59,9 @@
           </transition>
         </el-row>
       </el-row>
-      <message-one  class="marginBottom100"/>
+      <message-one class="marginBottom100" />
+      <integral-pay v-if="this.$store.state.home.IntegralPay" />
+      <pro-details v-if="this.$store.state.home.proDetails"/>
     </div>
   </div>
 </template>
@@ -70,9 +72,11 @@ import projectInt from '@/components/projectInfo/projectInt'
 import contact from '@/components/projectInfo/contact'
 import formText from '@/components/projectInfo/formText'
 import MessageOne from '@/components/publicModule/MessageOne'
+import IntegralPay from '@/components/publicModule/IntegralPay'
+import ProDetails from '@/components/projectInfo/proDetails'
 export default {
   layout: 'main',
-  components: { projectInt, contact, formText, MessageOne },
+  components: { ProDetails, IntegralPay, projectInt, contact, formText, MessageOne },
   data () {
     return {
       date: ''

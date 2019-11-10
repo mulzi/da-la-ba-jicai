@@ -1,6 +1,8 @@
 export const state = () => ({
   home: 1,
-  messageShow: false
+  messageShow: false,
+  IntegralPay: false, // 积分支付查看开关
+  proDetails: false // 项目信息查看开关
 })
 export const mutations = {
   addhome (state, pyload) {
@@ -8,5 +10,11 @@ export const mutations = {
   },
   changeMesShow (state, pyload) {
     state.messageShow = !state.messageShow
+  },
+  changeIntegralPay (state) {
+    state.IntegralPay = !state.IntegralPay
+  },
+  changeProDetails (state) {
+    state.proDetails = !state.proDetails
   }
 }

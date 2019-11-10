@@ -24,9 +24,9 @@
             <p>手机：甲方</p>
           </el-tooltip>
         </el-row>
-        <el-row class="clickLook">
+        <div class="clickLook" @click="changeIntegralPay">
           点击查看
-        </el-row>
+        </div>
       </el-row>
     </li>
   </el-row>
@@ -34,6 +34,11 @@
 
 <script>
 export default {
+  methods: {
+    changeIntegralPay () {
+      this.$store.commit('home/changeIntegralPay')
+    }
+  }
 }
 </script>
 
