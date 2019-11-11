@@ -11,7 +11,7 @@
             </nuxt-link>
           </div>
           <div class="loginBox">
-            <nuxt-link v-if="!isLogin" to="/" class="active">
+            <nuxt-link v-if="!isLogin" to="/login" class="active">
               立即登录
             </nuxt-link>
             <nuxt-link v-if="isLogin" to="/" class="active">

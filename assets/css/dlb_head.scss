@@ -56,9 +56,11 @@ html, body {
     margin: 0 auto;
     height: 40px;
     overflow: hidden;
-    .widthMx{
+
+    .widthMx {
       width: 100%;
       overflow: hidden;
+
       .leftCity {
         width: 50%;
         float: left;
@@ -117,6 +119,7 @@ html, body {
           }
         }
       }
+
       .rightShops {
         float: left;
         width: 50%;
@@ -282,11 +285,13 @@ html, body {
   width: 100%;
   background: #f0f3ef;
   overflow: hidden;
+
   .bodyBox {
     width: 75%;
     max-width: 1400px;
     margin: 0 auto;
-    &::after{
+
+    &::after {
       content: "";
       display: block;
       clear: both;
