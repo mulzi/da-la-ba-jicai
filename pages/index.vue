@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { Auth } from '@/services/auth'
 import { HomeService } from '@/services/home'
 import banner from '@/components/home/banner'
 import rollingNews from '@/components/home/rollingNews'
@@ -52,17 +53,15 @@ export default {
   asyncData (context) {
     const homeService = new HomeService(context)
     return homeService.home().then((res) => {
-      // console.log(res.data)
+      console.log('首页全部数据', res.data)
       return { home: res.data || {} }
     })
+  },
+  async fetch (context) {
+    const auth = new Auth(context)
+    const { store } = context
+    await store.commit('home/changeLogin', auth.isLogin())
   }
-  // async fetch (context) {
-  //   const { store } = context
-  //   const homeService = new HomeService(context)
-  //   await homeService.home().then((res) => {
-  //     store.commit('home/addhome', res.data)
-  //   })
-  // }
 
 }
 </script>

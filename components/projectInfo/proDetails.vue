@@ -119,7 +119,7 @@ export default {
         top: 0;
         left: 0;
         z-index: 900;
-        overflow-y: auto;
+      overflow: hidden;
         .bg{
             width: 100%;
             height: 100%;
@@ -138,6 +138,7 @@ export default {
             left: 50%;
             transform: translate(-50%,-50%);
             z-index: 908;
+            overflow-y: auto;
             .topClose{
                 width: 100%;
                 height: 52px;
@@ -199,6 +200,9 @@ export default {
                                 display: block;
                                 width: 100%;
                                 height: 100%;
+                              &:hover{
+                                cursor: url("~@/assets/img/big01.png") auto;
+                              }
                             }
                         }
                     }

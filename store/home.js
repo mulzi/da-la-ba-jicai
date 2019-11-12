@@ -2,7 +2,8 @@ export const state = () => ({
   home: 1,
   messageShow: false,
   IntegralPay: false, // 积分支付查看开关
-  proDetails: false // 项目信息查看开关
+  proDetails: false, // 项目信息查看开关
+  isLogin: '' // 登录判断
 })
 export const mutations = {
   addhome (state, pyload) {
@@ -16,5 +17,8 @@ export const mutations = {
   },
   changeProDetails (state) {
     state.proDetails = !state.proDetails
+  },
+  changeLogin (state, pyload) {
+    state.isLogin = pyload
   }
 }
