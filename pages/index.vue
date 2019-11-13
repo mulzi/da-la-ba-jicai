@@ -2,14 +2,14 @@
   <div class="indexBodybox">
     <banner :banners="home.banners" />
     <rolling-news :roll-news="home" />
-    <div class="index_Decoration">
-      <business title-name="工程商家推荐" :home-suppliers-recommend="home.homeSuppliersRecommend" />
-      <business style="margin: 0 1.25%" title-name="家装商家推荐" :home-suppliers-recommend="home.projectSuppliersRecommend" />
-      <business title-name="设计施工方推荐" :home-suppliers-recommend="home.homeSuppliersRecommend" />
-    </div>
+    <el-row class="index_Decoration">
+      <business title-name="工程商家推荐" src="/supplier/toolDecoration/" url="/supplier/" :list="home.projectSuppliersRecommend" />
+      <business style="margin: 0 1.25%" src="/supplier/homeDecorationChange/" url="/supplier/" title-name="家装商家推荐" :list="home.homeSuppliersRecommend" />
+      <business title-name="设计施工方推荐" src="/user/designDecoration/" url="/user/" :list="home.userSupplier" />
+    </el-row>
     <good-news :good-news="home" />
-    <new-products :new-products="home" />
-    <div class="homeNewsBox marginBottom100">
+    <new-products :new-products="home.works" />
+    <el-row class="homeNewsBox marginBottom100">
       <div class="title">
         <span>新闻资讯</span>
         <nuxt-link to="">
@@ -18,7 +18,7 @@
       </div>
       <news :newslist="home.platformNews" />
       <news :newslist="home.industryNews" />
-    </div>
+    </el-row>
     <!--    <supplier-img />-->
   </div>
 </template>
@@ -53,7 +53,7 @@ export default {
   asyncData (context) {
     const homeService = new HomeService(context)
     return homeService.home().then((res) => {
-      console.log('首页全部数据', res.data)
+      // console.log('首页全部数据', res.data)
       return { home: res.data || {} }
     })
   },

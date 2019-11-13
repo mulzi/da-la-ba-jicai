@@ -71,13 +71,13 @@ export default {
 
   proxy: {
     '/api': {
-      target: 'http://qy.cqsudu.com:10200',
+      target: 'http://qy.cqsudu.com:10200/',
       pathRewrite: {
         '^/api': '/api'
       }
     }
   },
-  // http://qy.cqsudu.com:20200/
+  // http://qy.cqsudu.com:10200/
   // http://www.dalabajicai.com/
   /*
     ** Build configuration

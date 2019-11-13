@@ -76,10 +76,12 @@
             <el-col :span="5" class="el-icon-search searchSt" />
           </el-col>
         </el-row>
-        <nuxt-link class="addItem" to="">
-          <em class="iconfont">&#xe880;</em>
-          <span>发布项目</span>
-        </nuxt-link>
+        <el-row class="addItem" >
+          <nuxt-link to="">
+            <em class="iconfont">&#xe880;</em>
+            <span>发布项目</span>
+          </nuxt-link>
+        </el-row>
       </el-row>
       <el-row class="boxList">
         <nuxt-link :to="`/projectInfo/projectContent/sss`">
@@ -661,6 +663,10 @@ export default {
                 margin-right: 20px;
                 color: #ffffff;
             }
+          &:hover{
+            background: rgba(218, 37, 29, 0.84);
+            transition: .2s ease-in;
+          }
         }
 
     }

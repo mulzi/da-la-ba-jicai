@@ -2,12 +2,12 @@
   <div class="newsProducts">
     <div class="title">
       <span>新品推荐</span>
-      <nuxt-link to="/">
+      <nuxt-link to="/works/">
         更多>
       </nuxt-link>
     </div>
     <div class="bottomList">
-      <nuxt-link v-for="(item,index) in newProducts.works" :key="index" to="/">
+      <nuxt-link v-for="(item,index) in newProducts" :key="index" :to="`/works/worksPage/${item.id}`">
         <div class="img">
           <img :key="index ++ " v-lazy="item.cover" alt="">
         </div>
@@ -15,9 +15,9 @@
           <p>{{ item.theme }}</p>
           <p>{{ item.name }}</p>
           <p>
-            <i class="el-icon-view" />{{ item.supplierId }}
-            <i class="el-icon-chat-dot-square" />{{ item.userId }}
-            <i class="iconfont">&#xe680;</i>{{ item.userId }}
+            <i class="el-icon-view" /> &nbsp;{{ item.browser }}
+            <i class="el-icon-chat-dot-square" />&nbsp;{{ item.comment }}
+            <i class="iconfont">&#xe680;&nbsp;{{ item.likes }}</i>
           </p>
         </div>
         <div class="b_name">
@@ -40,6 +40,9 @@ export default {
   props: ['newProducts'],
   data () {
     return {}
+  },
+  mounted () {
+    console.log(this.newProducts)
   }
 }
 </script>
@@ -164,7 +167,7 @@ export default {
                     }
                 }
               &:hover{
-                border-color: #b7b7b7;
+                border-color: #a9a9a9;
                 @include triText;
               }
 

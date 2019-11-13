@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 import { Button, Input, Carousel, Container, Icon, Col, Row, CarouselItem, Pagination, BreadcrumbItem,
   Breadcrumb, Tooltip, Rate, Radio, RadioButton, InfiniteScroll, Message, Form, FormItem, Calendar, Select, Cascader,
-  Option, Upload, Dialog, DatePicker
+  Option, Upload, Dialog, DatePicker, Loading
 } from 'element-ui'
 Vue.use(CarouselItem)
 Vue.use(Col)
@@ -30,4 +30,6 @@ Vue.use(Dialog)
 Vue.use(DatePicker)
 Vue.use(InfiniteScroll)
 Vue.use(Message)
+Vue.use(Loading)
 Vue.prototype.$message = Message
+Vue.prototype.$loading = Loading.service

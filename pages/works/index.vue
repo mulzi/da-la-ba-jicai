@@ -1,6 +1,6 @@
 <template>
-  <div class="supplierBody">
-    <div class="bodyBox">
+  <el-row class="supplierBody">
+    <el-row class="bodyBox">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -54,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="bottomListBox">
+      <el-row class="bottomListBox">
         <div v-if="getSupplierLiList.length === 0 " class="NoData marginBottom40">
           <div class="img">
             <img src="@/assets/img/nodata.png" alt="">
@@ -63,7 +63,7 @@
             没有数据
           </div>
         </div>
-        <div v-if="getSupplierLiList.length !== 0 " class="contentList">
+        <el-row v-if="getSupplierLiList.length !== 0 " class="contentList" v-loading="loading">
           <nuxt-link v-for="(item, index) in getSupplierLiList" :key="index" :to="`/works/worksPage/${item.id}`">
             <p>
               <img :src="item.cover" alt="">
@@ -76,10 +76,10 @@
                 项目名称：{{ item.name }}
               </el-row>
               <el-row class="numbers">
-                <i class="el-icon-view">{{item.browser}}</i>
-                <i class="el-icon-chat-dot-square">{{item.comment}}</i>
-                <i class="iconfont">&#xe680; {{item.likes}}</i>
-                <span>{{item.createdAtStr}}</span>
+                <i class="el-icon-view">&nbsp;{{ item.browser }}</i>
+                <i class="el-icon-chat-dot-square">&nbsp;{{ item.comment }}</i>
+                <i class="iconfont">&#xe680;&nbsp; {{ item.likes }}</i>
+                <span>{{ item.createdAtStr }}</span>
               </el-row>
             </el-row>
             <el-row class="b_name">
@@ -89,7 +89,7 @@
               </span>
             </el-row>
           </nuxt-link>
-        </div>
+        </el-row>
         <div v-if="getSupplierLiList.length !== 0 " class="pageSbox">
           <el-pagination
             background
@@ -102,9 +102,9 @@
             @current-change="handleCurrentChange"
           />
         </div>
-      </div>
-    </div>
-  </div>
+      </el-row>
+    </el-row>
+  </el-row>
 </template>
 
 <script>
@@ -157,7 +157,8 @@ export default {
       pageID: 0, // 分页第几页
       sizeID: 20, // 分页数量
       totalCount: 0, // 获取的总数
-      currentPage4: 1
+      currentPage4: 1,
+      loading: true
     }
   },
   // async asyncData (context) { // 获取一级类别
@@ -249,11 +250,17 @@ export default {
       })
     },
     getSupplierList (parmes) {
+      this.loading = true
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getWorksContList(parmes).then((res) => {
-        console.log('s', res.data)
+        console.log('s', res)
         this.getSupplierLiList = res.data.results
         this.totalCount = res.data.totalCount
+        if (res.status === 200) {
+          setTimeout(() => {
+            this.loading = false
+          }, 500)
+        }
       })
     }
   }
@@ -269,7 +276,6 @@ export default {
       width: 75%;
       max-width: 1400px;
       margin: 0 auto;
-      overflow: hidden;
       .HeaderBreadcrumb{
         width: 100%;
         margin-top: 20px;
@@ -322,7 +328,7 @@ export default {
               line-height: 30px;
               margin-bottom: 16px;
               text-align: right;
-              font-size: 16px;
+              font-size: 14px;
               font-weight: bold;
               color: #333333;
             }
@@ -333,9 +339,9 @@ export default {
                 display: inline-block;
                 height: 26px;
                 line-height: 26px;
-                font-size: 16px;
+                font-size: 14px;
                 color: #666666;
-                margin: 0 30px 10px 0;
+                margin: 0 15px 10px 0;
                 padding: 2px 10px;
                 cursor: pointer;
                 &.active{
@@ -374,12 +380,10 @@ export default {
       }
       .bottomListBox{
         margin-top: 30px;
-        overflow: hidden;
         width: 100%;
 
         .contentList{
           width: 100%;
-          overflow: hidden;
           a{
             width:19% ;
             float: left;
@@ -457,6 +461,10 @@ export default {
                 font-size:12px ;
                 color: #333333;
               }
+            }
+            &:hover{
+              transition: .2s ease-in;
+              box-shadow: 0px 6px 20px #cbcbcb;
             }
 
           }

@@ -7,9 +7,13 @@
       <div v-swiper:mySwiper="swiperOption">
         <div class="swiper-wrapper">
           <div v-for="(item,index) in goodnewsLeft " :key="index" class="swiper-slide clearfix swiper-no-swiping">
-            <nuxt-link class="p1" to="/">
-              <i>恭喜</i><em>{{ item.addAgent }}</em><i>通过大喇叭采集与</i> <em>{{ item.addedAgent }}</em>达成入库协议
-            </nuxt-link>
+            <el-row class="p1">
+              <i>恭喜</i><nuxt-link target="_blank" :to="`${item.addHost.includes('designDecoration')?'/user/designDecoration/':'/supplier/toolDecoration/'}${item.addId}`">
+                {{ item.addAgent }}
+              </nuxt-link><i>通过大喇叭采集与</i> <nuxt-link target="_blank" :to="`/supplier/toolDecoration/${item.addedId}`">
+                {{ item.addedAgent }}
+              </nuxt-link>达成入库协议
+            </el-row>
             <span>
               {{ item.createdAtStr }}
             </span>
@@ -40,9 +44,13 @@ export default {
         autoplayDisableOnInteraction: false,
         spaceBetween: 3,
         noSwiping: true
-      }
+      },
+      list: this.goodnewsLeft
     }
+  },
+  mounted () {
   }
+
 }
 </script>
 
@@ -103,7 +111,7 @@ export default {
                 @include over;
                 display: flex;
                 align-items: center;
-                em{
+                a{
                   color: $redColor;
                   max-width: 150px;
                   display: inline-block;

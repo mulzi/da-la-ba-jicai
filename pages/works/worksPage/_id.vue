@@ -25,7 +25,7 @@
               <el-col class="name">
                 {{ date.theme }}
               </el-col>
-              <div v-if="date.collectionTemp === false" class="span">
+              <div @click="getCollection" v-if="date.collectionTemp === false" class="span">
                 加入收藏
               </div>
               <div v-if="date.collectionTemp === true" class="span">
@@ -169,7 +169,7 @@
 </template>
 
 <script>
-import { HomeService } from '@/services/home'
+import { HomeService } from '@/services/works'
 import MessageOne from '@/components/publicModule/MessageOne'
 import Message from '@/components/works/message'
 export default {
@@ -177,7 +177,8 @@ export default {
   components: { Message, MessageOne },
   data () {
     return {
-      date: ''
+      date: '',
+      flagA: true
     }
   },
   mounted () {
@@ -193,7 +194,41 @@ export default {
         console.log('详情', res.data.result)
         this.date = res.data.result
       })
+    },
+    getCollection () { // 添加收藏
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      if (!this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没登录哦！请先登录',
+          type: 'error'
+        })
+        setTimeout(() => {
+          this.$router.push('/login')
+        }, 1000)
+        return false
+      } else if (this.flagA) {
+        this.flagA = false
+        homeService.getCollection({ type: 2, id: this.$route.params.id }).then((res) => {
+          console.log(res)
+          if (res.status === 200) {
+            this.$message({
+              message: '收藏成功',
+              type: 'success'
+            })
+          }
+          setTimeout(() => {
+            this.flagA = true
+          }, 1000)
+        })
+      } else {
+        this.$message({
+          message: '你点击得太频繁了哦~~，休息一会吧！',
+          type: 'waring'
+        })
+        return false
+      }
     }
+
   }
 }
 </script>

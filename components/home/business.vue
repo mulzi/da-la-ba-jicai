@@ -4,14 +4,14 @@
       <span>
         {{ titleName }}
       </span>
-      <nuxt-link to="/">
+      <nuxt-link :to="url">
         更多 +
       </nuxt-link>
     </div>
     <div class="bottomList">
       <ul>
-        <li v-for="(item,index) in homeSuppliersRecommend" :key="index">
-          <nuxt-link to="/">
+        <li v-for="(item,index) in list" :key="index">
+          <nuxt-link :to="`${src}${item.supplierId}`">
             <div class="leftImg">
               <span>
                 <img :src="item.logo" alt="">
@@ -36,9 +36,11 @@
 <script>
 export default {
   // eslint-disable-next-line
-  props: ['homeSuppliersRecommend', 'titleName'],
+  props: ['list', 'titleName', 'src', 'url'],
   data () {
     return {}
+  },
+  mounted () {
   }
 }
 </script>
@@ -74,6 +76,8 @@ export default {
       }
     }
     .bottomList{
+      height: 734px;
+      overflow-y: auto;
       width: 90%;
       max-width: 418px;
       margin: 14px auto 0;

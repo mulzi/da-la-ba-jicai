@@ -6,8 +6,8 @@
     <div class="threeList">
       <div v-swiper:mySwiper="swiperOption">
         <div class="swiper-wrapper">
-          <div v-for="(item,index) in goodnews " :key="index" class="swiper-slide clearfix swiper-no-swiping">
-            <nuxt-link to="/" class="p1">
+          <div v-for="(item,index) in goodNews " :key="index" class="swiper-slide clearfix swiper-no-swiping">
+            <nuxt-link :to="`/purchaseList/detailsPage/${item.id}`" class="p1">
               <em>恭喜</em>{{ item.info }}
             </nuxt-link>
             <i>{{ item.money }}</i>
@@ -24,7 +24,7 @@
 <script>
 export default {
   // eslint-disable-next-line vue/require-prop-types
-  props: ['goodnews'],
+  props: ['goodNews'],
   data () {
     return {
       swiperOption: {
@@ -41,6 +41,9 @@ export default {
         noSwiping: true
       }
     }
+  },
+  mounted () {
+    console.log(this.goodNews)
   }
 }
 </script>

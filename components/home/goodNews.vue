@@ -1,10 +1,10 @@
 <template>
-  <div class="goodNews">
-    <div class="TwoBox">
+  <el-row class="goodNews">
+    <el-row class="TwoBox">
       <rolling-news :goodnews-left="goodNews.enterpriseNews" />
-      <roll-three-news-two :goodnews="goodNews.successCases" />
-    </div>
-  </div>
+      <roll-three-news-two :good-news="goodNews.successCases" />
+    </el-row>
+  </el-row>
 </template>
 
 <script>
@@ -43,7 +43,7 @@ export default {
                 height: 120px;
                 position: absolute;
                 left: 50%;
-                top: 30px;
+                top: 47px;
                 background: linear-gradient(180deg,#f9f9f9,#d9d9d9,#f9f9f9);
             }
         }

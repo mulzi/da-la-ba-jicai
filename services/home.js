@@ -138,7 +138,7 @@ export class HomeService {
       data: params
     })
   }
-  async createCollection (params) { // 加入收藏
+  async createCollection (params) { // 加入材料供应商收藏
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
       url: `/api/supplier/open/createCollection.json`,
@@ -151,7 +151,7 @@ export class HomeService {
       params
     })
   }
-  async deletelCollection (params) { // 取消收藏
+  async deletelCollection (params) { // 取消材料供应商收藏
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
       url: `/api/supplier/open/deleteCollection.json`,
@@ -214,18 +214,6 @@ export class HomeService {
       params
     })
   }
-  async getWorksDetails (params) { // 获取工程案列详情
-    const token = await this.auth.checkAndRefreshToken()
-    return this.axios({
-      url: `/api/works/open/details/${params}.json`,
-      method: 'GET',
-      headers: {
-        Authorization: token.accessToken
-      },
-      timeout: TIME_OUT
-      // eslint-disable-next-line no-undef
-    })
-  }
   async getUserDetails (params) { // 获取设计施工方详情
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
@@ -243,6 +231,18 @@ export class HomeService {
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
       url: `/api/supplier/open/supplier/getTeam/${params}.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT
+      // eslint-disable-next-line no-undef
+    })
+  }
+  async getHomeSuccse (params) { // 获取设计施工方团队介绍详情
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/info/open/case/detail/${params}.json`,
       method: 'GET',
       headers: {
         Authorization: token.accessToken

@@ -14,9 +14,9 @@
             <nuxt-link v-if="!this.$store.state.home.isLogin" to="/login" class="active">
               立即登录
             </nuxt-link>
-            <nuxt-link v-if="this.$store.state.home.isLogin" to="" class="active" @click="delCookies">
+            <span v-if="this.$store.state.home.isLogin" to="" class="active" @click="delCookies">
               退出登录
-            </nuxt-link>
+            </span>
             <nuxt-link v-if="!this.$store.state.home.isLogin" to="/">
               注册
             </nuxt-link>
@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="rightShops">
-          <nuxt-link to="">
+          <nuxt-link to="/">
             首页
           </nuxt-link>
           <nuxt-link to="">
@@ -48,35 +48,26 @@
 </template>
 
 <script>
-// import { Auth } from '@/services/auth'
+import { Auth } from '@/services/auth'
 
 export default {
   name: 'HeadTop',
   data () {
     return {
-      isLogin: false
     }
   },
   mounted () {
     // const vm = this
     // const auth = new Auth({ $axios: vm.$axios, app: { $cookies: vm.$cookies } })
     // vm.isLogin = auth.isLogin()
-    this.getCookies()
   },
   methods: {
     delCookies (name = 'user-token', nameTwo = 'user-info') {
+      const auth = new Auth({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       document.cookie = name + '=;expires=' + (new Date(0)).toGMTString()
       document.cookie = nameTwo + '=;expires=' + (new Date(0)).toGMTString()
-      window.location.reload()
-    },
-    getCookies () {
-      const strCookie = document.cookie
-      const arrCookie = strCookie.split('; ') // 将多cookie切割为多个名/值对
-      for (let i = 0; i < arrCookie.length; i++) { // 遍历cookie数组，处理每个cookie对
-        const arr = arrCookie[i].split('=')
-        console.log(...arr)
-      }
-      console.log(arrCookie)
+      this.$store.commit('home/changeLogin', auth.isLogin())
+      console.log('退出登录成功')
     }
   }
 }
