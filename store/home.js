@@ -22,3 +22,8 @@ export const mutations = {
     state.isLogin = pyload
   }
 }
+export const actions = {
+  CHANGELOGIN ({ commit }, payload) {
+    commit('changeLogin', payload)
+  }
+}

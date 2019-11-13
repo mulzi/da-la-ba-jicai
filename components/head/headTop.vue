@@ -14,7 +14,7 @@
             <nuxt-link v-if="!this.$store.state.home.isLogin" to="/login" class="active">
               立即登录
             </nuxt-link>
-            <span v-if="this.$store.state.home.isLogin" to="" class="active" @click="delCookies">
+            <span v-if="this.$store.state.home.isLogin" class="active" @click="delCookies">
               退出登录
             </span>
             <nuxt-link v-if="!this.$store.state.home.isLogin" to="/">
@@ -57,16 +57,12 @@ export default {
     }
   },
   mounted () {
-    // const vm = this
-    // const auth = new Auth({ $axios: vm.$axios, app: { $cookies: vm.$cookies } })
-    // vm.isLogin = auth.isLogin()
   },
   methods: {
-    delCookies (name = 'user-token', nameTwo = 'user-info') {
+    delCookies () {
       const auth = new Auth({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      document.cookie = name + '=;expires=' + (new Date(0)).toGMTString()
-      document.cookie = nameTwo + '=;expires=' + (new Date(0)).toGMTString()
-      this.$store.commit('home/changeLogin', auth.isLogin())
+      auth.delCookies()
+      this.$store.dispatch('home/CHANGELOGIN', auth.isLogin())
       console.log('退出登录成功')
     }
   }

@@ -102,6 +102,10 @@ export class Auth {
     setUserInfo(this.cookies, userRes.data)
     return Promise.resolve(userToken)
   }
+  async delCookies () {
+    this.cookies.removeAll()
+    await this.checkAndRefreshToken()
+  }
 
   async checkAndRefreshToken () {
     // 判断设备号

@@ -1,5 +1,8 @@
 export default {
   mode: 'universal',
+  router: {
+    middleware: 'isLogin'
+  },
   /*
     ** Headers of the page
     */

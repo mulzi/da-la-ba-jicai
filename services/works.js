@@ -46,4 +46,30 @@ export class HomeService {
       params
     })
   }
+  async getThumb (params) { // 点赞
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/basic/open/thumbUp.json`,
+      method: 'POST',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
+  async delThumb (params) { // 取消赞
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/basic/open/thumbUp.json`,
+      method: 'DELETE',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
 }

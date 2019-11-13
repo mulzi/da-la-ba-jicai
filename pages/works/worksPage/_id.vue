@@ -28,7 +28,11 @@
               <div @click="getCollection" v-if="date.collectionTemp === false" class="span">
                 加入收藏
               </div>
-              <div v-if="date.collectionTemp === true" class="span">
+              <div
+                @click="delCollection"
+                v-if="date.collectionTemp === true"
+                class="span"
+              >
                 取消收藏
               </div>
             </el-row>
@@ -61,7 +65,10 @@
               <p>经典之处：{{ date.classic }}</p>
             </div>
             <div class="praise">
-              <div class="circle" :class="date.temp === true ? 'active' :'' ">
+              <div @click="getThumb" class="circle" v-if="date.temp === false">
+                <i class="iconfont">&#xe680;</i>
+              </div>
+              <div class="circle active" v-if="date.temp === true">
                 <i class="iconfont">&#xe680;</i>
               </div>
               <span v-if="date.temp === false">
@@ -209,16 +216,17 @@ export default {
       } else if (this.flagA) {
         this.flagA = false
         homeService.getCollection({ type: 2, id: this.$route.params.id }).then((res) => {
-          console.log(res)
+          // console.log(res)
           if (res.status === 200) {
             this.$message({
               message: '收藏成功',
               type: 'success'
             })
           }
+          this.getWorksDetails(this.$route.params.id)
           setTimeout(() => {
             this.flagA = true
-          }, 1000)
+          }, 10000)
         })
       } else {
         this.$message({
@@ -227,6 +235,26 @@ export default {
         })
         return false
       }
+    },
+    delCollection () { // 取消收藏
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.delCollection({ type: 2, id: this.$route.params.id }).then((res) => {
+        // console.log(res)
+        if (res.status === 200) {
+          this.$message({
+            message: '取消成功',
+            type: 'success'
+          })
+        }
+        this.getWorksDetails(this.$route.params.id)
+      })
+    },
+    getThumb () {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getThumb({ type: 3, otherId: this.$route.params.id }).then((res) => {
+        console.log(res)
+        this.getWorksDetails(this.$route.params.id)
+      })
     }
 
   }
