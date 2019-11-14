@@ -1,6 +1,6 @@
 <template>
   <div class="supplierBody">
-    <div class="bodyBox">
+    <div class="bodyBox" v-loading="loading">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -25,7 +25,7 @@
                 供应方：
               </el-col>
               <el-col class="right">
-                {{date.supplier}}
+                {{ date.supplier }}
               </el-col>
             </el-row>
             <el-row class="one">
@@ -33,7 +33,7 @@
                 需求方：
               </el-col>
               <el-col class="right">
-                {{date.demander}}
+                {{ date.demander }}
               </el-col>
             </el-row>
             <el-row class="one">
@@ -41,7 +41,7 @@
                 项目名称：
               </el-col>
               <el-col class="right">
-                {{date.projectName}}
+                {{ date.projectName }}
               </el-col>
             </el-row>
             <el-row class="one">
@@ -49,7 +49,7 @@
                 金额：
               </el-col>
               <el-col class="right">
-                {{date.money}}
+                {{ date.money }}
               </el-col>
             </el-row>
             <el-row class="one">
@@ -90,6 +90,7 @@ export default {
   layout: 'main',
   data () {
     return {
+      loading: true,
       date: []
     }
   },
@@ -102,6 +103,9 @@ export default {
       homeService.getHomeSuccse(params).then((res) => {
         console.log(res.data)
         this.date = res.data.result
+        setTimeout(() => {
+          this.loading = false
+        }, 500)
       })
     }
   }

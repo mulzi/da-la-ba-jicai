@@ -4,16 +4,18 @@
       成功案列
     </div>
     <div class="threeList">
-      <div v-swiper:mySwiper="swiperOption">
+      <div @mouseenter="bannerStop" @mouseleave="bannerStart" v-swiper:mySwiper="swiperOption">
         <div class="swiper-wrapper">
           <div v-for="(item,index) in goodNews " :key="index" class="swiper-slide clearfix swiper-no-swiping">
-            <nuxt-link :to="`/purchaseList/detailsPage/${item.id}`" class="p1">
-              <em>恭喜</em>{{ item.info }}
-            </nuxt-link>
-            <i>{{ item.money }}</i>
-            <span>
-              {{ item.createdAtStr }}
-            </span>
+            <el-row class="pone">
+              <nuxt-link target="_blank" :to="`/purchaseList/detailsPage/${item.id}`" class="p1">
+                <em>恭喜</em>{{ item.info | text }}
+              </nuxt-link>
+              <i>{{ item.money }}</i>
+              <span>
+                {{ item.createdAtStr }}
+              </span>
+            </el-row>
           </div>
         </div>
       </div>
@@ -23,17 +25,24 @@
 
 <script>
 export default {
+  filters: {
+    text (val) { // 警告此处是坑 换了新的数据字段，但是我就是不换 看熊大多久处理数据
+      return val.slice(2)
+    }
+  },
   // eslint-disable-next-line vue/require-prop-types
   props: ['goodNews'],
   data () {
     return {
+      list: this.goodNews,
       swiperOption: {
         direction: 'vertical', // 向上
         autoplay: {
-          delay: 2000
+          delay: 2000,
+          waitForTransition: true
         },
         speed: 1000, // 速度
-        loop: true, // 自动轮播
+        loop: true, //
         freeMode: true,
         slidesPerView: 3,
         autoplayDisableOnInteraction: false,
@@ -44,6 +53,14 @@ export default {
   },
   mounted () {
     console.log(this.goodNews)
+  },
+  methods: {
+    bannerStop () {
+      this.mySwiper.autoplay.stop()
+    },
+    bannerStart () {
+      this.mySwiper.autoplay.start()
+    }
   }
 }
 </script>
@@ -95,33 +112,41 @@ export default {
                         overflow: hidden;
                         .swiper-slide{
                             display: flex;
+                            display: -ms-flex;
+                          .pone{
+                            display: flex;
+                            display: -ms-flex;
+                            align-items: center;
+                            justify-items: center;
                             .p1{
-                              display: inline-block;
-                                flex: 1;
-                                height: 32px;
-                                line-height: 32px;
-                                margin-left: 30px;
-                                color: #333333;
-                                font-size: 14px;
-                                align-items: center;
-                                @include over;
-                                em{
-                                    color: $redColor;
+                              display: block;
+                              flex: 1;
+                              height: 32px;
+                              line-height: 32px;
+                              margin-left: 30px;
+                              color: #333333;
+                              font-size: 14px;
+                              align-items: center;
+                              @include over;
+                              em{
+                                color: $redColor;
 
-                                }
+                              }
                             }
                             span{
-                                width: 80px;
-                                margin-left: 20px;
-                                font-size:14px ;
-                                color: #333333;
+                              width: 80px;
+                              margin-left: 20px;
+                              font-size:14px ;
+                              color: #333333;
                             }
                             i{
-                                min-width: 66px;
-                                color: $redColor;
-                                font-size: 14px;
-                                margin-left: 40px;
+                              min-width: 66px;
+                              color: $redColor;
+                              font-size: 14px;
+                              margin-left: 40px;
                             }
+                          }
+
                         }
 
                     }

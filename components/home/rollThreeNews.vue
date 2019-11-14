@@ -4,7 +4,7 @@
       入库喜讯
     </div>
     <div class="threeList">
-      <div v-swiper:mySwiper="swiperOption">
+      <div @mouseenter="bannerStop" @mouseleave="bannerStart" v-swiper:mySwiper="swiperOption">
         <div class="swiper-wrapper">
           <div v-for="(item,index) in goodnewsLeft " :key="index" class="swiper-slide clearfix swiper-no-swiping">
             <el-row class="p1">
@@ -35,10 +35,11 @@ export default {
       swiperOption: {
         direction: 'vertical', // 向上
         autoplay: {
-          delay: 2000
+          delay: 2000,
+          waitForTransition: true
         },
         speed: 1000, // 速度
-        loop: true, // 自动轮播
+        loop: true,
         freeMode: true,
         slidesPerView: 3,
         autoplayDisableOnInteraction: false,
@@ -49,6 +50,14 @@ export default {
     }
   },
   mounted () {
+  },
+  methods: {
+    bannerStop () {
+      this.mySwiper.autoplay.stop()
+    },
+    bannerStart () {
+      this.mySwiper.autoplay.start()
+    }
   }
 
 }
@@ -118,6 +127,9 @@ export default {
                   @include over;
                   height: 32px;
                   line-height: 32px;
+                  &:hover{
+                    text-decoration:underline #DA251D;
+                  }
                 }
               }
               span{

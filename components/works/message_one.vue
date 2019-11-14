@@ -7,13 +7,13 @@
           <span class="el-icon-close" />
         </div>
         <div class="name">
-          你想对<span>用户名字</span>说什么
+          你想对<span>用户名字ss</span>说什么
         </div>
         <div class="text">
-          <textarea v-model="text" placeholder="写点什么吧" />
+          <textarea placeholder="写点什么吧" />
         </div>
         <div class="sub">
-          <span @click="postComment({type:4, toUserId: $route.params.id,content: text})">提交</span>
+          <span @click="postComment({type:4,toUserId:0})">提交</span>
         </div>
       </div>
     </div>
@@ -26,12 +26,12 @@ export default {
   name: 'Message',
   data () {
     return {
-      text: ''
+
     }
   },
   methods: {
     showMessageBox () {
-      this.$store.commit('works/changeMsg')
+      this.$store.commit('works/changeMsgTwo')
     },
     postComment () {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })

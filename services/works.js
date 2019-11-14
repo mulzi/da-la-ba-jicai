@@ -56,7 +56,7 @@ export class HomeService {
       },
       timeout: TIME_OUT,
       // eslint-disable-next-line no-undef
-      params
+      data: params
     })
   }
   async delThumb (params) { // 取消赞
@@ -64,6 +64,45 @@ export class HomeService {
     return this.axios({
       url: `/api/basic/open/thumbUp.json`,
       method: 'DELETE',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
+  async getComment (params) { // 获取评论
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/basic/open/comment.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
+  async postComment (params) { // 获取评论
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/basic/open/comment.json`,
+      method: 'POST',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      data: params
+    })
+  }
+  async getRecommend (params) { // 获取推荐
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/works/open/recommend.json`,
+      method: 'GET',
       headers: {
         Authorization: token.accessToken
       },

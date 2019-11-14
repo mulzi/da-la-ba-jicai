@@ -1,112 +1,71 @@
 <template>
-  <div class="liList">
-    <div class="l_img">
-      <img src="@/assets/img/0123.jpg" alt="">
-    </div>
-    <div class="r_Li_list">
-      <div class="topTit">
-        <span>用户名称：</span>撒大声地阿萨德阿萨德啊实打实大啊实打实大阿萨德啊
+  <el-row>
+    <div v-for="(t,i) in date" :key="i" class="liList">
+      <div class="l_img">
+        <img :src="t.headUri" alt="">
       </div>
-      <div class="time">
-        <div class="l_time">
-          今天 11:00
+      <div class="r_Li_list">
+        <div class="topTit">
+          <span>{{ t.nickName }}：</span>{{ t.content }}
         </div>
-        <div class="r_click_Reply" @click="showMessageBox">
-          回复
-        </div>
-      </div>
-      <div class="n_list">
-        <div class="n_liList">
-          <div class="l_img">
-            <img src="@/assets/img/0123.jpg" alt="">
+        <div class="time">
+          <div class="l_time">
+            {{ t.createdAtStr }}
           </div>
-          <div class="r_Li_list">
-            <div class="topTit">
-              <span>用户名称：</span><em>回复<i>@用户名称</i></em> 撒大声地阿萨德阿萨德啊实打实大啊实打实大阿萨德啊
-            </div>
-            <div class="time">
-              <div class="l_time">
-                今天 11:00
-              </div>
-              <div class="r_click_Reply" @click="showMessageBox">
-                回复
-              </div>
-            </div>
+          <div v-if=" t.ownId === t.userId ? false : true " class="r_click_Reply" @click="showMessageBox">
+            回复
           </div>
         </div>
-        <div class="n_liList">
-          <div class="l_img">
-            <img src="@/assets/img/0123.jpg" alt="">
-          </div>
-          <div class="r_Li_list">
-            <div class="topTit">
-              <span>用户名称：</span><em>回复<i>@用户名称</i></em> 撒大声地阿萨德阿萨德啊实打实大啊实打实大阿萨德啊
+        <div class="n_list" v-if="t.children">
+          <div class="n_liList" v-for="(tt,ii) in t.children" :key="ii">
+            <div class="l_img">
+              <img :src="tt.headUri" alt="">
             </div>
-            <div class="time">
-              <div class="l_time">
-                今天 11:00
+            <div class="r_Li_list">
+              <div class="topTit">
+                <span>{{ tt.nickName }}：</span><em>回复<i>@{{ tt.toNickName }}</i></em> {{ tt.content }}
               </div>
-              <div class="r_click_Reply" @click="showMessageBox">
-                回复
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="n_liList">
-          <div class="l_img">
-            <img src="@/assets/img/0123.jpg" alt="">
-          </div>
-          <div class="r_Li_list">
-            <div class="topTit">
-              <span>用户名称：</span><em>回复<i>@用户名称</i></em> 撒大声地阿萨德阿萨德啊实打实大啊实打实大阿萨德啊
-            </div>
-            <div class="time">
-              <div class="l_time">
-                今天 11:00
-              </div>
-              <div class="r_click_Reply" @click="showMessageBox">
-                回复
+              <div class="time">
+                <div class="l_time">
+                  {{ tt.createdAtStr }}
+                </div>
+                <div class="r_click_Reply" @click="showMessageBoxTwo">
+                  回复
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="n_liList">
-          <div class="l_img">
-            <img src="@/assets/img/0123.jpg" alt="">
+          <div class="spread">
+            <span>展开查看更多9条评论 <i class="el-icon-arrow-down" /></span>
           </div>
-          <div class="r_Li_list">
-            <div class="topTit">
-              <span>用户名称：</span><em>回复<i>@用户名称</i></em> 撒大声地阿萨德阿萨德啊实打实大啊实打实大阿萨德啊
-            </div>
-            <div class="time">
-              <div class="l_time">
-                今天 11:00
-              </div>
-              <div class="r_click_Reply" @click="showMessageBox">
-                回复
-              </div>
-            </div>
+          <div class="fewer">
+            <span>
+              收起更多评论 <i class="el-icon-arrow-up" />
+            </span>
           </div>
-        </div>
-        <div class="spread">
-          <span>展开查看更多9条评论 <i class="el-icon-arrow-down" /></span>
-        </div>
-        <div class="fewer">
-          <span>
-            收起更多评论 <i class="el-icon-arrow-up" />
-          </span>
         </div>
       </div>
     </div>
-  </div>
+  </el-row>
 </template>
 
 <script>
 export default {
   name: 'Comment',
+  // eslint-disable-next-line vue/require-prop-types
+  props: [ 'date' ],
+  data () {
+    return {
+    }
+  },
+  mounted () {
+  },
   methods: {
     showMessageBox () {
       this.$store.commit('works/changeMsg')
+    },
+    showMessageBoxTwo () {
+      this.$store.commit('works/changeMsgTwo')
     }
   }
 }
