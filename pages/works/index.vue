@@ -227,6 +227,9 @@ export default {
         const materialTypes = [{ id: 0, name: '全部' }]
         this.materialTypes = materialTypes.concat(res.data.result.worksStyles)
         this.projectTypes = projectTypes.concat(res.data.result.worksTypes)
+        this.supplierTwo = 0
+        this.supplierThree = 0
+        this.supplierFour = 0
       })
     },
     getFilterBySupplier (parmes) { // 获取二级三级类别

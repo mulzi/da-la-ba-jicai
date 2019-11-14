@@ -140,6 +140,7 @@ export default {
   data () {
     return {
       date: '',
+      recList: '',
       flagA: true,
       flagB: true,
       loading: true,
@@ -148,7 +149,6 @@ export default {
   },
   mounted () {
     this.getWorksDetails(this.$route.params.id)
-    this.getRecommend()
   },
   methods: {
     showMessageBox () {
@@ -159,6 +159,7 @@ export default {
       homeService.getWorksDetails(pamars).then((res) => {
         console.log('详情', res.data.result)
         this.date = res.data.result
+        this.getRecommend({ source: this.date.sourceId, size: 10 })
         setTimeout(() => {
           this.loading = false
         }, 500)
@@ -266,10 +267,11 @@ export default {
         console.log('赋值成功', this.commentList)
       })
     },
-    getRecommend () {
+    getRecommend (params) {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.getRecommend({ size: 10 }).then((res) => {
-        console.log(res.data)
+      homeService.getRecommend(params).then((res) => {
+        this.recList = res.data.results
+        console.log('ddd', res.data)
       })
     }
   }
