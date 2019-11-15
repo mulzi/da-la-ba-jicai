@@ -92,6 +92,17 @@ export default {
       })
     },
     subOrder () {
+      const _this = this
+      if (!_this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没登录哦~~~   去登录吧！',
+          type: 'error'
+        })
+        setTimeout(() => {
+          _this.$router.push('/login')
+        }, 1000)
+        return false
+      }
       const params = {
         supplierId: this.$route.params.id,
         name: this.ruleForm.name,

@@ -61,13 +61,13 @@
                 </li>
               </ul>
             </div>
-            <div class="privilege">
+            <div class="privilege" v-if="false">
               <span>优惠买单</span>
             </div>
           </el-col>
         </el-row>
         <el-row class="consultingBox">
-          <span>一键咨询底价</span>
+          <span v-if="false">一键咨询底价</span>
           <span v-if="date.collection === false" @click="getCollection">加入收藏</span>
           <span v-if="date.collection === true" @click="createCollection">取消收藏</span>
         </el-row>
@@ -125,6 +125,7 @@
         <company v-if="threeListShow" :list="date" />
         <CompanyInfo v-if="fourListShow" />
         <evaluate v-if="fiveListShow" />
+        <IntegralPay v-if="$store.state.supplier.IntegralPay"/>
       </el-row>
       <!--      id是{{ $route.params.id }}-->
     </div>
@@ -139,9 +140,11 @@ import CompanyInfo from '@/components/supplier/CompanyInfo'
 import evaluate from '@/components/supplier/homeDecoration/evaluate'
 import company from '@/components/supplier/homeDecoration/company'
 import sale from '@/components/supplier/homeDecoration/sale'
+import IntegralPay from '@/components/supplier/IntegralPay'
 export default {
   layout: 'main',
   components: {
+    IntegralPay,
     banner,
     productLine,
     CompanyInfo,
@@ -193,6 +196,18 @@ export default {
       })
     },
     getCollection () { // 点击收藏
+      const _this = this
+      if (!_this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没登录哦~~~   去登录吧！',
+          type: 'error'
+        })
+        setTimeout(() => {
+          _this.$router.push('/login')
+        }, 1000)
+
+        return false
+      }
       if (this.collectionFlag) {
         this.collectionFlag = false
         const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
@@ -208,7 +223,7 @@ export default {
         this.getSupplierList()
         setTimeout(() => {
           this.collectionFlag = true
-        }, 5000)
+        }, 10000)
       } else {
         this.$message({ message: '你点击太快了哦~~~', type: 'warning'
         })

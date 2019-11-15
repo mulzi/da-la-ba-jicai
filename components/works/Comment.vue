@@ -76,7 +76,8 @@ export default {
         width: 100%;
         display: flex;
         display: -ms-flex;
-        margin-bottom: 30px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid $borderE7;
         >.l_img{
             width: 40px;
             height: 40px;
@@ -88,6 +89,7 @@ export default {
             flex: 1;
             margin-left: 10px;
             overflow: hidden;
+            margin-bottom: 15px;
             >.topTit{
                 width: 100%;
                 font-size:16px ;

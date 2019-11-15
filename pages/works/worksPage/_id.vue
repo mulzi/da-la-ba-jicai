@@ -107,11 +107,11 @@
               作品精选
             </div>
             <div class="list_a">
-              <nuxt-link to="">
-                <span>
-                  撒大声地啊实打实大阿萨德阿萨德阿萨德按时按时啊实打实的
+              <nuxt-link v-for="(t,i) in recList" :key="i" :to="`/works/worksPage/${t.id}`">
+                <span :title="t.theme">
+                  {{ t.theme }}
                 </span>
-                <em>655555</em>
+                <em>{{ t.browser }}</em>
               </nuxt-link>
             </div>
             <div class="moreList">
@@ -271,7 +271,7 @@ export default {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getRecommend(params).then((res) => {
         this.recList = res.data.results
-        console.log('ddd', res.data)
+        // console.log('ddd', res.data)
       })
     }
   }
@@ -294,7 +294,6 @@ export default {
                 width: 100%;
                 border-bottom: 1px solid $borderE7;
                 background: #ffffff;
-
                 .nameTit_box {
                     width: 92%;
                     margin: 30px auto 0;

@@ -3,8 +3,8 @@
     <div id="topListBox" class="topListBox padding30">
       <product-line-one v-for="(item,index) in lists" :key="index" :dates="item"/>
     </div>
-    <div class="moneyState ">
-      价格说明：用户自己输入
+    <div v-if="lists.priceIllustrated" class="moneyState ">
+      价格说明：{{ lists.priceIllustrated }}
     </div>
     <div class="tips">
       温馨提示：平台提倡公平交易，为保障各位消费者合法权益，请各位切勿相信口头承诺，一定要写到合作协议里面或者将承诺签字录音等！

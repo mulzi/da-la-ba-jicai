@@ -338,13 +338,15 @@ export default {
             .rightList{
               flex: 1;
               -ms-flex: 1;
+              font-size: 0;
               span{
                 display: inline-block;
                 height: 26px;
                 line-height: 26px;
                 font-size: 14px;
                 color: #666666;
-                margin: 0 15px 10px 0;
+                margin: 0 6px 6px 0;
+                border-radius: 2px;
                 padding: 2px 10px;
                 cursor: pointer;
                 &.active{

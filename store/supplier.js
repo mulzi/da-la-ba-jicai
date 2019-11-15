@@ -9,7 +9,8 @@ export const state = () => ({
   projectTypeIdNu: null, // 项目类别ID临时存储
   gradeNu: null, // 品牌档次ID临时存储
   pageID: 0, // 分页第几页
-  sizeID: 20 // 分页数量
+  sizeID: 20, // 分页数量
+  IntegralPay: false // 积分支付查看开关
 })
 export const mutations = {
   changeSupplinerOne (state, pyload) {
@@ -38,7 +39,11 @@ export const mutations = {
   },
   changeEngineering (state) {
     state.engineering = !state.engineering
+  },
+  changeIntegralPay (state) {
+    state.IntegralPay = !state.IntegralPay
   }
+
 }
 export const actions = {
   CHANGECategory ({ commit }, payload) {

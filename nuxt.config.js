@@ -74,7 +74,7 @@ export default {
 
   proxy: {
     '/api': {
-      target: 'http://qy.cqsudu.com:10200/',
+      target: 'http://192.168.1.23:15100',
       pathRewrite: {
         '^/api': '/api'
       }

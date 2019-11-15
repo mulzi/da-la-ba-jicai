@@ -251,4 +251,29 @@ export class HomeService {
       // eslint-disable-next-line no-undef
     })
   }
+  async consumeScore (params) { // 积分消费
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/score/open/consume/order.json`,
+      method: 'POST',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      data: params
+    })
+  }
+  async postScore (params) { // 查询账户余额及积分价格
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/score/open/consume/consumeInfo/${params}.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT
+      // eslint-disable-next-line no-undef
+    })
+  }
 }

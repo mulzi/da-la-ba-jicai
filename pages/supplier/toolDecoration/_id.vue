@@ -103,6 +103,7 @@
         <Evaluate v-if="fiveListShow" />
       </el-row>
       <message-module-one v-if="$store.state.home.messageShow" />
+      <integral-pay v-if="$store.state.supplier.IntegralPay"/>
       <!--      id是{{ $route.params.id }}-->
     </div>
   </div>
@@ -117,9 +118,11 @@ import CompanyInfo from '@/components/supplier/CompanyInfo'
 import Evaluate from '@/components/supplier/Evaluate'
 import companyIntroduction from '@/components/supplier/companyIntroduction'
 import messageModuleOne from '@/components/publicModule/messageModuleOne'
+import IntegralPay from '@/components/supplier/IntegralPay'
 export default {
   layout: 'main',
   components: {
+    IntegralPay,
     banner,
     productLine,
     EngineeringWorks,
@@ -148,7 +151,7 @@ export default {
     const homeService = new HomeService(context)
     // eslint-disable-next-line no-undef
     return homeService.SupplierListParticulars({ supplierId: params.id }).then((res) => {
-      console.log(res.data)
+      console.log('详情', res.data)
       return { date: res.data }
     })
   },
@@ -169,11 +172,23 @@ export default {
     getSupplierList () { // 获取详情数据
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.SupplierListParticulars({ supplierId: this.$route.params.id }).then((res) => {
-        // console.log(res.data)
+        console.log('详情数据', res.data)
         this.date = res.data
       })
     },
     getCollection () { // 点击收藏
+      const _this = this
+      if (!_this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没登录哦~~~   去登录吧！',
+          type: 'error'
+        })
+        setTimeout(() => {
+          _this.$router.push('/login')
+        }, 1000)
+
+        return false
+      }
       if (this.collectionFlag) {
         this.collectionFlag = false
         const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
@@ -189,7 +204,7 @@ export default {
         this.getSupplierList()
         setTimeout(() => {
           this.collectionFlag = true
-        }, 5000)
+        }, 10000)
       } else {
         this.$message({ message: '你点击太快了哦~~~', type: 'warning'
         })

@@ -272,15 +272,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .supplierBody{
-    width: 100%;
-    background: #f0f3ef;
-    overflow: hidden;
-    .bodyBox{
-      width: 75%;
-      max-width: 1400px;
-      margin: 0 auto;
-      overflow: hidden;
+
       .HeaderBreadcrumb{
         width: 100%;
         margin-top: 20px;
@@ -331,9 +323,9 @@ export default {
               width: 80px;
               height: 30px;
               line-height: 30px;
-              margin-bottom: 16px;
+              margin-bottom: 14px;
               text-align: right;
-              font-size: 16px;
+              font-size: 14px;
               font-weight: bold;
               color: #333333;
             }
@@ -344,11 +336,12 @@ export default {
                 display: inline-block;
                 height: 26px;
                 line-height: 26px;
-                font-size: 16px;
+                font-size: 14px;
                 color: #666666;
-                margin: 0 30px 10px 0;
+                margin: 0 6px 6px 0;
                 padding: 2px 10px;
                 cursor: pointer;
+                border-radius: 2px;
                 &.active{
                   color: #ffffff;
                   background: $redColor;
@@ -458,6 +451,4 @@ export default {
           }
         }
       }
-    }
-  }
 </style>

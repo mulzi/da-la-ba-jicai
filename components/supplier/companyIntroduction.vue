@@ -63,7 +63,7 @@
               <span>联系人：</span><em>{{ t.name }}</em>
             </div>
             <div class="li">
-              <span>部门：</span><em>***</em>
+              <span>部门：</span><em> {{ t.department }} </em>
             </div>
             <div class="li">
               <span>职位：</span><em>{{ t.positionLevel }}</em>
@@ -74,8 +74,8 @@
           </li>
         </ul>
       </div>
-      <div class="clickShow">
-        <span>积分查看</span>
+      <div class="clickShow" v-if="this.list.contacts[0].flag">
+        <span @click="payShow">积分查看</span>
       </div>
       <div class="tips">
         联系我时请说是在大喇叭集采网上看到的，谢谢！
@@ -118,6 +118,24 @@ export default {
       this.constructionExplain = this.list.constructionExplain.split('\n')
     } else {
       this.constructionExplain = null
+    }
+  },
+  methods: {
+    payShow () {
+      const _this = this
+      if (!_this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没登录哦~~~   去登录吧！',
+          type: 'error'
+        })
+        setTimeout(() => {
+          _this.$router.push('/login')
+        }, 1000)
+
+        return false
+      }
+      this.$store.dispatch('home/CHANGEPAYSCORE', 6)
+      this.$store.commit('supplier/changeIntegralPay')
     }
   }
 }
