@@ -99,10 +99,10 @@
       <el-row class="bottomModuleBox">
         <el-row class="topMenuBox">
           <ul>
-            <li :class="oneListShow ? 'active':''" @click="oneChangeShow">
+            <li v-if="dates.length !== 0" :class="oneListShow ? 'active':''" @click="oneChangeShow">
               <span>特价爆款</span>
             </li>
-            <li :class="twoListShow ? 'active':''" @click="twoChangeShow">
+            <li v-if="date.product.length !== 0" :class="twoListShow ? 'active':''" @click="twoChangeShow">
               <span>产品系列</span>
             </li>
             <li :class="threeListShow ? 'active':''" @click="threeChangeShow">
@@ -125,7 +125,7 @@
         <company v-if="threeListShow" :list="date" />
         <CompanyInfo v-if="fourListShow" />
         <evaluate v-if="fiveListShow" />
-        <IntegralPay v-if="$store.state.supplier.IntegralPay"/>
+        <IntegralPay v-if="$store.state.supplier.IntegralPay" />
       </el-row>
       <!--      id是{{ $route.params.id }}-->
     </div>
@@ -161,6 +161,7 @@ export default {
       fourListShow: false, // 公司资讯列表显示
       fiveListShow: false, // 评价留言显示
       date: [ ], // 主数据
+      dates: [ ], // 特价爆款
       collectionFlag: true, // 点击收藏的锁
       bannerShow: false,
       videoShow: true,
@@ -173,11 +174,20 @@ export default {
     // eslint-disable-next-line no-undef
     return homeService.SupplierListParticulars({ supplierId: params.id }).then((res) => {
       // eslint-disable-next-line no-console
-      console.log(res.data)
+      console.log('详情', res.data)
       return { date: res.data || {} }
     })
   },
   created () {
+    const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+    homeService.postHotProducts(this.$route.params.id).then((res) => { // 获取特价爆款
+      console.log(res.data.results)
+      this.dates = res.data.results
+      if (res.data.results === '' || res.data.results.length === 0 || res.data.results === []) {
+        this.oneListShow = false
+        this.threeListShow = true
+      }
+    })
     if (this.date.videoUri !== null || undefined) {
       this.videoShowTwo = true
     } else {

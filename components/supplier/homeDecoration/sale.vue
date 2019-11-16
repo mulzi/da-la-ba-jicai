@@ -1,30 +1,24 @@
 <template>
   <el-row class="saleBox marginBottom100">
     <el-row class="saleList">
-      <el-row class="liList">
+      <el-row class="liList" v-for="(t,i) in dates" :key="i">
         <el-row class="flexs">
           <div class="leftBanner">
-            <banner />
+            <banner :banner="t.productPics" />
           </div>
           <div class="rightText">
             <el-row class="title">
-              <span>产品名称</span>
+              <span>{{ t.name }}</span>
             </el-row>
             <el-row class="property">
-              <el-col class="li">
-                属性：45KG
-              </el-col>
-              <el-col class="li">
-                属性：45KG
-              </el-col>
-              <el-col class="li">
-                属性：45KG
+              <el-col class="li" v-for="(tt,ii) in t.productAttributeAndValues" :key="ii">
+                {{ tt.attributeName }}{{ tt.name }}
               </el-col>
             </el-row>
             <el-row class="money">
               <el-col class="leBox">
                 <span>大喇叭惊爆价：</span>
-                <em>72</em>
+                <em>{{ t.price }}</em>
                 <span>元</span>
               </el-col>
               <el-col class="riBox">
@@ -32,7 +26,7 @@
                   门店价：
                 </span>
                 <em>
-                  99
+                  {{ t.previousPrice }}
                 </em>
                 <span>
                   元
@@ -41,7 +35,7 @@
             </el-row>
           </div>
         </el-row>
-        <div class="line-s" />
+        <el-row class="line-s" />
       </el-row>
     </el-row>
   </el-row>
@@ -49,10 +43,36 @@
 
 <script>
 import banner from './banner'
+import { HomeService } from '@/services/home'
 export default {
   name: 'Sale',
   components: {
     banner
+  },
+  // eslint-disable-next-line vue/require-prop-types
+  props: [],
+  data () {
+    return {
+      date: [],
+      dates: []
+    }
+  },
+  created () {
+    const _this = this
+    const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+    homeService.postHotProducts(this.$route.params.id).then((res) => { // 获取特价爆款
+      this.date = res.data.results
+      console.log(_this.date)
+    })
+    for (let i = 0; i < this.date.length; i++) {
+      if (_this.list[i].seriesType === 2) {
+        _this.dates.push(..._this.list[i].products)
+      }
+    }
+    console.log(this.dates)
+  },
+  mounted () {
+
   }
 }
 </script>

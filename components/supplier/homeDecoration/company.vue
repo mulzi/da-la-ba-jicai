@@ -1,5 +1,5 @@
 <template>
-  <div class="companyIntroduction">
+  <div class="companyIntroduction marginBottom100">
     <div v-if="this.list.introduce" class="ones">
       <div class="titName">
         <span>品牌概况</span>
@@ -49,8 +49,13 @@
         联系我时请说是在大喇叭集采网上看到的，谢谢！
       </div>
     </div>
-    <el-row class="promise">
-       ss
+    <el-row v-if="this.list.promise" class="promise">
+      <el-row class="tit">
+        <span>服务承诺</span>
+      </el-row>
+      <el-row class="bottomContent">
+        <p v-for="(t,i) in promise" :key="i">{{ t }}</p>
+      </el-row>
     </el-row>
   </div>
 </template>
@@ -65,7 +70,8 @@ export default {
       introduceList: [ ], // 品牌简介
       companyIntroduce: [], // 公司介绍
       advantage: [], // 产品优势
-      constructionExplain: [] // 施工说明
+      constructionExplain: [], // 施工说明
+      promise: [] // 服务承诺
 
     }
   },
@@ -75,20 +81,15 @@ export default {
     } else {
       this.introduceList = null
     }
-    if (this.list.companyIntroduce !== null || undefined || '') {
-      this.companyIntroduce = this.list.companyIntroduce.split('\n')
+    if (this.list.promise !== null || undefined || '') {
+      this.promise = this.list.promise.split('\n')
     } else {
-      this.companyIntroduce = null
+      this.promise = null
     }
     if (this.list.advantage !== null || undefined || '') {
       this.advantage = this.list.advantage.split('\n')
     } else {
       this.advantage = null
-    }
-    if (this.list.constructionExplain !== null || undefined || '') {
-      this.constructionExplain = this.list.constructionExplain.split('\n')
-    } else {
-      this.constructionExplain = null
     }
   },
   methods: {
@@ -226,9 +227,34 @@ export default {
                 font-size: 16px;
                 margin: 20px 0 40px;
             }
-            &:last-child{
-                margin-bottom: 100px;
-            }
         }
+      .promise{
+        width: 100%;
+        background: #ffffFF;
+        margin-top: 20px;
+        overflow: hidden;
+        .tit{
+          margin:30px auto 0;
+          width: calc(100% - 60px);
+          border-bottom: 1px solid $borderE7;
+          span{
+            text-indent: .5em;
+            font-size: 30px;
+            color: #333333;
+            margin-bottom: 10px;
+            display: block;
+          }
+        }
+        .bottomContent{
+          margin:40px auto ;
+          width: calc(100% - 60px);
+          p{
+            font-size: 18px;
+            color: #333333;
+            margin-bottom: 30px;
+            line-height: 26px;
+          }
+        }
+      }
     }
 </style>
