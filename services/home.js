@@ -1,3 +1,4 @@
+import qs from 'qs'
 import { Auth } from '@/services/auth'
 import { TIME_OUT } from '@/utils/constants'
 
@@ -7,6 +8,36 @@ export class HomeService {
     this.axios = context.$axios
     this.cookies = context.app.$cookies
     this.auth = new Auth(this.context)
+  }
+
+  async sendValidCode (params) {
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/validation/open/mobile/sms.json`,
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded',
+        Authorization: token.accessToken
+      },
+      method: 'POST',
+      timeout: TIME_OUT,
+      data: params,
+      transformRequest: [function (data) {
+        return qs.stringify(data)
+      }]
+    })
+  }
+
+  async register (params) {
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/basic/open/visitor/bind/register.json`,
+      headers: {
+        Authorization: token.accessToken
+      },
+      method: 'POST',
+      timeout: TIME_OUT,
+      data: params
+    })
   }
 
   async home () {
