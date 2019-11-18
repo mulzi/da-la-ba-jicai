@@ -61,7 +61,7 @@
       </el-row>
       <message-one class="marginBottom100" />
       <integral-pay v-if="this.$store.state.home.IntegralPay" />
-      <pro-details v-if="this.$store.state.home.proDetails"/>
+      <pro-details v-if="this.$store.state.home.proDetails" />
     </div>
   </div>
 </template>

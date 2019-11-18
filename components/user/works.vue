@@ -22,7 +22,7 @@
         <el-row class="b_name">
           <img :src="t.cover" alt="">
           <span>
-            {{t.agent}}
+            {{ t.agent }}
           </span>
         </el-row>
       </nuxt-link>

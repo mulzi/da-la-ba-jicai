@@ -18,7 +18,7 @@
                 项目名称：
               </div>
               <div class="rightName">
-                {{date.projectName}}
+                {{ date.projectName }}
               </div>
             </div>
             <div class="ones">
@@ -26,7 +26,7 @@
                 项目地址：
               </div>
               <div class="rightName">
-                {{date.address}}
+                {{ date.address }}
               </div>
             </div>
             <div class="ones">
@@ -34,7 +34,7 @@
                 使用产品：
               </div>
               <div class="rightName">
-                {{date.product}}
+                {{ date.product }}
               </div>
             </div>
             <div class="ones">
@@ -42,7 +42,7 @@
                 产品用量：
               </div>
               <div class="rightName">
-                {{date.amount}}
+                {{ date.amount }}
               </div>
             </div>
             <div class="ones">
@@ -50,7 +50,7 @@
                 项目介绍：
               </div>
               <div class="rightName">
-                {{date.introduce}}
+                {{ date.introduce }}
               </div>
             </div>
             <div class="ones">
@@ -58,7 +58,7 @@
                 经典之处：
               </div>
               <div class="rightName">
-                {{date.classic}}
+                {{ date.classic }}
               </div>
             </div>
           </div>
