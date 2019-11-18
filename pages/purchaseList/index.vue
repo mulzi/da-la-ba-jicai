@@ -84,7 +84,7 @@
         </el-row>
       </el-row>
       <el-row class="boxList">
-        <nuxt-link to="/purchaseList/page/ss">
+        <nuxt-link to="/purchaseList/page/ss" v-for="(t,i) in 20" :key="i">
           <el-row class="tit">
             招采材料名称
           </el-row>
@@ -95,9 +95,12 @@
             <el-col :span="8" class="two">
               项目类型\精装房
             </el-col>
-            <el-col :spa="8" class="three">
+            <el-col :span="8" class="three">
               2019.01.26
             </el-col>
+          </el-row>
+          <el-row class="complete">
+            已完成
           </el-row>
         </nuxt-link>
       </el-row>

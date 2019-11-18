@@ -390,6 +390,7 @@ html, body {
     background: #ffffff;
     margin-bottom: 30px;
     position: relative;
+    overflow: hidden;
 
     &:hover {
       transition: .3s ease-in-out;
@@ -402,6 +403,33 @@ html, body {
       color: #333333;
       font-weight: bold;
       @include over;
+    }
+    .addr{
+      width: calc(100% - 60px);
+      margin: 30px auto;
+      color: #999999;
+      font-size: 14px;
+      .two{
+        text-align: center;
+      }
+      .three{
+        text-align: right;
+      }
+
+    }
+    .complete{
+      width: 200px;
+      text-align: center;
+      top: 17px;
+      right: -70px;
+      position: absolute;
+      background: $redColor;
+      height: 24px;
+      line-height: 24px;
+      font-size: 14px;
+      color: #ffffff;
+      transform: rotateZ(45deg);
+
     }
     &:nth-child(2n) {
       margin-right: 0;
