@@ -1,18 +1,31 @@
-FROM node:8.16.2
+FROM node:latest as builder
 
-## forward request and error logs to docker log collector
-#RUN ln -sf /dev/stdout /var/log/nginx/access.log && \
-#	ln -sf /dev/stderr /var/log/nginx/error.log
+WORKDIR /src
 
-#COPY deploy/docker/nginx /etc/nginx
-#COPY deploy/site/ /usr/share/nginx/html/
+COPY . .
 
-WORKDIR /app
+RUN yarn install \
+  --prefer-offline \
+  --frozen-lockfile \
+  --non-interactive \
+  --production=false
 
-COPY . /app
+RUN yarn build
 
-ARG APP_ENV
-ARG TZ
+RUN rm -rf node_modules && \
+  NODE_ENV=production yarn install \
+  --prefer-offline \
+  --pure-lockfile \
+  --non-interactive \
+  --production=true
 
-RUN npm install
-CMD npm run build && npm run start
+FROM node:alpine
+
+WORKDIR /src
+
+COPY --from=builder /src  .
+
+ENV HOST 0.0.0.0
+EXPOSE 3000
+
+CMD [ "yarn", "start" ]
