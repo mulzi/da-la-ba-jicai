@@ -1,0 +1,85 @@
+image: node:8.16.2
+
+variables:
+  DOCKER_TLS_CERTDIR: ""
+  IMAGE_NAME: hub.tencentyun.com/qingyu/dalaba-web-ssr
+  REPOSITORY_NAME: dalaba-web-ssr-front
+  PROJECT_ID: 30000
+  UPDATE_URL: http://192.168.1.118:17030
+
+stages:
+  - docker
+  - update
+
+docker:
+  stage: docker
+  only:
+    - branches
+  except:
+#    - master
+#    - develop
+  image: docker:stable
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+    IMAGE_TAG: latest #default
+  services:
+    - name: docker:dind
+      command: ["/usr/local/bin/dockerd-entrypoint.sh", "--registry-mirror=https://aqb3y4in.mirror.aliyuncs.com","--storage-driver=overlay"]
+  before_script:
+    - docker info
+    - docker login -ukonghang -pkonghang158 hub.tencentyun.com
+    - export IMAGE_TAG=${CI_COMMIT_REF_NAME//\//-}-${CI_COMMIT_SHA}
+    - echo ${IMAGE_TAG}
+  script:
+    - docker build -f Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
+    - docker push ${IMAGE_NAME}:${IMAGE_TAG}
+    - docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${IMAGE_NAME}:dev
+    - docker push ${IMAGE_NAME}:dev
+    - docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${IMAGE_NAME}:test
+    - docker push ${IMAGE_NAME}:test
+
+docker-prod:
+  stage: docker
+  only:
+    - tags
+  except:
+    - master
+    - develop
+  image: docker:latest
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+    IMAGE_TAG: latest #default
+  services:
+    - name: docker:dind
+      command: ["/usr/local/bin/dockerd-entrypoint.sh", "--registry-mirror=https://aqb3y4in.mirror.aliyuncs.com","--storage-driver=overlay"]
+  before_script:
+    - docker info
+    - docker login -ukonghang -pkonghang158 hub.tencentyun.com
+    - export IMAGE_TAG=${CI_COMMIT_REF_NAME//\//-}-${CI_COMMIT_SHA}
+    - echo ${IMAGE_TAG}
+  script:
+    - docker build --cache-from ${IMAGE_NAME}:1.0 -f Dockerfile -t ${IMAGE_NAME}:${IMAGE_TAG} .
+    - docker push ${IMAGE_NAME}:${IMAGE_TAG}
+    - docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${IMAGE_NAME}:prod
+    - docker push ${IMAGE_NAME}:prod
+
+update:
+  only:
+    - tags
+  except:
+    - master
+    - develop
+  stage: update
+  before_script:
+    - export IMAGE_TAG=${CI_COMMIT_REF_NAME//\//-}-${CI_COMMIT_SHA}
+    - echo ${IMAGE_TAG}
+  script:
+    - export BRANCH_NAME=${CI_COMMIT_REF_NAME//\//-}
+    - export LOCAL_IMAGE_NAME=${IMAGE_NAME}:${IMAGE_TAG}
+    - echo ${REPOSITORY_NAME}
+    - echo ${PROJECT_ID}
+    - curl -X PUT "${UPDATE_URL}/api/devops/iteration/status/modify.json" -H "accept:*/*" -H "Content-Type:application/json"
+      -d "{ \"dockers\":[ \"${LOCAL_IMAGE_NAME}\"],
+      \"iterationName\":\"${BRANCH_NAME}\", \"projectId\":${PROJECT_ID}, \"repositoryName\":\"${REPOSITORY_NAME}\"}"
