@@ -14,7 +14,7 @@
           </li>
           <li>
             <div class="left">
-              <img src="@/assets/img/footTwo.png" alt="">
+              <img src="@/assets/img/foottwo.png" alt="">
             </div>
             <div class="right">
               <p>一对一交易服务</p>
@@ -23,7 +23,7 @@
           </li>
           <li>
             <div class="left">
-              <img src="@/assets/img/footThree.png" alt="">
+              <img src="@/assets/img/footthree.png" alt="">
             </div>
             <div class="right">
               <p>交易安全有保障</p>
