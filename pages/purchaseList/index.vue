@@ -1,6 +1,6 @@
 <template>
-  <div class="supplierBody">
-    <div class="bodyBox">
+  <el-row class="supplierBody">
+    <el-row class="bodyBox">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -126,8 +126,8 @@
           />
         </div>
       </el-row>
-    </div>
-  </div>
+    </el-row>
+  </el-row>
 </template>
 
 <script>
@@ -544,5 +544,69 @@ export default {
         }
 
     }
+    .boxList {
+      width: 100%;
+      margin-top: 30px;
 
+      a {
+        float: left;
+        width: 49%;
+        margin-right: 2%;
+        background: #ffffff;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+
+        &:hover {
+          transition: .3s ease-in-out;
+          box-shadow: 2px 0px 10px #cccccc;
+        }
+        .tit{
+          width: calc(100% - 60px);
+          margin: 30px auto;
+          font-size: 16px;
+          color: #333333;
+          font-weight: bold;
+          @include over;
+        }
+        .addr{
+          width: calc(100% - 60px);
+          margin: 30px auto;
+          color: #999999;
+          font-size: 14px;
+          .two{
+            text-align: center;
+          }
+          .three{
+            text-align: right;
+          }
+
+        }
+        .complete{
+          width: 200px;
+          text-align: center;
+          top: 17px;
+          right: -70px;
+          position: absolute;
+          background: $redColor;
+          height: 24px;
+          line-height: 24px;
+          font-size: 14px;
+          color: #ffffff;
+          transform: rotateZ(45deg);
+
+        }
+        &:nth-child(2n) {
+          margin-right: 0;
+        }
+      }
+
+      &::after {
+        content: "";
+        display: block;
+        clear: both;
+        visibility: hidden;
+        height: 0;
+      }
+    }
 </style>
