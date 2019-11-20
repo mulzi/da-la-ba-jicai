@@ -27,8 +27,8 @@
               <span />
             </el-row>
           </el-row>
-          <el-form-item label="招募标题：" prop="material">
-            <el-input v-model="form.material" placeholder="请输入招募标题" />
+          <el-form-item label="招募标题：" prop="title">
+            <el-input v-model="form.title" placeholder="请输入招募标题" />
           </el-form-item>
           <el-form-item label="招募类型：" prop="class">
             <el-select v-model="form.class" placeholder="请选择项目类别">
@@ -39,11 +39,8 @@
           <el-form-item label="招募地区：" prop="area">
             <el-cascader :options="options" v-model="form.area" clearable />
           </el-form-item>
-          <el-form-item label="内容：" prop="material">
-            <el-input type="textarea" v-model="form.material" placeholder="请输入招募内容，请输入30字以上" />
-          </el-form-item>
-          <el-form-item label="材料要求：">
-            <el-input v-model="form.claim" placeholder="请输入材料要求" />
+          <el-form-item label="内容：" prop="content">
+            <el-input type="textarea" v-model="form.content" placeholder="请输入招募内容，请输入30字以上" />
           </el-form-item>
           <el-row class="tips">
             请上传文件 <span>(文件限制在10m以内，支持word/excl等格式)</span>
@@ -59,19 +56,16 @@
               :before-upload="beforeAvatarUpload"
               :on-exceed="handleExceed"
             >
-              <el-row v-if="!form.recruitAnnexeList.length" size="small" type="primary" class="btnUp">
+              <el-row v-if="!form.recruitAnnexeList.length" size="small" type="primary">
                 <span style="width: 100px;height: 100px;background: gainsboro;display: flex; opacity: 0.5;">
                   <i class="el-icon-plus" style="margin: auto;font-size: 3rem" />
                 </span>
               </el-row>
             </el-upload>
-            <el-dialog :visible.sync="dialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt="">
-            </el-dialog>
           </el-row>
-          <el-form-item label="报名截止时间：" prop="area">
+          <el-form-item label="报名截止时间：" prop="time">
             <el-date-picker
-              v-model="time"
+              v-model="form.time"
               type="date"
               placeholder="选择日期"
             />
@@ -82,13 +76,13 @@
           <el-form-item label="联系人姓名：" prop="nameS">
             <el-input v-model="form.nameS" placeholder="请输入联系人" />
           </el-form-item>
-          <el-form-item label="联系人职位：">
+          <el-form-item label="联系人职位：" prop="positionLevel">
             <el-input v-model="form.positionLevel" placeholder="请输入联系人职位" />
           </el-form-item>
           <el-form-item label="联系人电话：" prop="phone">
             <el-input v-model="form.phone" type="text" placeholder="请输入联系人电话" />
           </el-form-item>
-          <div class="sub">
+          <div class="sub" @click="onSub">
             提交
           </div>
         </el-row>
@@ -126,27 +120,54 @@ export default {
         }
       }, 1000)
     }
+    const contentS = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('内容不能为空'))
+      }
+      setTimeout(() => {
+        if (Array.from(value).length < 30) {
+          return callback(new Error('请输入30个字以上！'))
+        } else {
+          callback()
+        }
+      }, 1000)
+    }
     return {
       dialogImageUrl: '',
       right: 'right',
       errorText: '', // 错误信息展示
       dialogVisible: false,
       form: {
+        title: '', // 招募标题
         class: '', // 项目类别
         nameS: '', // 联系人姓名
-        material: '', // 材料
-        claim: '', // 材料要求
-        recruitAnnexeList: [], // 产品图片
-        area: '', // 工地地区
-        address: '', // 详细地址
-        companyName: '', // 公司名称
+        content: '', // 招募内容
+        time: '', // 截止时间
+        recruitAnnexeList: [], // 招标文件
+        area: '', // 招募地区
+        companyName: '', // 需求公司名称
         positionLevel: '', // 联系人职位
         phone: '' // 联系人电话
       },
       rules: {
+        content: [
+          { required: true, validator: contentS, trigger: 'blur' }
+        ],
+        title: [
+          { required: true, message: '请输入招募标题', trigger: 'blur' }
+        ],
+        companyName: [
+          { required: true, message: '请输入需求单位名称', trigger: 'blur' }
+        ],
+        time: [
+          { required: true, message: '请输入报名截止时间', trigger: 'blur' }
+        ],
         phone: [{ required: true, trigger: 'blur', validator: checkPhone }],
         nameS: [
           { required: true, message: '请输入联系人名称', trigger: 'blur' }
+        ],
+        positionLevel: [
+          { required: true, message: '请输入联系人职位', trigger: 'blur' }
         ],
         class: [
           { required: true, message: '请选择项目类别', trigger: 'change' }
@@ -357,6 +378,48 @@ export default {
     }
   },
   methods: {
+    onSub () {
+      if (this.form.title === '') {
+        this.errorText = '请输入招募！'
+        this.dialogVisible = true
+      } else if (this.form.class === '') {
+        this.errorText = '请选择项目类别！'
+        this.dialogVisible = true
+      } else if (this.form.area === '') {
+        this.errorText = '请选择项目地区！'
+        this.dialogVisible = true
+      } else if (this.form.content === '') {
+        this.errorText = '请输入内容！'
+        this.dialogVisible = true
+      } else if (this.form.time === '') {
+        this.errorText = '请选择报名截止时间！'
+        this.dialogVisible = true
+      } else if (this.form.companyName === '') {
+        this.errorText = '请输入需求单位名称！'
+        this.dialogVisible = true
+      } else if (this.form.nameS === '') {
+        this.errorText = '请输入联系人姓名！'
+        this.dialogVisible = true
+      } else if (this.form.positionLevel === '') {
+        this.errorText = '请输入联系人职位！'
+        this.dialogVisible = true
+      } else if (this.form.phone === '') {
+        this.errorText = '请输入联系人电话！'
+        this.dialogVisible = true
+      } else {
+        this.$refs.formOne.validate((valid) => {
+          if (!valid) {
+            this.$message({
+              message: '你填写的信息不完整哦！~~~',
+              type: 'warning'
+            })
+            return
+          }
+          console.log(66)
+          this.$refs.formOne.resetFields()
+        })
+      }
+    },
     handleClose () {
       this.dialogVisible = false
     },

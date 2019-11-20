@@ -363,7 +363,6 @@ export default {
         this.$refs.formOne.validate((valid) => {
           if (!valid) {
             this.$message({
-              showClose: true,
               message: '你填写的信息不完整哦！~~~',
               type: 'warning'
             })

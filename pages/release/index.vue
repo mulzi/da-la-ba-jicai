@@ -17,6 +17,9 @@
           <transition name="bounce">
             <bidding v-if="$store.state.release.number === 2" />
           </transition>
+          <transition name="bounce">
+            <success v-if="$store.state.release.number === 3" />
+          </transition>
         </el-row>
       </el-row>
     </el-row>
@@ -27,12 +30,14 @@
 import projectInfo from '@/components/release/projectInfo'
 import information from '@/components/release/information'
 import bidding from '@/components/release/bidding'
+import success from '@/components/release/success'
 export default {
   layout: 'main',
   components: {
     projectInfo,
     information,
-    bidding
+    bidding,
+    success
   },
   data () {
     return {
@@ -110,11 +115,11 @@ export default {
               font-size: 18px;
               color: #4c4c4c;
               em{
-                margin-right: 20px;
+                margin-right: 6px;
               }
               span{
                 color: $redColor;
-                margin-right: 20px;
+                margin-right: 6px;
               }
             }
             .line{
@@ -130,6 +135,9 @@ export default {
             }
           }
           .el-select{
+            width: 100%;
+          }
+          .el-date-editor.el-input, .el-date-editor.el-input__inner{
             width: 100%;
           }
           .el-textarea{
@@ -289,11 +297,11 @@ export default {
               font-size: 18px;
               color: #4c4c4c;
               em{
-                margin-right: 20px;
+                margin-right: 6px;
               }
               span{
                 color: $redColor;
-                margin-right: 20px;
+                margin-right: 6px;
               }
             }
             .line{
@@ -309,6 +317,9 @@ export default {
             }
           }
           .el-select{
+            width: 100%;
+          }
+          .el-date-editor.el-input, .el-date-editor.el-input__inner{
             width: 100%;
           }
           .el-textarea{

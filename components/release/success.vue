@@ -1,0 +1,206 @@
+<template>
+  <el-row class="listOneS">
+    <el-row class="content_wB">
+      <el-form
+        :label-position="right"
+        label-width="140px"
+        :rules="rules"
+        ref="formOne"
+        :model="form"
+      >
+        <el-row>
+          <el-row class="tit">
+            <el-row class="name">
+              成功案列
+            </el-row>
+            <el-row class="desc">
+              <em>ISSUING
+              </em>
+              <span>
+                SUCCESSFUL
+              </span>
+              <span>
+                CASES
+              </span>
+            </el-row>
+            <el-row class="line">
+              <span />
+            </el-row>
+          </el-row>
+          <el-form-item label="招募标题：" prop="title">
+            <el-input v-model="form.title" placeholder="请输入招募标题" />
+          </el-form-item>
+          <el-form-item label="招募类型：" prop="class">
+            <el-select v-model="form.class" placeholder="请选择项目类别">
+              <el-option label="区域一" value="shanghai" />
+              <el-option label="区域二" value="beijing" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="招募地区：" prop="area">
+            <el-cascader :options="options" v-model="form.area" clearable />
+          </el-form-item>
+          <el-form-item label="内容：" prop="content">
+            <el-input type="textarea" v-model="form.content" placeholder="请输入招募内容，请输入30字以上" />
+          </el-form-item>
+          <el-form-item label="发布单位：" prop="companyName">
+            <el-input v-model="form.companyName" placeholder="请输入需求单位名称" />
+          </el-form-item>
+          <el-form-item label="联系人姓名：" prop="nameS">
+            <el-input v-model="form.nameS" placeholder="请输入联系人" />
+          </el-form-item>
+          <el-form-item label="联系人职位：" prop="positionLevel">
+            <el-input v-model="form.positionLevel" placeholder="请输入联系人职位" />
+          </el-form-item>
+          <el-form-item label="联系人电话：" prop="phone">
+            <el-input v-model="form.phone" type="text" placeholder="请输入联系人电话" />
+          </el-form-item>
+          <div class="sub" @click="onSub">
+            提交
+          </div>
+        </el-row>
+      </el-form>
+      <el-dialog
+        title="提示"
+        :visible.sync="dialogVisible"
+        width="22%"
+        :before-close="handleClose"
+      >
+        <span>{{ errorText }}</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
+    </el-row>
+  </el-row>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      dialogImageUrl: '',
+      right: 'right',
+      errorText: '', // 错误信息展示
+      dialogVisible: false,
+      form: {
+        title: '', // 招募标题
+        class: '', // 项目类别
+        nameS: '', // 联系人姓名
+        content: '', // 招募内容
+        time: '', // 截止时间
+        recruitAnnexeList: [], // 招标文件
+        area: '', // 招募地区
+        companyName: '', // 需求公司名称
+        positionLevel: '', // 联系人职位
+        phone: '' // 联系人电话
+      },
+      rules: {
+        title: [
+          { required: true, message: '请输入招募标题', trigger: 'blur' }
+        ],
+        companyName: [
+          { required: true, message: '请输入需求单位名称', trigger: 'blur' }
+        ],
+        time: [
+          { required: true, message: '请输入报名截止时间', trigger: 'blur' }
+        ],
+        nameS: [
+          { required: true, message: '请输入联系人名称', trigger: 'blur' }
+        ],
+        positionLevel: [
+          { required: true, message: '请输入联系人职位', trigger: 'blur' }
+        ],
+        class: [
+          { required: true, message: '请选择项目类别', trigger: 'change' }
+        ],
+        material: [
+          { required: true, message: '请输入招采材料', trigger: 'blur' }
+        ],
+        area: [
+          { required: true, message: '请选择工地地区', trigger: 'change' }
+        ]
+      }
+    }
+  },
+  methods: {
+    onSub () {
+      if (this.form.title === '') {
+        this.errorText = '请输入招募！'
+        this.dialogVisible = true
+      } else if (this.form.class === '') {
+        this.errorText = '请选择项目类别！'
+        this.dialogVisible = true
+      } else if (this.form.area === '') {
+        this.errorText = '请选择项目地区！'
+        this.dialogVisible = true
+      } else if (this.form.content === '') {
+        this.errorText = '请输入内容！'
+        this.dialogVisible = true
+      } else if (this.form.time === '') {
+        this.errorText = '请选择报名截止时间！'
+        this.dialogVisible = true
+      } else if (this.form.companyName === '') {
+        this.errorText = '请输入需求单位名称！'
+        this.dialogVisible = true
+      } else if (this.form.nameS === '') {
+        this.errorText = '请输入联系人姓名！'
+        this.dialogVisible = true
+      } else if (this.form.positionLevel === '') {
+        this.errorText = '请输入联系人职位！'
+        this.dialogVisible = true
+      } else if (this.form.phone === '') {
+        this.errorText = '请输入联系人电话！'
+        this.dialogVisible = true
+      } else {
+        this.$refs.formOne.validate((valid) => {
+          if (!valid) {
+            this.$message({
+              message: '你填写的信息不完整哦！~~~',
+              type: 'warning'
+            })
+            return
+          }
+          console.log(66)
+          this.$refs.formOne.resetFields()
+        })
+      }
+    },
+    handleClose () {
+      this.dialogVisible = false
+    },
+    // 图片移除
+    handleRemove (file) {
+      const that = this
+      that.form.recruitAnnexeList = []
+    },
+    // 图片上传
+    uploadPicture (response, file) {
+      this.form.recruitAnnexeList.push({ 'fileName': file.name, 'fileUrl': file.response.uri })
+    },
+    beforeAvatarUpload (file) { // 文件上传之前调用做一些拦截限制
+      console.log(file)
+      const isJPG = true
+      // const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 10
+
+      // if (!isJPG) {
+      //   this.$message.error('上传头像图片只能是 JPG 格式!');
+      // }
+      if (!isLt2M) {
+        this.$message.error('上传文件大小不能超过 10MB!')
+      }
+      return isJPG && isLt2M
+    },
+    handleExceed () { // 限制图片张数
+      this.$message({
+        message: '最多只能上传3份文件',
+        type: 'error'
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+</style>
