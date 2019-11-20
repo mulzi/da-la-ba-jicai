@@ -69,9 +69,9 @@ export default {
     ** See https://axios.nuxtjs.org/options
     */
   axios: {
-    baseURL : 'http://qy.cqsudu.com:10200/',
+    baseURL: 'http://qy.cqsudu.com:10200/',
     browserBaseURL: '/',
-    proxy: false,
+    proxy: false
   },
 
   proxy: {

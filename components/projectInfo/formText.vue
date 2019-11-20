@@ -41,8 +41,10 @@
                     <el-upload
                       action="/api/file/dalaba/file/upload.json"
                       list-type="picture-card"
+                      accept="image/*"
                       :on-remove="(file, fileList)=>handleRemove(file, fileList,ii)"
                       :limit="3"
+                      :before-upload="beforeAvatarUpload"
                       :on-success="(response, file, fileList)=>uploadPicture(response, file, fileList,ii)"
                       :on-exceed="overList"
                     >
@@ -143,6 +145,20 @@ export default {
       this.tipsText = '最多只能传3张图片'
       this.DialogVisibles = true
     },
+    beforeAvatarUpload (file) { // 文件上传之前调用做一些拦截限制
+      console.log(file)
+      const isJPG = true
+      // const isJPG = file.type === 'image/jpeg';
+      const isLt2M = file.size / 1024 / 1024 < 4
+
+      // if (!isJPG) {
+      //   this.$message.error('上传头像图片只能是 JPG 格式!');
+      // }
+      if (!isLt2M) {
+        this.$message.error('上传图片大小不能超过 4MB!')
+      }
+      return isJPG && isLt2M
+    },
     add () {
       this.fromBox.formO.push(
         {
@@ -189,16 +205,6 @@ export default {
       const del = arr.indexOf(fileName)
       that.fromBox.formO[index].pics.splice(del, 1)
     }
-    // 限制类型及大小
-    // beforeAvatarUpload (file) {
-    //   if (file.size > 3 * 1024 * 1024) {
-    //     this.$message({
-    //       message: '上传文件大小不能超过 3MB!',
-    //       type: 'warning'
-    //     })
-    //     return false
-    //   }
-    // }
   }
 }
 </script>
