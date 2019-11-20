@@ -9,7 +9,7 @@
         </el-row>
         <el-row class="bottom_con">
           <transition name="bounce">
-            <projectInfo v-if="$store.state.release.number === 0"/>
+            <projectInfo v-if="$store.state.release.number === 0" />
           </transition>
         </el-row>
       </el-row>

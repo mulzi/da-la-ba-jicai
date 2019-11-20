@@ -2,42 +2,12 @@
   <div class="login-container">
     <div class="login-form-container">
       <div class="login-welcome">
-        <span class="welcome">用户注册</span> <span class="btn-register fRight">已有账号，<nuxt-link to="/login">立即登录</nuxt-link></span>
+        <span class="welcome">忘记密码</span> <span class="btn-register fRight">已有账号，<nuxt-link to="/login">立即登录</nuxt-link></span>
       </div>
       <el-row>
         <el-col class="login-form-col" :span="13" :offset="5">
           <div class="login-from">
-            <el-form ref="form" label-position="right" :rules="rules" label-width="100px" :model="form">
-              <el-form-item label="账号：" prop="account">
-                <el-input v-model="form.account" placeholder="请输入手机号作为账号">
-                  <i slot="prefix" class="el-icon-user" />
-                </el-input>
-              </el-form-item>
-              <el-form-item label="密码：" prop="password">
-                <el-input v-model="form.password" type="password" placeholder="请输入密码" show-password>
-                  <i slot="prefix" class="el-icon-lock" />
-                </el-input>
-              </el-form-item>
-              <el-form-item label="昵称：" prop="name">
-                <el-input v-model="form.name" placeholder="请输入昵称">
-                  <i slot="prefix" class="el-icon-user" />
-                </el-input>
-              </el-form-item>
-              <el-form-item label="真实姓名：" prop="realName">
-                <el-input v-model="form.realName" placeholder="请输入真实姓名">
-                  <i slot="prefix" class="el-icon-user" />
-                </el-input>
-              </el-form-item>
-              <el-form-item label="性别：" prop="sex">
-                <el-radio-group v-model="form.sex">
-                  <el-radio label="1">
-                    男
-                  </el-radio>
-                  <el-radio label="2">
-                    女
-                  </el-radio>
-                </el-radio-group>
-              </el-form-item>
+            <el-form ref="form" label-position="right" :rules="rules" label-width="120px" :model="form">
               <el-form-item label="手机号码：" prop="mobile">
                 <el-input type="number" v-model="form.mobile" placeholder="请输入手机号码">
                   <span slot="append" @click="fetchAuthCode()">{{ authCodeMessage }}</span>
@@ -48,23 +18,18 @@
                   <i slot="prefix" class="el-icon-coin" />
                 </el-input>
               </el-form-item>
-              <el-form-item label="公司名称：">
-                <el-input v-model="form.companyName" placeholder="请输入公司名称">
-                  <i slot="prefix" class="el-icon-office-building" />
+              <el-form-item label="新密码：" prop="password">
+                <el-input v-model="form.password" type="password" placeholder="请输入密码" show-password>
+                  <i slot="prefix" class="el-icon-lock" />
                 </el-input>
               </el-form-item>
-              <el-form-item label="公司地址：">
-                <el-input v-model="form.companyAddress" placeholder="请输入公司地址">
-                  <i slot="prefix" class="el-icon-coordinate" />
+              <el-form-item label="确认新密码：" prop="repeatPwd">
+                <el-input v-model="form.repeatPwd" type="password" placeholder="请输入密码" show-password>
+                  <i slot="prefix" class="el-icon-lock" />
                 </el-input>
               </el-form-item>
             </el-form>
-            <el-checkbox v-model="isRead" name="isRead" @change="(value) => this.isRead = value">
-              <div style="font-size: 14px">
-                我已阅读并同意 <a href="#"><strong class="primary--text">《重庆大喇叭平台服务协议》</strong></a>
-              </div>
-            </el-checkbox>
-            <el-button @click="registerUser" style="margin-top: 20px; margin-bottom: 20px;">
+            <el-button @click="updatePwd" style="margin-top: 20px; margin-bottom: 20px;">
               立即注册
             </el-button>
           </div>
@@ -86,35 +51,29 @@ export default {
   data () {
     return {
       form: {
-        account: '',
+        mobile: '',
+        validCode: '',
         password: '',
-        sex: '1'
+        repeatPwd: ''
       },
       countDown: 0,
-      remember: false,
       isRead: false,
       authCodeMessage: '发送验证码',
       rules: {
-        account: [
-          { required: true, message: '请输入手机号', trigger: 'blur' }
-        ],
-        password: [
-          { required: true, message: '请输入密码', trigger: 'blur' }
-        ],
-        name: [
-          { required: true, message: '请输入昵称', trigger: 'blur' }
-        ],
-        realName: [
-          { required: true, message: '请输入真实姓名', trigger: 'blur' }
-        ],
-        sex: [
-          { required: true, message: '请选择性别', trigger: 'blur' }
-        ],
         mobile: [
           { required: true, message: '请输入手机号', trigger: 'blur' }
         ],
         validCode: [
           { required: true, message: '请输入验证码', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { required: true, min: 6, message: '密码必须大于6位', trigger: 'blur' }
+        ],
+        repeatPwd: [
+          { required: true, message: '请输入重复新密码', trigger: 'blur' },
+          { required: true, min: 6, message: '密码必须大于6位', trigger: 'blur' },
+          { validator: this.checkRepeatPwd, trigger: 'blur' }
         ]
       }
 
@@ -125,39 +84,34 @@ export default {
     vm.auth = new Auth({ $axios: vm.$axios, app: { $cookies: vm.$cookies } })
   },
   methods: {
-    registerUser () {
+    checkRepeatPwd (rule, value, callback) {
       const vm = this
-      if (!vm.isRead) {
-        vm.$message({
-          message: '请阅读并同意《重庆大喇叭平台服务协议》',
-          type: 'error'
-        })
-        return
+      if (value === vm.form.password) {
+        return callback()
       }
+      return callback(new Error('输入的新密码与重复新密码不相同'))
+    },
+    updatePwd () {
+      const vm = this
+      const auth = vm.auth
       this.$refs.form.validate((valid) => {
         if (!valid) {
           return false
         }
-        const tempParams = {
-          validCode: vm.form.validCode,
+        const params = {
           mobile: vm.form.mobile,
-          account: vm.form.account,
-          name: vm.form.name,
-          realName: vm.form.realName,
-          sex: vm.form.sex,
-          companyName: vm.form.companyName,
-          companyAddress: vm.form.companyAddress,
-          password: Base64.encode(vm.form.password)
+          password: Base64.encode(vm.form.password),
+          validCode: vm.form.validCode
         }
-        vm.auth.register(tempParams).then((res) => {
+        auth.findBackPassword(params).then((res) => {
           vm.$message({
-            message: '注册成功',
+            message: '修改密码成功',
             type: 'success'
           })
           vm.$router.push('/login')
-        }).catch((e) => {
+        }).catch((err) => {
           vm.$message({
-            message: exception.formatError(e),
+            message: exception.formatError(err),
             type: 'error'
           })
         })

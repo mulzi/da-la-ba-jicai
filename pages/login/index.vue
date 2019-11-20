@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="login-form-container">
       <div class="login-welcome">
-        <span class="welcome">欢迎光临</span> <span class="btn-register fRight">没有账号，<a>立即注册</a></span>
+        <span class="welcome">欢迎光临</span> <span class="btn-register fRight">没有账号，<nuxt-link to="/register">立即注册</nuxt-link></span>
       </div>
       <el-row>
         <el-col class="login-form-col" :span="12">
@@ -22,6 +22,20 @@
             <el-button @click="onLogin">
               登录
             </el-button>
+            <el-col :span="24" class="mt-3">
+              <el-row type="flex" justify="space-between" style="font-size: 16px;color: #9e9e9e!important;margin-top: 10px;text-align: center!important;">
+                <el-col :span="10">
+                  <a @click="$router.push('/password')">忘记密码</a>
+                </el-col>
+                <!--<el-col :span="10">无法获取验证码？</el-col>-->
+                <el-col :span="4">
+                  |
+                </el-col>
+                <el-col :span="10">
+                  <a @click="$router.push('/register')">免费注册</a>
+                </el-col>
+              </el-row>
+            </el-col>
           </div>
         </el-col>
         <el-col class="login-img-col" :span="12">
@@ -31,12 +45,40 @@
         </el-col>
       </el-row>
     </div>
+
+    <el-dialog title="验证码" :visible.sync="dialogVisible" :close-on-click-modal="false" :close-on-press-escape="false" width="500px">
+      <span class="flex_center mt-5" style="font-size:17px;">尊敬的会员用户，为了保护您的账户安全，请输入验证码验证</span>
+      <div v-if="error">
+        <span v-if="butStyl" class="flex_start font_kai" style="font-size:17px;margin-top:50px;">短信验证码已发送至<span class="spanStyl">{{ Verification.message }}</span></span>
+        <span v-else class="flex_start font_kai" style="font-size:17px;margin-top:50px;">发送验证码至<span class="spanStyl">{{ Verification.message }}</span></span>
+      </div>
+      <span v-else class="flex_start font_kai" style="font-size:17px;margin-top:50px;color:#da251d;">验证码输入错误，请重新输入！</span>
+      <el-row style="margin-top: 40px;">
+        <el-col :span="14">
+          <el-input v-model="VerificationInput" placeholder="请输入内容" />
+        </el-col>
+        <el-col :span="10">
+          <div v-if="butStyl" class="butStyl align_center">
+            重新获取({{ countDown1 }}s)
+          </div>
+          <div v-else class="butStyl align_center" @click="onVerification">
+            重新获取验证码
+          </div>
+        </el-col>
+      </el-row>
+      <div @click="onDetermine">
+        <div class="btn align_center">
+          确认
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { Base64 } from 'js-base64'
 import { Auth, CLIENT_ID } from '@/services/auth'
+import exception from '@/utils/exception'
 
 export default {
   layout: 'main',
@@ -44,12 +86,32 @@ export default {
   },
   data () {
     return {
+      show: false,
       form: {
+        type: 'user',
+        authCode: '',
+        phone: '',
+        password: '',
         account: '',
-        password: ''
-      }
-
+        remember: false
+      },
+      loading: false,
+      countDown: 0,
+      countDown1: 0,
+      error: true,
+      authCodeMessage: '发送验证码',
+      dialogVisible: false,
+      butStyl: true,
+      VerificationInput: '',
+      Verification: {
+        message: ''
+      },
+      confirmShow: true
     }
+  },
+  created () {
+    const vm = this
+    vm.auth = new Auth({ $axios: vm.$axios, app: { $cookies: vm.$cookies } })
   },
   methods: {
     onLogin () {
@@ -60,17 +122,101 @@ export default {
         password: Base64.encode(vm.form.password),
         client_id: CLIENT_ID
       }
-      const auth = new Auth({ $axios: vm.$axios, app: { $cookies: vm.$cookies } })
+      const auth = vm.auth
       auth.login(params).then((res) => {
         const token = auth.setUserToken(res.data)
         auth.fetchUserInfo({ accessToken: token.accessToken }).then((userRes) => {
           auth.setUserInfo(userRes.data)
           vm.$router.push({ path: '/' })
         }).catch((err) => {
+          vm.$message({
+            message: exception.formatError(err),
+            type: 'error'
+          })
+        })
+      }).catch((e) => {
+        if (e.response.data.code === 11013) {
+          vm.Verification = e.response.data
+          vm.dialogVisible = true
+          vm.butStyl = true
+          this.time()
+        } else {
+          vm.$message({
+            message: exception.formatError(e),
+            type: 'error'
+          })
+        }
+      })
+    },
+    time () {
+      const vm = this
+      vm.countDown1 = 59
+      const interval = setInterval(function () {
+        vm.countDown1--
+        if (vm.countDown1 === 0) {
+          vm.butStyl = false
+          vm.confirmShow = true
+          clearInterval(interval)
+        }
+      }, 1000)
+      setTimeout(function () {
+        clearInterval(interval)
+      }, 59000)
+    },
+    checkAuthCode (value) {
+      if (value.length === 4) {
+        alert(value)
+      }
+    },
+    onVerification () {
+      const vm = this
+      const auth = vm.auth
+      vm.butStyl = true
+      vm.error = true
+      vm.time()
+      auth.sendValidCode({
+        mobile: vm.form.phone
+      }).then((res) => {}).catch((e) => {
+        vm.$message({
+          message: exception.formatError(e),
+          type: 'error'
+        })
+      })
+    },
+
+    onDetermine () {
+      const vm = this
+      const auth = vm.auth
+      if (!vm.VerificationInput || vm.VerificationInput.length !== 4) {
+        return
+      }
+      if (vm.confirmShow === false) {
+        return
+      }
+      vm.confirmShow = false
+      const tempParams = {
+        grant_type: 'password-valid',
+        username: vm.form.account,
+        valid_code: vm.VerificationInput,
+        password: Base64.encode(vm.form.password),
+        client_id: CLIENT_ID
+      }
+      auth.login(tempParams).then((res) => {
+        vm.confirmShow = true
+        const token = auth.setUserToken(res.data)
+        auth.fetchUserInfo({ accessToken: token.accessToken }).then((userRes) => {
+          auth.setUserInfo(userRes.data)
+          setTimeout(() => {
+            vm.show = false
+            vm.$router.push('/')
+          }, 1300)
+        }).catch((err) => {
           console.log(err)
         })
       }).catch((err) => {
         console.log(err)
+        vm.confirmShow = true
+        vm.error = false
       })
     }
   }
@@ -146,6 +292,34 @@ export default {
           margin-bottom: 242px;
         }
       }
+    }
+
+    .spanStyl {
+      color: #da251d;
+    }
+
+    .butStyl {
+      margin-left: 20px;
+      line-height: 40px;
+      height: 40px;
+      border: 2px solid #da251d;
+      border-radius: 5px;
+      font-size: 18px;
+      padding: 0 5px 0 5px;
+      color: #da251d;
+      text-align: center;
+    }
+
+    .btn {
+      height: 50px;
+      line-height: 50px;
+      background: #da251d;
+      padding: 0 190px 0 190px;
+      color: #fff;
+      font-size: 21px;
+      border-radius: 5px;
+      margin-bottom: 50px;
+      margin-top: 50px;
     }
   }
 </style>

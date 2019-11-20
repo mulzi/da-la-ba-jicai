@@ -15,6 +15,35 @@ export class Auth {
     this.cookies = context.app.$cookies
   }
 
+  async sendValidCode (params) {
+    const token = await this.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/validation/open/mobile/sms.json`,
+      headers: {
+        Authorization: token.accessToken
+      },
+      method: 'POST',
+      timeout: TIME_OUT,
+      data: params,
+      transformRequest: [function (data) {
+        return qs.stringify(data)
+      }]
+    })
+  }
+
+  async register (params) {
+    const token = await this.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/basic/open/visitor/bind/register.json`,
+      headers: {
+        Authorization: token.accessToken
+      },
+      method: 'POST',
+      timeout: TIME_OUT,
+      data: params
+    })
+  }
+
   login (params) {
     return this.axios({
       url: `/api/authz/oauth2/token.json`,
@@ -24,6 +53,22 @@ export class Auth {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       params,
+      transformRequest: [function (data) {
+        return qs.stringify(data)
+      }]
+    })
+  }
+
+  async findBackPassword (params) {
+    const token = await this.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/basic/open/findBackPassword.json`,
+      method: 'PUT',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      data: params,
       transformRequest: [function (data) {
         return qs.stringify(data)
       }]
