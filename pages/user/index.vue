@@ -62,10 +62,10 @@
             <p>
               <img :src="item.logo" alt="">
             </p>
-          <el-row class="companyName">
-              <span>{{item.agent}}</span>
-              <span>{{item.address}}</span>
-          </el-row>
+            <el-row class="companyName">
+              <span>{{ item.agent }}</span>
+              <span>{{ item.address }}</span>
+            </el-row>
           </nuxt-link>
         </div>
         <div v-if="getSupplierLiList.length !== 0 " class="pageSbox">

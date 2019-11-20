@@ -54,7 +54,9 @@
         <span>服务承诺</span>
       </el-row>
       <el-row class="bottomContent">
-        <p v-for="(t,i) in promise" :key="i">{{ t }}</p>
+        <p v-for="(t,i) in promise" :key="i">
+          {{ t }}
+        </p>
       </el-row>
     </el-row>
   </div>

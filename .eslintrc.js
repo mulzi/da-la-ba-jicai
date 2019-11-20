@@ -11,6 +11,9 @@ module.exports = {
     '@nuxtjs',
     'plugin:nuxt/recommended'
   ],
+  plugins: [
+    'vue'
+  ],
   // add your custom rules here
   rules: {
     'vue/attribute-hyphenation': 1,

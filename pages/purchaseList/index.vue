@@ -1,6 +1,6 @@
 <template>
-  <div class="supplierBody">
-    <div class="bodyBox">
+  <el-row class="supplierBody">
+    <el-row class="bodyBox">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -76,7 +76,7 @@
             <el-col :span="5" class="el-icon-search searchSt" />
           </el-col>
         </el-row>
-        <el-row class="addItem" >
+        <el-row class="addItem">
           <nuxt-link to="">
             <em class="iconfont">&#xe880;</em>
             <span>发布项目</span>
@@ -84,153 +84,27 @@
         </el-row>
       </el-row>
       <el-row class="boxList">
-        <nuxt-link :to="`/projectInfo/projectContent/sss`">
-          <el-row class="topBox">
-            <el-row class="one">
-              名字
-            </el-row>
-            <el-row class="two">
-              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
-            </el-row>
-            <el-row class="three">
-              <el-col :span="18">
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="6" class="red">
-                  精准情报
-                </el-col>
-              </el-col>
-              <el-col :span="6">
-                2019-01-26
-              </el-col>
-            </el-row>
+        <nuxt-link to="/purchaseList/page/ss" v-for="(t,i) in 20" :key="i">
+          <el-row class="tit">
+            招采材料名称
           </el-row>
-          <el-row class="right_top">
-            <span>用户</span>
+          <el-row class="addr">
+            <el-col :span="8" class="one">
+              工地地区\重庆市渝北
+            </el-col>
+            <el-col :span="8" class="two">
+              项目类型\精装房
+            </el-col>
+            <el-col :span="8" class="three">
+              2019.01.26
+            </el-col>
           </el-row>
-        </nuxt-link>
-        <nuxt-link to="">
-          <el-row class="topBox">
-            <el-row class="one">
-              名字
-            </el-row>
-            <el-row class="two">
-              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
-            </el-row>
-            <el-row class="three">
-              <el-col :span="18">
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="6" class="red">
-                  精准情报
-                </el-col>
-              </el-col>
-              <el-col :span="6">
-                2019-01-26
-              </el-col>
-            </el-row>
-          </el-row>
-          <el-row class="right_top">
-            <span>用户</span>
-          </el-row>
-        </nuxt-link>
-        <nuxt-link to="">
-          <el-row class="topBox">
-            <el-row class="one">
-              名字
-            </el-row>
-            <el-row class="two">
-              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
-            </el-row>
-            <el-row class="three">
-              <el-col :span="18">
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="6" class="red">
-                  精准情报
-                </el-col>
-              </el-col>
-              <el-col :span="6">
-                2019-01-26
-              </el-col>
-            </el-row>
-          </el-row>
-          <el-row class="right_top">
-            <span>用户</span>
-          </el-row>
-        </nuxt-link>
-        <nuxt-link to="">
-          <el-row class="topBox">
-            <el-row class="one">
-              名字
-            </el-row>
-            <el-row class="two">
-              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
-            </el-row>
-            <el-row class="three">
-              <el-col :span="18">
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="6" class="red">
-                  精准情报
-                </el-col>
-              </el-col>
-              <el-col :span="6">
-                2019-01-26
-              </el-col>
-            </el-row>
-          </el-row>
-          <el-row class="right_top">
-            <span>用户</span>
-          </el-row>
-        </nuxt-link>
-        <nuxt-link to="">
-          <el-row class="topBox">
-            <el-row class="one">
-              名字
-            </el-row>
-            <el-row class="two">
-              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
-            </el-row>
-            <el-row class="three">
-              <el-col :span="18">
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="6" class="red">
-                  精准情报
-                </el-col>
-              </el-col>
-              <el-col :span="6">
-                2019-01-26
-              </el-col>
-            </el-row>
-          </el-row>
-          <el-row class="right_top">
-            <span>用户</span>
+          <el-row class="complete">
+            已完成
           </el-row>
         </nuxt-link>
       </el-row>
-      <div class="bottomListBox">
+      <el-row class="bottomListBox">
         <div class="NoData marginBottom40">
           <div class="img">
             <img src="@/assets/img/nodata.png" alt="">
@@ -251,9 +125,9 @@
             @current-change="handleCurrentChange"
           />
         </div>
-      </div>
-    </div>
-  </div>
+      </el-row>
+    </el-row>
+  </el-row>
 </template>
 
 <script>
@@ -670,99 +544,69 @@ export default {
         }
 
     }
-
     .boxList {
-        width: 100%;
-        margin-top: 30px;
+      width: 100%;
+      margin-top: 30px;
 
-        a {
-            float: left;
-            width: 49%;
-            margin-right: 2%;
-            background: #ffffff;
-            margin-bottom: 30px;
-            position: relative;
+      a {
+        float: left;
+        width: 49%;
+        margin-right: 2%;
+        background: #ffffff;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
 
-            &:hover {
-                transition: .3s ease-in-out;
-                box-shadow: 2px 0px 10px #cccccc;
-            }
-
-            .topBox {
-                padding: 0 30px;
-                margin: 40px 0;
-
-                .one {
-                    width: 100%;
-                    @include over;
-                    font-size: 16px;
-                    color: #333333;
-                    font-weight: bold;
-                }
-
-                .two {
-                    width: 100%;
-                    margin-top: 20px;
-                    line-height: 24px;
-                    @include twoText;
-                    font-size: 14px;
-                    color: #666666;
-                }
-
-                .three {
-                    color: #999999;
-                    font-size: 14px;
-                    margin-top: 35px;
-
-                    .red {
-                        color: $redColor;
-                    }
-                }
-            }
-
-            .right_top {
-                position: absolute;
-                top: 0;
-                right: 20px;
-                width: 35px;
-                height: 50px;
-                background: $redColor;
-
-                span {
-                    width: 100%;
-                    height: 100%;
-                    position: relative;
-                    display: block;
-                    color: #ffffff;
-                    font-size: 14px;
-                    text-align: center;
-                    line-height: 34px;
-
-                    &::after {
-                        content: "";
-                        display: block;
-                        position: absolute;
-                        bottom: 0;
-                        left: 0;
-                        height: 0;
-                        border: 17.5px solid transparent;
-                        border-bottom-color: #ffffff;
-                        z-index: 900;
-                    }
-                }
-            }
-
-            &:nth-child(2n) {
-                margin-right: 0;
-            }
+        &:hover {
+          transition: .3s ease-in-out;
+          box-shadow: 2px 0px 10px #cccccc;
         }
-
-        &::after {
-            content: "";
-            display: block;
-            clear: both;
-            visibility: hidden;
-            height: 0;
+        .tit{
+          width: calc(100% - 60px);
+          margin: 30px auto;
+          font-size: 16px;
+          color: #333333;
+          font-weight: bold;
+          @include over;
         }
+        .addr{
+          width: calc(100% - 60px);
+          margin: 30px auto;
+          color: #999999;
+          font-size: 14px;
+          .two{
+            text-align: center;
+          }
+          .three{
+            text-align: right;
+          }
+
+        }
+        .complete{
+          width: 200px;
+          text-align: center;
+          top: 17px;
+          right: -70px;
+          position: absolute;
+          background: $redColor;
+          height: 24px;
+          line-height: 24px;
+          font-size: 14px;
+          color: #ffffff;
+          transform: rotateZ(45deg);
+
+        }
+        &:nth-child(2n) {
+          margin-right: 0;
+        }
+      }
+
+      &::after {
+        content: "";
+        display: block;
+        clear: both;
+        visibility: hidden;
+        height: 0;
+      }
     }
 </style>

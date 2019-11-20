@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <engineering v-if="$store.state.supplier.engineering" :list="date"/>
+    <engineering v-if="$store.state.supplier.engineering" :list="date" />
   </el-row>
 </template>
 

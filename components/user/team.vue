@@ -28,7 +28,7 @@
         </div>
       </div>
     </el-row>
-    <popup v-if="$store.state.user.popup" :list="bo_list"/>
+    <popup v-if="$store.state.user.popup" :list="bo_list" />
   </el-row>
 </template>
 

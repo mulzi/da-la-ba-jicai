@@ -60,24 +60,24 @@
         </el-row>
       </el-row>
       <el-row class="bodyListBox">
-        <nuxt-link to="" v-for="(t,i) in 8" :key="i">
+        <nuxt-link to="/AskPriseList/page/sd" v-for="(t,i) in 8" :key="i">
           <el-row class="liList">
             <el-row class="tit">
               这个是标题
             </el-row>
             <el-row class="time">
-              <el-col span="4">
+              <el-col :span="4">
                 发布时间：<span>2019-08-26</span>
               </el-col>
-              <el-col span="4">
+              <el-col :span="4">
                 发布时间：<span>2019-08-26</span>
               </el-col>
             </el-row>
             <el-row class="time">
-              <el-col span="4">
+              <el-col :span="4">
                 招募地区<span>/重庆</span>
               </el-col>
-              <el-col span="4">
+              <el-col :pan="4">
                 招募类型<span>/施工单位</span>
               </el-col>
             </el-row>
@@ -448,5 +448,60 @@ export default {
         }
 
     }
-
+    .bodyListBox{
+      width: 100%;
+      margin-top: 30px;
+      background: #ffffff;
+      a{
+        display: block;
+        width: 100%;
+        background: #ffffff;
+        position: relative;
+        border-bottom: 1px solid $borderE7 ;
+        overflow: hidden;
+        .liList{
+          margin: 30px 0;
+          padding: 0 30px;
+          position: relative;
+          .tit{
+            width: 100%;
+            font-size: 20px;
+            line-height: 36px;
+            color: #333333;
+            margin-bottom: 10px;
+          }
+          .time{
+            width: 100%;
+            font-size: 16px;
+            color: #777777;
+            margin-bottom: 10px;
+            span{
+              color: #333333;
+            }
+          }
+          .NOTime{
+            position: absolute;
+            height: 26px;
+            line-height: 26px;
+            font-size: 24px;
+            color: $redColor;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+        }
+        &:hover{
+          transition: .3s ease-in-out;
+          box-shadow: 2px 2px 10px #dcdcdc;
+          border-bottom-color: $redColor;
+        }
+      }
+      &::after{
+        content: "";
+        display: block;
+        clear: both;
+        visibility: hidden;
+        height: 0;
+      }
+    }
 </style>

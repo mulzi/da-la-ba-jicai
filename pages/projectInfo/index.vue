@@ -1,6 +1,6 @@
 <template>
-  <div class="supplierBody">
-    <div class="bodyBox">
+  <el-row class="supplierBody">
+    <el-row class="bodyBox">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -67,10 +67,12 @@
             <el-col :span="5" class="el-icon-search searchSt" />
           </el-col>
         </el-row>
-        <nuxt-link class="addItem" to="">
-          <em class="iconfont">&#xe880;</em>
-          <span>发布项目</span>
-        </nuxt-link>
+        <el-row class="addItem">
+          <nuxt-link to="/release">
+            <em class="iconfont">&#xe880;</em>
+            <span>发布项目</span>
+          </nuxt-link>
+        </el-row>
       </el-row>
       <el-row class="boxList">
         <nuxt-link :to="`/projectInfo/projectContent/sss`">
@@ -241,8 +243,8 @@
           />
         </div>
       </div>
-    </div>
-  </div>
+    </el-row>
+  </el-row>
 </template>
 
 <script>

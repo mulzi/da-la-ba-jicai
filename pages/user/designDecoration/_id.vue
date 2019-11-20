@@ -62,8 +62,8 @@
           </ul>
         </el-row>
         <company-introduction v-if="oneListShow" :list="date" />
-        <team v-if="twoListShow" :list="date.team"/>
-        <works v-if="threeListShow" :list="date.works"/>
+        <team v-if="twoListShow" :list="date.team" />
+        <works v-if="threeListShow" :list="date.works" />
         <CompanyInfo v-if="fourListShow" />
         <Evaluate v-if="fiveListShow" />
       </el-row>
@@ -106,6 +106,8 @@ export default {
 
     }
   },
+  computed: {
+  },
   asyncData (context) {
     const { params } = context
     const homeService = new HomeService(context)
@@ -114,8 +116,6 @@ export default {
       console.log('设计施工方详情数据', res.data.result.team)
       return { date: res.data.result }
     })
-  },
-  computed: {
   },
   created () {
   },

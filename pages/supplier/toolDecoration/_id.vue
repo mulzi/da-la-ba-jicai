@@ -1,6 +1,6 @@
 <template>
-  <div class="supplierBody">
-    <div class="bodyBox">
+  <el-row class="supplierBody">
+    <el-row class="bodyBox">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -103,10 +103,10 @@
         <Evaluate v-if="fiveListShow" />
       </el-row>
       <message-module-one v-if="$store.state.home.messageShow" />
-      <integral-pay v-if="$store.state.supplier.IntegralPay"/>
+      <integral-pay v-if="$store.state.supplier.IntegralPay" />
       <!--      id是{{ $route.params.id }}-->
-    </div>
-  </div>
+    </el-row>
+  </el-row>
 </template>
 
 <script>
@@ -143,7 +143,8 @@ export default {
       collectionFlag: true, // 点击收藏的锁
       bannerShow: false,
       videoShow: true,
-      videoShowTwo: true
+      videoShowTwo: true,
+      loading: true
     }
   },
   asyncData (context) {

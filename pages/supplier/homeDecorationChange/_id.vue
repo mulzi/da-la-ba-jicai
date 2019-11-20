@@ -99,10 +99,10 @@
       <el-row class="bottomModuleBox">
         <el-row class="topMenuBox">
           <ul>
-            <li v-if="dates.length !== 0" :class="oneListShow ? 'active':''" @click="oneChangeShow">
+            <li v-if="dates !== undefined && dates.length > 0" :class="oneListShow ? 'active':''" @click="oneChangeShow">
               <span>特价爆款</span>
             </li>
-            <li v-if="date.product.length !== 0" :class="twoListShow ? 'active':''" @click="twoChangeShow">
+            <li v-if="date.product !== undefined && date.product.length !== 0" :class="twoListShow ? 'active':''" @click="twoChangeShow">
               <span>产品系列</span>
             </li>
             <li :class="threeListShow ? 'active':''" @click="threeChangeShow">
@@ -120,7 +120,7 @@
             </li>
           </ul>
         </el-row>
-        <sale v-if="oneListShow" />
+        <sale v-if="oneListShow" :listed="datesES" />
         <product-line v-if="twoListShow" :list="date.product" />
         <company v-if="threeListShow" :list="date" />
         <CompanyInfo v-if="fourListShow" />
@@ -162,6 +162,7 @@ export default {
       fiveListShow: false, // 评价留言显示
       date: [ ], // 主数据
       dates: [ ], // 特价爆款
+      datesES: [],
       collectionFlag: true, // 点击收藏的锁
       bannerShow: false,
       videoShow: true,
@@ -181,9 +182,10 @@ export default {
   created () {
     const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
     homeService.postHotProducts(this.$route.params.id).then((res) => { // 获取特价爆款
-      console.log(res.data.results)
+      console.log('主页面获取', res.data.results)
       this.dates = res.data.results
-      if (res.data.results === '' || res.data.results.length === 0 || res.data.results === []) {
+      this.changeSE()
+      if (res.data.results === null || res.data.results.length === 0) {
         this.oneListShow = false
         this.threeListShow = true
       }
@@ -294,6 +296,17 @@ export default {
     bannerChange () {
       this.videoShow = false
       this.bannerShow = true
+    },
+    changeSE () {
+      const _this = this
+      // console.log('能报错吗？', this.dates)
+      if (this.dates) {
+        const ig = this.dates.length
+        for (let i = 0; i < ig; i++) {
+          _this.datesES.push(..._this.dates[i].products)
+        }
+      }
+      // console.log('修改过的数据', this.datesES)
     }
   }
 }

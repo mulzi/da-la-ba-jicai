@@ -1,7 +1,7 @@
 <template>
-  <el-row class="saleBox marginBottom100">
+  <el-row class="saleBox marginBottom100" v-loading="loading">
     <el-row class="saleList">
-      <el-row class="liList" v-for="(t,i) in dates" :key="i">
+      <el-row class="liList" v-for="(t,i) in date" :key="i">
         <el-row class="flexs">
           <div class="leftBanner">
             <banner :banner="t.productPics" />
@@ -43,36 +43,44 @@
 
 <script>
 import banner from './banner'
-import { HomeService } from '@/services/home'
+// import { HomeService } from '@/services/home'
 export default {
   name: 'Sale',
   components: {
     banner
   },
   // eslint-disable-next-line vue/require-prop-types
-  props: [],
+  props: ['listed'],
   data () {
     return {
-      date: [],
-      dates: []
+      date: this.listed,
+      dates: [],
+      loading: true
     }
   },
   created () {
-    const _this = this
-    const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-    homeService.postHotProducts(this.$route.params.id).then((res) => { // 获取特价爆款
-      this.date = res.data.results
-      console.log(_this.date)
-    })
-    for (let i = 0; i < this.date.length; i++) {
-      if (_this.list[i].seriesType === 2) {
-        _this.dates.push(..._this.list[i].products)
-      }
-    }
-    console.log(this.dates)
+    this.loading = true
+    setTimeout(() => {
+      this.loading = false
+    }, 500)
+    // this.changeSE()
+    // console.log('传过来的数据1', this.date)
+    // const _this = this
+    // const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+    // homeService.postHotProducts(this.$route.params.id).then((res) => { // 获取特价爆款
+    //   this.date = res.data.results
+    //   console.log('惊爆价数据', _this.date)
+    //   if (res.status === 200) {
+    //     setTimeout(() => {
+    //       this.change()
+    //       this.loading = false
+    //     }, 200)
+    //   }
+    // })
   },
   mounted () {
-
+  },
+  methods: {
   }
 }
 </script>

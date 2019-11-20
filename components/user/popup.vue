@@ -21,7 +21,7 @@
             </div>
             <div class="int">
               <p>
-                {{ this.list.selfIntroduction}}
+                {{ this.list.selfIntroduction }}
               </p>
             </div>
             <div class="line" />
@@ -38,7 +38,7 @@
             <em>/ RERESENTATIVE WORKS</em>
           </div>
           <div class="c_box" v-viewer>
-            <div class="a" v-for="(t,i) in this.list.portfolioList "  :key="i">
+            <div class="a" v-for="(t,i) in this.list.portfolioList " :key="i">
               <p><img v-lazy="t.pic" alt=""></p>
               <p>{{ t.imageName }}</p>
             </div>

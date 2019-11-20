@@ -1,7 +1,7 @@
 <template>
   <el-row class="productLineBox">
     <div id="topListBox" class="topListBox padding30">
-      <product-line-one v-for="(item,index) in lists" :key="index" :dates="item"/>
+      <product-line-one v-for="(item,index) in lists" :key="index" :dates="item" />
     </div>
     <div v-if="lists.priceIllustrated" class="moneyState ">
       价格说明：{{ lists.priceIllustrated }}

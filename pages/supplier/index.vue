@@ -1,6 +1,6 @@
 <template>
-  <div class="supplierBody">
-    <div class="bodyBox">
+  <el-row class="supplierBody">
+    <el-row class="bodyBox">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -65,7 +65,7 @@
             没有数据
           </div>
         </div>
-        <div v-if="getSupplierLiList.length !== 0 " class="contentList">
+        <div v-if="getSupplierLiList.length !== 0 " class="contentList" v-loading="loading">
           <nuxt-link v-for="(item, index) in getSupplierLiList" :key="index" :to="`/supplier/${categoryIdNu === 66 ? 'homeDecorationChange' : 'toolDecoration' }/${item.supplierId}`">
             <p>
               <img :src="item.logo" alt="">
@@ -125,8 +125,8 @@
           />
         </div>
       </div>
-    </div>
-  </div>
+    </el-row>
+  </el-row>
 </template>
 
 <script>
@@ -184,7 +184,8 @@ export default {
       pageID: 0, // 分页第几页
       sizeID: 20, // 分页数量
       totalCount: 0, // 获取的总数
-      currentPage4: 1
+      currentPage4: 1,
+      loading: true
     }
   },
   async asyncData (context) { // 获取一级类别
@@ -260,11 +261,17 @@ export default {
       })
     },
     getSupplierList (parmes) {
+      this.loading = true
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.SupplierList(parmes).then((res) => {
         // console.log('s', res.data)
         this.getSupplierLiList = res.data.results
         this.totalCount = res.data.totalCount
+        if (res.status === 200) {
+          setTimeout(() => {
+            this.loading = false
+          }, 500)
+        }
       })
     }
   }
