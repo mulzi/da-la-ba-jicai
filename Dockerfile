@@ -4,6 +4,8 @@ WORKDIR /src
 
 COPY . .
 
+RUN yarn config set registry 'https://registry.npm.taobao.org' && yarn config set sass_binary_site https://npm.taobao.org/mirrors/node-sass/
+
 RUN yarn install \
   --prefer-offline \
   --frozen-lockfile \
