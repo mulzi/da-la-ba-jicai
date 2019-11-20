@@ -531,6 +531,34 @@ html, body {
             cursor: pointer;
           }
         }
+        .sub{
+          width: 580px;
+          margin-left: 120px;
+          margin-top: 30px;
+          margin-bottom: 30px;
+          overflow: hidden;
+          text-align: center;
+          background: $redColor;
+          height: 50px;
+          line-height: 50px;
+          color: #ffffFF;
+          border-radius: 5px;
+          cursor: pointer;
+          &:hover{
+            transition: .3s ease-in;
+            background: rgba(255, 29, 0, 0.92);
+          }
+        }
+        .add{
+          width: 100%;
+          text-align: right;
+          span{
+            color: $redColor;
+            font-size:18px ;
+            cursor: pointer;
+            text-decoration: underline $redColor;
+          }
+        }
       }
     }
   }

@@ -6,7 +6,7 @@
         label-width="120px"
         :rules="rules"
         ref="formOne"
-        :model="form.constants[0]"
+        :model="form.project"
       >
         <el-row v-show="$store.state.release.num === 0">
           <el-row class="tit">
@@ -136,7 +136,6 @@
             </el-form-item>
             <el-form-item label="公司名称：" prop="companyName">
               <el-input v-model="form.constants[i].companyName" placeholder="请输入公司名称" />
-              {{ t.companyName }}
             </el-form-item>
             <el-form-item label="公司地址：">
               <el-input v-model="form.constants[i].address" placeholder="请输入公司地址" />
@@ -151,15 +150,20 @@
               <el-input v-model="form.constants[i].telephone" placeholder="请输入联系人电话" />
             </el-form-item>
           </el-row>
-{{ this.form.constants[0].companyName }}
-          <el-row class="proNext">
-            <div class="left" @click="$store.commit('release/changeNum', 0)">
+          <el-row class="proNext" v-if="false">
+            <div class="left" @click="$store.commit('release/changeNum', 1)">
               上一步
             </div>
             <div class="right" @click="nextStepTwo">
-              下一步
+              提交
             </div>
           </el-row>
+          <el-row class="add">
+            <span>点击添加多个联系人</span>
+          </el-row>
+          <div class="sub">
+            提交
+          </div>
         </el-row>
       </el-form>
       <el-dialog
@@ -182,13 +186,8 @@
 export default {
   data () {
     const cate = (rule, value, callback) => {
-      if (value === null || value === '' || value === undefined) {
-        return callback(new Error('请选择公司类型ssss'))
-      }
-    }
-    const copName = (rule, value, callback) => {
-      if (value === null || value === '' || value === undefined) {
-        return callback(new Error('请选择公司名字sdsdsdsd'))
+      if (value === null || value === '') {
+        return callback(new Error('请选择公司类型'))
       }
     }
     return {
@@ -238,16 +237,16 @@ export default {
           { required: true, message: '请输入项目简介', trigger: 'blur' }
         ],
         companyName: [
-          { validator: copName, trigger: 'blur' }
+          { required: true, validator: cate, trigger: 'blur' }
         ],
         categoryId: [
           { required: true, validator: cate, trigger: 'change' }
         ],
         nameS: [
-          { required: true, validator: copName, trigger: 'blur' }
+          { required: true, validator: cate, trigger: 'blur' }
         ],
         telephone: [
-          { required: true, message: '请输入联系人电话', trigger: 'blur' }
+          { required: true, validator: cate, trigger: 'blur' }
         ]
       },
       options: [
@@ -471,8 +470,10 @@ export default {
     },
     nextStepTwo () {
       if (this.form.project.introduce === null || this.form.project.introduce === '') {
-        this.errorText = '请输入项目简介！'
-        this.dialogVisible = true
+        this.$message({
+          message: '请输入项目简介',
+          type: 'error'
+        })
         return
       }
       this.$store.commit('release/changeNum', 2)
