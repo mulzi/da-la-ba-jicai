@@ -1,5 +1,5 @@
 <template>
-  <div class="headTopBox">
+  <el-row class="headTopBox">
     <el-row class="headTop">
       <div class="widthMx">
         <div class="leftCity">
@@ -20,7 +20,7 @@
             <nuxt-link v-if="!this.$store.state.home.isLogin" to="/">
               注册
             </nuxt-link>
-            <nuxt-link to="/">
+            <nuxt-link to="/my/basicInfo">
               个人中心
             </nuxt-link>
           </div>
@@ -44,7 +44,7 @@
         </div>
       </div>
     </el-row>
-  </div>
+  </el-row>
 </template>
 
 <script>

@@ -1,7 +1,6 @@
 <template>
   <el-row class="dlb_indexBody">
-    <index-head />
-
+    <my-head />
     <nuxt />
 
     <index-foot />
@@ -9,19 +8,16 @@
 </template>
 
 <script>
-
-import indexHead from '@/components/indexHead'
+import myHead from '@/components/myHead'
 import indexFoot from '@/components/indexFoot'
-
 export default {
   components: {
-    indexHead,
-    indexFoot
+    indexFoot,
+    myHead
   }
-
 }
 </script>
 
-<style>
+<style scoped lang="scss">
 
 </style>

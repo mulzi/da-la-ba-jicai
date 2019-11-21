@@ -1,5 +1,5 @@
 <template>
-  <div class="headSearchBox">
+  <el-row class="headSearchBox">
     <el-col :span="7">
       <div class="logoBox">
         <nuxt-link to="/">
@@ -33,7 +33,7 @@
         </div>
       </div>
     </el-col>
-  </div>
+  </el-row>
 </template>
 
 <script>

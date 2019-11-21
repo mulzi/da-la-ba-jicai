@@ -1,6 +1,6 @@
 export const state = () => ({
   number: 0,
-  num: 1
+  num: 0
 })
 
 export const mutations = {

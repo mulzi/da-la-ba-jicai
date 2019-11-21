@@ -568,7 +568,8 @@ export default {
         that.dialogVisible = true
         that.errorText = '请输入正确的手机号格式！'
       } else {
-        console.log(222)
+        console.log(66)
+        window.location.reload()
       }
     },
     // 判断手机号码是否正确
