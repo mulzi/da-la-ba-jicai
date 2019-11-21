@@ -65,7 +65,7 @@ export default {
         const token = auth.setUserToken(res.data)
         auth.fetchUserInfo({ accessToken: token.accessToken }).then((userRes) => {
           auth.setUserInfo(userRes.data)
-          vm.$router.push({ path: '/' })
+          vm.$router.go(-1)
         }).catch((err) => {
           console.log(err)
         })

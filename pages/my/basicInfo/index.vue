@@ -42,7 +42,7 @@
                   <span>基本信息</span>
                 </el-col>
                 <el-col :span="12" class="rige">
-                  <nuxt-link to="">
+                  <nuxt-link to="/my/basicInfo/edit">
                     编辑
                   </nuxt-link>
                 </el-col>
@@ -160,6 +160,41 @@ export default {
         }
 
       }
+      .userBox{
+        background: #ffffFF;
+        margin-top: 10px;
+        .title{
+          padding: 0 30px;
+          margin: 30px 0;
+          .lete{
+            font-size: 20px;
+            font-weight: 400;
+            color: #333333;
+          }
+          .rige{
+            text-align: right;
+            a{
+              color:#037CE6 ;
+              font-size: 14px;
+            }
+          }
+        }
+        .list{
+          padding: 0 30px;
+          margin-bottom: 25px;
+          font-size: 14px;
+          .lef{
+            color: #b3b3b3;
+          }
+          .rig{
+            color: #333333;
+          }
+          &:last-child{
+            margin-bottom: 32px;
+          }
+        }
+      }
+
     }
   }
 }
