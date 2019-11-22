@@ -106,6 +106,7 @@ export default {
         .rightBox{
             .infoBox{
               width: 100%;
+              height: 628px;
               background: #ffffff;
               .userBox{
                 width: 60%;

@@ -42,13 +42,13 @@ export default {
       flag: false,
       menu: [
         { name: '基本信息', url: '/my/basicInfo' },
-        { name: '我的会员', url: '' },
-        { name: '我的积分', url: '' },
+        { name: '我的会员', url: '/my/member' },
+        { name: '我的积分', url: '/my/point' },
         { name: '我的订单', url: '' },
         { name: '我的收藏', url: '' }
       ],
       menub: [
-        { name: '项目信息', url: '/my/basicInfo' },
+        { name: '项目信息', url: '' },
         { name: '招采信息', url: '' },
         { name: '招募招标', url: '' }
       ]
