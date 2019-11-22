@@ -19,7 +19,7 @@
           应支付：<i>10</i>积分  <span>你目前共有999个积分</span>
         </el-row>
         <el-row class="four">
-          积分不够，<nuxt-link target="_bank" to="">
+          积分不够，<nuxt-link to="/my/PurchasePoints">
             点击这里充值
           </nuxt-link> <span @click="changeTextShow">如何赚取积分？</span>
         </el-row>
@@ -34,9 +34,11 @@
               1. 发布项目信息 送100个积分
             </el-col>
             <el-col :span="7">
-              <nuxt-link to="">
-                点击这里去发布
-              </nuxt-link>
+              <span @click="$store.commit('release/changeNumber', 0)">
+                <nuxt-link to="/release">
+                  点击这里去发布
+                </nuxt-link>
+              </span>
             </el-col>
           </el-row>
           <el-row class="contentS">
@@ -44,9 +46,11 @@
               2. 发布招采购信息 送100个积分
             </el-col>
             <el-col :span="7">
-              <nuxt-link to="">
-                点击这里去发布
-              </nuxt-link>
+               <span @click="$store.commit('release/changeNumber', 1)">
+                <nuxt-link to="/release">
+                  点击这里去发布
+                </nuxt-link>
+              </span>
             </el-col>
           </el-row>
           <el-row class="contentS">
@@ -54,9 +58,11 @@
               3. 发布招募招标 送100个积分
             </el-col>
             <el-col :span="7">
-              <nuxt-link to="">
-                点击这里去发布
-              </nuxt-link>
+              <span @click="$store.commit('release/changeNumber', 2)">
+                <nuxt-link to="/release">
+                  点击这里去发布
+                </nuxt-link>
+              </span>
             </el-col>
           </el-row>
           <el-row class="contentS">
@@ -64,9 +70,11 @@
               4. 发布成功案例 送50积分
             </el-col>
             <el-col :span="7">
-              <nuxt-link to="">
-                点击这里去发布
-              </nuxt-link>
+              <span @click="$store.commit('release/changeNumber', 3)">
+                <nuxt-link to="/release">
+                  点击这里去发布
+                </nuxt-link>
+              </span>
             </el-col>
           </el-row>
           <el-row class="tit">

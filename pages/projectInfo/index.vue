@@ -67,12 +67,12 @@
             <el-col :span="5" class="el-icon-search searchSt" />
           </el-col>
         </el-row>
-        <el-row class="addItem">
+        <div @click="$store.commit('release/changeNumber', 0)" class="addItem">
           <nuxt-link to="/release">
             <em class="iconfont">&#xe880;</em>
             <span>发布项目</span>
           </nuxt-link>
-        </el-row>
+        </div>
       </el-row>
       <el-row class="boxList">
         <nuxt-link :to="`/projectInfo/projectContent/sss`">

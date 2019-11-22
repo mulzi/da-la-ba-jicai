@@ -15,7 +15,7 @@
         </el-col>
       </el-row>
       <el-row class="rightTIPS">
-        <span>如何赚取积分？</span>
+        <span @click="$store.commit('myCentent/changePoints')">如何赚取积分？</span>
       </el-row>
     </el-row>
   </el-row>

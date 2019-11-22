@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <el-row class="login-container ">
     <div class="login-form-container">
       <div class="login-welcome">
         <span class="welcome">忘记密码</span> <span class="btn-register fRight">已有账号，<nuxt-link to="/login">立即登录</nuxt-link></span>
@@ -36,7 +36,7 @@
         </el-col>
       </el-row>
     </div>
-  </div>
+  </el-row>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
-  <div class="supplierBody">
-    <div class="bodyBox">
+  <el-row class="supplierBody">
+    <el-row class="bodyBox">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -52,12 +52,12 @@
             <el-col :span="5" class="el-icon-search searchSt" />
           </el-col>
         </el-row>
-        <el-row class="addItem">
-          <nuxt-link to="">
+        <div @click="$store.commit('release/changeNumber', 2)" class="addItem">
+          <nuxt-link to="/release">
             <em class="iconfont">&#xe880;</em>
             <span>发布项目</span>
           </nuxt-link>
-        </el-row>
+        </div>
       </el-row>
       <el-row class="bodyListBox">
         <nuxt-link to="/AskPriseList/page/sd" v-for="(t,i) in 8" :key="i">
@@ -109,8 +109,8 @@
           />
         </div>
       </div>
-    </div>
-  </div>
+    </el-row>
+  </el-row>
 </template>
 
 <script>

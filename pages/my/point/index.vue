@@ -6,7 +6,7 @@
           <menu-s />
         </el-col>
         <el-col :span="20" class="rightBox">
-          <el-row class="infoBox">
+          <el-row class="infoBox_b">
             <el-col :span="12" class="left">
               可用积分：0
             </el-col>
@@ -21,7 +21,7 @@
               <span>
                 积分明细
               </span>
-              <em>
+              <em @click="$store.commit('myCentent/changePoints')">
                 积分规则
               </em>
             </el-row>
@@ -66,13 +66,18 @@
         </el-col>
       </el-row>
     </el-row>
+    <points v-if="this.$store.state.myCentent.pointDes" />
   </el-row>
 </template>
 
 <script>
 import menuS from '@/components/my/leftMenu'
+import points from '@/components/my/points/points'
 export default {
-  components: { menuS },
+  components: {
+    menuS,
+    points
+  },
   layout: 'my',
   data () {
     return {
@@ -83,14 +88,14 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     .myCentent{
         width: 100%;
         margin-top: 20px;
         .leftBox{
         }
       .rightBox{
-        .infoBox{
+        .infoBox_b{
           width: 100%;
           height: 96px;
           background: #ffffff;

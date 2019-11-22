@@ -76,12 +76,12 @@
             <el-col :span="5" class="el-icon-search searchSt" />
           </el-col>
         </el-row>
-        <el-row class="addItem">
-          <nuxt-link to="">
+        <div @click="$store.commit('release/changeNumber', 1)" class="addItem">
+          <nuxt-link to="/release">
             <em class="iconfont">&#xe880;</em>
             <span>发布项目</span>
           </nuxt-link>
-        </el-row>
+        </div>
       </el-row>
       <el-row class="boxList">
         <nuxt-link to="/purchaseList/page/ss" v-for="(t,i) in 20" :key="i">
