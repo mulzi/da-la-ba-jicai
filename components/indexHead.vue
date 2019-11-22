@@ -1,9 +1,9 @@
 <template>
-  <div class="header">
+  <el-row class="header">
     <head-top />
     <head-search />
     <head-menu />
-  </div>
+  </el-row>
 </template>
 
 <script>

@@ -1,9 +1,10 @@
 import Vue from 'vue'
-
+import 'element-ui/lib/theme-chalk/base.css'
+import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 import {
   Button, Input, Carousel, Container, Icon, Col, Row, CarouselItem, Pagination, BreadcrumbItem,
   Breadcrumb, Tooltip, Rate, Radio, RadioButton, InfiniteScroll, Message, Form, FormItem, Calendar, Select, Cascader,
-  Option, Upload, Dialog, DatePicker, Loading, RadioGroup, Checkbox
+  Option, Upload, Dialog, DatePicker, Loading, RadioGroup, Checkbox, CollapseItem
 } from 'element-ui'
 Vue.use(CarouselItem)
 Vue.use(Col)
@@ -33,6 +34,8 @@ Vue.use(DatePicker)
 Vue.use(Checkbox)
 Vue.use(InfiniteScroll)
 Vue.use(Message)
+Vue.use(CollapseItem)
 Vue.use(Loading)
 Vue.prototype.$message = Message
 Vue.prototype.$loading = Loading.service
+Vue.component(CollapseTransition.name, CollapseTransition)

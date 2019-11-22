@@ -127,28 +127,30 @@
               <span />
             </el-row>
           </el-row>
-          <el-row v-for="(t,i) in form.constants" :key="i">
-            <el-form-item label="公司类别：" prop="categoryId">
-              <el-select v-model="form.constants[i].categoryId" placeholder="请选择公司类别">
-                <el-option label="区域一" value="shanghai" />
-                <el-option label="区域二" value="beijing" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="公司名称：" prop="companyName">
-              <el-input v-model="form.constants[i].companyName" placeholder="请输入公司名称" />
-            </el-form-item>
-            <el-form-item label="公司地址：">
-              <el-input v-model="form.constants[i].address" placeholder="请输入公司地址" />
-            </el-form-item>
-            <el-form-item label="联系人姓名：" prop="nameS">
-              <el-input v-model="form.constants[i].nameS" placeholder="请输入联系人" />
-            </el-form-item>
-            <el-form-item label="联系人职位：">
-              <el-input v-model="form.constants[i].positionLevel" placeholder="请输入联系人职位" />
-            </el-form-item>
-            <el-form-item label="联系人电话：" prop="telephone">
-              <el-input v-model="form.constants[i].telephone" placeholder="请输入联系人电话" />
-            </el-form-item>
+          <el-row class="lsitBoxS">
+            <el-row v-for="(t,i) in form.constants" :key="i" class="listLi">
+              <el-form-item label="公司类别：" prop="categoryId">
+                <el-select v-model="form.constants[i].categoryId" placeholder="请选择公司类别">
+                  <el-option label="区域一" value="shanghai" />
+                  <el-option label="区域二" value="beijing" />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="公司名称：" prop="companyName">
+                <el-input v-model="form.constants[i].companyName" placeholder="请输入公司名称" />
+              </el-form-item>
+              <el-form-item label="公司地址：">
+                <el-input v-model="form.constants[i].address" placeholder="请输入公司地址" />
+              </el-form-item>
+              <el-form-item label="联系人姓名：" prop="nameS">
+                <el-input v-model="form.constants[i].nameS" placeholder="请输入联系人" />
+              </el-form-item>
+              <el-form-item label="联系人职位：">
+                <el-input v-model="form.constants[i].positionLevel" placeholder="请输入联系人职位" />
+              </el-form-item>
+              <el-form-item label="联系人电话：" prop="telephone">
+                <el-input v-model="form.constants[i].telephone" placeholder="请输入联系人电话" />
+              </el-form-item>
+            </el-row>
           </el-row>
           <el-row class="proNext" v-if="false">
             <div class="left" @click="$store.commit('release/changeNum', 1)">
@@ -158,10 +160,16 @@
               提交
             </div>
           </el-row>
-          <el-row class="add">
-            <span>点击添加多个联系人</span>
+          <el-row v-if="form.constants.length === 1" class="add">
+            <span @click="add">点击添加多个联系人</span>
           </el-row>
-          <div class="sub">
+          <el-row v-if="form.constants.length > 1" class="add_B_add">
+            <el-row class="boxwE">
+              <span class="el-icon-circle-plus-outline" @click="add" />
+              <span class="el-icon-remove-outline" @click="onslice" />
+            </el-row>
+          </el-row>
+          <div class="sub" @click="submitTo">
             提交
           </div>
         </el-row>
@@ -521,11 +529,62 @@ export default {
         message: '最多只能上传3张图片',
         type: 'error'
       })
+    },
+    // 添加联系人数据
+    add () {
+      const that = this
+      that.form.constants.push({
+        categoryId: null, // 公司类别
+        companyName: null, // 公司名称
+        name: null, // 联系人姓名
+        positionLevel: null, // 联系人职位
+        telephone: null, // 联系人电话
+        address: null // 公司地址
+      })
+      console.log(this.form.constants.length)
+    },
+
+    // 删除联系人
+    onslice () {
+      const that = this
+      that.form.constants.splice(that.form.constants.length - 1, 1)
+    },
+    submitTo () {
+      const that = this
+      const form = that.form
+      if (!form.constants[0].categoryId) {
+        that.dialogVisible = true
+        that.errorText = '请选择公司类别！'
+      } else if (!form.constants[0].companyName) {
+        that.dialogVisible = true
+        that.errorText = '输入公司名称！'
+      } else if (!form.constants[0].nameS) {
+        that.dialogVisible = true
+        that.errorText = '输入联系人姓名！'
+      } else if (!form.constants[0].telephone) {
+        that.dialogVisible = true
+        that.errorText = '输入联系人电话！'
+      } else if (this.isPoneAvailable(form.constants[0].telephone)) {
+        that.dialogVisible = true
+        that.errorText = '请输入正确的手机号格式！'
+      } else {
+        console.log(66)
+        window.location.reload()
+      }
+    },
+    // 判断手机号码是否正确
+    isPoneAvailable (str) {
+      const myreg = /^[1][3,4,5,7,8][0-9]{9}$/
+      if (!myreg.test(str)) {
+        return true
+      } else {
+        return false
+      }
     }
+
   }
 }
 </script>
 
 <style scoped lang="scss">
-
 </style>
