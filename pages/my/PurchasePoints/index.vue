@@ -55,17 +55,39 @@
         确认支付
       </span>
     </el-row>
+    <transition name="scle">
+      <el-row class="codeBox" v-show="canvas">
+        <div class="bg" @click="changeCanvas" />
+        <el-row class="codeBody">
+          <el-row class="topTit">
+            <el-col :span="20">
+              扫码支付
+            </el-col>
+            <el-col :span="4" class="right">
+              <span class="el-icon-close" @click="changeCanvas" />
+            </el-col>
+          </el-row>
+          <el-row class="canv">
+            <canvas id="canvas" ref="qrcode" class="canvas" />
+          </el-row>
+        </el-row>
+      </el-row>
+    </transition>
     <points v-if="this.$store.state.myCentent.pointDes" />
   </el-row>
 </template>
 
 <script>
+import Qrcode from 'qrcode'
 import points from '@/components/my/points/points'
 export default {
-  components: { points },
+  components: {
+    points
+  },
   layout: 'PurchasePoints',
   data () {
     return {
+      canvas: false,
       form: {
         radio: '1',
         radioe: '300',
@@ -74,6 +96,14 @@ export default {
     }
   },
   methods: {
+    changeCanvas () {
+      this.canvas = !this.canvas
+    },
+    qrCode (url) { // 生成二维码
+      Qrcode.toCanvas(this.$refs.qrcode, url, function (error) {
+        console.log(error)
+      })
+    },
     onSub () {
       const text = /^[0-9]+$/
       if (this.form.radioe === '400') {
@@ -95,10 +125,14 @@ export default {
           })
         } else {
           console.log(this.form.radioes)
+          this.qrCode(this.form.radioes)
+          this.canvas = true
         }
       } else {
         this.form.radioes = this.form.radioe
         console.log(this.form.radioes)
+        this.qrCode('http://m.315sj.cn/')
+        this.canvas = true
       }
     }
   }
@@ -106,7 +140,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
   .points {
     width: 62.5%;
     max-width: 1200px;
@@ -247,6 +281,65 @@ export default {
         margin-bottom: 40px;
         display: inline-block;
         cursor: pointer;
+      }
+    }
+    .codeBox{
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      position: fixed;
+      .bg{
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0, .15);
+        position: absolute;
+        z-index: 900;
+        top: 0;
+        left: 0;
+      }
+      .codeBody{
+        width: 400px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        background: #ffffFF;
+        z-index: 910;
+        .topTit{
+          padding: 0 30px;
+          height: 60px;
+          line-height: 60px;
+          background: $redColor;
+          font-size: 18px;
+          color: #ffffFF;
+          .right{
+            text-align: right;
+            span{
+
+              display: inline-block;
+              cursor: pointer;
+              font-size: 26px;
+              height: 36px;
+              line-height: 36px;
+              text-align: center;
+              width: 36px;
+              border-radius: 50%;
+              &:hover{
+                transition: .2s ease-in-out;
+                background: rgba(255,255,255, .15);
+              }
+            }
+          }
+        }
+        .canv{
+          .canvas{
+            display: block;
+            height: 148px;
+            width: 148px;
+            margin: 40px auto;
+          }
+        }
       }
     }
   }

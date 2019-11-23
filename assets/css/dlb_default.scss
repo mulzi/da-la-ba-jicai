@@ -121,3 +121,19 @@ $borderE7: #e7e7e7; //默认边框线颜色
     opacity: 1;
   }
 }
+.scle-enter-active {
+  animation: scle-in .3s;
+}
+.scle-leave-active {
+  opacity: 0;
+}
+@keyframes scle-in {
+  0% {
+    opacity: 0;
+    transform: scale(.5);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
