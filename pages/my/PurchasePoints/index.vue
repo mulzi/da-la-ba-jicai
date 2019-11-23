@@ -57,7 +57,7 @@
     </el-row>
     <transition name="scle">
       <el-row class="codeBox" v-show="canvas">
-        <div class="bg" @click="changeCanvas" />
+        <div class="bg" @click="changeCanvas" v-if="canvasTwo" />
         <el-row class="codeBody">
           <el-row class="topTit">
             <el-col :span="20">
@@ -88,6 +88,7 @@ export default {
   data () {
     return {
       canvas: false,
+      canvasTwo: false,
       form: {
         radio: '1',
         radioe: '300',
@@ -98,6 +99,9 @@ export default {
   methods: {
     changeCanvas () {
       this.canvas = !this.canvas
+      setTimeout(() => {
+        this.canvasTwo = !this.canvasTwo
+      }, 300)
     },
     qrCode (url) { // 生成二维码
       Qrcode.toCanvas(this.$refs.qrcode, url, function (error) {
@@ -126,13 +130,13 @@ export default {
         } else {
           console.log(this.form.radioes)
           this.qrCode(this.form.radioes)
-          this.canvas = true
+          this.changeCanvas()
         }
       } else {
         this.form.radioes = this.form.radioe
         console.log(this.form.radioes)
         this.qrCode('http://m.315sj.cn/')
-        this.canvas = true
+        this.changeCanvas()
       }
     }
   }
@@ -292,7 +296,7 @@ export default {
       .bg{
         width: 100%;
         height: 100%;
-        background: rgba(0,0,0, .15);
+        background: rgba(0,0,0, .5);
         position: absolute;
         z-index: 900;
         top: 0;
