@@ -45,7 +45,7 @@ export default {
         { name: '我的会员', url: '/my/member' },
         { name: '我的积分', url: '/my/point' },
         { name: '我的订单', url: '' },
-        { name: '我的收藏', url: '' }
+        { name: '我的收藏', url: '/my/collection' }
       ],
       menub: [
         { name: '项目信息', url: '' },

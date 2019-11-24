@@ -14,7 +14,7 @@
           </div>
         </el-col>
       </el-row>
-      <div class="topMenuBox">
+      <el-row class="topMenuBox">
         <div class="contentBox">
           <div class="defaultBox">
             <div class="leftText">
@@ -55,8 +55,8 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="bottomListBox">
+      </el-row>
+      <el-row class="bottomListBox">
         <div v-if="getSupplierLiList.length === 0 " class="NoData marginBottom40">
           <div class="img">
             <img src="@/assets/img/nodata.png" alt="">
@@ -124,7 +124,7 @@
             @current-change="handleCurrentChange"
           />
         </div>
-      </div>
+      </el-row>
     </el-row>
   </el-row>
 </template>

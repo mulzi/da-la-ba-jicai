@@ -14,7 +14,7 @@
           </div>
         </el-col>
       </el-row>
-      <div class="topMenuBox">
+      <el-row class="topMenuBox">
         <div class="contentBox">
           <div class="defaultBox">
             <div class="leftText">
@@ -53,7 +53,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </el-row>
       <el-row class="bottomListBox">
         <div v-if="getSupplierLiList.length === 0 " class="NoData marginBottom40">
           <div class="img">
@@ -271,45 +271,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .supplierBody{
-    width: 100%;
-    background: #f0f3ef;
-    overflow: hidden;
-    .bodyBox{
-      width: 75%;
-      max-width: 1400px;
-      margin: 0 auto;
-      .HeaderBreadcrumb{
-        width: 100%;
-        margin-top: 20px;
-        .breadcrumb{
-          overflow: hidden;
-          height: 20px;
-          line-height: 20px;
-          span{
-            display: block;
-            float: left;
-            font-size: 14px;
-            color: #333333;
-            margin-right: 6px;
-            &.right{
-              font-size: 12px;
-            }
-          }
-          a{
-            font-size: 14px;
-            display: block;
-            float: left;
-            color: #8e8e8e;
-            margin-right: 6px;
-          }
-          .iconfont{
-            color:#9a9a9a ;
-            font-size: 20px;
-          }
-        }
-
-      }
       .topMenuBox{
         background: #ffffff;
         width: 100%;
@@ -495,6 +456,4 @@ export default {
           }
         }
       }
-    }
-  }
 </style>

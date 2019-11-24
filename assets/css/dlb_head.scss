@@ -554,32 +554,6 @@ html, body {
       }
 
     }
-
-    .pageSbox { // 默认分页样式
-      width: 100%;
-      margin: 30px auto 40px;
-      text-align: center;
-
-      .el-pagination {
-        padding: 0 20px;
-        display: inline-block;
-
-        .btn-prev {
-          background: #ffffff;
-        }
-
-        .el-pager {
-          li {
-            background: #ffffff;
-
-            &.active {
-              background: $redColor;
-            }
-          }
-
-        }
-      }
-    }
   }
 
   .myBodyBox {
@@ -587,7 +561,30 @@ html, body {
     max-width: 1200px;
     margin: 0 auto;
   }
+  .pageSbox { // 默认分页样式
+    width: 100%;
+    margin: 30px auto 40px;
+    text-align: center;
+    .el-pagination {
+      padding: 0 20px;
+      display: inline-block;
 
+      .btn-prev {
+        background: #ffffff;
+      }
+
+      .el-pager {
+        li {
+          background: #ffffff;
+
+          &.active {
+            background: $redColor;
+          }
+        }
+
+      }
+    }
+  }
 }
 
 

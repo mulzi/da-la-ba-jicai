@@ -112,6 +112,13 @@ export default {
   created () {
     const vm = this
     vm.auth = new Auth({ $axios: vm.$axios, app: { $cookies: vm.$cookies } })
+    if (this.$store.state.home.loginText) {
+      this.$message({
+        message: '你还没有登录哦！',
+        type: 'error'
+      })
+      this.$store.commit('home/changeLoginText')
+    }
   },
   methods: {
     onLogin () {

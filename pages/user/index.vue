@@ -1,6 +1,6 @@
 <template>
-  <div class="supplierBody">
-    <div class="bodyBox">
+  <el-row class="supplierBody">
+    <el-row class="bodyBox">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -14,8 +14,8 @@
           </div>
         </el-col>
       </el-row>
-      <div class="topMenuBox">
-        <div class="contentBox">
+      <el-row class="topMenuBox">
+        <el-row class="contentBox">
           <div class="defaultBox">
             <div class="leftText">
               设计施工方：
@@ -46,8 +46,8 @@
               <span v-for="(item,index) in materialTypes" :id="item.id" :key="index" :class="supplierThree === index ? 'active':'' " @click="changeThree (index),changeProjectTypeIdNuOne(item.id || null) , getSupplierList({ type: type, categoryId: categoryIdNu, materialId: projectTypeIdNu, projectTypeId: materialIdNu, page: pageID, size: sizeID })">{{ item.name }}</span>
             </div>
           </div>
-        </div>
-      </div>
+        </el-row>
+      </el-row>
       <div class="bottomListBox">
         <div v-if="getSupplierLiList.length === 0 " class="NoData marginBottom40">
           <div class="img">
@@ -81,8 +81,8 @@
           />
         </div>
       </div>
-    </div>
-  </div>
+    </el-row>
+  </el-row>
 </template>
 
 <script>
@@ -220,7 +220,7 @@ export default {
           line-height: 30px;
           margin-bottom: 16px;
           text-align: right;
-          font-size: 16px;
+          font-size: 14px;
           font-weight: bold;
           color: #333333;
         }
@@ -228,14 +228,15 @@ export default {
         .rightList {
           flex: 1;
           -ms-flex: 1;
+          font-size: 0;
 
           span {
             display: inline-block;
             height: 26px;
             line-height: 26px;
-            font-size: 16px;
+            font-size: 14px;
             color: #666666;
-            margin: 0 30px 10px 0;
+            margin: 0 6px 6px 0;
             padding: 2px 10px;
             cursor: pointer;
 
