@@ -1,6 +1,6 @@
 <template>
-  <div class="supplierBody">
-    <div class="bodyBox">
+  <el-row class="supplierBody">
+    <el-row class="bodyBox">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -43,10 +43,10 @@
             <li :class="oneListShow ? 'active':''" @click="oneChangeShow">
               <span>公司介绍</span>
             </li>
-            <li v-if="date.team.length > 0" :class="twoListShow ? 'active':''" @click="twoChangeShow">
+            <li v-if="date.team !== undefined && date.team.length > 0" :class="twoListShow ? 'active':''" @click="twoChangeShow">
               <span>团队介绍</span>
             </li>
-            <li v-if="date.works.length > 0" :class="threeListShow ? 'active':''" @click="threeChangeShow">
+            <li v-if="date.works !== undefined && date.works.length > 0" :class="threeListShow ? 'active':''" @click="threeChangeShow">
               <span>
                 作品精选
               </span>
@@ -69,8 +69,8 @@
       </el-row>
       <message-module-one v-if="$store.state.home.messageShow" />
       <!--      id是{{ $route.params.id }}-->
-    </div>
-  </div>
+    </el-row>
+  </el-row>
 </template>
 
 <script>
@@ -130,6 +130,18 @@ export default {
       })
     },
     getCollection () { // 点击收藏
+      const _this = this
+      if (!_this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没登录哦~~~   去登录吧！',
+          type: 'error'
+        })
+        setTimeout(() => {
+          _this.$router.push('/login')
+        }, 1000)
+
+        return false
+      }
       if (this.collectionFlag) {
         this.collectionFlag = false
         const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
@@ -145,7 +157,7 @@ export default {
         this.getSupplierList()
         setTimeout(() => {
           this.collectionFlag = true
-        }, 5000)
+        }, 10000)
       } else {
         this.$message({ message: '你点击太快了哦~~~', type: 'warning'
         })

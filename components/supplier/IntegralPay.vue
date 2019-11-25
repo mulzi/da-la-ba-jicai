@@ -34,9 +34,11 @@
               1. 发布项目信息 送100个积分
             </el-col>
             <el-col :span="7">
-              <nuxt-link to="">
-                点击这里去发布
-              </nuxt-link>
+              <span @click="$store.commit('release/changeNumber', 0)">
+                <nuxt-link to="/release">
+                  点击这里去发布
+                </nuxt-link>
+              </span>
             </el-col>
           </el-row>
           <el-row class="contentS">
@@ -44,9 +46,11 @@
               2. 发布招采购信息 送100个积分
             </el-col>
             <el-col :span="7">
-              <nuxt-link to="">
-                点击这里去发布
-              </nuxt-link>
+              <span @click="$store.commit('release/changeNumber', 1)">
+                <nuxt-link to="/release">
+                  点击这里去发布
+                </nuxt-link>
+              </span>
             </el-col>
           </el-row>
           <el-row class="contentS">
@@ -54,9 +58,11 @@
               3. 发布招募招标 送100个积分
             </el-col>
             <el-col :span="7">
-              <nuxt-link to="">
-                点击这里去发布
-              </nuxt-link>
+              <span @click="$store.commit('release/changeNumber', 2)">
+                <nuxt-link to="/release">
+                  点击这里去发布
+                </nuxt-link>
+              </span>
             </el-col>
           </el-row>
           <el-row class="contentS">
@@ -64,9 +70,11 @@
               4. 发布成功案例 送50积分
             </el-col>
             <el-col :span="7">
-              <nuxt-link to="">
-                点击这里去发布
-              </nuxt-link>
+              <span @click="$store.commit('release/changeNumber', 3)">
+                <nuxt-link to="/release">
+                  点击这里去发布
+                </nuxt-link>
+              </span>
             </el-col>
           </el-row>
           <el-row class="tit">
@@ -115,6 +123,8 @@
 import { HomeService } from '@/services/home'
 export default {
   name: 'IntegralPay',
+  // eslint-disable-next-line vue/require-prop-types
+  props: ['id'],
   data () {
     return {
       date: '',
@@ -138,10 +148,12 @@ export default {
         console.log(res.data)
       })
     },
-    consumeScore () { // 积分消费后台逻辑没修改暂时停止
+    consumeScore () { // 积分消费
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.consumeScore({ productId: 6, dataId: this.$route.params.id }).then((res) => {
-        console.log(res.data)
+      homeService.consumeScore({ productId: this.$store.state.home.payScore, dataId: this.id }).then((res) => {
+        console.log(res)
+        window.location.reload()
+        this.$store.commit('supplier/changeIntegralPay')
       })
     }
 

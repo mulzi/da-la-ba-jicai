@@ -103,7 +103,7 @@
         <Evaluate v-if="fiveListShow" />
       </el-row>
       <message-module-one v-if="$store.state.home.messageShow" />
-      <integral-pay v-if="$store.state.supplier.IntegralPay" />
+      <integral-pay :id="date.contacts[0].id"  v-if="$store.state.supplier.IntegralPay" />
       <!--      id是{{ $route.params.id }}-->
     </el-row>
   </el-row>

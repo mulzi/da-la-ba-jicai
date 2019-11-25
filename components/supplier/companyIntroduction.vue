@@ -134,7 +134,7 @@ export default {
 
         return false
       }
-      this.$store.dispatch('home/CHANGEPAYSCORE', 6)
+      this.$store.dispatch('home/CHANGEPAYSCORE', 6) // 改变积分查看的数字
       this.$store.commit('supplier/changeIntegralPay')
     }
   }

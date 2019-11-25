@@ -42,9 +42,9 @@
           </li>
         </ul>
       </div>
-      <div class="clickShow">
-        <span @click="payShow">积分查看</span>
-      </div>
+      <!--      <div class="clickShow">-->
+      <!--        <span @click="payShow">积分查看</span>-->
+      <!--      </div>-->
       <div class="tips">
         联系我时请说是在大喇叭集采网上看到的，谢谢！
       </div>

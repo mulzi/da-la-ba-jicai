@@ -261,7 +261,7 @@ export class HomeService {
       },
       timeout: TIME_OUT,
       // eslint-disable-next-line no-undef
-      data: params
+      params
     })
   }
   async postScore (params) { // 查询账户余额及积分价格
@@ -276,7 +276,7 @@ export class HomeService {
       // eslint-disable-next-line no-undef
     })
   }
-  async postHotProducts (params) { // 查询账户余额及积分价格
+  async postHotProducts (params) { // 获取特价爆款
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
       url: `/api/supplier/open/mini/hot/products/${params}.json`,
