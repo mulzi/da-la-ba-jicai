@@ -66,7 +66,9 @@
         </el-col>
       </el-row>
     </el-row>
-    <points v-if="this.$store.state.myCentent.pointDes" />
+    <transition name="scle">
+      <points v-if="this.$store.state.myCentent.pointDes" />
+    </transition>
   </el-row>
 </template>
 

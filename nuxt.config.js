@@ -7,11 +7,10 @@ export default {
     ** Headers of the page
     */
   head: {
-    title: process.env.npm_package_name || '',
+    title: '大喇叭集采-一家工程行业多方数据采集,多方需求集采的大数据供需平台',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { name: 'viewport', content: 'width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -70,14 +69,14 @@ export default {
     ** See https://axios.nuxtjs.org/options
     */
   axios: {
-    baseURL: 'http://www.dalabajicai.com/',
+    baseURL: 'http://qy.cqsudu.com:10200/',
     browserBaseURL: '/',
     proxy: false
   },
 
   proxy: {
     '/api': {
-      target: 'http://www.dalabajicai.com/',
+      target: 'http://qy.cqsudu.com:10200/',
       pathRewrite: {
         '^/api': '/api'
       }

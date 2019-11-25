@@ -1,7 +1,7 @@
 <template>
-  <div class="footerBox">
-    <div class="centnetBox">
-      <div class="footTop">
+  <el-row class="footerBox">
+    <el-row class="centnetBox">
+      <el-row class="footTop">
         <ul>
           <li>
             <div class="left">
@@ -42,67 +42,67 @@
             </div>
           </li>
         </ul>
-      </div>
+      </el-row>
       <div class="line" />
-      <div class="connectBox">
+      <el-row class="connectBox">
         <div class="leftMud">
           <div class="one">
             <p>关于我们</p>
             <li>
-              <a href="">
+              <nuxt-link to="/we/about">
                 关于我们
-              </a>
+              </nuxt-link>
             </li>
             <li>
-              <a href="">
+              <nuxt-link to="">
                 联系我们
-              </a>
+              </nuxt-link>
             </li>
           </div>
           <div class="one">
             <p>用户指南</p>
             <li>
-              <a href="">
+              <nuxt-link to="">
                 免责声明
-              </a>
+              </nuxt-link>
             </li>
             <li>
-              <a href="">
+              <nuxt-link to="">
                 争议解决
-              </a>
+              </nuxt-link>
             </li>
             <li>
-              <a href="">
+              <nuxt-link to="">
                 平台规则
-              </a>
+              </nuxt-link>
             </li>
             <li>
-              <a href="">
+              <nuxt-link to="">
                 版权声明
-              </a>
+              </nuxt-link>
             </li>
           </div>
           <div class="one">
             <p>帮助中心</p>
             <li>
-              <a href="">
+              <nuxt-link to="">
                 常见问题
-              </a>
+              </nuxt-link>
             </li>
             <li>
-              <a href="">
+              <nuxt-link to="">
                 文档下载
-              </a>
+              </nuxt-link>
             </li>
             <li>
-              <a href="">
+              <nuxt-link to="">
                 招商必看
-              </a>
+              </nuxt-link>
             </li>
             <li>
-              <a href="">
+              <nuxt-link to="">
                 采购必看
-              </a>
+              </nuxt-link>
             </li>
           </div>
           <div class="two">
@@ -131,12 +131,12 @@
             </p>
           </div>
         </div>
-      </div>
-    </div>
+      </el-row>
+    </el-row>
     <div class="copyright">
       Copyright © 2019版权所有重庆庆渝科技有限公司
     </div>
-  </div>
+  </el-row>
 </template>
 
 <script>
