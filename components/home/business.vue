@@ -1,5 +1,5 @@
 <template>
-  <div class="businessBoxOne">
+  <el-row class="businessBoxOne">
     <div class="headTit">
       <span>
         {{ titleName }}
@@ -30,7 +30,7 @@
         </li>
       </ul>
     </div>
-  </div>
+  </el-row>
 </template>
 
 <script>
@@ -47,8 +47,7 @@ export default {
 /* eslint-disable */
 <style scoped lang="scss">
   .businessBoxOne{
-    width:32.5% ;
-    max-width:460px;
+    width:100% ;
     box-sizing: border-box;
     /* eslint-disable */
     border: 1px solid $borderE7;

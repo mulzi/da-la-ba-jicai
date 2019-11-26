@@ -69,14 +69,14 @@ export default {
     ** See https://axios.nuxtjs.org/options
     */
   axios: {
-    baseURL: 'http://192.168.1.16:15100/',
+    baseURL: 'http://www.dalabajicai.com/',
     browserBaseURL: '/',
     proxy: false
   },
 
   proxy: {
     '/api': {
-      target: 'http://192.168.1.16:15100/',
+      target: 'http://www.dalabajicai.com/',
       pathRewrite: {
         '^/api': '/api'
       }

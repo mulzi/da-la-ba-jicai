@@ -1,11 +1,19 @@
 <template>
-  <div class="indexBodybox">
+  <el-row class="indexBodybox">
     <banner :banners="home.banners" />
     <rolling-news :roll-news="home" />
     <el-row class="index_Decoration">
-      <business title-name="工程商家推荐" src="/supplier/toolDecoration/" url="/supplier/" :list="home.projectSuppliersRecommend" />
-      <business style="margin: 0 1.25%" src="/supplier/homeDecorationChange/" url="/supplier/" title-name="家装商家推荐" :list="home.homeSuppliersRecommend" />
-      <business title-name="设计施工方推荐" src="/user/designDecoration/" url="/user/" :list="home.userSupplier" />
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <business title-name="工程商家推荐" src="/supplier/toolDecoration/" url="/supplier/" :list="home.projectSuppliersRecommend" />
+        </el-col>
+        <el-col :span="8">
+          <business src="/supplier/homeDecorationChange/" url="/supplier/" title-name="家装商家推荐" :list="home.homeSuppliersRecommend" />
+        </el-col>
+        <el-col :span="8">
+          <business title-name="设计施工方推荐" src="/user/designDecoration/" url="/user/" :list="home.userSupplier" />
+        </el-col>
+      </el-row>
     </el-row>
     <good-news :good-news="home" />
     <new-products :new-products="home.works" />
@@ -20,11 +28,10 @@
       <news :newslist="home.industryNews" />
     </el-row>
     <!--    <supplier-img />-->
-  </div>
+  </el-row>
 </template>
 
 <script>
-import { Auth } from '@/services/auth'
 import { HomeService } from '@/services/home'
 import banner from '@/components/home/banner'
 import rollingNews from '@/components/home/rollingNews'
@@ -56,12 +63,12 @@ export default {
       // console.log('首页全部数据', res.data)
       return { home: res.data || {} }
     })
-  },
-  async fetch (context) {
-    const auth = new Auth(context)
-    const { store } = context
-    await store.commit('home/changeLogin', auth.isLogin())
   }
+  // async fetch (context) {
+  //   const auth = new Auth(context)
+  //   const { store } = context
+  //   await store.commit('home/changeLogin', auth.isLogin())
+  // }
 
 }
 </script>
@@ -69,9 +76,6 @@ export default {
 <style lang="scss" scoped>
   .index_Decoration{
     width: 100%;
-    overflow: hidden;
-    display: flex;
-    display: -ms-flex;
   }
   .homeNewsBox{
     width: 100%;

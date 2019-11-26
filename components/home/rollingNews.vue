@@ -1,66 +1,68 @@
 <template>
   <el-row class="indexRollingNews">
-    <el-col :span="8">
-      <div class="one">
-        <div class="leftName">
-          <img src="@/assets/img/horn.png" alt="">
-          <span>【工程商家推荐】</span>
-        </div>
+    <el-row :gutter="20">
+      <el-col :span="8">
+        <div class="one">
+          <div class="leftName">
+            <img src="@/assets/img/horn.png" alt="">
+            <span>【工程商家推荐】</span>
+          </div>
 
-        <el-carousel
-          class="rightRollList"
-          height="20px"
-          direction="vertical"
-          :autoplay="true"
-          loop
-          indicator-position="none"
-        >
-          <el-carousel-item v-for="(item,index) in rollNews.homeSupplierTile" :key="index">
-            <span> {{ item.title }}</span>
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-    </el-col>
-    <el-col :span="8">
-      <div class="one">
-        <div class="leftName">
-          <img src="@/assets/img/horn.png" alt="">
-          <span>【家装商家推荐】</span>
+          <el-carousel
+                  class="rightRollList"
+                  height="20px"
+                  direction="vertical"
+                  :autoplay="true"
+                  loop
+                  indicator-position="none"
+          >
+            <el-carousel-item v-for="(item,index) in rollNews.homeSupplierTile" :key="index">
+              <span> {{ item.title }}</span>
+            </el-carousel-item>
+          </el-carousel>
         </div>
-        <el-carousel
-          class="rightRollList"
-          height="20px"
-          direction="vertical"
-          :autoplay="true"
-          loop
-          indicator-position="none"
-        >
-          <el-carousel-item v-for="(item,index) in rollNews.projectSupplierTile" :key="index">
-            <span> {{ item.title }}</span>
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-    </el-col>
-    <el-col :span="8">
-      <div class="one">
-        <div class="leftName">
-          <img src="@/assets/img/horn.png" alt="">
-          <span>【设计施工方推荐】</span>
+      </el-col>
+      <el-col :span="8">
+        <div class="one">
+          <div class="leftName">
+            <img src="@/assets/img/horn.png" alt="">
+            <span>【家装商家推荐】</span>
+          </div>
+          <el-carousel
+                  class="rightRollList"
+                  height="20px"
+                  direction="vertical"
+                  :autoplay="true"
+                  loop
+                  indicator-position="none"
+          >
+            <el-carousel-item v-for="(item,index) in rollNews.projectSupplierTile" :key="index">
+              <span> {{ item.title }}</span>
+            </el-carousel-item>
+          </el-carousel>
         </div>
-        <el-carousel
-          class="rightRollList"
-          height="20px"
-          direction="vertical"
-          :autoplay="true"
-          loop
-          indicator-position="none"
-        >
-          <el-carousel-item v-for="(item,index) in rollNews.simpleProjectTile" :key="index">
-            <span> {{ item.title }}</span>
-          </el-carousel-item>
-        </el-carousel>
-      </div>
-    </el-col>
+      </el-col>
+      <el-col :span="8">
+        <div class="one">
+          <div class="leftName">
+            <img src="@/assets/img/horn.png" alt="">
+            <span>【设计施工方推荐】</span>
+          </div>
+          <el-carousel
+                  class="rightRollList"
+                  height="20px"
+                  direction="vertical"
+                  :autoplay="true"
+                  loop
+                  indicator-position="none"
+          >
+            <el-carousel-item v-for="(item,index) in rollNews.simpleProjectTile" :key="index">
+              <span> {{ item.title }}</span>
+            </el-carousel-item>
+          </el-carousel>
+        </div>
+      </el-col>
+    </el-row>
   </el-row>
 </template>
 

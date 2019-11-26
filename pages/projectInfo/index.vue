@@ -1,6 +1,6 @@
 <template>
   <el-row class="supplierBody">
-    <el-row class="bodyBox">
+    <el-row class="bodyBox" v-loading="loading">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -22,7 +22,14 @@
                 地区
               </el-col>
               <el-col :span="18">
-                <el-cascader v-model="valueOne" :options="options" :props="{ expandTrigger: 'hover' }" clearable />
+                <el-cascader
+                  v-model="area"
+                  @blur="console"
+                  @focus="getArea"
+                  clearable
+                  :options="areaList"
+                  :props="{ expandTrigger: 'hover' }"
+                />
               </el-col>
             </el-col>
             <el-col :span="8">
@@ -30,9 +37,9 @@
                 项目类别
               </el-col>
               <el-col :span="18">
-                <el-select v-model="values" clearable placeholder="请选择">
+                <el-select v-model="type" @focus="getType" clearable placeholder="请选择">
                   <el-option
-                    v-for="item in optionss"
+                    v-for="item in typeList"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value"
@@ -45,9 +52,9 @@
                 项目阶段
               </el-col>
               <el-col :span="18">
-                <el-select v-model="value" clearable placeholder="请选择">
+                <el-select v-model="phase" @focus="getPhase" clearable placeholder="请选择">
                   <el-option
-                    v-for="item in optionss"
+                    v-for="item in phaesList"
                     :key="item.value"
                     :label="item.label"
                     :value="item.value"
@@ -64,7 +71,9 @@
                 clearable
               />
             </el-col>
-            <el-col :span="5" class="el-icon-search searchSt" />
+            <el-col @click="getPage" :span="5">
+              <span @click="getPage" class="el-icon-search searchSt"></span>
+            </el-col>
           </el-col>
         </el-row>
         <div @click="$store.commit('release/changeNumber', 0)" class="addItem">
@@ -74,145 +83,29 @@
           </nuxt-link>
         </div>
       </el-row>
-      <el-row class="boxList">
-        <nuxt-link :to="`/projectInfo/projectContent/sss`">
+      <el-row class="boxList" v-if="listPage !== undefined && listPage.length > 0">
+        <nuxt-link :to="`/projectInfo/projectContent/sss`" v-for="(t,i) in listPage" :key="i">
           <el-row class="topBox">
             <el-row class="one">
-              名字
+              {{ t.name }}
             </el-row>
             <el-row class="two">
-              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
+              {{ t.introduce }}
             </el-row>
             <el-row class="three">
               <el-col :span="18">
                 <el-col :span="9">
-                  sdssds
+                  {{ t.typeName }}
                 </el-col>
                 <el-col :span="9">
-                  sdssds
+                  {{ t.phaseName }}
                 </el-col>
                 <el-col :span="6" class="red">
                   精准情报
                 </el-col>
               </el-col>
               <el-col :span="6">
-                2019-01-26
-              </el-col>
-            </el-row>
-          </el-row>
-          <el-row class="right_top">
-            <span>用户</span>
-          </el-row>
-        </nuxt-link>
-        <nuxt-link to="">
-          <el-row class="topBox">
-            <el-row class="one">
-              名字
-            </el-row>
-            <el-row class="two">
-              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
-            </el-row>
-            <el-row class="three">
-              <el-col :span="18">
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="6" class="red">
-                  精准情报
-                </el-col>
-              </el-col>
-              <el-col :span="6">
-                2019-01-26
-              </el-col>
-            </el-row>
-          </el-row>
-          <el-row class="right_top">
-            <span>用户</span>
-          </el-row>
-        </nuxt-link>
-        <nuxt-link to="">
-          <el-row class="topBox">
-            <el-row class="one">
-              名字
-            </el-row>
-            <el-row class="two">
-              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
-            </el-row>
-            <el-row class="three">
-              <el-col :span="18">
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="6" class="red">
-                  精准情报
-                </el-col>
-              </el-col>
-              <el-col :span="6">
-                2019-01-26
-              </el-col>
-            </el-row>
-          </el-row>
-          <el-row class="right_top">
-            <span>用户</span>
-          </el-row>
-        </nuxt-link>
-        <nuxt-link to="">
-          <el-row class="topBox">
-            <el-row class="one">
-              名字
-            </el-row>
-            <el-row class="two">
-              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
-            </el-row>
-            <el-row class="three">
-              <el-col :span="18">
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="6" class="red">
-                  精准情报
-                </el-col>
-              </el-col>
-              <el-col :span="6">
-                2019-01-26
-              </el-col>
-            </el-row>
-          </el-row>
-          <el-row class="right_top">
-            <span>用户</span>
-          </el-row>
-        </nuxt-link>
-        <nuxt-link to="">
-          <el-row class="topBox">
-            <el-row class="one">
-              名字
-            </el-row>
-            <el-row class="two">
-              简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介
-            </el-row>
-            <el-row class="three">
-              <el-col :span="18">
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="9">
-                  sdssds
-                </el-col>
-                <el-col :span="6" class="red">
-                  精准情报
-                </el-col>
-              </el-col>
-              <el-col :span="6">
-                2019-01-26
+                {{ t.updatedAtStr }}
               </el-col>
             </el-row>
           </el-row>
@@ -222,7 +115,7 @@
         </nuxt-link>
       </el-row>
       <div class="bottomListBox">
-        <div class="NoData marginBottom40">
+        <div class="NoData marginBottom40" v-if="listPage !== undefined && listPage.length === 0">
           <div class="img">
             <img src="@/assets/img/nodata.png" alt="">
           </div>
@@ -230,7 +123,7 @@
             没有数据
           </div>
         </div>
-        <div class="pageSbox">
+        <div class="pageSbox" v-if="listPage !== undefined && listPage.length > 0">
           <el-pagination
             background
             :current-page="currentPage4"
@@ -248,292 +141,155 @@
 </template>
 
 <script>
-// import { HomeService } from '@/services/home'
+import { HomeService } from '@/services/projectInfo'
 
 export default {
   layout: 'main',
   data () {
     return {
+      listPage: [], // 列表
       pageID: 0, // 分页第几页
-      sizeID: 20, // 分页数量
+      sizeID: 10, // 分页数量
       totalCount: 0, // 获取的总数
       currentPage4: 1,
-      options: [
-        {
-          value: 'zhinan',
-          label: '指南',
-          children: [{
-            value: 'shejiyuanze',
-            label: '设计原则',
-            children: [{
-              value: 'yizhi',
-              label: '一致'
-            }, {
-              value: 'fankui',
-              label: '反馈'
-            }, {
-              value: 'xiaolv',
-              label: '效率'
-            }, {
-              value: 'kekong',
-              label: '可控'
-            }]
-          }, {
-            value: 'daohang',
-            label: '导航',
-            children: [{
-              value: 'cexiangdaohang',
-              label: '侧向导航'
-            }, {
-              value: 'dingbudaohang',
-              label: '顶部导航'
-            }]
-          }]
-        }, {
-          value: 'zujian',
-          label: '组件',
-          children: [{
-            value: 'basic',
-            label: 'Basic',
-            children: [{
-              value: 'layout',
-              label: 'Layout 布局'
-            }, {
-              value: 'color',
-              label: 'Color 色彩'
-            }, {
-              value: 'typography',
-              label: 'Typography 字体'
-            }, {
-              value: 'icon',
-              label: 'Icon 图标'
-            }, {
-              value: 'button',
-              label: 'Button 按钮'
-            }]
-          }, {
-            value: 'form',
-            label: 'Form',
-            children: [{
-              value: 'radio',
-              label: 'Radio 单选框'
-            }, {
-              value: 'checkbox',
-              label: 'Checkbox 多选框'
-            }, {
-              value: 'input',
-              label: 'Input 输入框'
-            }, {
-              value: 'input-number',
-              label: 'InputNumber 计数器'
-            }, {
-              value: 'select',
-              label: 'Select 选择器'
-            }, {
-              value: 'cascader',
-              label: 'Cascader 级联选择器'
-            }, {
-              value: 'switch',
-              label: 'Switch 开关'
-            }, {
-              value: 'slider',
-              label: 'Slider 滑块'
-            }, {
-              value: 'time-picker',
-              label: 'TimePicker 时间选择器'
-            }, {
-              value: 'date-picker',
-              label: 'DatePicker 日期选择器'
-            }, {
-              value: 'datetime-picker',
-              label: 'DateTimePicker 日期时间选择器'
-            }, {
-              value: 'upload',
-              label: 'Upload 上传'
-            }, {
-              value: 'rate',
-              label: 'Rate 评分'
-            }, {
-              value: 'form',
-              label: 'Form 表单'
-            }]
-          }, {
-            value: 'data',
-            label: 'Data',
-            children: [{
-              value: 'table',
-              label: 'Table 表格'
-            }, {
-              value: 'tag',
-              label: 'Tag 标签'
-            }, {
-              value: 'progress',
-              label: 'Progress 进度条'
-            }, {
-              value: 'tree',
-              label: 'Tree 树形控件'
-            }, {
-              value: 'pagination',
-              label: 'Pagination 分页'
-            }, {
-              value: 'badge',
-              label: 'Badge 标记'
-            }]
-          }, {
-            value: 'notice',
-            label: 'Notice',
-            children: [{
-              value: 'alert',
-              label: 'Alert 警告'
-            }, {
-              value: 'loading',
-              label: 'Loading 加载'
-            }, {
-              value: 'message',
-              label: 'Message 消息提示'
-            }, {
-              value: 'message-box',
-              label: 'MessageBox 弹框'
-            }, {
-              value: 'notification',
-              label: 'Notification 通知'
-            }]
-          }, {
-            value: 'navigation',
-            label: 'Navigation',
-            children: [{
-              value: 'menu',
-              label: 'NavMenu 导航菜单'
-            }, {
-              value: 'tabs',
-              label: 'Tabs 标签页'
-            }, {
-              value: 'breadcrumb',
-              label: 'Breadcrumb 面包屑'
-            }, {
-              value: 'dropdown',
-              label: 'Dropdown 下拉菜单'
-            }, {
-              value: 'steps',
-              label: 'Steps 步骤条'
-            }]
-          }, {
-            value: 'others',
-            label: 'Others',
-            children: [{
-              value: 'dialog',
-              label: 'Dialog 对话框'
-            }, {
-              value: 'tooltip',
-              label: 'Tooltip 文字提示'
-            }, {
-              value: 'popover',
-              label: 'Popover 弹出框'
-            }, {
-              value: 'card',
-              label: 'Card 卡片'
-            }, {
-              value: 'carousel',
-              label: 'Carousel 走马灯'
-            }, {
-              value: 'collapse',
-              label: 'Collapse 折叠面板'
-            }]
-          }]
-        }, {
-          value: 'ziyuan',
-          label: '资源',
-          children: [{
-            value: 'axure',
-            label: 'Axure Components'
-          }, {
-            value: 'sketch',
-            label: 'Sketch Templates'
-          }, {
-            value: 'jiaohu',
-            label: '组件交互文档'
-          }]
-        }], // 地区
-      optionss: [
-        {
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }], // 项目类别
-      valueOne: '',
-      value: '',
-      values: '',
-      searchText: '' // 搜索的值
+      areaList: [], // 地区
+      typeList: [], // 项目类别
+      phaesList: [], // 项目阶段
+      area: '', // 地区的值
+      type: '', // 项目类别
+      phase: '', // 项目阶段
+      searchText: '', // 搜索的值
+      loading: false
     }
   },
   created () {
+    this.getPage()
   },
   methods: {
     handleSizeChange (val) {
       const _this = this
       _this.sizeID = val
-      _this.getSupplierList()
+      _this.getPage()
     },
     handleCurrentChange (val) {
       const _this = this
       _this.currentPage4 = val
       this.pageID = val - 1
-      _this.getSupplierList()
+      _this.getPage()
     },
-    getWorksOneList () { // 获取一级栏目
-      // const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+    getArea () { // 获取项目地区
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getArea().then((res) => {
+        console.log('项目地区', res.data.results)
+        this.areaList = this.convertTree(res.data.results)
+        // console.log(this.options)
+        setTimeout(() => {
+          console.log(this.area)
+        }, 3000)
+      })
     },
-    getFilterBySupplier (parmes) { // 获取二级三级类别
+    getType () { // 获取类型
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getType().then((res) => {
+        // console.log('项目类型', res.data.results)
+        this.typeList = this.convertTree(res.data.results)
+        // console.log(this.options)
+      })
     },
-    getSupplierList (parmes) {
+    getPhase () { // 获取阶段
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getPhase().then((res) => {
+        console.log('项目阶段', res.data.results)
+        this.phaesList = this.convertTrees(res.data.results)
+      })
+    },
+    getPage () { // 获取列表
+      this.loading = true
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getPage({
+        conditions: this.searchText,
+        province: this.area[0] || 0,
+        city: this.area[1] || 0,
+        area: this.area[2] || 0,
+        typeId: this.type,
+        phaseId: this.phase,
+        page: this.pageID,
+        size: this.sizeID
+      }).then((res) => {
+        // console.log('项目列表', res.data.results)
+        // console.log('项目列表', res)
+        this.totalCount = res.data.totalCount
+        this.listPage = res.data.results
+        if (res.status === 200) {
+          this.loading = false
+        }
+        console.log(this.area[0])
+        console.log(this.area[1])
+        console.log(this.area[2])
+      }).catch(() => {
+        this.$message({
+          message: '网络可能不太好哦! 刷新一下试试！',
+          type: 'error'
+        })
+      })
+    },
+    console () {
+      setTimeout(() => {
+        console.log('地区', this.area)
+      }, 3000)
+    },
+    convertTree (tree) {
+      const result = []
+      // eslint-disable-next-line no-unused-vars
+      // 遍历 tree
+      tree.forEach((item) => {
+        // 解构赋值
+        let {
+          // eslint-disable-next-line prefer-const
+          name: label,
+          id: value,
+          children
+        } = item
+        // 如果有子节点，递归
+        if (value === 0) {
+          value = Math.random().toString(32).substr(2) // 生成字母和数字的随机数
+        }
+        if (children) {
+          children = this.convertTree(children)
+        }
+        result.push({
+          value,
+          label,
+          children
+        })
+      })
+
+      return result
+    },
+    convertTrees (tree) {
+      const result = []
+      // eslint-disable-next-line no-unused-vars
+      // 遍历 tree
+      tree.forEach((item) => {
+        // 解构赋值
+        const {
+          // eslint-disable-next-line prefer-const
+          phaseName: label,
+          id: value
+        } = item
+        result.push({
+          value,
+          label
+        })
+      })
+      return result
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-        .HeaderBreadcrumb{
-                width: 100%;
-                margin-top: 20px;
-                .breadcrumb{
-                    overflow: hidden;
-                    height: 20px;
-                    line-height: 20px;
-                    span{
-                        display: block;
-                        float: left;
-                        font-size: 14px;
-                        color: #333333;
-                        margin-right: 6px;
-                        &.right{
-                            font-size: 12px;
-                        }
-                    }
-                    a{
-                        font-size: 14px;
-                        display: block;
-                        float: left;
-                        color: #8e8e8e;
-                        margin-right: 6px;
-                    }
-                    .iconfont{
-                        color:#9a9a9a ;
-                        font-size: 20px;
-                    }
-                }
 
-            }
         .bottomListBox{
           margin-top: 30px;
           overflow: hidden;
@@ -578,6 +334,8 @@ export default {
             }
             .rightSbox{
               .searchSt{
+                display: block;
+                width: 100%;
                 background: #DA251D;
                 height: 40px;
                 line-height: 40px;
@@ -618,6 +376,7 @@ export default {
           margin-top: 30px;
           a{
             float: left;
+            height: 224px;
             width: 49%;
             margin-right: 2%;
             background: #ffffff;
@@ -640,6 +399,7 @@ export default {
               .two{
                 width: 100%;
                 margin-top: 20px;
+                height: 48px;
                 line-height: 24px;
                 @include twoText;
                 font-size: 14px;

@@ -101,6 +101,10 @@ $borderE7: #e7e7e7; //默认边框线颜色
 .el-radio__input.is-checked+.el-radio__label{
   color: $redColor;
 }
+.el-scrollbar{
+  max-height: 400px;
+  overflow-y: scroll;
+}
 
 .bounce-enter-active {
   animation: bounce-in .3s;
