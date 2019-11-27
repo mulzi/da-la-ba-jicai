@@ -72,7 +72,7 @@
               />
             </el-col>
             <el-col @click="getPage" :span="5">
-              <span @click="getPage" class="el-icon-search searchSt"></span>
+              <span @click="getPage" class="el-icon-search searchSt" />
             </el-col>
           </el-col>
         </el-row>
@@ -84,7 +84,7 @@
         </div>
       </el-row>
       <el-row class="boxList" v-if="listPage !== undefined && listPage.length > 0">
-        <nuxt-link :to="`/projectInfo/projectContent/sss`" v-for="(t,i) in listPage" :key="i">
+        <nuxt-link :to="`/projectInfo/projectContent/${t.id}`" v-for="(t,i) in listPage" :key="i">
           <el-row class="topBox">
             <el-row class="one">
               {{ t.name }}
@@ -101,7 +101,7 @@
                   {{ t.phaseName }}
                 </el-col>
                 <el-col :span="6" class="red">
-                  精准情报
+                  <span v-if="t.intelligences">精准情报</span>
                 </el-col>
               </el-col>
               <el-col :span="6">
@@ -109,7 +109,7 @@
               </el-col>
             </el-row>
           </el-row>
-          <el-row class="right_top">
+          <el-row class="right_top" v-if="t.source === 0">
             <span>用户</span>
           </el-row>
         </nuxt-link>
@@ -180,7 +180,7 @@ export default {
     getArea () { // 获取项目地区
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getArea().then((res) => {
-        console.log('项目地区', res.data.results)
+        // console.log('项目地区', res.data.results)
         this.areaList = this.convertTree(res.data.results)
         // console.log(this.options)
         setTimeout(() => {
@@ -216,16 +216,16 @@ export default {
         page: this.pageID,
         size: this.sizeID
       }).then((res) => {
-        // console.log('项目列表', res.data.results)
+        console.log('项目列表', res.data.results)
         // console.log('项目列表', res)
         this.totalCount = res.data.totalCount
         this.listPage = res.data.results
         if (res.status === 200) {
           this.loading = false
         }
-        console.log(this.area[0])
-        console.log(this.area[1])
-        console.log(this.area[2])
+        // console.log(this.area[0])
+        // console.log(this.area[1])
+        // console.log(this.area[2])
       }).catch(() => {
         this.$message({
           message: '网络可能不太好哦! 刷新一下试试！',

@@ -1,6 +1,6 @@
 <template>
-  <div class="supplierBody">
-    <div class="bodyBox">
+  <el-row class="supplierBody">
+    <el-row class="bodyBox">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -21,15 +21,15 @@
       <el-row class="topNameBox">
         <el-row class="contentBox">
           <el-row class="topTit">
-            <span>深圳市雅鸟内装饰设计有限公司</span>
+            <span>{{ date.name }}</span>
           </el-row>
           <el-row class="bot_Li">
-            <li><span>更新时间：</span> <em>2019-</em></li>
-            <li><span>项目类别：</span> <em>2019-</em></li>
-            <li><span>项目阶段：</span> <em>2019-</em></li>
-            <li><span>建筑周期：</span> <em>2019-</em></li>
-            <li><span>项目预算：</span> <em>2019-</em></li>
-            <li><span>项目地址：</span> <em>2019-</em></li>
+            <li><span>更新时间：</span> <em>{{ date.createdTimeStr }}</em></li>
+            <li><span>项目类别：</span> <em>{{ date.typeName }}</em></li>
+            <li><span>项目阶段：</span> <em>{{ date.phaseName }}</em></li>
+            <li><span>建筑周期：</span> <em>{{ date.progress }}</em></li>
+            <li><span>项目预算：</span> <em>{{ date.budget }}</em></li>
+            <li><span>项目地址：</span> <em>{{ date.address }}</em></li>
           </el-row>
         </el-row>
       </el-row>
@@ -49,7 +49,7 @@
         </el-row>
         <el-row class="bo_list">
           <transition name="bounce">
-            <project-int v-if="this.$store.state.projectInfo.projectOne" />
+            <project-int v-if="this.$store.state.projectInfo.projectOne" :list="date" />
           </transition>
           <transition name="bounce">
             <contact v-if="this.$store.state.projectInfo.projectTwo" />
@@ -59,20 +59,21 @@
           </transition>
         </el-row>
       </el-row>
-      <message-one class="marginBottom100" />
-      <integral-pay v-if="this.$store.state.home.IntegralPay" />
-      <pro-details v-if="this.$store.state.home.proDetails" />
-    </div>
-  </div>
+      <message-one class="marginBottom100" v-if="this.$store.state.projectInfo.projectTwo || this.$store.state.projectInfo.projectOne" />
+      <el-row class="marginBottom100" v-if="this.$store.state.projectInfo.projectThree" />
+      <integral-pay v-if="this.$store.state.projectInfo.IntegralPay" />
+      <pro-details v-if="this.$store.state.projectInfo.proDetails" />
+    </el-row>
+  </el-row>
 </template>
 
 <script>
-// import { HomeService } from '@/services/home'
+import { HomeService } from '@/services/projectInfo'
 import projectInt from '@/components/projectInfo/projectInt'
 import contact from '@/components/projectInfo/contact'
 import formText from '@/components/projectInfo/formText'
 import MessageOne from '@/components/publicModule/MessageOne'
-import IntegralPay from '@/components/publicModule/IntegralPay'
+import IntegralPay from '@/components/projectInfo/IntegralPay'
 import ProDetails from '@/components/projectInfo/proDetails'
 export default {
   layout: 'main',
@@ -82,7 +83,17 @@ export default {
       date: ''
     }
   },
+  mounted () {
+    this.getProject()
+  },
   methods: {
+    getProject () {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getProject(this.$route.params.id).then((res) => {
+        // console.log('详情', res.data)
+        this.date = res.data
+      })
+    },
     changeList () {
       this.$store.commit('projectInfo/changeOne')
     },

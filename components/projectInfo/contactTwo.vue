@@ -1,6 +1,6 @@
 <template>
   <el-row class="bo_list">
-    <li v-for="(t, i) in list" :key="i">
+    <li v-for="(t,i) in date" :key="i">
       <el-row class="boxList">
         <el-row class="companyName">
           {{ t.companyName }}
@@ -8,11 +8,8 @@
         <el-row class="bo_text">
           <p>类别：{{ t.categoryName }}</p>
           <p>地址：{{ t.address }}</p>
-          <p>职位：{{ t.positionLevel }}</p>
-          <p>姓名：{{ t.name }}</p>
-          <p>手机：{{ t.telephone }}</p>
         </el-row>
-        <div class="clickLook" @click="changeIntegralPay(t.id)">
+        <div class="clickLook" @click="changeIntegralPay">
           点击查看
         </div>
       </el-row>
@@ -21,26 +18,27 @@
 </template>
 
 <script>
+// import $ from 'jquery'
+// import { HomeService } from '@/services/projectInfo'
 export default {
   // eslint-disable-next-line vue/require-prop-types
-  props: ['list'],
+  props: ['dates'],
+  data () {
+    return {
+      date: []
+
+    }
+  },
   mounted () {
+    this.dates.forEach((t) => {
+      this.date.push(...t)
+    })
+    console.log('最后s', this.date)
   },
   methods: {
-    changeIntegralPay (i) {
-      const _this = this
-      if (!_this.$store.state.home.isLogin) {
-        this.$message({
-          message: '你还没登录哦~~~   去登录吧！',
-          type: 'error'
-        })
-        setTimeout(() => {
-          _this.$router.push('/login')
-        }, 1000)
-        return false
-      }
-      this.$store.commit('projectInfo/changeOneID', i)
-      this.$store.commit('projectInfo/changeIntegralPay')
+    changeIntegralPay () {
+      this.$store.commit('projectInfo/changeTwoID')
+      this.$store.commit('home/changeIntegralPay')
     }
   }
 }

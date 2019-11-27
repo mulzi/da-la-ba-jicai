@@ -1,43 +1,74 @@
 <template>
   <el-row class="two">
     <el-row id="contentText" class="content">
-      <el-row v-for="(t,i) in dates" :key="i" class="list">
-        <el-row class="topName">
-          <span class="span">{{ t }}</span>
-          <i class="el-icon-caret-right" />
-        </el-row>
-        <contact-one />
+      <el-row>
+        <contact :list="dateO" :tit="lisName" />
+      </el-row>
+      <el-row v-if="dateT !== undefined && dateT.length > 0">
+        <contact-o v-for="(t,i) in dateT" :key="i + 3" :list="t" />
+      </el-row>
+      <el-row v-if="dateF !== undefined && dateF.length > 0">
+        <Contactf :list="dateF" />
       </el-row>
     </el-row>
   </el-row>
 </template>
 
 <script>
-import $ from 'jquery'
-import contactOne from './contactOne'
+import ContactO from './contact_o'
+import Contact from './contact_t'
+import Contactf from './contact_f'
+import { HomeService } from '@/services/projectInfo'
 export default {
-  name: 'Contact',
   components: {
-    contactOne
+    Contact,
+    ContactO,
+    Contactf
   },
   data () {
     return {
-      dates: ['sss', 'ssdasda', 'dasdas', 'dasdasf', 'fdsgsd']
+      show: true,
+      date: [],
+      dateF: [],
+      dateO: [],
+      dateT: [],
+      lisName: ''
     }
   },
   mounted () {
-    $(function () {
-      $('#contentText').children().first().addClass('active')
-      $('#contentText').children().first().children('.bo_list').css({ display: 'block' })
-      $('#contentText .span').on('click', function () {
-        $(this).parent().parent().siblings().children('.bo_list').slideUp('slow')
-        $(this).parent().parent().siblings().removeClass('active')
-        $(this).parent().siblings('.bo_list').slideToggle('slow')
-        $(this).parent().parent().toggleClass('active')
-      })
-    })
+    this.getContact(this.$route.params.id)
   },
   methods: {
+    changeIntegralPay () {
+      this.$store.commit('home/changeIntegralPay')
+    },
+    getContact (pamars) { // 获取联系人列表
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getContact(pamars).then((res) => {
+        console.log(res.data.result)
+        if (res.data.result.contractor !== [] && res.data.result.contractor.length > 0) {
+          this.date.push(res.data.result.contractor)
+        }
+        if (res.data.result.decoratingParty !== [] && res.data.result.decoratingParty.length > 0) {
+          this.date.push(res.data.result.decoratingParty)
+        }
+        if (res.data.result.designer !== [] && res.data.result.designer.length > 0) {
+          this.date.push(res.data.result.designer)
+        }
+        if (res.data.result.firstParty !== [] && res.data.result.firstParty.length > 0) {
+          this.date.push(res.data.result.firstParty)
+        }
+        if (res.data.result.intelligence !== [] && res.data.result.intelligence.length > 0) {
+          this.dateF.push(res.data.result.intelligence)
+        }
+        this.dateO = this.date.shift()
+        this.lisName = this.dateO[0].categoryName
+        this.dateT = this.date.splice(0)
+        console.log('第一个数组', this.dateF)
+        // console.log('第二个数组', this.dateT)
+        // console.log('第二个数组', this.date)
+      })
+    }
   }
 }
 </script>

@@ -211,6 +211,8 @@ export default {
 <style  lang="scss">
   .AddIntelligence{
     width: 100%;
+    padding-bottom: 50px;
+    margin-bottom: 20px;
     .contentBox{
       width: 800px;
       margin: 0 auto;
