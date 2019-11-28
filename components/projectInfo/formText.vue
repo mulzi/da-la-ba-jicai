@@ -1,37 +1,88 @@
 <template>
-  <el-row class="AddIntelligence">
+  <el-row class="AddIntelligence" v-loading="loading">
     <el-row class="contentBox">
-      <el-form ref="props" class="formBox demo-ruleForm" :model="fromBox" :rules="pops" onsubmit="return false">
+      <el-form ref="props" class="formBox demo-ruleForm" onsubmit="return false">
         <el-row class="ulAddList">
-          <el-row v-for="(ti,ii) in fromBox.formO" :key="ii" class="topForm">
-            <el-form-item label="公司类别：" prop="type">
-              <el-select v-model="ti.categoryId" placeholder="请选择公司类别">
-                <el-option v-for="(t,i) in type" :key="i" :label="t.name" :value="t.id" />
-              </el-select>
-            </el-form-item>
-            <el-form-item label="公司名称：" prop="name">
-              <el-input v-model="fromBox.formO.name" placeholder="请输入公司名称" />
-            </el-form-item>
-            <el-form-item label="公司地址：" prop="name">
-              <el-input v-model="fromBox.formO.name" placeholder="请输入公司地址" />
-            </el-form-item>
-            <el-form-item label="联系人：" prop="name">
-              <el-input v-model="fromBox.formO.name" placeholder="请输入联系人" />
-            </el-form-item>
-            <el-form-item label="联系人职位介绍：" prop="name">
-              <el-input v-model="fromBox.formO.name" placeholder="请输入联系人职位介绍" />
-            </el-form-item>
-            <el-form-item label="联系人电话：" prop="name">
-              <el-input v-model="fromBox.formO.name" placeholder="请输入联系人电话" />
-            </el-form-item>
-            <el-form-item label="项目阶段：" prop="name">
-              <el-input v-model="fromBox.formO.name" placeholder="请输入项目阶段" />
-            </el-form-item>
-            <el-form-item label="未定材料：" prop="name" class="label-ls">
-              <el-input v-model="fromBox.formO.name" placeholder="请输入未定材料" />
-            </el-form-item>
-            <el-form-item label="项目图片:">
-              <el-row>
+          <el-row v-for="(ti,ii) in fromBox.contacts" :key="ii" class="topForm">
+            <el-row class="listUl">
+              <el-col class="leftName" :span="6">
+                <em>*</em><span>公司类别：</span>
+              </el-col>
+              <el-col class="rightInp" :span="18">
+                <el-select v-model="fromBox.contacts[ii].categoryId" placeholder="请选择公司类别">
+                  <el-option v-for="(t,i) in type" :key="i" :label="t.name" :value="t.id" />
+                </el-select>
+              </el-col>
+            </el-row>
+            <el-row class="listUl">
+              <el-col :span="6" class="leftName">
+                <em>*</em><span>公司名称：</span>
+              </el-col>
+              <el-col :span="18" class="rightInp">
+                <el-input v-model="fromBox.contacts[ii].companyName" placeholder="请输入公司名称" />
+              </el-col>
+            </el-row>
+            <el-row class="listUl">
+              <el-col class="leftName" :span="6">
+                <span>公司地址：</span>
+              </el-col>
+              <el-col class="rightInp" :span="18">
+                <el-input v-model="fromBox.contacts[ii].address" placeholder="请输入公司地址" />
+              </el-col>
+            </el-row>
+            <el-row class="listUl">
+              <el-col class="leftName" :span="6">
+                <em>*</em><span>联系人：</span>
+              </el-col>
+              <el-col :span="18" class="rightInp">
+                <el-input v-model="fromBox.contacts[ii].name" placeholder="请输入联系人" />
+              </el-col>
+            </el-row>
+            <el-row class="listUl">
+              <el-col :span="6" class="leftName">
+                <span>联系人职位：</span>
+              </el-col>
+              <el-col :span="18" class="rightInp">
+                <el-input v-model="fromBox.contacts[ii].positionLevel" placeholder="请输入联系人职位介绍" />
+              </el-col>
+            </el-row>
+            <el-row class="listUl">
+              <el-col :span="6" class="leftName">
+                <em>*</em><span>联系人职位介绍：</span>
+              </el-col>
+              <el-col :span="18" class="rightInp">
+                <el-input v-model="fromBox.contacts[ii].positionIntroduce" placeholder="请输入联系人职位介绍" />
+              </el-col>
+            </el-row>
+            <el-row class="listUl">
+              <el-col class="leftName" :span="6">
+                <em>*</em><span>联系人职位电话：</span>
+              </el-col>
+              <el-col class="rightInp" :span="18">
+                <el-input v-model="fromBox.contacts[ii].telephone" placeholder="请输入联系人电话" />
+              </el-col>
+            </el-row>
+            <el-row class="listUl">
+              <el-col :span="6" class="leftName">
+                <em>*</em><span>项目阶段：</span>
+              </el-col>
+              <el-col class="rightInp" :span="18">
+                <el-input v-model="fromBox.contacts[ii].projectStage" placeholder="请输入项目阶段" />
+              </el-col>
+            </el-row>
+            <el-row class="listUl">
+              <el-col class="leftName" :span="6">
+                <span>未定材料：</span>
+              </el-col>
+              <el-col class="rightInp" :span="18">
+                <el-input v-model="fromBox.contacts[ii].uncertaintyMaterials" placeholder="请输入未定材料" />
+              </el-col>
+            </el-row>
+            <el-row class="listUl">
+              <el-col class="leftName" :span="6">
+                <span>项目图片：</span>
+              </el-col>
+              <el-col :span="18" class="rightInp">
                 <el-row class="titBoxStop">
                   <span class="titleTopBox">请上传情报图片信息</span>
                   <span class="caption ">（图片限制在4M以内且只能上传3张,支持PNG\PG\JPEG\GIF格式）</span>
@@ -50,13 +101,11 @@
                     >
                       <i class="el-icon-plus" />
                     </el-upload>
-                    <el-dialog :visible.sync="dialogVisible" class="updateImg">
-                      <img width="100%" :src="dialogImageUrl" alt="">
-                    </el-dialog>
+                    <el-dialog :visible.sync="dialogVisible" class="updateImg" />
                     <el-dialog
                       title="提示"
                       :visible.sync="DialogVisibles"
-                      width="30%"
+                      width="26%"
                       center
                     >
                       <span>{{ tipsText }}</span>
@@ -67,21 +116,23 @@
                     </el-dialog>
                   </el-row>
                 </el-row>
-              </el-row>
-            </el-form-item>
+              </el-col>
+            </el-row>
           </el-row>
         </el-row>
-        <el-row v-if="fromBox.formO.length === 1" class="addListTop">
+        <el-row v-if="fromBox.contacts.length === 1" class="addListTop">
           <span @click="add">点击添加多个情报</span>
         </el-row>
-        <el-row v-if="fromBox.formO.length > 1" class="add_B_add">
+        <el-row v-if="fromBox.contacts.length > 1" class="add_B_add">
           <el-row class="boxwE">
             <span class="el-icon-circle-plus-outline" @click="add" />
             <span class="el-icon-remove-outline" @click="removeList" />
           </el-row>
         </el-row>
         <el-row class="subBox">
-          <button>提交</button>
+          <button @click="sub()">
+            提交
+          </button>
         </el-row>
       </el-form>
     </el-row>
@@ -89,6 +140,7 @@
 </template>
 
 <script>
+import { HomeService } from '@/services/projectInfo'
 export default {
   data () {
     return {
@@ -111,10 +163,10 @@ export default {
       tipsText: '多少岁',
       dialogImageUrl: '',
       fromBox: {
-        formO: [
+        contacts: [
           {
-            // projectId: this.$store.state.projectInfo.id,
-            // id: this.$store.state.projectInfo.id,
+            id: this.$route.params.id,
+            projectId: this.$route.params.id,
             categoryId: null,
             name: null,
             companyName: null,
@@ -129,18 +181,80 @@ export default {
           }
         ]
       },
-      pops: {
-        name: [
-          { required: true, message: '请选择活动区域', trigger: 'blur' }
-        ],
-        type: [
-          { required: true, message: '请选择公司类型', trigger: 'change' }
-        ]
-      }
-
+      loading: false
     }
   },
   methods: {
+    sub () {
+      const _this = this
+      if (!_this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没登录哦~~~   去登录吧！',
+          type: 'error'
+        })
+        setTimeout(() => {
+          _this.$router.push('/login')
+        }, 1000)
+        return false
+      }
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      const mobile = /^((13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})|(19[0-9]{9}))$/
+      if (this.fromBox.contacts[0].categoryId === null) {
+        this.tipsText = '请选择公司类型'
+        this.DialogVisibles = true
+      } else if (this.fromBox.contacts[0].companyName === null) {
+        this.tipsText = '请输入公司名字'
+        this.DialogVisibles = true
+      } else if (this.fromBox.contacts[0].name === null) {
+        this.tipsText = '请输入联系人名字'
+        this.DialogVisibles = true
+      } else if (this.fromBox.contacts[0].positionIntroduce === null) {
+        this.tipsText = '请输入联系人职位介绍'
+        this.DialogVisibles = true
+      } else if (this.fromBox.contacts[0].telephone === null) {
+        this.tipsText = '请输入联系人电话'
+        this.DialogVisibles = true
+      } else if (!mobile.test(this.fromBox.contacts[0].telephone)) {
+        this.tipsText = '请输入正确的电话号码'
+        this.DialogVisibles = true
+      } else if (this.fromBox.contacts[0].projectStage === null) {
+        this.tipsText = '请输入项目阶段'
+        this.DialogVisibles = true
+      } else {
+        this.loading = true
+        const params = { intelligences: this.fromBox.contacts, projectId: this.$route.params.id }
+        homeService.postIntelligences(params).then((res) => {
+          if (res.status === 200) {
+            this.fromBox = {
+              contacts: [
+                {
+                  id: this.$route.params.id,
+                  projectId: this.$route.params.id,
+                  categoryId: null,
+                  name: null,
+                  companyName: null,
+                  positionLevel: null,
+                  positionIntroduce: null,
+                  address: null,
+                  telephone: null,
+                  projectStage: null,
+                  uncertaintyMaterials: null,
+                  pics: [] // 图片
+
+                }
+              ]
+            }
+            setTimeout(() => {
+              this.loading = false
+              this.$message({
+                message: '上传成功',
+                type: 'success'
+              })
+            }, 1000)
+          }
+        })
+      }
+    },
     overList () {
       this.tipsText = '最多只能传3张图片'
       this.DialogVisibles = true
@@ -160,10 +274,9 @@ export default {
       return isJPG && isLt2M
     },
     add () {
-      this.fromBox.formO.push(
+      this.fromBox.contacts.push(
         {
-          // projectId: this.$store.state.projectInfo.id,
-          // id: this.$store.state.projectInfo.id,
+          projectId: this.$route.params.id,
           categoryId: null,
           name: null,
           companyName: null,
@@ -179,14 +292,14 @@ export default {
       )
     },
     removeList () {
-      this.fromBox.formO.splice(this.fromBox.formO.length - 1, 1)
+      this.fromBox.contacts.splice(this.fromBox.contacts.length - 1, 1)
     },
     centerDialogVisible () {
       this.DialogVisibles = !this.DialogVisibles
     },
     // 图片上传
     uploadPicture (response, file, fileList, index) {
-      this.fromBox.formO[index].pics.push(response.uri)
+      this.fromBox.contacts[index].pics.push(response.uri)
     },
 
     // 图片删除
@@ -201,14 +314,14 @@ export default {
     // 删除图片函数封装
     delone (fileName, index) {
       const that = this
-      const arr = that.fromBox.formO[index].pics
+      const arr = that.fromBox.contacts[index].pics
       const del = arr.indexOf(fileName)
-      that.fromBox.formO[index].pics.splice(del, 1)
+      that.fromBox.contacts[index].pics.splice(del, 1)
     }
   }
 }
 </script>
-<style  lang="scss">
+<style  scoped lang="scss">
   .AddIntelligence{
     width: 100%;
     padding-bottom: 50px;
@@ -239,6 +352,25 @@ export default {
                 flex: 1;
                 -ms-flex: 1;
                 overflow: hidden;
+                .el-select{
+                  width: 100%;
+                }
+              }
+            }
+            .listUl{
+              width: 100%;
+              margin-bottom: 30px;
+              .leftName{
+                text-align: right;
+                font-size: 18px;
+                color: #8c8c8c;
+                height: 40px;
+                line-height: 40px;
+                em{
+                  color: $redColor;
+                }
+              }
+              .rightInp{
                 .el-select{
                   width: 100%;
                 }
@@ -306,6 +438,7 @@ export default {
   }
   .titBoxStop{
     width: 100%;
+    margin-top: 10px;
     .titleTopBox{
       font-size: 16px;
       color: #333333;
@@ -316,6 +449,9 @@ export default {
       font-size: 12px;
     }
   }
+
+</style>
+<style>
   .el-upload-list--picture-card .el-upload-list__item{
     width: 134px;
     height: 134px;

@@ -85,7 +85,7 @@ export class HomeService {
       params
     })
   }
-  async postComment (params) { // 获取评论
+  async postComment (params) { // 创建评论
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
       url: `/api/basic/open/comment.json`,

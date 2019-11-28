@@ -1,37 +1,91 @@
 <template>
-  <el-row class="comment_box">
+  <el-row class="comment_box" v-loading="loading">
     <div class="top_form">
       <div class="text_Box">
-        <textarea placeholder="想说点什么呢..." />
+        <textarea v-model="text" placeholder="想说点什么呢..." />
       </div>
       <div class="sub">
-        <span>评&nbsp;&nbsp;论</span>
+        <span @click="sub">评&nbsp;&nbsp;论</span>
       </div>
     </div>
     <div class="b_list_Box">
-      <comment :date="commentList" />
+      <comment />
     </div>
   </el-row>
 </template>
 
 <script>
-import Comment from '@/components/works/Comment'
+import { HomeService } from '@/services/works'
+import Comment from '@/components/projectInfo/Comment'
 export default {
   components: {
     Comment
   },
-  // eslint-disable-next-line vue/require-prop-types
-  props: ['list'],
+
   data () {
     return {
-      commentList: this.list
+      text: null,
+      flag: true,
+      loading: false
     }
   },
   mounted () {
-    this.commentList = this.list
-    console.log('第一级', this.commentList)
+    this.getComment()
   },
   methods: {
+    sub () {
+      console.log(33)
+      const _this = this
+      if (!_this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没登录哦~~~   去登录吧！',
+          type: 'error'
+        })
+        setTimeout(() => {
+          _this.$router.push('/login')
+        }, 1000)
+        return false
+      }
+      if (this.text === null) {
+        this.$message({
+          message: '你没有输入任何评论哦！',
+          type: 'error'
+        })
+        return
+      }
+      if (!this.flag) {
+        this.$message({
+          message: '稍等一会才能评论哦',
+          type: 'warning'
+        })
+        return
+      }
+      this.loading = true
+      this.$message({
+        message: '提交中~~~ 请等待'
+      })
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.postComment({ type: 3, otherId: this.$route.params.id, content: this.text }).then((res) => {
+        if (res.status === 200) {
+          this.flag = false
+          this.loading = false
+          this.$message({
+            message: '提交成功！',
+            type: 'success'
+          })
+          this.text = null
+        }
+        setTimeout(() => {
+          this.flag = true
+        }, 10000)
+      })
+    },
+    getComment () {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getComment({ type: 3, otherId: this.$route.params.id }).then((res) => {
+        console.log('评论', res)
+      })
+    }
   }
 }
 </script>

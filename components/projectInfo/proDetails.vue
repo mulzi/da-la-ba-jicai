@@ -4,7 +4,7 @@
     <el-row class="listBox">
       <el-row class="topClose">
         <el-col class="overc" :span="22">
-          公司名字
+          {{ date.companyName }}
         </el-col>
         <el-col :span="2">
           <span class="icon el-icon-close" @click="changePro" />
@@ -16,7 +16,7 @@
             公司类型：
           </el-col>
           <el-col :span="18" class="right">
-            ssssssssssssss
+            {{ date.categoryName }}
           </el-col>
         </el-row>
         <el-row class="list">
@@ -24,7 +24,7 @@
             公司名称：
           </el-col>
           <el-col :span="18" class="right">
-            ssssssssssssss
+            {{ date.companyName }}
           </el-col>
         </el-row>
         <el-row class="list">
@@ -32,7 +32,7 @@
             姓名：
           </el-col>
           <el-col :span="18" class="right">
-            ssssssssssssss
+            {{ date.name }}
           </el-col>
         </el-row>
         <el-row class="list">
@@ -40,7 +40,7 @@
             联系人职位：
           </el-col>
           <el-col :span="18" class="right">
-            ssssssssssssss
+            {{ date.positionLevel }}
           </el-col>
         </el-row>
         <el-row class="list">
@@ -48,7 +48,7 @@
             联系人介绍：
           </el-col>
           <el-col :span="18" class="right">
-            ssssssssssssss
+            {{ date.positionIntroduce }}
           </el-col>
         </el-row>
         <el-row class="list">
@@ -56,7 +56,7 @@
             联系人电话：
           </el-col>
           <el-col :span="18" class="right">
-            ssssssssssssss
+            {{ date.telephone }}
           </el-col>
         </el-row>
         <el-row class="list">
@@ -64,7 +64,7 @@
             项目地址：
           </el-col>
           <el-col :span="18" class="right">
-            ssssssssssssss
+            {{ date.address }}
           </el-col>
         </el-row>
         <el-row class="list">
@@ -72,7 +72,7 @@
             项目阶段：
           </el-col>
           <el-col :span="18" class="right">
-            ssssssssssssss
+            {{ date.projectStage }}
           </el-col>
         </el-row>
         <el-row class="list">
@@ -80,20 +80,17 @@
             未定材料：
           </el-col>
           <el-col :span="18" class="right">
-            ssssssssssssss
+            {{ date.uncertaintyMaterials }}
           </el-col>
         </el-row>
-        <el-row class="list">
+        <el-row class="list" v-if="date.pics !== undefined && date.pics.length > 0">
           <el-col :span="6" class="left">
             项目图片：
           </el-col>
           <el-col :span="18" class="right" />
         </el-row>
         <div v-viewer class="imgList">
-          <li><span><img src="@/assets/img/0123.jpg" alt=""></span></li>
-          <li><span><img src="@/assets/img/0123.jpg" alt=""></span></li>
-          <li><span><img src="@/assets/img/0123.jpg" alt=""></span></li>
-          <li><span><img src="@/assets/img/0123.jpg" alt=""></span></li>
+          <li v-for="(t,i) in date.pics" :key="i"><span><img :src="t.pic" alt=""></span></li>
         </div>
       </el-row>
     </el-row>
@@ -101,11 +98,25 @@
 </template>
 
 <script>
+import { HomeService } from '@/services/projectInfo'
+
 export default {
-  name: 'ProDetails',
+  data () {
+    return {
+      date: ''
+    }
+  },
+  mounted () {
+    console.log(this.$store.state.projectInfo.oneID)
+    const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+    homeService.getIntelligences(this.$store.state.projectInfo.oneID).then((res) => {
+      console.log(res.data.result)
+      this.date = res.data.result
+    })
+  },
   methods: {
     changePro () {
-      this.$store.commit('home/changeProDetails')
+      this.$store.commit('projectInfo/changeProDetails')
     }
   }
 }

@@ -81,4 +81,29 @@ export class HomeService {
       // eslint-disable-next-line no-undef
     })
   }
+  async getIntelligences (params) { // 获取项目信息精准情报
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/info/open/project/intelligences/${params}.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT
+      // eslint-disable-next-line no-undef
+    })
+  }
+  async postIntelligences (params) { // 获取项目信息精准情报
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/info/open/project/intelligence.json`,
+      method: 'POST',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      data: params
+    })
+  }
 }

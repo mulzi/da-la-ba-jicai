@@ -12,7 +12,7 @@
           <p>姓名：{{ t.name }}</p>
           <p>手机：{{ t.telephone }}</p>
         </el-row>
-        <div class="clickLook" @click="changeIntegralPay(t.id)">
+        <div v-if="t.flag" class="clickLook" @click="changeIntegralPay(t.id)">
           点击查看
         </div>
       </el-row>
@@ -39,6 +39,7 @@ export default {
         }, 1000)
         return false
       }
+      this.$store.commit('projectInfo/changeClass', 3)
       this.$store.commit('projectInfo/changeOneID', i)
       this.$store.commit('projectInfo/changeIntegralPay')
     }

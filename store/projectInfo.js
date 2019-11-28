@@ -6,7 +6,7 @@ export const state = () => ({
   twoID: '', // 精准项目ID
   IntegralPay: false, // 积分支付查看开关
   proDetails: false, // 项目信息查看开关
-  projectFlag: false // 方法再执行锁
+  projectClass: '' // 积分消费类型
 })
 
 export const mutations = {
@@ -25,11 +25,14 @@ export const mutations = {
     state.projectTwo = false
     state.projectThree = true
   },
-  changeOneID (state, pyload) {
-    state.oneID = pyload
+  changeOneID (state, payload) {
+    state.oneID = payload
   },
-  changeTwoID (state, pyload) {
-    state.twoID = pyload
+  changeTwoID (state, payload) {
+    state.twoID = payload
+  },
+  changeClass (state, payload) {
+    state.projectClass = payload
   },
   changeIntegralPay (state) {
     state.IntegralPay = !state.IntegralPay

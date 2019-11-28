@@ -143,14 +143,14 @@ export default {
     },
     postSCore () { // 查询账户余额及积分价格
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.postScore(3).then((res) => {
+      homeService.postScore(this.$store.state.projectInfo.projectClass).then((res) => {
         this.date = res.data.result
         console.log(res.data)
       })
     },
     consumeScore () { // 积分消费
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.consumeScore({ productId: 3, dataId: this.$store.state.projectInfo.oneID }).then((res) => {
+      homeService.consumeScore({ productId: this.$store.state.projectInfo.projectClass, dataId: this.$store.state.projectInfo.oneID }).then((res) => {
         console.log('S1', res)
         if (res.status === 200) {
           this.$message({
@@ -159,9 +159,15 @@ export default {
           })
         }
         this.$store.commit('projectInfo/changeIntegralPay')
+        this.$store.commit('projectInfo/changeOne')
+        this.$nextTick(() => {
+          this.$store.commit('projectInfo/changeTwo')
+        })
+        if (this.$store.state.projectInfo.projectClass === 4) {
+          this.$store.commit('projectInfo/changeProDetails')
+        }
       })
     }
-
   }
 }
 </script>

@@ -72,7 +72,7 @@ import { HomeService } from '@/services/projectInfo'
 import projectInt from '@/components/projectInfo/projectInt'
 import contact from '@/components/projectInfo/contact'
 import formText from '@/components/projectInfo/formText'
-import MessageOne from '@/components/publicModule/MessageOne'
+import MessageOne from '@/components/projectInfo/MessageOne'
 import IntegralPay from '@/components/projectInfo/IntegralPay'
 import ProDetails from '@/components/projectInfo/proDetails'
 export default {
