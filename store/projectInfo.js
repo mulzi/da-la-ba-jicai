@@ -1,29 +1,16 @@
 export const state = () => ({
-  projectOne: true,
-  projectTwo: false,
-  projectThree: false,
+  num: 0,
   oneID: '', // 普通项目ID
   twoID: '', // 精准项目ID
+  messageBox: false, // 留言回复框
   IntegralPay: false, // 积分支付查看开关
   proDetails: false, // 项目信息查看开关
   projectClass: '' // 积分消费类型
 })
 
 export const mutations = {
-  changeOne (state) {
-    state.projectOne = true
-    state.projectTwo = false
-    state.projectThree = false
-  },
-  changeTwo (state) {
-    state.projectOne = false
-    state.projectTwo = true
-    state.projectThree = false
-  },
-  changeThree (state) {
-    state.projectOne = false
-    state.projectTwo = false
-    state.projectThree = true
+  changeOne (state, payload) {
+    state.num = payload
   },
   changeOneID (state, payload) {
     state.oneID = payload
@@ -39,5 +26,8 @@ export const mutations = {
   },
   changeProDetails (state) {
     state.proDetails = !state.proDetails
+  },
+  changeMsg (state) {
+    state.messageBox = !state.messageBox
   }
 }

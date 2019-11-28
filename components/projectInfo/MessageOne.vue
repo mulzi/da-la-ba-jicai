@@ -8,9 +8,9 @@
         <span @click="sub">评&nbsp;&nbsp;论</span>
       </div>
     </div>
-    <div class="b_list_Box">
-      <comment />
-    </div>
+    <el-row class="b_list_Box">
+      <comment :list="date"/>
+    </el-row>
   </el-row>
 </template>
 
@@ -26,6 +26,7 @@ export default {
     return {
       text: null,
       flag: true,
+      date: '',
       loading: false
     }
   },
@@ -34,7 +35,6 @@ export default {
   },
   methods: {
     sub () {
-      console.log(33)
       const _this = this
       if (!_this.$store.state.home.isLogin) {
         this.$message({
@@ -83,7 +83,8 @@ export default {
     getComment () {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getComment({ type: 3, otherId: this.$route.params.id }).then((res) => {
-        console.log('评论', res)
+        console.log('评论', res.data.results)
+        this.date = res.data.results
       })
     }
   }

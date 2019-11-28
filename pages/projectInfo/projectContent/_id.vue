@@ -35,32 +35,26 @@
       </el-row>
       <el-row class="projIntBox">
         <el-row class="topTitChange">
-          <li :class="this.$store.state.projectInfo.projectOne ? 'active':''" @click="changeList">
+          <li v-for="(t,i) in menu" :key="i" :class="$store.state.projectInfo.num === i ? 'active':''" @click="changeList(i)">
             <span>
-              项目简介
+              {{ t }}
             </span>
-          </li>
-          <li :class="this.$store.state.projectInfo.projectTwo ? 'active':''" @click="changeListTwo">
-            联系方式
-          </li>
-          <li :class="this.$store.state.projectInfo.projectThree ? 'active' : ''" @click="changeListThree">
-            添加联系人
           </li>
         </el-row>
         <el-row class="bo_list">
           <transition name="bounce">
-            <project-int v-if="this.$store.state.projectInfo.projectOne" :list="date" />
+            <project-int v-if="this.$store.state.projectInfo.num === 0" :list="date" />
           </transition>
           <transition name="bounce">
-            <contact v-if="this.$store.state.projectInfo.projectTwo" />
+            <contact v-if="this.$store.state.projectInfo.num === 1" />
           </transition>
           <transition name="bounce">
-            <form-text v-if="this.$store.state.projectInfo.projectThree" />
+            <form-text v-if="this.$store.state.projectInfo.num === 2" />
           </transition>
         </el-row>
       </el-row>
-      <message-one class="marginBottom100" v-if="this.$store.state.projectInfo.projectTwo || this.$store.state.projectInfo.projectOne" />
-      <el-row class="marginBottom100" v-if="this.$store.state.projectInfo.projectThree" />
+      <message-one class="marginBottom100" v-if="this.$store.state.projectInfo.num === 0" />
+      <el-row class="marginBottom100" v-if="this.$store.state.projectInfo.num === 2 || this.$store.state.projectInfo.num === 1" />
       <integral-pay v-if="this.$store.state.projectInfo.IntegralPay" />
       <pro-details v-if="this.$store.state.projectInfo.proDetails" />
     </el-row>
@@ -80,7 +74,9 @@ export default {
   components: { ProDetails, IntegralPay, projectInt, contact, formText, MessageOne },
   data () {
     return {
-      date: ''
+      menu: ['项目简介', '联系方式', '添加联系人'],
+      date: '',
+      num: 0
     }
   },
   mounted () {
@@ -94,14 +90,8 @@ export default {
         this.date = res.data
       })
     },
-    changeList () {
-      this.$store.commit('projectInfo/changeOne')
-    },
-    changeListTwo () {
-      this.$store.commit('projectInfo/changeTwo')
-    },
-    changeListThree () {
-      this.$store.commit('projectInfo/changeThree')
+    changeList (i) {
+      this.$store.commit('projectInfo/changeOne', i)
     }
   }
 

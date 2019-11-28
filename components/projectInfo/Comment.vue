@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <div v-for="(t,i) in date" :key="i" class="liList">
+    <div v-for="(t,i) in list" :key="i" class="liList">
       <div class="l_img">
         <img :src="t.headUri" alt="">
       </div>
@@ -12,7 +12,7 @@
           <div class="l_time">
             {{ t.createdAtStr }}
           </div>
-          <div v-if=" t.ownId === t.userId ? false : true " class="r_click_Reply" @click="showMessageBox">
+          <div v-if=" t.ownId !== t.userId " class="r_click_Reply" @click="showMessageBox(t.userId,t.id,t.nickName)">
             回复
           </div>
         </div>
@@ -29,7 +29,7 @@
                 <div class="l_time">
                   {{ tt.createdAtStr }}
                 </div>
-                <div class="r_click_Reply" @click="showMessageBoxTwo">
+                <div v-if=" t.ownId !== t.userId " class="r_click_Reply" @click="showMessageBox(tt.userId,tt.id,tt.nickName)">
                   回复
                 </div>
               </div>
@@ -46,23 +46,32 @@
         </div>
       </div>
     </div>
+    <message :one-n="toUserId" :two-n="toId" :three-n="toName" v-if="this.$store.state.projectInfo.messageBox" />
   </el-row>
 </template>
 
 <script>
+import Message from '@/components/projectInfo/message'
 export default {
   name: 'Comment',
+  components: { Message },
   // eslint-disable-next-line vue/require-prop-types
-  props: [ 'date' ],
+  props: [ 'list' ],
   data () {
     return {
+      toUserId: '', // 被回复人
+      toId: '', // 被回复ID
+      toName: '' // 被回复名字
     }
   },
   mounted () {
   },
   methods: {
-    showMessageBox () {
-      this.$store.commit('works/changeMsg')
+    showMessageBox (i, b, c) {
+      this.toUserId = i
+      this.toId = b
+      this.toName = c
+      this.$store.commit('projectInfo/changeMsg')
     },
     showMessageBoxTwo () {
       this.$store.commit('works/changeMsgTwo')
