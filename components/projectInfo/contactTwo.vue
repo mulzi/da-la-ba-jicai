@@ -1,6 +1,6 @@
 <template>
   <el-row class="bo_list">
-    <li v-for="(t,i) in date" :key="i">
+    <li v-for="(t,i) in list" :key="i">
       <el-row class="boxList">
         <el-row class="companyName">
           {{ t.companyName }}
@@ -23,8 +23,7 @@
 <script>
 // import { HomeService } from '@/services/projectInfo'
 export default {
-  // eslint-disable-next-line vue/require-prop-types
-  props: ['dates'],
+  props: ['list'],
   data () {
     return {
       date: []
@@ -32,9 +31,6 @@ export default {
     }
   },
   mounted () {
-    this.dates.forEach((t) => {
-      this.date.push(...t)
-    })
     // console.log('最后s', this.date)
   },
   methods: {

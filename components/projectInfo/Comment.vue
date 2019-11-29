@@ -17,64 +17,39 @@
           </div>
         </div>
         <div class="n_list" v-if="t.children">
-          <div class="n_liList" v-for="(tt,ii) in t.children" :key="ii">
-            <div class="l_img">
-              <img :src="tt.headUri" alt="">
-            </div>
-            <div class="r_Li_list">
-              <div class="topTit">
-                <span>{{ tt.nickName }}：</span><em>回复<i>@{{ tt.toNickName }}</i></em> {{ tt.content }}
-              </div>
-              <div class="time">
-                <div class="l_time">
-                  {{ tt.createdAtStr }}
-                </div>
-                <div v-if=" t.ownId !== t.userId " class="r_click_Reply" @click="showMessageBox(tt.userId,tt.id,tt.nickName)">
-                  回复
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="spread">
-            <span>展开查看更多9条评论 <i class="el-icon-arrow-down" /></span>
-          </div>
-          <div class="fewer">
-            <span>
-              收起更多评论 <i class="el-icon-arrow-up" />
-            </span>
-          </div>
+          <comment_one :list="t.children" :old="t.ownId " />
         </div>
       </div>
     </div>
-    <message :one-n="toUserId" :two-n="toId" :three-n="toName" v-if="this.$store.state.projectInfo.messageBox" />
+    <message v-if="this.$store.state.projectInfo.messageBox" />
   </el-row>
 </template>
 
 <script>
 import Message from '@/components/projectInfo/message'
+import comment_one from '@/components/projectInfo/Comment_one'
 export default {
   name: 'Comment',
-  components: { Message },
+  components: { Message, comment_one },
   // eslint-disable-next-line vue/require-prop-types
   props: [ 'list' ],
   data () {
     return {
+      date: this.list,
       toUserId: '', // 被回复人
       toId: '', // 被回复ID
       toName: '' // 被回复名字
     }
   },
   mounted () {
+    console.log(this.oldId, 'ss')
   },
   methods: {
     showMessageBox (i, b, c) {
-      this.toUserId = i
-      this.toId = b
-      this.toName = c
+      this.$store.commit('works/changeUID', i)
+      this.$store.commit('works/changeTOID', b)
+      this.$store.commit('works/changeName', c)
       this.$store.commit('projectInfo/changeMsg')
-    },
-    showMessageBoxTwo () {
-      this.$store.commit('works/changeMsgTwo')
     }
   }
 }

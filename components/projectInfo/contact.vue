@@ -1,72 +1,94 @@
 <template>
   <el-row class="two">
-    <el-row id="contentText" class="content">
-      <el-row>
-        <contact :list="dateO" :tit="lisName" />
-      </el-row>
-      <el-row v-if="dateT !== undefined && dateT.length > 0">
-        <contact-o v-for="(t,i) in dateT" :key="i + 3" :list="t" />
-      </el-row>
-      <el-row v-if="dateF !== undefined && dateF.length > 0">
-        <Contactf :list="dateF" />
-      </el-row>
+    <el-row class="content">
+      <contacta v-if="dateA !== undefined && dateA.length > 0" :list="dateA" />
+      <contactb v-if="dateB !== undefined && dateB.length > 0" :list="dateB" />
+      <contactc v-if="dateC !== undefined && dateC.length > 0" :list="dateC" />
+      <contactd v-if="dateD !== undefined && dateD.length > 0" :list="dateD" />
+      <contacte v-if="dateE !== undefined && dateE.length > 0" :list="dateE" />
     </el-row>
+    <integral-pay @clickTwo="getContactTwo" v-if="this.$store.state.projectInfo.IntegralPay" />
   </el-row>
 </template>
 
 <script>
-import ContactO from './contact_o'
-import Contact from './contact_t'
-import Contactf from './contact_f'
+import contacta from './contact_a'
+import contactb from './contact_b'
+import contactc from './contact_c'
+import contactd from './contact_d'
+import contacte from './contact_e'
+import IntegralPay from '@/components/projectInfo/IntegralPay'
 import { HomeService } from '@/services/projectInfo'
 export default {
   components: {
-    Contact,
-    ContactO,
-    Contactf
+    contacta,
+    contactb,
+    contactc,
+    contactd,
+    contacte,
+    IntegralPay
   },
   data () {
     return {
       show: true,
       date: [],
-      dateF: [],
-      dateO: [],
-      dateT: [],
+      dateA: [],
+      dateB: [],
+      dateC: [],
+      dateD: [],
+      dateE: [],
       lisName: ''
     }
   },
   mounted () {
-    this.getContact(this.$route.params.id)
+    this.getContact()
   },
   methods: {
-    changeIntegralPay () {
-      this.$store.commit('home/changeIntegralPay')
-    },
-    getContact (pamars) { // 获取联系人列表
+    getContact () { // 获取联系人列表
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.getContact(pamars).then((res) => {
-        console.log(res.data.result)
-        if (res.data.result.contractor !== [] && res.data.result.contractor.length > 0) {
-          this.date.push(res.data.result.contractor)
-        }
-        if (res.data.result.decoratingParty !== [] && res.data.result.decoratingParty.length > 0) {
-          this.date.push(res.data.result.decoratingParty)
-        }
-        if (res.data.result.designer !== [] && res.data.result.designer.length > 0) {
-          this.date.push(res.data.result.designer)
+      homeService.getContact(this.$route.params.id).then((res) => {
+        console.log(res.data.result, '联系人 ')
+        if (res.data.result.intelligence !== [] && res.data.result.intelligence.length > 0) {
+          this.dateE = res.data.result.intelligence
+          this.$store.commit('projectInfo/changeDateE')
         }
         if (res.data.result.firstParty !== [] && res.data.result.firstParty.length > 0) {
-          this.date.push(res.data.result.firstParty)
+          this.dateD = res.data.result.firstParty
+          this.$store.commit('projectInfo/changeDateD')
         }
+        if (res.data.result.designer !== [] && res.data.result.designer.length > 0) {
+          this.dateC = res.data.result.designer
+          this.$store.commit('projectInfo/changeDateC')
+        }
+        if (res.data.result.decoratingParty !== [] && res.data.result.decoratingParty.length > 0) {
+          this.dateB = res.data.result.decoratingParty
+          this.$store.commit('projectInfo/changeDateB')
+        }
+        if (res.data.result.contractor !== [] && res.data.result.contractor.length > 0) {
+          this.dateA = res.data.result.contractor
+          this.$store.commit('projectInfo/changeDateA')
+        }
+      })
+    },
+    getContactTwo () { // 获取联系人列表
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getContact(this.$route.params.id).then((res) => {
+        console.log(res.data.result, '联系人成功 ')
         if (res.data.result.intelligence !== [] && res.data.result.intelligence.length > 0) {
-          this.dateF.push(res.data.result.intelligence)
+          this.dateE = res.data.result.intelligence
         }
-        this.dateO = this.date.shift()
-        this.lisName = this.dateO[0].categoryName
-        this.dateT = this.date.splice(0)
-        console.log('第一个数组', this.dateF)
-        // console.log('第二个数组', this.dateT)
-        // console.log('第二个数组', this.date)
+        if (res.data.result.firstParty !== [] && res.data.result.firstParty.length > 0) {
+          this.dateD = res.data.result.firstParty
+        }
+        if (res.data.result.designer !== [] && res.data.result.designer.length > 0) {
+          this.dateC = res.data.result.designer
+        }
+        if (res.data.result.decoratingParty !== [] && res.data.result.decoratingParty.length > 0) {
+          this.dateB = res.data.result.decoratingParty
+        }
+        if (res.data.result.contractor !== [] && res.data.result.contractor.length > 0) {
+          this.dateA = res.data.result.contractor
+        }
       })
     }
   }

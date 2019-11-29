@@ -122,9 +122,6 @@
 <script>
 import { HomeService } from '@/services/home'
 export default {
-  name: 'IntegralPay',
-  // eslint-disable-next-line vue/require-prop-types
-  props: ['id'],
   data () {
     return {
       date: '',
@@ -142,6 +139,7 @@ export default {
       this.$store.commit('projectInfo/changeIntegralPay')
     },
     postSCore () { // 查询账户余额及积分价格
+      this.$emit('abc')
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.postScore(this.$store.state.projectInfo.projectClass).then((res) => {
         this.date = res.data.result
@@ -158,11 +156,8 @@ export default {
             type: 'success'
           })
         }
+        this.$emit('clickTwo')
         this.$store.commit('projectInfo/changeIntegralPay')
-        this.$store.commit('projectInfo/changeOne')
-        this.$nextTick(() => {
-          this.$store.commit('projectInfo/changeTwo')
-        })
         if (this.$store.state.projectInfo.projectClass === 4) {
           this.$store.commit('projectInfo/changeProDetails')
         }

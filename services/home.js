@@ -49,7 +49,7 @@ export class HomeService {
   async SupplierList (params) { // 材料供应商列表数据
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
-      url: `/api/supplier/open/mini/condition.json`,
+      url: `/api/supplier/open/condition.json`,
       method: 'GET',
       headers: {
         Authorization: token.accessToken

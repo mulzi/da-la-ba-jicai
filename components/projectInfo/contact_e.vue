@@ -1,28 +1,32 @@
 <template>
   <el-row class="list">
     <el-row class="topName">
-      <span class="span" @click="show = !show">{{ list[0].categoryName }}</span>
-      <i :class=" show ?'el-icon-caret-bottom' : 'el-icon-caret-right'" />
+      <span class="span" @click="$store.commit('projectInfo/changeDateE')">精准项目</span>
+      <i :class=" this.$store.state.projectInfo.dateE ?'el-icon-caret-bottom' : 'el-icon-caret-right'" />
     </el-row>
     <el-collapse-transition>
-      <contact-one :list="list" v-show="show" />
+      <contactOne :list="list" v-show="this.$store.state.projectInfo.dateE" />
     </el-collapse-transition>
   </el-row>
 </template>
 
 <script>
-import contactOne from './contactOne'
+import contactOne from './contactTwo'
 export default {
   components: { contactOne },
   // eslint-disable-next-line vue/require-prop-types
-  props: ['list'],
+  props: ['list', 'tit'],
   data () {
     return {
       show: false,
+      data: '',
       lisName: ''
     }
   },
   mounted () {
+    console.log(this.list)
+  },
+  methods: {
   }
 }
 </script>

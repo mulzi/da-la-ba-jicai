@@ -23,8 +23,6 @@
 <script>
 import { HomeService } from '@/services/works'
 export default {
-  // eslint-disable-next-line vue/require-prop-types
-  props: ['oneN', 'twoN', 'threeN'],
   data () {
     return {
       text: '',
@@ -55,7 +53,7 @@ export default {
         return
       }
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.postComment({ type: 3, toUserId: this.oneN, toId: this.twoN, content: this.text, otherId: this.$route.params.id }).then((res) => {
+      homeService.postComment({ type: 3, toUserId: this.$store.state.works.toUserId, toId: this.$store.state.works.toId, content: this.text, otherId: this.$route.params.id }).then((res) => {
         if (res.status === 200) {
           this.$store.commit('projectInfo/changeMsg')
           this.$store.commit('projectInfo/changeOne', 1)

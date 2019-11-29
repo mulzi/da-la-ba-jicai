@@ -9,7 +9,7 @@
       </div>
     </div>
     <el-row class="b_list_Box">
-      <comment :list="date"/>
+      <comment :list="date" />
     </el-row>
   </el-row>
 </template>
@@ -30,7 +30,7 @@ export default {
       loading: false
     }
   },
-  mounted () {
+  created () {
     this.getComment()
   },
   methods: {

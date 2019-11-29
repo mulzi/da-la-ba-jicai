@@ -1,6 +1,6 @@
 <template>
-  <div class="supplierBody">
-    <div class="bodyBox">
+  <el-row class="supplierBody">
+    <el-row class="bodyBox">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -79,7 +79,7 @@
               </span>
             </div>
           </el-row>
-          <MessageOne />
+          <MessageOne v-if="this.$store.state.works.commentBox" />
         </el-row>
         <el-row class="r_content_box">
           <div class="top_img_box">
@@ -122,21 +122,16 @@
           </el-row>
         </el-row>
       </el-row>
-      <message v-if="$store.state.works.messageBox" />
-      <message_one v-if="$store.state.works.messageBoxTwo" />
-    </div>
-  </div>
+    </el-row>
+  </el-row>
 </template>
 
 <script>
 import { HomeService } from '@/services/works'
 import MessageOne from '@/components/works/MessageOne'
-import Message from '@/components/works/message'
-import message_one from '@/components/works/message_one'
-
 export default {
   layout: 'main',
-  components: { Message, MessageOne, message_one },
+  components: { MessageOne },
   data () {
     return {
       date: '',
@@ -151,9 +146,6 @@ export default {
     this.getWorksDetails(this.$route.params.id)
   },
   methods: {
-    showMessageBox () {
-      this.$store.commit('works/changeMsg')
-    },
     getWorksDetails (pamars) { // 获取详情
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getWorksDetails(pamars).then((res) => {

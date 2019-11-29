@@ -233,11 +233,6 @@ export default {
         })
       })
     },
-    console () {
-      setTimeout(() => {
-        console.log('地区', this.area)
-      }, 3000)
-    },
     convertTree (tree) {
       const result = []
       // eslint-disable-next-line no-unused-vars

@@ -25,6 +25,7 @@ export default {
   // eslint-disable-next-line vue/require-prop-types
   props: ['list'],
   mounted () {
+    console.log(this.list)
   },
   methods: {
     changeIntegralPay (i) {

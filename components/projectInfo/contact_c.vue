@@ -1,11 +1,11 @@
 <template>
   <el-row class="list">
     <el-row class="topName">
-      <span class="span" @click="show = !show">{{ tit }}</span>
-      <i :class=" show ?'el-icon-caret-bottom' : 'el-icon-caret-right'" />
+      <span class="span" @click="$store.commit('projectInfo/changeDateC')">设计方</span>
+      <i :class=" this.$store.state.projectInfo.dateC ?'el-icon-caret-bottom' : 'el-icon-caret-right'" />
     </el-row>
     <el-collapse-transition>
-      <contact-one :list="list" v-show="show" />
+      <contactOne :list="list" v-show="this.$store.state.projectInfo.dateC" />
     </el-collapse-transition>
   </el-row>
 </template>
@@ -15,14 +15,17 @@ import contactOne from './contactOne'
 export default {
   components: { contactOne },
   // eslint-disable-next-line vue/require-prop-types
-  props: ['list', 'tit'],
+  props: ['list'],
   data () {
     return {
-      show: true,
+      show: false,
+      data: '',
       lisName: ''
     }
   },
   mounted () {
+  },
+  methods: {
   }
 }
 </script>
