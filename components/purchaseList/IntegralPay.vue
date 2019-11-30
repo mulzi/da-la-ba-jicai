@@ -122,6 +122,7 @@
 <script>
 import { HomeService } from '@/services/home'
 export default {
+  props: ['id'],
   data () {
     return {
       date: '',
@@ -140,14 +141,14 @@ export default {
     },
     postSCore () { // 查询账户余额及积分价格
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.postScore(this.$store.state.projectInfo.projectClass).then((res) => {
+      homeService.postScore(2).then((res) => {
         this.date = res.data.result
         console.log(res.data)
       })
     },
     consumeScore () { // 积分消费
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.consumeScore({ productId: this.$store.state.projectInfo.projectClass, dataId: this.$store.state.projectInfo.oneID }).then((res) => {
+      homeService.consumeScore({ productId: 2, dataId: this.id }).then((res) => {
         console.log('S1', res)
         if (res.status === 200) {
           this.$message({
@@ -157,9 +158,6 @@ export default {
         }
         this.$emit('clickTwo')
         this.$store.commit('projectInfo/changeIntegralPay')
-        if (this.$store.state.projectInfo.projectClass === 4) {
-          this.$store.commit('projectInfo/changeProDetails')
-        }
       })
     }
   }

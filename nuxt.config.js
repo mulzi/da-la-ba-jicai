@@ -69,14 +69,14 @@ export default {
     ** See https://axios.nuxtjs.org/options
     */
   axios: {
-    baseURL: 'http://192.168.1.23:15100/',
+    baseURL: 'http://qy.cqsudu.com:10200/',
     browserBaseURL: '/',
     proxy: false
   },
 
   proxy: {
     '/api': {
-      target: 'http://192.168.1.23:15100/',
+      target: 'http://qy.cqsudu.com:10200/',
       pathRewrite: {
         '^/api': '/api'
       }

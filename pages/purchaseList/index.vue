@@ -74,7 +74,9 @@
                 clearable
               />
             </el-col>
-            <el-col :span="5" class="el-icon-search searchSt" />
+            <el-col :span="5">
+              <span @click="getList" class="el-icon-search searchSt"></span>
+            </el-col>
           </el-col>
         </el-row>
         <div @click="$store.commit('release/changeNumber', 1)" class="addItem">
@@ -84,29 +86,29 @@
           </nuxt-link>
         </div>
       </el-row>
-      <el-row class="boxList">
-        <nuxt-link to="/purchaseList/page/ss" v-for="(t,i) in 20" :key="i">
+      <el-row v-if="this.date !== undefined && this.date.length > 0" class="boxList">
+        <nuxt-link :to="`/purchaseList/page/${t.id}`" v-for="(t,i) in date" :key="i">
           <el-row class="tit">
-            招采材料名称
+            {{ t.materials }}
           </el-row>
           <el-row class="addr">
             <el-col :span="8" class="one">
-              工地地区\重庆市渝北
+              工地地区\{{ t.areaName }}
             </el-col>
             <el-col :span="8" class="two">
-              项目类型\精装房
+              项目类型\{{ t.projectCategoryName }}
             </el-col>
             <el-col :span="8" class="three">
-              2019.01.26
+              {{ t.createdAtStr}}
             </el-col>
           </el-row>
-          <el-row class="complete">
+          <el-row v-if="t.finishStatus === 2 " class="complete">
             已完成
           </el-row>
         </nuxt-link>
       </el-row>
       <el-row class="bottomListBox">
-        <div class="NoData marginBottom40">
+        <div v-if="this.date !== undefined && this.date.length === 0" class="NoData marginBottom40">
           <div class="img">
             <img src="@/assets/img/nodata.png" alt="">
           </div>
@@ -114,7 +116,7 @@
             没有数据
           </div>
         </div>
-        <div class="pageSbox">
+        <div v-if="this.date !== undefined && this.date.length > 0" class="pageSbox">
           <el-pagination
             background
             :current-page="currentPage4"
@@ -138,28 +140,13 @@ export default {
   layout: 'main',
   data () {
     return {
+      date: [],
       pageID: 0, // 分页第几页
       sizeID: 20, // 分页数量
       totalCount: 0, // 获取的总数
       currentPage4: 1,
       areaList: [], // 地区
-      typeList: [
-        {
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }], // 项目类别
+      typeList: [], // 项目类别
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',
@@ -201,18 +188,19 @@ export default {
   created () {
     this.getArea()
     this.getType()
+    this.getList()
   },
   methods: {
     handleSizeChange (val) {
       const _this = this
       _this.sizeID = val
-      _this.getSupplierList()
+      _this.getList()
     },
     handleCurrentChange (val) {
       const _this = this
       _this.currentPage4 = val
       this.pageID = val - 1
-      _this.getSupplierList()
+      _this.getList()
     },
     getArea () { // 获取地区
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
@@ -221,7 +209,7 @@ export default {
         this.areaList = this.convertTree(res.data.results)
       })
     },
-    getType () { // 获取地区
+    getType () { // 获取类型
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getType().then((res) => {
         console.log(res.data)
@@ -230,8 +218,10 @@ export default {
     },
     getList () {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.getList({ flag: false, province: this.area[0], city: this.area[1], area: this.area[2] }).then((res) => {
+      homeService.getList({ flag: false, province: this.area[0] || 0, city: this.area[1] || 0, area: this.area[2] || 0, startTime: this.time[1] || '', endTime: this.time[2] || '', page: this.pageID, size: this.sizeID, condition: this.searchText, projectCategoryId: this.type || '' }).then((res) => {
         console.log(res.data)
+        this.totalCount = res.data.totalCount
+        this.date = res.data.results
       })
     },
     convertTree (tree) {
@@ -321,6 +311,8 @@ export default {
 
             .rightSbox {
                 .searchSt {
+                  display: block;
+                  width: 100%;
                     background: #DA251D;
                     height: 40px;
                     line-height: 40px;

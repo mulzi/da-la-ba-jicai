@@ -24,7 +24,7 @@ export class HomeService {
   async getType () { // 获取类型
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
-      url: `/api/info/open/purchase/type.json`,
+      url: `/api/supplier/open/containAll/categories.json`,
       method: 'GET',
       headers: {
         Authorization: token.accessToken
@@ -36,7 +36,7 @@ export class HomeService {
   async getList (params) { // 获取列表
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
-      url: `/api/info/open/purchases.json`,
+      url: `/api/info/open/recruits.json`,
       method: 'GET',
       headers: {
         Authorization: token.accessToken
@@ -46,7 +46,7 @@ export class HomeService {
       params
     })
   }
-  async getDetails (params) { // 获取列表
+  async getDetails (params) { // 获取详情
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
       url: `/api/info/open/purchase/${params}.json`,

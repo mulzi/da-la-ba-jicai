@@ -20,7 +20,7 @@
       </el-row>
       <el-row class="ones">
         <el-row class="tit">
-          <span>主题主题</span>
+          <span>{{ date.materials }}</span>
         </el-row>
         <el-row class="bo_box">
           <el-row class="li">
@@ -28,7 +28,7 @@
               更新时间：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.createdAtStr }}
             </el-col>
           </el-row>
           <el-row class="li">
@@ -36,25 +36,23 @@
               项目类别：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.projectCategoryName }}
             </el-col>
           </el-row>
           <el-row class="li">
-          <el-col :span="2" class="left">
-            材料要求：
-          </el-col>
-          <el-col :span="20" class="right">
-            招募类型
-          </el-col>
-        </el-row>
-          <el-row class="li">
+            <el-col :span="2" class="left">
+              材料要求：
+            </el-col>
+            <el-col :span="20" class="right">
+              {{ date.requirement }}
+            </el-col>
+          </el-row>
+          <el-row class="li" v-if="date.purchaseAnnexeList !== undefined && date.purchaseAnnexeList.length > 0">
             <el-col :span="2" class="left">
               &nbsp;
             </el-col>
             <el-col :span="20" class="right" v-viewer>
-              <img src="@/assets/img/0123.jpg" alt="">
-              <img src="@/assets/img/0123.jpg" alt="">
-              <img src="@/assets/img/0123.jpg" alt="">
+              <img v-for="(t,i) in date.purchaseAnnexeList" :key="i" :src="t.linkUrl" alt="">
             </el-col>
           </el-row>
           <el-row class="li">
@@ -62,7 +60,7 @@
               工地地区：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.areaName }}
             </el-col>
           </el-row>
           <el-row class="li">
@@ -70,7 +68,7 @@
               详细地址：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.address }}
             </el-col>
           </el-row>
         </el-row>
@@ -85,7 +83,7 @@
               联系人：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.contactName }}
             </el-col>
           </el-row>
           <el-row class="li">
@@ -93,7 +91,7 @@
               联系人职位：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.contactPosition }}
             </el-col>
           </el-row>
           <el-row class="li">
@@ -101,7 +99,7 @@
               联系电话：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.contactPhone }}
             </el-col>
           </el-row>
           <el-row class="li">
@@ -110,17 +108,42 @@
             </el-col>
           </el-row>
         </el-row>
-        <el-row class="download">
+        <div class="download" @click="pay" v-if="date.flag">
           点击查看
-        </el-row>
+        </div>
       </el-row>
     </el-row>
+    <integral-pay @clickTwo="get" :id="this.$route.params.id" v-if="this.$store.state.projectInfo.IntegralPay" />
   </el-row>
 </template>
 
 <script>
+import { HomeService } from '@/services/purchaseList'
+import IntegralPay from '@/components/purchaseList/IntegralPay'
+
 export default {
-  layout: 'main'
+  components: { IntegralPay },
+  layout: 'main',
+  data () {
+    return {
+      date: ''
+    }
+  },
+  created () {
+    this.get()
+  },
+  methods: {
+    get () {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getDetails(this.$route.params.id).then((res) => {
+        console.log(res.data.result)
+        this.date = res.data.result
+      })
+    },
+    pay () {
+      this.$store.commit('projectInfo/changeIntegralPay')
+    }
+  }
 }
 </script>
 

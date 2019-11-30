@@ -24,8 +24,6 @@
               <el-col :span="18">
                 <el-cascader
                   v-model="area"
-                  @blur="console"
-                  @focus="getArea"
                   clearable
                   :options="areaList"
                   :props="{ expandTrigger: 'hover' }"
@@ -37,7 +35,7 @@
                 项目类别
               </el-col>
               <el-col :span="18">
-                <el-select v-model="type" @focus="getType" clearable placeholder="请选择">
+                <el-select v-model="type" clearable placeholder="请选择">
                   <el-option
                     v-for="item in typeList"
                     :key="item.value"
@@ -52,7 +50,7 @@
                 项目阶段
               </el-col>
               <el-col :span="18">
-                <el-select v-model="phase" @focus="getPhase" clearable placeholder="请选择">
+                <el-select v-model="phase" clearable placeholder="请选择">
                   <el-option
                     v-for="item in phaesList"
                     :key="item.value"
@@ -71,7 +69,7 @@
                 clearable
               />
             </el-col>
-            <el-col @click="getPage" :span="5">
+            <el-col :span="5">
               <span @click="getPage" class="el-icon-search searchSt" />
             </el-col>
           </el-col>
@@ -163,6 +161,9 @@ export default {
     }
   },
   created () {
+    this.getType()
+    this.getPhase()
+    this.getArea()
     this.getPage()
   },
   methods: {
