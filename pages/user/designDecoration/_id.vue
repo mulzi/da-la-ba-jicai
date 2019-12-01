@@ -21,18 +21,18 @@
       <el-row class="moiveImgBox">
         <el-row class="padding30">
           <el-row class="l_banner">
-            <banner :list="date.bannerImages" />
+            <banner :list="dates.bannerImages" />
           </el-row>
           <el-row class="rightTextBox">
             <el-row class="topName">
-              <p>{{ date.name }}</p>
-              <p>公司官网：{{ date.portalUrl }}</p>
-              <p>地址：{{ date.address }}</p>
+              <p>{{ dates.name }}</p>
+              <p>公司官网：{{ dates.portalUrl }}</p>
+              <p>地址：{{ dates.address }}</p>
             </el-row>
             <el-row class="consultingBox">
               <span @click="messageShow">咨询留言</span>
-              <span v-if="date.collection === false" @click="getCollection">加入收藏</span>
-              <span v-if="date.collection === true" @click="createCollection">取消收藏</span>
+              <span v-if="!dates.collection" @click="getCollection">加入收藏</span>
+              <span v-else @click="createCollection">取消收藏</span>
             </el-row>
           </el-row>
         </el-row>
@@ -43,10 +43,10 @@
             <li :class="oneListShow ? 'active':''" @click="oneChangeShow">
               <span>公司介绍</span>
             </li>
-            <li v-if="date.team !== undefined && date.team.length > 0" :class="twoListShow ? 'active':''" @click="twoChangeShow">
+            <li v-if="dates.team !== undefined && dates.team.length > 0" :class="twoListShow ? 'active':''" @click="twoChangeShow">
               <span>团队介绍</span>
             </li>
-            <li v-if="date.works !== undefined && date.works.length > 0" :class="threeListShow ? 'active':''" @click="threeChangeShow">
+            <li v-if="dates.works !== undefined && dates.works.length > 0" :class="threeListShow ? 'active':''" @click="threeChangeShow">
               <span>
                 作品精选
               </span>
@@ -61,14 +61,13 @@
             </li>
           </ul>
         </el-row>
-        <company-introduction v-if="oneListShow" :list="date" />
-        <team v-if="twoListShow" :list="date.team" />
-        <works v-if="threeListShow" :list="date.works" />
+        <company-introduction v-if="oneListShow" />
+        <team v-if="twoListShow" :list="dates.team" />
+        <works v-if="threeListShow" :list="dates.works" />
         <CompanyInfo v-if="fourListShow" />
         <Evaluate v-if="fiveListShow" />
       </el-row>
       <message-module-one v-if="$store.state.home.messageShow" />
-      <!--      id是{{ $route.params.id }}-->
     </el-row>
   </el-row>
 </template>
@@ -82,6 +81,7 @@ import companyIntroduction from '@/components/user/companyIntroduction'
 import messageModuleOne from '@/components/publicModule/messageModuleOne'
 import team from '@/components/user/team'
 import works from '@/components/user/works'
+
 export default {
   layout: 'main',
   components: {
@@ -101,6 +101,7 @@ export default {
       threeListShow: false, // 公司介绍列表显示
       fourListShow: false, // 公司资讯列表显示
       fiveListShow: false, // 评价留言显示
+      dates: [ ],
       date: [ ], // 主数据
       collectionFlag: true // 点击收藏的锁
 
@@ -108,25 +109,26 @@ export default {
   },
   computed: {
   },
-  asyncData (context) {
-    const { params } = context
-    const homeService = new HomeService(context)
-    // eslint-disable-next-line no-undef
-    return homeService.getUserDetails({ supplierId: params.id }).then((res) => {
-      console.log('设计施工方详情数据', res.data.result.team)
-      return { date: res.data.result }
-    })
-  },
+  // asyncData (context) {
+  //   const { params } = context
+  //   const homeService = new HomeService(context)
+  //   return homeService.getUserDetails({ supplierId: params.id }).then((res) => {
+  //     return { dates: res.data.result }
+  //   })
+  // },
   created () {
+    this.getDate()
   },
   mounted () {
+
   },
   methods: {
-    getSupplierList () { // 获取详情数据
+    getDate () {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.SupplierListParticulars({ supplierId: this.$route.params.id }).then((res) => {
-        // console.log(res.data)
-        this.date = res.data
+      homeService.getUserDetails({ supplierId: this.$route.params.id }).then((res) => {
+        console.log(res.data, 'xxxxxxxxxxxxxxxxxxxx')
+        this.dates = res.data.result
+        console.log(this.dates, 'ssssssssss')
       })
     },
     getCollection () { // 点击收藏
@@ -153,8 +155,8 @@ export default {
               type: 'success'
             })
           }
+          this.getDate()
         })
-        this.getSupplierList()
         setTimeout(() => {
           this.collectionFlag = true
         }, 10000)
@@ -172,9 +174,9 @@ export default {
             message: '取消成功',
             type: 'success'
           })
+          this.getDate()
         }
       })
-      this.getSupplierList()
     },
     messageShow () { // 切换留言框
       this.$store.commit('home/changeMesShow')
@@ -252,10 +254,10 @@ export default {
             }
             &:nth-child(2){
               margin-top: 40px;
-              height: 20px;
               line-height: 20px;
               font-size: 18px;
               color: #474747;
+              @include twoText;
             }
             &:nth-child(3){
               margin-top: 40px;

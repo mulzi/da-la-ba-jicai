@@ -24,13 +24,13 @@
       <div class="top">
         <ul id="evaluateChang">
           <li :class="flagOne ? 'active' : '' " @click="changeFlagOne">
-            全部({{ this.ones }})
+            全部({{ ones }})
           </li>
           <li :class="flagTwo ? 'active' : '' " @click="changeFlagTwo">
-            好评({{ this.twos }})
+            好评({{ twos }})
           </li>
           <li :class="flagThree ? 'active': '' " @click="changeFlagThree">
-            差评({{ this.threes }})
+            差评({{ threes }})
           </li>
         </ul>
       </div>
@@ -101,6 +101,9 @@ export default {
             message: '恭喜你，提交成功~',
             type: 'success'
           })
+          this.getComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
+          this.getGoodComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
+          this.getBadComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
         }
       })
       this.text = ''

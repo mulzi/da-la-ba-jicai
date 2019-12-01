@@ -11,14 +11,17 @@
     <div class="b_list_Box">
       <comment :date="commentList" />
     </div>
+    <message @clickTwo="getComment" v-if="this.$store.state.works.messageBox" />
   </el-row>
 </template>
 
 <script>
 import { HomeService } from '@/services/works'
 import Comment from '@/components/works/Comment'
+import Message from '@/components/works/message'
 export default {
   components: {
+    Message,
     Comment
   },
   // eslint-disable-next-line vue/require-prop-types

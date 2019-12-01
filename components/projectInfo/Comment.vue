@@ -21,16 +21,15 @@
         </div>
       </div>
     </div>
-    <message v-if="this.$store.state.projectInfo.messageBox" />
   </el-row>
 </template>
 
 <script>
-import Message from '@/components/projectInfo/message'
+
 import comment_one from '@/components/projectInfo/Comment_one'
 export default {
   name: 'Comment',
-  components: { Message, comment_one },
+  components: { comment_one },
   // eslint-disable-next-line vue/require-prop-types
   props: [ 'list' ],
   data () {
@@ -46,9 +45,9 @@ export default {
   },
   methods: {
     showMessageBox (i, b, c) {
-      this.$store.commit('works/changeUID', i)
-      this.$store.commit('works/changeTOID', b)
-      this.$store.commit('works/changeName', c)
+      this.$store.commit('projectInfo/changeUID', i)
+      this.$store.commit('projectInfo/changeTOID', b)
+      this.$store.commit('projectInfo/changeName', c)
       this.$store.commit('projectInfo/changeMsg')
     }
   }

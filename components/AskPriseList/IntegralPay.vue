@@ -19,7 +19,7 @@
           应支付：<i>{{ date.price }}</i>积分  <span>你目前共有{{ date.balance }}个积分</span>
         </el-row>
         <el-row class="four">
-          积分不够，<nuxt-link target="_bank" to="">
+          积分不够，<nuxt-link to="/my/PurchasePoints">
             点击这里充值
           </nuxt-link> <span @click="changeTextShow">如何赚取积分？</span>
         </el-row>
@@ -122,7 +122,6 @@
 <script>
 import { HomeService } from '@/services/home'
 export default {
-  name: 'IntegralPay',
   // eslint-disable-next-line vue/require-prop-types
   props: ['id'],
   data () {
@@ -139,29 +138,29 @@ export default {
       this.textShow = !this.textShow
     },
     changeIntegralPay () {
-      this.$store.commit('supplier/changeIntegralPay')
+      this.$store.commit('projectInfo/changeIntegralPay')
     },
     postSCore () { // 查询账户余额及积分价格
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.postScore(this.$store.state.home.payScore).then((res) => {
+      homeService.postScore(11).then((res) => {
         this.date = res.data.result
         console.log(res.data)
       })
     },
     consumeScore () { // 积分消费
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.consumeScore({ productId: this.$store.state.home.payScore, dataId: this.id }).then((res) => {
+      homeService.consumeScore({ productId: 11, dataId: this.id }).then((res) => {
+        console.log('S1', res)
         if (res.status === 200) {
           this.$message({
             message: '支付成功',
             type: 'success'
           })
-          this.$emit('clickTwo')
-          this.$store.commit('supplier/changeIntegralPay')
         }
+        this.$emit('clickTwo')
+        this.$store.commit('projectInfo/changeIntegralPay')
       })
     }
-
   }
 }
 </script>

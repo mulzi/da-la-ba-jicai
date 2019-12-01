@@ -20,7 +20,7 @@
       </el-row>
       <el-row class="ones">
         <el-row class="tit">
-          <span>主题主题</span>
+          <span>{{ date.title }}</span>
         </el-row>
         <el-row class="bo_box">
           <el-row class="li">
@@ -28,7 +28,7 @@
               招募类型：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.categoryName }}
             </el-col>
           </el-row>
           <el-row class="li">
@@ -36,7 +36,7 @@
               发布时间：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.createdAtStr }}
             </el-col>
           </el-row>
           <el-row class="li">
@@ -44,7 +44,7 @@
               截止时间：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.expiredAtStr }}
             </el-col>
           </el-row>
           <el-row class="li">
@@ -52,7 +52,7 @@
               招募地区：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.address }}
             </el-col>
           </el-row>
         </el-row>
@@ -62,19 +62,14 @@
           <span>招募类容</span>
         </el-row>
         <el-row class="bo_box">
-          <el-row class="content">
-            <p>
-              1.这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容。
-            </p><p>
-              2.这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容这是招募类容
-            </p>
-            <p>
-              3.这是招募类容这是招募类容这是招募类容这是招募类容
-            </p>
+          <el-row class="content" v-html="content">
+            {{ content }}
           </el-row>
         </el-row>
-        <el-row class="download">
-          点击下载招标文件
+        <el-row class="download" v-for="(it,ii) in date.recruitAnnexeList" :key="ii">
+          <a :href="it.fileUrl" target="_blank" download="" :alt="it.filenName">
+            点击下载招标文件
+          </a>
         </el-row>
       </el-row>
       <el-row class="ones marginBottom100">
@@ -87,7 +82,7 @@
               发布单位：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.companyName }}
             </el-col>
           </el-row>
           <el-row class="li">
@@ -95,7 +90,7 @@
               联系人：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.contactName }}
             </el-col>
           </el-row>
           <el-row class="li">
@@ -103,7 +98,7 @@
               联系人职位：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.contactPosition }}
             </el-col>
           </el-row>
           <el-row class="li">
@@ -111,7 +106,7 @@
               联系电话：
             </el-col>
             <el-col :span="20" class="right">
-              招募类型
+              {{ date.contactPhone }}
             </el-col>
           </el-row>
           <el-row class="li">
@@ -120,17 +115,57 @@
             </el-col>
           </el-row>
         </el-row>
-        <el-row class="download">
-          点击查看
-        </el-row>
+        <div v-if="date.flag" @click="showPay" class="download">
+          <span>
+            点击查看
+          </span>
+        </div>
       </el-row>
     </el-row>
+    <integral-pay @clickTwo="getDetails" :id="this.$route.params.id" v-if="this.$store.state.projectInfo.IntegralPay" />
   </el-row>
 </template>
 
 <script>
+import { HomeService } from '@/services/askPriseList'
+import IntegralPay from '@/components/askPriseList/integralPay'
 export default {
-  layout: 'main'
+  components: { IntegralPay },
+  layout: 'main',
+  data () {
+    return {
+      date: '',
+      content: ''
+    }
+  },
+  mounted () {
+    this.getDetails()
+  },
+  methods: {
+    getDetails () {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getDetails(this.$route.params.id).then((res) => {
+        console.log(res)
+        this.date = res.data.result
+        this.content = res.data.result.content
+        this.content = this.content.replace(/\n/g, '<br> <br>')
+        console.log(res.data.result.content)
+        console.log(this.content)
+      })
+    },
+    showPay () {
+      if (!this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没登录哦！请先登录吧！',
+          type: 'error'
+        })
+        setTimeout(() => {
+          this.$router.push('/login')
+        }, 1000)
+      }
+      this.$store.commit('projectInfo/changeIntegralPay')
+    }
+  }
 }
 </script>
 
@@ -184,6 +219,12 @@ export default {
       cursor: pointer;
       margin-left: 50px;
       margin-bottom: 30px;
+      span{
+        color: #ffffff;
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
     }
   }
   .twos{
@@ -212,6 +253,7 @@ export default {
       overflow: hidden;
       .content{
         padding: 0 20px;
+        margin-bottom: 40px;
         p{
           margin-bottom: 20px;
           font-size: 16px;
@@ -230,6 +272,12 @@ export default {
       cursor: pointer;
       margin-left: 50px;
       margin-bottom: 30px;
+      a{
+        color: #ffffff;
+        width: 100%;
+        display: block;
+        height: 100%;
+      }
     }
 
   }

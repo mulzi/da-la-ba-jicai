@@ -1,6 +1,6 @@
 <template>
-  <div class="companyIntroduction">
-    <div v-if="this.list.companyIntroduce" class="ones">
+  <el-row class="companyIntroduction">
+    <el-row v-if="dates.companyIntroduce" class="ones">
       <div class="titName">
         <span>公司介绍</span>
       </div>
@@ -9,31 +9,31 @@
           {{ t }}
         </p>
       </div>
-    </div>
-    <div v-if="this.list.credentialImages" class="ones">
+    </el-row>
+    <el-row v-if="dates.credentialImages" class="ones">
       <div class="titName">
         <span>公司资质</span>
       </div>
-      <viewer class="banner">
+      <el-row class="banner" v-viewer>
         <el-carousel :interval="4000" type="card" height="340px">
-          <el-carousel-item v-for="(item,index) in lists.credentialImages" :key="index">
+          <el-carousel-item v-for="(item,index) in dates.credentialImages" :key="index">
             <img :src="item.pic" alt="">
           </el-carousel-item>
         </el-carousel>
-      </viewer>
-    </div>
-    <div v-if="this.list.contacts" class="ones">
+      </el-row>
+    </el-row>
+    <el-row v-if="dates.contacts" class="ones">
       <div class="titName">
         <span>联系方式</span>
       </div>
       <div class="aboutList">
         <ul>
-          <li v-for="(t,i) in lists.contacts" :key="i">
+          <li v-for="(t,i) in dates.contacts" :key="i">
             <div class="li">
               <span>联系人：</span><em>{{ t.name }}</em>
             </div>
             <div class="li">
-              <span>部门：</span><em>***</em>
+              <span>部门：</span><em>{{ t.department }}</em>
             </div>
             <div class="li">
               <span>职位：</span><em>{{ t.positionLevel }}</em>
@@ -44,28 +44,60 @@
           </li>
         </ul>
       </div>
-      <div class="clickShow">
-        <span>积分查看</span>
+      <div class="clickShow" v-if="dates.contacts[0].flag">
+        <span @click="showPay">积分查看</span>
       </div>
       <div class="tips">
         联系我时请说是在大喇叭集采网上看到的，谢谢！
       </div>
-    </div>
-  </div>
+    </el-row>
+    <integral-pay @clickTwo="getDate" :id="dates.contacts[0].id" v-if="this.$store.state.projectInfo.IntegralPay" />
+  </el-row>
 </template>
 
 <script>
+import IntegralPay from '@/components/user/integralPay'
+import { HomeService } from '@/services/home'
+
 export default {
-  // eslint-disable-next-line vue/require-prop-types
-  props: ['list'],
+  components: {
+    IntegralPay
+  },
   data () {
     return {
-      lists: this.list,
+      dates: '',
       companyIntroduce: [] // 公司介绍
     }
   },
+  created () {
+    this.getDate()
+  },
   mounted () {
-    this.companyIntroduce = this.list.companyIntroduce.split('\n')
+
+  },
+  methods: {
+    getDate () {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getUserDetails({ supplierId: this.$route.params.id }).then((res) => {
+        this.dates = res.data.result
+        this.companyIntroduce = res.data.result.companyIntroduce.split('\n')
+        // console.log(this.dates, 'ssssssssss')
+      })
+    },
+    showPay () {
+      const _this = this
+      if (!_this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没登录哦~~~   去登录吧！',
+          type: 'error'
+        })
+        setTimeout(() => {
+          _this.$router.push('/login')
+        }, 1000)
+        return false
+      }
+      this.$store.commit('projectInfo/changeIntegralPay')
+    }
   }
 }
 </script>

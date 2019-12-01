@@ -65,7 +65,7 @@ export default {
       pagesOne: 0,
       pagesTwo: 0,
       pagesThree: 0,
-      size: 3,
+      size: 10,
       flagOne: true,
       flagTwo: false,
       flagThree: false,
@@ -75,9 +75,9 @@ export default {
     }
   },
   mounted () {
-    this.getComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
-    this.getGoodComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
-    this.getBadComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
+    this.getComment({ otherId: this.$route.params.id, type: 3, page: 0, size: this.size })
+    this.getGoodComment({ otherId: this.$route.params.id, type: 3, page: 0, size: this.size })
+    this.getBadComment({ otherId: this.$route.params.id, type: 3, page: 0, size: this.size })
   },
   methods: {
     clickComment () {
@@ -86,12 +86,15 @@ export default {
         return
       }
       const params = {
-        type: 1,
+        type: 3,
         otherId: parseInt(this.$route.params.id),
         comment: parseInt(this.radio),
         content: this.text
       }
       this.postComment(params)
+      this.getComment({ otherId: this.$route.params.id, type: 3, page: 0, size: this.size })
+      this.getGoodComment({ otherId: this.$route.params.id, type: 3, page: 0, size: this.size })
+      this.getBadComment({ otherId: this.$route.params.id, type: 3, page: 0, size: this.size })
     },
     postComment (params) { // 提交评论
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })

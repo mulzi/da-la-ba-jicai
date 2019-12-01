@@ -61,14 +61,14 @@ export default {
   watch: {
   },
   mounted () {
-    this.getBadComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
+    this.getBadComment({ otherId: this.$route.params.id, type: 3, page: 0, size: this.size })
   },
   methods: {
     loadOne () {
       // this.loading = true
       setTimeout(() => {
         this.pagesOne++
-        this.getBadComment({ otherId: this.$route.params.id, type: 1, page: this.pagesOne, size: this.size })
+        this.getBadComment({ otherId: this.$route.params.id, type: 3, page: this.pagesOne, size: this.size })
       }, 1500)
     },
     getBadComment (params) { // 获取差评

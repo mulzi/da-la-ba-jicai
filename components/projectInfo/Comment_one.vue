@@ -18,10 +18,10 @@
         </div>
       </div>
     </div>
-    <div class="spread" v-if="flag && this.list.length > 3">
-      <span @click="changeFlag">展开查看更多{{ this.list.length - 3 }}条评论 <i class="el-icon-arrow-down" /></span>
+    <div class="spread" v-if="flag && list.length > 3">
+      <span @click="changeFlag">展开查看更多{{ list.length - 3 }}条评论 <i class="el-icon-arrow-down" /></span>
     </div>
-    <div class="fewer" v-if="!flag && this.list.length > 3">
+    <div class="fewer" v-if="!flag && list.length > 3">
       <span @click="changeFlag">
         收起更多评论 <i class="el-icon-arrow-up" />
       </span>
@@ -31,6 +31,7 @@
 
 <script>
 export default {
+  // eslint-disable-next-line vue/require-prop-types
   props: ['list', 'old'],
   data () {
     return {
@@ -42,10 +43,10 @@ export default {
       this.flag = !this.flag
     },
     showMessageBox (i, b, c) {
-      this.$store.commit('works/changeUID', i)
-      this.$store.commit('works/changeTOID', b)
-      this.$store.commit('works/changeName', c)
-      this.$store.commit('works/changeMsg')
+      this.$store.commit('projectInfo/changeUID', i)
+      this.$store.commit('projectInfo/changeTOID', b)
+      this.$store.commit('projectInfo/changeName', c)
+      this.$store.commit('projectInfo/changeMsg')
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="companyIntroduction">
+  <el-row class="companyIntroduction">
     <!--    <div v-if="this.list.introduce" class="ones">-->
     <!--      <div class="titName">-->
     <!--        <span>品牌概况</span>-->
@@ -10,7 +10,7 @@
     <!--        </P>-->
     <!--      </div>-->
     <!--    </div>-->
-    <div v-if="this.list.companyIntroduce" class="ones">
+    <div v-if="date.companyIntroduce" class="ones">
       <div class="titName">
         <span>公司介绍</span>
       </div>
@@ -20,19 +20,19 @@
         </p>
       </div>
     </div>
-    <div v-if="this.list.credentialImages" class="ones">
+    <div v-if="date.credentialImages" class="ones">
       <div class="titName">
         <span>公司资质</span>
       </div>
       <viewer class="banner">
         <el-carousel :interval="4000" type="card" height="340px">
-          <el-carousel-item v-for="(item,index) in lists.credentialImages" :key="index">
+          <el-carousel-item v-for="(item,index) in date.credentialImages" :key="index">
             <img :src="item.pic" alt="">
           </el-carousel-item>
         </el-carousel>
       </viewer>
     </div>
-    <div v-if="this.list.advantage" class="ones">
+    <div v-if="date.advantage" class="ones">
       <div class="titName">
         <span>产品优势</span>
       </div>
@@ -42,7 +42,7 @@
         </p>
       </div>
     </div>
-    <div v-if="this.list.constructionExplain" class="ones">
+    <div v-if="date.constructionExplain" class="ones">
       <div class="titName">
         <span>施工说明</span>
       </div>
@@ -52,13 +52,13 @@
         </p>
       </div>
     </div>
-    <div v-if="this.list.contacts" class="ones">
+    <div v-if="date.contacts" class="ones">
       <div class="titName">
         <span>联系方式</span>
       </div>
       <div class="aboutList">
         <ul>
-          <li v-for="(t,i) in lists.contacts" :key="i">
+          <li v-for="(t,i) in date.contacts" :key="i">
             <div class="li">
               <span>联系人：</span><em>{{ t.name }}</em>
             </div>
@@ -74,22 +74,29 @@
           </li>
         </ul>
       </div>
-      <div class="clickShow" v-if="this.list.contacts[0].flag">
+      <div class="clickShow" v-if="date.contacts[0].flag">
         <span @click="payShow">积分查看</span>
       </div>
       <div class="tips">
         联系我时请说是在大喇叭集采网上看到的，谢谢！
       </div>
     </div>
-  </div>
+    <integral-pay @clickTwo="getSupplierList" :id="date.contacts[0].id" v-if="$store.state.supplier.IntegralPay" />
+  </el-row>
 </template>
 
 <script>
+import { HomeService } from '@/services/home'
+import IntegralPay from '@/components/supplier/IntegralPay'
 export default {
+  components: {
+    IntegralPay
+  },
   // eslint-disable-next-line vue/require-prop-types
   props: ['list'],
   data () {
     return {
+      date: [],
       lists: this.list,
       introduceList: [ ], // 品牌简介
       companyIntroduce: [], // 公司介绍
@@ -99,28 +106,22 @@ export default {
     }
   },
   mounted () {
-    if (this.list.introduce !== null || undefined || '') {
-      this.introduceList = this.list.introduce.split('\n')
-    } else {
-      this.introduceList = null
-    }
-    if (this.list.companyIntroduce !== null || undefined || '') {
-      this.companyIntroduce = this.list.companyIntroduce.split('\n')
-    } else {
-      this.companyIntroduce = null
-    }
-    if (this.list.advantage !== null || undefined || '') {
-      this.advantage = this.list.advantage.split('\n')
-    } else {
-      this.advantage = null
-    }
-    if (this.list.constructionExplain !== null || undefined || '') {
-      this.constructionExplain = this.list.constructionExplain.split('\n')
-    } else {
-      this.constructionExplain = null
-    }
+    this.getSupplierList()
   },
   methods: {
+    getSupplierList () { // 获取详情数据
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.SupplierListParticulars({ supplierId: this.$route.params.id }).then((res) => {
+        console.log('详情数据', res.data)
+        this.date = res.data
+
+        this.companyIntroduce = res.data.companyIntroduce.split('\n')
+
+        this.advantage = res.data.advantage.split('\n')
+
+        this.constructionExplain = res.data.constructionExplain.split('\n')
+      })
+    },
     payShow () {
       const _this = this
       if (!_this.$store.state.home.isLogin) {

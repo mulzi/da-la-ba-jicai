@@ -56,14 +56,14 @@ export default {
     }
   },
   mounted () {
-    this.getGoodComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
+    this.getGoodComment({ otherId: this.$route.params.id, type: 3, page: 0, size: this.size })
   },
   methods: {
     loadOne () {
       this.loading = true
       setTimeout(() => {
         this.pagesOne++
-        this.getGoodComment({ otherId: this.$route.params.id, type: 1, page: this.pagesOne, size: this.size })
+        this.getGoodComment({ otherId: this.$route.params.id, type: 3, page: this.pagesOne, size: this.size })
         this.loading = false
       }, 1500)
     },

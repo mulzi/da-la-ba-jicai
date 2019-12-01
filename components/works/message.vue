@@ -56,16 +56,11 @@ export default {
       homeService.postComment({ type: 4, toUserId: this.$store.state.works.toUserId, toId: this.$store.state.works.toId, content: this.text, otherId: this.$route.params.id }).then((res) => {
         if (res.status === 200) {
           this.$store.commit('works/changeMsg')
-          this.$store.commit('works/changeComBox')
-          this.$nextTick(() => {
-            this.$nuxt.$loading.start()
-            this.$store.commit('works/changeComBox')
-            setTimeout(() => this.$nuxt.$loading.finish(), 500)
-          })
           this.$message({
             message: '发布成功',
             type: 'success'
           })
+          this.$emit('clickTwo')
         }
       })
     }

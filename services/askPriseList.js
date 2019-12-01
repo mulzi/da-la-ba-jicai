@@ -36,7 +36,7 @@ export class HomeService {
   async getList (params) { // 获取列表
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
-      url: `/api/info/open/recruits.json`,
+      url: `/api/info/open/mini/recruits.json`,
       method: 'GET',
       headers: {
         Authorization: token.accessToken
@@ -49,7 +49,7 @@ export class HomeService {
   async getDetails (params) { // 获取详情
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
-      url: `/api/info/open/purchase/${params}.json`,
+      url: `/api/info/open/recruit/${params}.json`,
       method: 'GET',
       headers: {
         Authorization: token.accessToken

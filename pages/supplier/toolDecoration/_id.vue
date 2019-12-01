@@ -75,10 +75,10 @@
       <el-row class="bottomModuleBox">
         <el-row class="topMenuBox">
           <ul>
-            <li :class="oneListShow ? 'active':''" @click="oneChangeShow">
+            <li v-if="date.product !== undefined && date.product.length > 0" :class="oneListShow ? 'active':''" @click="oneChangeShow">
               <span>产品系列</span>
             </li>
-            <li :class="twoListShow ? 'active':''" @click="twoChangeShow">
+            <li v-if="date.cases !== undefined && date.cases.length > 0" :class="twoListShow ? 'active':''" @click="twoChangeShow">
               <span>工程案列</span>
             </li>
             <li :class="threeListShow ? 'active':''" @click="threeChangeShow">
@@ -98,13 +98,11 @@
         </el-row>
         <product-line v-if="oneListShow" :list="date.product" />
         <engineering-works v-if="twoListShow" :list="date.cases" />
-        <company-introduction v-if="threeListShow" :list="date" />
+        <company-introduction v-if="threeListShow" />
         <CompanyInfo v-if="fourListShow" />
         <Evaluate v-if="fiveListShow" />
       </el-row>
       <message-module-one v-if="$store.state.home.messageShow" />
-      <integral-pay :id="date.contacts[0].id"  v-if="$store.state.supplier.IntegralPay" />
-      <!--      id是{{ $route.params.id }}-->
     </el-row>
   </el-row>
 </template>
@@ -118,11 +116,10 @@ import CompanyInfo from '@/components/supplier/CompanyInfo'
 import Evaluate from '@/components/supplier/Evaluate'
 import companyIntroduction from '@/components/supplier/companyIntroduction'
 import messageModuleOne from '@/components/publicModule/messageModuleOne'
-import IntegralPay from '@/components/supplier/IntegralPay'
+
 export default {
   layout: 'main',
   components: {
-    IntegralPay,
     banner,
     productLine,
     EngineeringWorks,

@@ -97,7 +97,7 @@ export default {
 <style scoped lang="scss">
   .engineeringWorkse{
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
@@ -106,6 +106,7 @@ export default {
     overflow-y: scroll;
     .bg{
       width: 100%;
+      min-height: 100vh;
       position: absolute;
       z-index: 901;
       background: rgba(255,255,255,.95);

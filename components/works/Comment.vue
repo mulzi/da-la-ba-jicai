@@ -21,16 +21,15 @@
         </div>
       </div>
     </div>
-    <message v-if="this.$store.state.works.messageBox" />
+
   </el-row>
 </template>
 
 <script>
-import Message from '@/components/works/message'
 import comment_one from '@/components/works/Comment_one'
 export default {
   name: 'Comment',
-  components: { Message, comment_one },
+  components: { comment_one },
   // eslint-disable-next-line vue/require-prop-types
   props: [ 'date' ],
   data () {

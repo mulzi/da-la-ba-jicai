@@ -141,6 +141,15 @@ export default {
       })
     },
     pay () {
+      if (!this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没登录哦！请先登录吧！',
+          type: 'error'
+        })
+        setTimeout(() => {
+          this.$router.push('/login')
+        }, 1000)
+      }
       this.$store.commit('projectInfo/changeIntegralPay')
     }
   }

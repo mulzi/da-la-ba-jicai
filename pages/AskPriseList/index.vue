@@ -1,6 +1,6 @@
 <template>
   <el-row class="supplierBody">
-    <el-row class="bodyBox">
+    <el-row class="bodyBox" v-loading="loading">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -49,7 +49,9 @@
                 clearable
               />
             </el-col>
-            <el-col :span="5" class="el-icon-search searchSt" />
+            <el-col :span="5">
+              <span class="el-icon-search searchSt" @click="getList" />
+            </el-col>
           </el-col>
         </el-row>
         <div @click="$store.commit('release/changeNumber', 2)" class="addItem">
@@ -59,36 +61,36 @@
           </nuxt-link>
         </div>
       </el-row>
-      <el-row class="bodyListBox">
-        <nuxt-link to="/AskPriseList/page/sd" v-for="(t,i) in 8" :key="i">
+      <el-row v-if="date !== undefined && date.length > 0" class="bodyListBox">
+        <nuxt-link :to="`/AskPriseList/page/${t.id}`" v-for="(t,i) in date" :key="i">
           <el-row class="liList">
             <el-row class="tit">
-              这个是标题
+              {{ t.title }}
             </el-row>
             <el-row class="time">
               <el-col :span="4">
-                发布时间：<span>2019-08-26</span>
+                发布时间：<span>{{ t.createdAtStr }}</span>
               </el-col>
               <el-col :span="4">
-                发布时间：<span>2019-08-26</span>
+                结束时间：<span>{{ t.expiredAtStr }}</span>
               </el-col>
             </el-row>
             <el-row class="time">
               <el-col :span="4">
-                招募地区<span>/重庆</span>
+                招募地区<span v-if="t.address">/{{ t.address }}</span>
               </el-col>
-              <el-col :pan="4">
-                招募类型<span>/施工单位</span>
+              <el-col :span="4">
+                招募类型<span v-if="t.categoryName">/{{ t.categoryName }}</span>
               </el-col>
             </el-row>
             <el-row class="NOTime">
-              已截止
+              {{ t.expiredAtMark }}
             </el-row>
           </el-row>
         </nuxt-link>
       </el-row>
       <div class="bottomListBox">
-        <div class="NoData marginBottom40">
+        <div v-if="date !== undefined && date.length === 0" class="NoData marginBottom40">
           <div class="img">
             <img src="@/assets/img/nodata.png" alt="">
           </div>
@@ -96,7 +98,7 @@
             没有数据
           </div>
         </div>
-        <div class="pageSbox">
+        <div v-if="date !== undefined && date.length > 0" class="pageSbox">
           <el-pagination
             background
             :current-page="currentPage4"
@@ -120,6 +122,8 @@ export default {
   layout: 'main',
   data () {
     return {
+      loading: false,
+      date: '',
       pageID: 0, // 分页第几页
       sizeID: 20, // 分页数量
       totalCount: 0, // 获取的总数
@@ -140,33 +144,40 @@ export default {
     handleSizeChange (val) {
       const _this = this
       _this.sizeID = val
-      _this.getSupplierList()
+      _this.getList()
     },
     handleCurrentChange (val) {
       const _this = this
       _this.currentPage4 = val
       this.pageID = val - 1
-      _this.getSupplierList()
+      _this.getList()
     },
-    getArea () { // 获取一级栏目
+    getArea () { // 获取地区
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getArea().then((res) => {
-        console.log(res)
+        // console.log(res)
         this.areaList = this.convertTree(res.data.results)
       })
     },
     getType () { // 获取类型
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getType().then((res) => {
-        console.log(res)
+        // console.log(res)
         this.typeList = this.convertTree(res.data)
+        console.log(this.typeList)
       })
     },
     getList () { // 获取列表
+      this.loading = true
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.getList({ flag: false, title: this.searchText, categoryId: this.type || '', page: this.pageID, size: this.sizeID, province: this.area[0] || 0, city: this.area[1] || 0, area: this.area[2] || 0 }).then((res) => {
-        console.log(res)
-        this.date = res.date
+      homeService.getList({ flag: false, title: this.searchText || '', categoryId: this.type || 0, page: this.pageID, size: this.sizeID, province: this.area[0] || 0, city: this.area[1] || 0, area: this.area[2] || 0 }).then((res) => {
+        if (res.status === 200) {
+          this.loading = false
+          this.date = res.data.results
+          this.totalCount = res.data.totalCount
+          console.log(this.date)
+          console.log(res)
+        }
       })
     },
     convertTree (tree) {
@@ -183,7 +194,7 @@ export default {
         } = item
         // 如果有子节点，递归
         if (value === 0) {
-          value = Math.random().toString(32).substr(2) // 生成字母和数字的随机数
+          value = 0 // 生成字母和数字的随机数
         }
         if (children) {
           children = this.convertTree(children)
@@ -246,6 +257,8 @@ export default {
             }
             .rightSbox{
                 .searchSt{
+                  display: block;
+                  width: 100%;
                     background: #DA251D;
                     height: 40px;
                     line-height: 40px;

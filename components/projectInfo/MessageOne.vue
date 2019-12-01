@@ -11,15 +11,18 @@
     <el-row class="b_list_Box">
       <comment :list="date" />
     </el-row>
+    <message @clickTwo="getComment" v-if="this.$store.state.projectInfo.messageBox" />
   </el-row>
 </template>
 
 <script>
 import { HomeService } from '@/services/works'
 import Comment from '@/components/projectInfo/Comment'
+import Message from '@/components/projectInfo/message'
 export default {
   components: {
-    Comment
+    Comment,
+    Message
   },
 
   data () {
@@ -79,6 +82,7 @@ export default {
           this.flag = true
         }, 10000)
       })
+      this.getComment()
     },
     getComment () {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })

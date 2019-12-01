@@ -238,7 +238,7 @@ export default {
         } = item
         // 如果有子节点，递归
         if (value === 0) {
-          value = Math.random().toString(32).substr(2) // 生成字母和数字的随机数
+          value = 0 // 生成字母和数字的随机数
         }
         if (children) {
           children = this.convertTree(children)

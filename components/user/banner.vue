@@ -6,7 +6,7 @@
     <div class="bottomI">
       <div v-swiper:mySwiper="swiperOption">
         <div class="swiper-wrapper">
-          <div v-for="(t,i) in banners" :key="i" class="swiper-slide" @click="changeImgUrl(t)">
+          <div v-for="(t,i) in list" :key="i" class="swiper-slide" @click="changeImgUrl(t)">
             <img :src="t">
           </div>
         </div>
@@ -25,7 +25,6 @@ export default {
   data () {
     return {
       imgUrl: '',
-      banners: this.list,
       swiperOption: {
         // eslint-disable-next-line no-undef
         loop: false,
@@ -43,7 +42,9 @@ export default {
   computed: {
   },
   mounted () {
-    this.imgUrl = this.banners[0]
+    if (this.list) {
+      this.imgUrl = this.list[0]
+    }
   },
   methods: {
     callback () {

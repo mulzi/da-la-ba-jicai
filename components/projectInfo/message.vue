@@ -7,7 +7,7 @@
           <span class="el-icon-close" />
         </div>
         <div class="name">
-          你想对<span>{{ threeN }}</span>说什么
+          你想对<span>{{ this.$store.state.projectInfo.toName }}</span>说什么
         </div>
         <div class="text">
           <textarea v-model="text" placeholder="写点什么吧" />
@@ -53,19 +53,14 @@ export default {
         return
       }
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.postComment({ type: 3, toUserId: this.$store.state.works.toUserId, toId: this.$store.state.works.toId, content: this.text, otherId: this.$route.params.id }).then((res) => {
+      homeService.postComment({ type: 3, toUserId: this.$store.state.projectInfo.toUserId, toId: this.$store.state.projectInfo.toId, content: this.text, otherId: this.$route.params.id }).then((res) => {
         if (res.status === 200) {
           this.$store.commit('projectInfo/changeMsg')
-          this.$store.commit('projectInfo/changeOne', 1)
-          this.$nextTick(() => {
-            this.$nuxt.$loading.start()
-            this.$store.commit('projectInfo/changeOne', 0)
-            setTimeout(() => this.$nuxt.$loading.finish(), 500)
-          })
           this.$message({
             message: '发布成功',
             type: 'success'
           })
+          this.$emit('clickTwo')
         }
       })
     }

@@ -1,6 +1,6 @@
 <template>
-  <div class="supplierBody">
-    <div class="bodyBox">
+  <el-row class="supplierBody">
+    <el-row class="bodyBox">
       <el-row class="HeaderBreadcrumb">
         <el-col :span="24">
           <div class="breadcrumb">
@@ -125,11 +125,9 @@
         <company v-if="threeListShow" :list="date" />
         <CompanyInfo v-if="fourListShow" />
         <evaluate v-if="fiveListShow" />
-        <IntegralPay v-if="$store.state.supplier.IntegralPay" />
       </el-row>
-      <!--      id是{{ $route.params.id }}-->
-    </div>
-  </div>
+    </el-row>
+  </el-row>
 </template>
 
 <script>
@@ -140,11 +138,9 @@ import CompanyInfo from '@/components/supplier/CompanyInfo'
 import evaluate from '@/components/supplier/homeDecoration/evaluate'
 import company from '@/components/supplier/homeDecoration/company'
 import sale from '@/components/supplier/homeDecoration/sale'
-import IntegralPay from '@/components/supplier/IntegralPay'
 export default {
   layout: 'main',
   components: {
-    IntegralPay,
     banner,
     productLine,
     CompanyInfo,
