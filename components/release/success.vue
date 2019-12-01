@@ -28,8 +28,8 @@
             </el-row>
           </el-row>
           <el-form-item label="供应方：" prop="companyNameT">
-          <el-input v-model="form.companyNameT" placeholder="请输入公司名称" />
-         </el-form-item>
+            <el-input v-model="form.companyNameT" placeholder="请输入公司名称" />
+          </el-form-item>
           <el-form-item label="需求方：" prop="companyName">
             <el-input v-model="form.companyName" placeholder="请输入公司名称" />
           </el-form-item>
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import { HomeService } from '@/services/askPriseList'
 export default {
   data () {
     return {
@@ -100,6 +101,17 @@ export default {
   },
   methods: {
     onSub () {
+      if (!this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没登录哦！请先登录吧！',
+          type: 'error'
+        })
+        setTimeout(() => {
+          this.$router.push('/login')
+        }, 1000)
+        return false
+      }
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       if (this.form.companyNameT === '') {
         this.errorText = '请输入供应公司名称！'
         this.dialogVisible = true
@@ -119,10 +131,32 @@ export default {
               message: '你填写的信息不完整哦！~~~',
               type: 'warning'
             })
-            return
+            return false
+          } else {
+            const params = {
+              supplier: this.form.companyNameT,
+              demander: this.form.companyName,
+              projectName: this.form.title,
+              money: this.form.money,
+              cooperation: this.form.content
+            }
+            homeService.postSuccess(params).then((res) => {
+              if (res.status === 200) {
+                this.$message({
+                  message: '上传成功！请等待审核！！！',
+                  type: 'success'
+                })
+                this.$store.commit('release/changeNumber', 0)
+                this.$nextTick(() => {
+                  this.$nuxt.$loading.start()
+                  this.$store.commit('release/changeNumber', 3)
+                  setTimeout(() => {
+                    this.$nuxt.$loading.finish()
+                  }, 500)
+                })
+              }
+            })
           }
-          console.log(66)
-          this.$refs.formOne.resetFields()
         })
       }
     },
