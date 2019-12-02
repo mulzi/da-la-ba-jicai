@@ -6,7 +6,7 @@
         label-width="120px"
         :rules="rules"
         ref="formOne"
-        :model="form.project"
+        :model="form"
       >
         <el-row v-show="$store.state.release.num === 0">
           <el-row class="tit">
@@ -27,32 +27,63 @@
               <span />
             </el-row>
           </el-row>
-          <el-form-item label="项目名称：" prop="name">
-            <el-input v-model="form.project.name" placeholder="请输入项目名称" />
+          <el-form-item
+            label="项目名称："
+            prop="name"
+            :rules="{
+              required: true, message: '请输入项目名称', trigger: 'blur'
+            }"
+          >
+            <el-input v-model="form.name" placeholder="请输入项目名称" />
           </el-form-item>
-          <el-form-item label="项目类别：" prop="class">
-            <el-select v-model="form.project.class" placeholder="请选择项目类别">
+          <el-form-item
+            label="项目类别："
+            prop="class"
+            error=""
+            :rules="{
+              required: true, message: '请选择项目类别', trigger: 'change'
+            }"
+          >
+            <el-select v-model="form.class" placeholder="请选择项目类别">
               <el-option label="区域一" value="shanghai" />
               <el-option label="区域二" value="beijing" />
             </el-select>
           </el-form-item>
-          <el-form-item label="项目阶段：" prop="stage">
-            <el-select v-model="form.project.stage" placeholder="请选择项目阶段">
+          <el-form-item
+            label="项目阶段："
+            prop="stage"
+            :rules="{
+              required: true, message: '请选择项目阶段', trigger: 'change'
+            }"
+          >
+            <el-select v-model="form.stage" placeholder="请选择项目阶段">
               <el-option label="区域一" value="shanghai" />
               <el-option label="区域二" value="beijing" />
             </el-select>
           </el-form-item>
           <el-form-item label="建筑周期：">
-            <el-input v-model="form.project.cycle" placeholder="请输入建筑周期" />
+            <el-input v-model="form.cycle" placeholder="请输入建筑周期" />
           </el-form-item>
           <el-form-item label="项目预算：">
-            <el-input v-model="form.project.budget" placeholder="请输入项目预算" />
+            <el-input v-model="form.budget" placeholder="请输入项目预算" />
           </el-form-item>
-          <el-form-item label="工地地区：" prop="area">
-            <el-cascader :options="options" v-model="form.project.area" clearable />
+          <el-form-item
+            label="工地地区："
+            prop="area"
+            :rules="{
+              required: true, message: '请选择工地地区', trigger: 'change'
+            }"
+          >
+            <el-cascader :options="areaList" v-model="form.area" clearable />
           </el-form-item>
-          <el-form-item label="详细地址：" prop="address">
-            <el-input v-model="form.project.address" placeholder="请输入详细地址" />
+          <el-form-item
+            label="详细地址："
+            prop="address"
+            :rules="{
+              required: true, message: '请输入详细地址', trigger: 'blur'
+            }"
+          >
+            <el-input v-model="form.address" placeholder="请输入详细地址" />
           </el-form-item>
           <div class="next" @click="nextStep">
             下一步
@@ -77,8 +108,11 @@
               <span />
             </el-row>
           </el-row>
-          <el-form-item label="项目简介：" prop="introduce">
-            <el-input type="textarea" placeholder="请输入项目简介..." v-model="form.project.introduce" />
+          <el-form-item
+            label="项目简介："
+            prop="introduce"
+          >
+            <el-input type="textarea" placeholder="请输入项目简介..." v-model="form.introduce" />
           </el-form-item>
           <el-row class="tips">
             请上传项目图片 <span>（图片限制在2M以内，最多上传3张，支持PNG\PG\JPEG\GIF格式）</span>
@@ -129,26 +163,48 @@
           </el-row>
           <el-row class="lsitBoxS">
             <el-row v-for="(t,i) in form.constants" :key="i" class="listLi">
-              <el-form-item label="公司类别：" prop="categoryId">
-                <el-select v-model="form.constants[i].categoryId" placeholder="请选择公司类别">
+              <el-form-item
+                label="公司类别："
+                :prop="'constants.' + i + '.categoryId'"
+                :rules="{
+                  required: true, message: '公司类别', trigger: 'change'
+                }"
+              >
+                <el-select v-model="t.categoryId" placeholder="请选择公司类别">
                   <el-option label="区域一" value="shanghai" />
                   <el-option label="区域二" value="beijing" />
                 </el-select>
               </el-form-item>
-              <el-form-item label="公司名称：" prop="companyName">
-                <el-input v-model="form.constants[i].companyName" placeholder="请输入公司名称" />
+              <el-form-item
+                label="公司名称："
+                :prop="'constants.' + i +'.companyName'"
+                :rules="{
+                  required: true, message: '请输入公司名称', trigger: 'blur'
+                }"
+              >
+                <el-input v-model="t.companyName" placeholder="请输入公司名称" />
               </el-form-item>
               <el-form-item label="公司地址：">
-                <el-input v-model="form.constants[i].address" placeholder="请输入公司地址" />
+                <el-input v-model="t.address" placeholder="请输入公司地址" />
               </el-form-item>
-              <el-form-item label="联系人姓名：" prop="nameS">
-                <el-input v-model="form.constants[i].nameS" placeholder="请输入联系人" />
+              <el-form-item
+                label="联系人姓名："
+                :prop="'constants.' + i +'.nameS'"
+                :rules="{
+                  required: true, message: '请输入联系人', trigger: 'blur'
+                }"
+              >
+                <el-input v-model="t.nameS" placeholder="请输入联系人" />
               </el-form-item>
               <el-form-item label="联系人职位：">
-                <el-input v-model="form.constants[i].positionLevel" placeholder="请输入联系人职位" />
+                <el-input v-model="t.positionLevel" placeholder="请输入联系人职位" />
               </el-form-item>
-              <el-form-item label="联系人电话：" prop="telephone">
-                <el-input v-model="form.constants[i].telephone" placeholder="请输入联系人电话" />
+              <el-form-item
+                label="联系人电话："
+                :rules="constantsRules.tel"
+                :prop="'constants.' + i +'.telephone'"
+              >
+                <el-input v-model="t.telephone" placeholder="请输入联系人电话" />
               </el-form-item>
             </el-row>
           </el-row>
@@ -193,11 +249,7 @@
 <script>
 export default {
   data () {
-    const cate = (rule, value, callback) => {
-      if (value === null || value === '') {
-        return callback(new Error('请选择公司类型'))
-      }
-    }
+    // eslint-disable-next-line no-unused-vars
     return {
       dialogImageUrl: '',
       number: 0,
@@ -205,17 +257,15 @@ export default {
       errorText: '', // 错误信息展示
       dialogVisible: false,
       form: {
-        project: {
-          name: '', // 项目名字
-          class: '', // 项目类别
-          stage: '', // 项目阶段
-          cycle: '', // 项目周期
-          budget: '', // 项目预算
-          area: '', // 项目地区
-          address: '', // 项目地址
-          introduce: '',
-          pic: [] // 图片地址
-        },
+        name: '', // 项目名字
+        class: '', // 项目类别
+        stage: '', // 项目阶段
+        cycle: '', // 项目周期
+        budget: '', // 项目预算
+        area: '', // 项目地区
+        address: '', // 项目地址
+        introduce: '',
+        pic: [], // 图片地址
         constants: [{
           categoryId: null, // 公司类别
           companyName: null, // 公司名称
@@ -226,38 +276,32 @@ export default {
         }] // 联系人数组
       },
       rules: {
-        name: [
-          { required: true, message: '请输入项目名称', trigger: 'blur' }
-        ],
-        class: [
-          { required: true, message: '请选择项目类别', trigger: 'change' }
-        ],
-        stage: [
-          { required: true, message: '请选择项目阶段', trigger: 'change' }
-        ],
-        area: [
-          { required: true, message: '请选择工地地区', trigger: 'change' }
-        ],
-        address: [
-          { required: true, message: '请输入详细地址', trigger: 'blur' }
-        ],
-        introduce: [
-          { required: true, message: '请输入项目简介', trigger: 'blur' }
-        ],
-        companyName: [
-          { required: true, validator: cate, trigger: 'blur' }
-        ],
-        categoryId: [
-          { required: true, validator: cate, trigger: 'change' }
-        ],
-        nameS: [
-          { required: true, validator: cate, trigger: 'blur' }
-        ],
-        telephone: [
-          { required: true, validator: cate, trigger: 'blur' }
+        introduce: [{
+          required: true, message: '请输入项目简介', trigger: 'blur'
+        }]
+      },
+      constantsRules: {
+        tel: [{ required: true, message: '请输入联系人号码', trigger: 'blur' },
+          {
+            validator: (rule, value, callback) => {
+              if (!value) {
+                return callback(new Error('请输入电话号码'))
+              } else {
+                const myreg = /^[1][3,4,5,7,8][0-9]{9}$/
+                setTimeout(() => {
+                  if (!myreg.test(value)) {
+                    callback(new Error('请输入正确的电话号码'))
+                  } else {
+                    callback()
+                  }
+                }, 1000)
+              }
+            },
+            trigger: 'change'
+          }
         ]
       },
-      options: [
+      areaList: [
         {
           value: 'zhinan',
           label: '指南',
@@ -457,19 +501,19 @@ export default {
   },
   methods: {
     nextStep () {
-      if (this.form.project.name === null || this.form.project.name === '') {
+      if (this.form.name === null || this.form.name === '') {
         this.errorText = '请输入项目名称！'
         this.dialogVisible = true
-      } else if (this.form.project.class === null || this.form.project.class === '') {
+      } else if (this.form.class === null || this.form.class === '') {
         this.errorText = '请选择项目类别！'
         this.dialogVisible = true
-      } else if (this.form.project.stage === null || this.form.project.stage === '') {
+      } else if (this.form.stage === null || this.form.stage === '') {
         this.errorText = '请选择项目阶段！'
         this.dialogVisible = true
-      } else if (this.form.project.area === null || this.form.project.area === '') {
+      } else if (this.form.area === null || this.form.area === '') {
         this.errorText = '请选择工地地区！'
         this.dialogVisible = true
-      } else if (this.form.project.address === null || this.form.project.address === '') {
+      } else if (this.form.address === null || this.form.address === '') {
         this.errorText = '请输入详细地址！'
         this.dialogVisible = true
       } else {
@@ -477,7 +521,7 @@ export default {
       }
     },
     nextStepTwo () {
-      if (this.form.project.introduce === null || this.form.project.introduce === '') {
+      if (this.form.introduce === null || this.form.introduce === '') {
         this.$message({
           message: '请输入项目简介',
           type: 'error'
@@ -550,27 +594,6 @@ export default {
       that.form.constants.splice(that.form.constants.length - 1, 1)
     },
     submitTo () {
-      const that = this
-      const form = that.form
-      if (!form.constants[0].categoryId) {
-        that.dialogVisible = true
-        that.errorText = '请选择公司类别！'
-      } else if (!form.constants[0].companyName) {
-        that.dialogVisible = true
-        that.errorText = '输入公司名称！'
-      } else if (!form.constants[0].nameS) {
-        that.dialogVisible = true
-        that.errorText = '输入联系人姓名！'
-      } else if (!form.constants[0].telephone) {
-        that.dialogVisible = true
-        that.errorText = '输入联系人电话！'
-      } else if (this.isPoneAvailable(form.constants[0].telephone)) {
-        that.dialogVisible = true
-        that.errorText = '请输入正确的手机号格式！'
-      } else {
-        console.log(66)
-        window.location.reload()
-      }
     },
     // 判断手机号码是否正确
     isPoneAvailable (str) {
