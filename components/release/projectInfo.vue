@@ -45,8 +45,12 @@
             }"
           >
             <el-select v-model="form.class" placeholder="请选择项目类别">
-              <el-option label="区域一" value="shanghai" />
-              <el-option label="区域二" value="beijing" />
+              <el-option
+                v-for="item in typeList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
           <el-form-item
@@ -57,8 +61,12 @@
             }"
           >
             <el-select v-model="form.stage" placeholder="请选择项目阶段">
-              <el-option label="区域一" value="shanghai" />
-              <el-option label="区域二" value="beijing" />
+              <el-option
+                v-for="item in phaesList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
           <el-form-item label="建筑周期：">
@@ -171,8 +179,7 @@
                 }"
               >
                 <el-select v-model="t.categoryId" placeholder="请选择公司类别">
-                  <el-option label="区域一" value="shanghai" />
-                  <el-option label="区域二" value="beijing" />
+                  <el-option v-for="(t,i) in type" :key="i" :label="t.name" :value="t.id" />
                 </el-select>
               </el-form-item>
               <el-form-item
@@ -189,12 +196,12 @@
               </el-form-item>
               <el-form-item
                 label="联系人姓名："
-                :prop="'constants.' + i +'.nameS'"
+                :prop="'constants.' + i +'.name'"
                 :rules="{
                   required: true, message: '请输入联系人', trigger: 'blur'
                 }"
               >
-                <el-input v-model="t.nameS" placeholder="请输入联系人" />
+                <el-input v-model="t.name" placeholder="请输入联系人" />
               </el-form-item>
               <el-form-item label="联系人职位：">
                 <el-input v-model="t.positionLevel" placeholder="请输入联系人职位" />
@@ -247,10 +254,25 @@
 </template>
 
 <script>
+import { HomeService } from '@/services/projectInfo'
 export default {
   data () {
     // eslint-disable-next-line no-unused-vars
     return {
+      type: [
+        {
+          name: '甲方',
+          id: 1
+        }, {
+          name: '设计方',
+          id: 2
+        }, {
+          name: '承建方',
+          id: 3
+        }, {
+          name: '装饰方',
+          id: 4
+        }],
       dialogImageUrl: '',
       number: 0,
       right: 'right',
@@ -269,7 +291,7 @@ export default {
         constants: [{
           categoryId: null, // 公司类别
           companyName: null, // 公司名称
-          nameS: null, // 联系人姓名
+          name: null, // 联系人姓名
           positionLevel: null, // 联系人职位
           telephone: null, // 联系人电话
           address: null // 公司地址
@@ -301,203 +323,15 @@ export default {
           }
         ]
       },
-      areaList: [
-        {
-          value: 'zhinan',
-          label: '指南',
-          children: [{
-            value: 'shejiyuanze',
-            label: '设计原则',
-            children: [{
-              value: 'yizhi',
-              label: '一致'
-            }, {
-              value: 'fankui',
-              label: '反馈'
-            }, {
-              value: 'xiaolv',
-              label: '效率'
-            }, {
-              value: 'kekong',
-              label: '可控'
-            }]
-          }, {
-            value: 'daohang',
-            label: '导航',
-            children: [{
-              value: 'cexiangdaohang',
-              label: '侧向导航'
-            }, {
-              value: 'dingbudaohang',
-              label: '顶部导航'
-            }]
-          }]
-        }, {
-          value: 'zujian',
-          label: '组件',
-          children: [{
-            value: 'basic',
-            label: 'Basic',
-            children: [{
-              value: 'layout',
-              label: 'Layout 布局'
-            }, {
-              value: 'color',
-              label: 'Color 色彩'
-            }, {
-              value: 'typography',
-              label: 'Typography 字体'
-            }, {
-              value: 'icon',
-              label: 'Icon 图标'
-            }, {
-              value: 'button',
-              label: 'Button 按钮'
-            }]
-          }, {
-            value: 'form',
-            label: 'Form',
-            children: [{
-              value: 'radio',
-              label: 'Radio 单选框'
-            }, {
-              value: 'checkbox',
-              label: 'Checkbox 多选框'
-            }, {
-              value: 'input',
-              label: 'Input 输入框'
-            }, {
-              value: 'input-number',
-              label: 'InputNumber 计数器'
-            }, {
-              value: 'select',
-              label: 'Select 选择器'
-            }, {
-              value: 'cascader',
-              label: 'Cascader 级联选择器'
-            }, {
-              value: 'switch',
-              label: 'Switch 开关'
-            }, {
-              value: 'slider',
-              label: 'Slider 滑块'
-            }, {
-              value: 'time-picker',
-              label: 'TimePicker 时间选择器'
-            }, {
-              value: 'date-picker',
-              label: 'DatePicker 日期选择器'
-            }, {
-              value: 'datetime-picker',
-              label: 'DateTimePicker 日期时间选择器'
-            }, {
-              value: 'upload',
-              label: 'Upload 上传'
-            }, {
-              value: 'rate',
-              label: 'Rate 评分'
-            }, {
-              value: 'form',
-              label: 'Form 表单'
-            }]
-          }, {
-            value: 'data',
-            label: 'Data',
-            children: [{
-              value: 'table',
-              label: 'Table 表格'
-            }, {
-              value: 'tag',
-              label: 'Tag 标签'
-            }, {
-              value: 'progress',
-              label: 'Progress 进度条'
-            }, {
-              value: 'tree',
-              label: 'Tree 树形控件'
-            }, {
-              value: 'pagination',
-              label: 'Pagination 分页'
-            }, {
-              value: 'badge',
-              label: 'Badge 标记'
-            }]
-          }, {
-            value: 'notice',
-            label: 'Notice',
-            children: [{
-              value: 'alert',
-              label: 'Alert 警告'
-            }, {
-              value: 'loading',
-              label: 'Loading 加载'
-            }, {
-              value: 'message',
-              label: 'Message 消息提示'
-            }, {
-              value: 'message-box',
-              label: 'MessageBox 弹框'
-            }, {
-              value: 'notification',
-              label: 'Notification 通知'
-            }]
-          }, {
-            value: 'navigation',
-            label: 'Navigation',
-            children: [{
-              value: 'menu',
-              label: 'NavMenu 导航菜单'
-            }, {
-              value: 'tabs',
-              label: 'Tabs 标签页'
-            }, {
-              value: 'breadcrumb',
-              label: 'Breadcrumb 面包屑'
-            }, {
-              value: 'dropdown',
-              label: 'Dropdown 下拉菜单'
-            }, {
-              value: 'steps',
-              label: 'Steps 步骤条'
-            }]
-          }, {
-            value: 'others',
-            label: 'Others',
-            children: [{
-              value: 'dialog',
-              label: 'Dialog 对话框'
-            }, {
-              value: 'tooltip',
-              label: 'Tooltip 文字提示'
-            }, {
-              value: 'popover',
-              label: 'Popover 弹出框'
-            }, {
-              value: 'card',
-              label: 'Card 卡片'
-            }, {
-              value: 'carousel',
-              label: 'Carousel 走马灯'
-            }, {
-              value: 'collapse',
-              label: 'Collapse 折叠面板'
-            }]
-          }]
-        }, {
-          value: 'ziyuan',
-          label: '资源',
-          children: [{
-            value: 'axure',
-            label: 'Axure Components'
-          }, {
-            value: 'sketch',
-            label: 'Sketch Templates'
-          }, {
-            value: 'jiaohu',
-            label: '组件交互文档'
-          }]
-        }]
+      areaList: [],
+      phaesList: [],
+      typeList: []
     }
+  },
+  mounted () {
+    this.getType()
+    this.getPhase()
+    this.getArea()
   },
   methods: {
     nextStep () {
@@ -519,6 +353,43 @@ export default {
       } else {
         this.$store.commit('release/changeNum', 1)
       }
+    },
+    postProject () {
+      const params = {
+        project: {
+          province: this.form.area[0],
+          city: this.form.area[1],
+          area: this.form.area[2],
+          phaseId: this.form.stage,
+          name: this.form.name,
+          typeId: this.form.class,
+          introduce: this.form.introduce,
+          budget: this.form.budget,
+          address: this.form.address,
+          progress: this.form.cycle,
+          pic: this.form.pic
+        },
+        constants: this.form.constants
+      }
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.postProject(params).then((res) => {
+        console.log(res)
+        if (res.status === 200) {
+          this.$message({
+            message: '上传成功！请等待审核！！！',
+            type: 'success'
+          })
+          this.$store.commit('release/changeNumber', 1)
+          this.$nextTick(() => {
+            this.$nuxt.$loading.start()
+            this.$store.commit('release/changeNumber', 0)
+            this.$store.commit('release/changeNum', 0)
+            setTimeout(() => {
+              this.$nuxt.$loading.finish()
+            }, 500)
+          })
+        }
+      })
     },
     nextStepTwo () {
       if (this.form.introduce === null || this.form.introduce === '') {
@@ -594,15 +465,100 @@ export default {
       that.form.constants.splice(that.form.constants.length - 1, 1)
     },
     submitTo () {
-    },
-    // 判断手机号码是否正确
-    isPoneAvailable (str) {
-      const myreg = /^[1][3,4,5,7,8][0-9]{9}$/
-      if (!myreg.test(str)) {
-        return true
-      } else {
+      if (!this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没登录哦！请先登录吧！',
+          type: 'error'
+        })
+        setTimeout(() => {
+          this.$router.push('/login')
+        }, 1000)
         return false
       }
+      this.$refs.formOne.validate((valid) => {
+        if (!valid) {
+          this.$message({
+            message: '你填写的信息不完整哦！~~~',
+            type: 'warning'
+          })
+        } else {
+          this.postProject()
+        }
+      })
+    },
+    getArea () { // 获取项目地区
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getArea().then((res) => {
+        // console.log('项目地区', res.data.results)
+        this.areaList = this.convertTree(res.data.results)
+        // console.log(this.options)
+        setTimeout(() => {
+          console.log(this.area)
+        }, 3000)
+      }).catch(() => {
+
+      })
+    },
+    getType () { // 获取类型
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getType().then((res) => {
+        // console.log('项目类型', res.data.results)
+        this.typeList = this.convertTree(res.data.results)
+        // console.log(this.options)
+      })
+    },
+    getPhase () { // 获取阶段
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getPhase().then((res) => {
+        console.log('项目阶段', res.data.results)
+        this.phaesList = this.convertTrees(res.data.results)
+      })
+    },
+    convertTree (tree) {
+      const result = []
+      // eslint-disable-next-line no-unused-vars
+      // 遍历 tree
+      tree.forEach((item) => {
+        // 解构赋值
+        let {
+          // eslint-disable-next-line prefer-const
+          name: label,
+          id: value,
+          children
+        } = item
+        // 如果有子节点，递归
+        if (value === 0) {
+          value = 0
+        }
+        if (children) {
+          children = this.convertTree(children)
+        }
+        result.push({
+          value,
+          label,
+          children
+        })
+      })
+
+      return result
+    },
+    convertTrees (tree) {
+      const result = []
+      // eslint-disable-next-line no-unused-vars
+      // 遍历 tree
+      tree.forEach((item) => {
+        // 解构赋值
+        const {
+          // eslint-disable-next-line prefer-const
+          phaseName: label,
+          id: value
+        } = item
+        result.push({
+          value,
+          label
+        })
+      })
+      return result
     }
 
   }

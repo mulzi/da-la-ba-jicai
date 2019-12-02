@@ -9,13 +9,13 @@
           <el-row class="infoBox">
             <el-row class="topHead">
               <el-row class="headImg">
-                <img src="@/assets/img/0123.jpg" alt="">
+                <img :src="date.headUri" alt="">
               </el-row>
               <el-row class="name">
-                用户姓名
+                {{date.name}}
               </el-row>
               <el-row class="userId">
-                Id:0123456789
+                Id:{{ date.id }}
               </el-row>
               <el-row class="numberMsg">
                 <el-col :span="6" class="msgNub">
@@ -48,52 +48,55 @@
                 </el-col>
               </el-row>
               <el-row class="list">
-                <el-col :span="2" class="lef">
+                <el-col class="lef">
                   昵称
                 </el-col>
-                <el-col :span="22" class="rig">
-                  sdasdasd
+                <el-col class="rig">
+                  {{date.name}}
                 </el-col>
               </el-row>
 
               <el-row class="list">
-                <el-col :span="2" class="lef">
+                <el-col class="lef">
                   手机号
                 </el-col>
-                <el-col :span="22" class="rig">
-                  sdasdasd
+                <el-col class="rig">
+                  {{date.mobile}}
                 </el-col>
               </el-row>
               <el-row class="list">
-                <el-col :span="2" class="lef">
+                <el-col class="lef">
                   邮箱
                 </el-col>
-                <el-col :span="22" class="rig">
-                  sdasdasd
+                <el-col class="rig">
+                  {{date.email}}
                 </el-col>
               </el-row>
               <el-row class="list">
-                <el-col :span="2" class="lef">
+                <el-col class="lef">
                   性别
                 </el-col>
-                <el-col :span="22" class="rig">
-                  sdasdasd
+                <el-col v-if="date.sex === 1" class="rig">
+                  男
+                </el-col>
+                <el-col  v-if="date.sex === 2" class="rig">
+                  女
                 </el-col>
               </el-row>
               <el-row class="list">
-                <el-col :span="2" class="lef">
+                <el-col class="lef">
                   公司名称
                 </el-col>
-                <el-col :span="22" class="rig">
-                  sdasdasd
+                <el-col class="rig">
+                  {{date.companyName}}
                 </el-col>
               </el-row>
               <el-row class="list">
-                <el-col :span="2" class="lef">
+                <el-col class="lef">
                   公司地址
                 </el-col>
-                <el-col :span="22" class="rig">
-                  sdasdasd
+                <el-col class="rig">
+                  {{ date.companyAddress }}
                 </el-col>
               </el-row>
             </el-row>
@@ -105,10 +108,35 @@
 </template>
 
 <script>
+import { HomeService } from '@/services/myCentent'
 import menuS from '@/components/my/leftMenu'
 export default {
   components: { menuS },
-  layout: 'my'
+  layout: 'my',
+  data () {
+    return {
+      date: ''
+    }
+  },
+  asyncData (context) {
+    const homeService = new HomeService(context)
+    return homeService.getUser().then((res) => {
+      // console.log('首页全部数据', res.data)
+      return { date: res.data.result || {} }
+    })
+  },
+  mounted () {
+    console.log(this.date)
+    // this.getUser()
+  },
+  methods: {
+    getUser () {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getUser().then((res) => {
+        console.log(res)
+      })
+    }
+  }
 }
 </script>
 
@@ -183,10 +211,18 @@ export default {
           padding: 0 30px;
           margin-bottom: 25px;
           font-size: 14px;
+          display: flex;
+          display: -ms-flex;
           .lef{
+            width: 80px;
+            text-align: right;
             color: #b3b3b3;
           }
           .rig{
+            flex: 1;
+            margin-left: 20px;
+            -ms-flex: 1;
+            overflow: hidden;
             color: #333333;
           }
           &:last-child{

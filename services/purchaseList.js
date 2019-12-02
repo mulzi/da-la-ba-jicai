@@ -58,4 +58,17 @@ export class HomeService {
       // eslint-disable-next-line no-undef
     })
   }
+  async postRecruit (params) { // 发布招采信息
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/info/open/purchase.json`,
+      method: 'POST',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      data: params
+    })
+  }
 }

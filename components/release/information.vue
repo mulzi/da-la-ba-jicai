@@ -29,8 +29,12 @@
           </el-row>
           <el-form-item label="项目类别：" prop="class">
             <el-select v-model="form.class" placeholder="请选择项目类别">
-              <el-option label="区域一" value="shanghai" />
-              <el-option label="区域二" value="beijing" />
+              <el-option
+                v-for="item in typeList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              />
             </el-select>
           </el-form-item>
           <el-form-item label="招采材料：" prop="material">
@@ -57,7 +61,12 @@
             </el-upload>
           </el-row>
           <el-form-item label="工地地区：" prop="area">
-            <el-cascader :options="options" v-model="form.area" clearable />
+            <el-cascader
+              v-model="form.area"
+              :options="areaList"
+              :props="{ expandTrigger: 'hover' }"
+              clearable
+            />
           </el-form-item>
           <el-form-item label="详细地址：">
             <el-input v-model="form.address" placeholder="请输入详细地址" />
@@ -96,6 +105,7 @@
 </template>
 
 <script>
+import { HomeService } from '@/services/purchaseList'
 export default {
   data () {
     const checkPhone = (rule, value, callback) => {
@@ -144,203 +154,13 @@ export default {
           { required: true, message: '请选择工地地区', trigger: 'change' }
         ]
       },
-      options: [
-        {
-          value: 'zhinan',
-          label: '指南',
-          children: [{
-            value: 'shejiyuanze',
-            label: '设计原则',
-            children: [{
-              value: 'yizhi',
-              label: '一致'
-            }, {
-              value: 'fankui',
-              label: '反馈'
-            }, {
-              value: 'xiaolv',
-              label: '效率'
-            }, {
-              value: 'kekong',
-              label: '可控'
-            }]
-          }, {
-            value: 'daohang',
-            label: '导航',
-            children: [{
-              value: 'cexiangdaohang',
-              label: '侧向导航'
-            }, {
-              value: 'dingbudaohang',
-              label: '顶部导航'
-            }]
-          }]
-        }, {
-          value: 'zujian',
-          label: '组件',
-          children: [{
-            value: 'basic',
-            label: 'Basic',
-            children: [{
-              value: 'layout',
-              label: 'Layout 布局'
-            }, {
-              value: 'color',
-              label: 'Color 色彩'
-            }, {
-              value: 'typography',
-              label: 'Typography 字体'
-            }, {
-              value: 'icon',
-              label: 'Icon 图标'
-            }, {
-              value: 'button',
-              label: 'Button 按钮'
-            }]
-          }, {
-            value: 'form',
-            label: 'Form',
-            children: [{
-              value: 'radio',
-              label: 'Radio 单选框'
-            }, {
-              value: 'checkbox',
-              label: 'Checkbox 多选框'
-            }, {
-              value: 'input',
-              label: 'Input 输入框'
-            }, {
-              value: 'input-number',
-              label: 'InputNumber 计数器'
-            }, {
-              value: 'select',
-              label: 'Select 选择器'
-            }, {
-              value: 'cascader',
-              label: 'Cascader 级联选择器'
-            }, {
-              value: 'switch',
-              label: 'Switch 开关'
-            }, {
-              value: 'slider',
-              label: 'Slider 滑块'
-            }, {
-              value: 'time-picker',
-              label: 'TimePicker 时间选择器'
-            }, {
-              value: 'date-picker',
-              label: 'DatePicker 日期选择器'
-            }, {
-              value: 'datetime-picker',
-              label: 'DateTimePicker 日期时间选择器'
-            }, {
-              value: 'upload',
-              label: 'Upload 上传'
-            }, {
-              value: 'rate',
-              label: 'Rate 评分'
-            }, {
-              value: 'form',
-              label: 'Form 表单'
-            }]
-          }, {
-            value: 'data',
-            label: 'Data',
-            children: [{
-              value: 'table',
-              label: 'Table 表格'
-            }, {
-              value: 'tag',
-              label: 'Tag 标签'
-            }, {
-              value: 'progress',
-              label: 'Progress 进度条'
-            }, {
-              value: 'tree',
-              label: 'Tree 树形控件'
-            }, {
-              value: 'pagination',
-              label: 'Pagination 分页'
-            }, {
-              value: 'badge',
-              label: 'Badge 标记'
-            }]
-          }, {
-            value: 'notice',
-            label: 'Notice',
-            children: [{
-              value: 'alert',
-              label: 'Alert 警告'
-            }, {
-              value: 'loading',
-              label: 'Loading 加载'
-            }, {
-              value: 'message',
-              label: 'Message 消息提示'
-            }, {
-              value: 'message-box',
-              label: 'MessageBox 弹框'
-            }, {
-              value: 'notification',
-              label: 'Notification 通知'
-            }]
-          }, {
-            value: 'navigation',
-            label: 'Navigation',
-            children: [{
-              value: 'menu',
-              label: 'NavMenu 导航菜单'
-            }, {
-              value: 'tabs',
-              label: 'Tabs 标签页'
-            }, {
-              value: 'breadcrumb',
-              label: 'Breadcrumb 面包屑'
-            }, {
-              value: 'dropdown',
-              label: 'Dropdown 下拉菜单'
-            }, {
-              value: 'steps',
-              label: 'Steps 步骤条'
-            }]
-          }, {
-            value: 'others',
-            label: 'Others',
-            children: [{
-              value: 'dialog',
-              label: 'Dialog 对话框'
-            }, {
-              value: 'tooltip',
-              label: 'Tooltip 文字提示'
-            }, {
-              value: 'popover',
-              label: 'Popover 弹出框'
-            }, {
-              value: 'card',
-              label: 'Card 卡片'
-            }, {
-              value: 'carousel',
-              label: 'Carousel 走马灯'
-            }, {
-              value: 'collapse',
-              label: 'Collapse 折叠面板'
-            }]
-          }]
-        }, {
-          value: 'ziyuan',
-          label: '资源',
-          children: [{
-            value: 'axure',
-            label: 'Axure Components'
-          }, {
-            value: 'sketch',
-            label: 'Sketch Templates'
-          }, {
-            value: 'jiaohu',
-            label: '组件交互文档'
-          }]
-        }]
+      areaList: [],
+      typeList: []
     }
+  },
+  mounted () {
+    this.getArea()
+    this.getType()
   },
   methods: {
     onSub () {
@@ -366,12 +186,47 @@ export default {
               message: '你填写的信息不完整哦！~~~',
               type: 'warning'
             })
-            return
+          } else {
+            this.postRecruit()
           }
-          console.log(66)
-          this.$refs.formOne.resetFields()
         })
       }
+    },
+    postRecruit () {
+      const params = {
+        address: this.form.address,
+        area: this.form.area[2] || 0,
+        city: this.form.area[1] || 0,
+        companyName: this.form.companyName,
+        contactName: this.form.nameS,
+        contactPhone: this.form.phone,
+        contactPosition: this.form.positionLevel,
+        materials: this.form.material,
+        projectCategoryId: this.form.class,
+        province: this.form.area[0] || 0,
+        purchaseAnnexeList: this.form.pic,
+        requirement: this.form.claim,
+        supplement: '',
+        type: 1
+      }
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.postRecruit(params).then((res) => {
+        console.log(res)
+        if (res.status === 200) {
+          this.$message({
+            message: '上传成功！请等待审核！！！',
+            type: 'success'
+          })
+          this.$store.commit('release/changeNumber', 0)
+          this.$nextTick(() => {
+            this.$nuxt.$loading.start()
+            this.$store.commit('release/changeNumber', 1)
+            setTimeout(() => {
+              this.$nuxt.$loading.finish()
+            }, 500)
+          })
+        }
+      })
     },
     handleClose () {
       this.dialogVisible = false
@@ -389,13 +244,15 @@ export default {
       const arr = that.form.pic
       const del = arr.indexOf(fileName)
       that.form.pic.splice(del, 1)
+      console.log(this.form.pic)
     },
 
     // 图片上传
     uploadPicture (response, file, fileList) {
-      console.log(response.uri)
-      this.form.pic.push(response.uri)
+      console.log(file, '杀杀杀')
+      this.form.pic.push({ type: 1, 'linkUrl': file.response.uri })
       this.dialogImageUrl = file.url
+      console.log(this.form.pic)
     },
     beforeAvatarUpload (file) { // 文件上传之前调用做一些拦截限制
       console.log(file)
@@ -416,6 +273,48 @@ export default {
         message: '最多只能上传3张图片',
         type: 'error'
       })
+    },
+    getArea () { // 获取地区
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getArea().then((res) => {
+        console.log(res.data)
+        this.areaList = this.convertTree(res.data.results)
+      })
+    },
+    getType () { // 获取类型
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getType().then((res) => {
+        console.log(res.data)
+        this.typeList = this.convertTree(res.data.results)
+      })
+    },
+    convertTree (tree) {
+      const result = []
+      // eslint-disable-next-line no-unused-vars
+      // 遍历 tree
+      tree.forEach((item) => {
+        // 解构赋值
+        let {
+          // eslint-disable-next-line prefer-const
+          name: label,
+          id: value,
+          children
+        } = item
+        // 如果有子节点，递归
+        if (value === 0) {
+          value = 0 // 生成字母和数字的随机数
+        }
+        if (children) {
+          children = this.convertTree(children)
+        }
+        result.push({
+          value,
+          label,
+          children
+        })
+      })
+
+      return result
     }
   }
 }
