@@ -128,7 +128,7 @@
 
 <script>
 import { HomeService } from '@/services/askPriseList'
-import IntegralPay from '@/components/askPriseList/integralPay'
+import IntegralPay from '@/components/askPriseList/IntegralPay'
 export default {
   components: { IntegralPay },
   layout: 'main',

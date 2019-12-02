@@ -44,7 +44,7 @@ export default {
         },
         {
           title: '招募招标',
-          path: '/AskPriseList'
+          path: '/askPriseList'
         },
         {
           title: '库存信息',

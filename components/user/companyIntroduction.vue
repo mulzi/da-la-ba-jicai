@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import IntegralPay from '@/components/user/integralPay'
+import IntegralPay from '@/components/user/IntegralPay'
 import { HomeService } from '@/services/home'
 
 export default {
