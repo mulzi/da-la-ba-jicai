@@ -8,7 +8,7 @@
         <el-col :span="20" class="rightBox">
           <el-row class="infoBox_b">
             <el-col :span="12" class="left">
-              可用积分：0
+              可用积分：{{ balance }}
             </el-col>
             <el-col :span="12" class="right">
               <nuxt-link to="/my/PurchasePoints">
@@ -27,38 +27,40 @@
             </el-row>
             <el-row class="list">
               <el-row class="top">
-                <el-col :span="4">
+                <el-col :span="6">
                   操作时间
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="9">
                   变更原因
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="5">
                   变更明细
                 </el-col>
                 <el-col :span="4">
                   积分变动
                 </el-col>
               </el-row>
-              <el-row class="b_list" v-for="(t,i) in 10" :key="i">
-                <el-col :span="4">
-                  2019.04.03 15:22
+              <el-row class="b_list" v-for="(t,i) in date" :key="i">
+                <el-col :span="6">
+                  {{ t.createAtStr }}
                 </el-col>
-                <el-col :span="8">
-                  发布情报
+                <el-col :span="9">
+                  {{ t.remark }}
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="5">
                   大喇叭平台
                 </el-col>
                 <el-col :span="4">
-                  +50
+                  {{ t.scoreStr }}
                 </el-col>
               </el-row>
               <el-row class="pageSbox">
                 <el-pagination
                   background
                   layout="prev, pager, next"
-                  :total="1000"
+                  @current-change="handleCurrentChange"
+                  :current-page.sync="currentPage"
+                  :total="totalCount"
                 />
               </el-row>
             </el-row>
@@ -66,13 +68,12 @@
         </el-col>
       </el-row>
     </el-row>
-    <transition name="scle">
-      <points v-if="this.$store.state.myCentent.pointDes" />
-    </transition>
+    <points v-if="this.$store.state.myCentent.pointDes" />
   </el-row>
 </template>
 
 <script>
+import { HomeService } from '@/services/myCentent'
 import menuS from '@/components/my/leftMenu'
 import points from '@/components/my/points/points'
 export default {
@@ -83,9 +84,33 @@ export default {
   layout: 'my',
   data () {
     return {
+      size: 10,
+      page: 0,
+      date: '',
+      currentPage: 1,
+      balance: 0,
+      totalCount: 0
     }
   },
+  mounted () {
+    this.get({ size: this.size, page: this.page })
+  },
   methods: {
+    handleCurrentChange (val) {
+      this.page = val - 1
+      this.get({ size: this.size, page: this.page })
+    },
+    get (params) {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getAccount(params).then((res) => {
+        if (res.status === 200) {
+          console.log(res.data)
+          this.date = res.data.results
+          this.balance = res.data.results[0].balance || 0
+          this.totalCount = res.data.totalCount
+        }
+      })
+    }
   }
 }
 </script>

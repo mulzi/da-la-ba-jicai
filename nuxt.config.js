@@ -37,7 +37,7 @@ export default {
     { src: '~/plugins/nuxt-swiper-plugin.js', ssr: false },
     { src: '~/plugins/ElementUI.js', ssr: true }, // ssr:true代表在服务端渲染,客户端不渲染
     { src: '~/plugins/babel-polyfill.js', ssr: true },
-    { src: '~/plugins/myCentent.js', ssr: true },
+    // { src: '~/plugins/myCentent.js', ssr: true },
     { src: '~/plugins/lazyload.js', ssr: false },
     { src: '~/plugins/viewer.js', ssr: false }
 
@@ -69,14 +69,14 @@ export default {
     ** See https://axios.nuxtjs.org/options
     */
   axios: {
-    baseURL: 'http://192.168.1.23:15100',
+    baseURL: 'http://www.dalabajicai.com/',
     browserBaseURL: '/',
     proxy: false
   },
 
   proxy: {
     '/api': {
-      target: 'http://192.168.1.23:15100',
+      target: 'http://www.dalabajicai.com/',
       pathRewrite: {
         '^/api': '/api'
       }

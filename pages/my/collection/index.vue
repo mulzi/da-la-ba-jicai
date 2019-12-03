@@ -13,7 +13,7 @@
               </div>
             </el-row>
             <el-row class="bottomList">
-              <supplier v-if="num === 0" />
+              <supplier v-if="num === 0" :con="list.totalCount" :date="list.results" />
               <user v-if="num === 1" />
               <works v-if="num === 2" />
             </el-row>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { HomeService } from '@/services/myCentent'
 import menuS from '@/components/my/leftMenu'
 import supplier from '@/components/my/collection/supplier'
 import user from '@/components/my/collection/user'
@@ -39,6 +40,7 @@ export default {
   layout: 'my',
   data () {
     return {
+      list: {},
       num: 0,
       prompt: [
         '材料供应商',
@@ -46,6 +48,15 @@ export default {
         '作品精选'
       ]
     }
+  },
+  asyncData (context) {
+    const homeService = new HomeService(context)
+    return homeService.getSupplierCol({ attribute: 0, size: 12, page: 0 }).then((res) => {
+      return { list: res.data }
+    })
+  },
+  mounted () {
+    console.log(this.list, '主页获取')
   },
   methods: {
     changeNum (i) {

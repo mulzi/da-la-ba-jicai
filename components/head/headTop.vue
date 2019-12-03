@@ -29,7 +29,7 @@
           <nuxt-link to="/">
             首页
           </nuxt-link>
-          <nuxt-link to="">
+          <nuxt-link to="/my/collection">
             我的收藏
           </nuxt-link>
           <nuxt-link to="">

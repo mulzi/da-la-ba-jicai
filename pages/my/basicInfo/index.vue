@@ -118,14 +118,15 @@ export default {
       date: ''
     }
   },
-  asyncData (context) {
-    const homeService = new HomeService(context)
-    return homeService.getUser().then((res) => {
-      // console.log('首页全部数据', res.data)
-      return { date: res.data.result || {} }
-    })
-  },
+  // asyncData (context) {
+  //   const homeService = new HomeService(context)
+  //   return homeService.getUser().then((res) => {
+  //     // console.log('首页全部数据', res.data)
+  //     return { date: res.data.result || {} }
+  //   })
+  // },
   mounted () {
+    this.getUser()
     console.log(this.date)
     // this.getUser()
   },
@@ -133,7 +134,7 @@ export default {
     getUser () {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getUser().then((res) => {
-        console.log(res)
+        this.date = res.data.result
       })
     }
   }

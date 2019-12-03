@@ -16,31 +16,31 @@
                 ref="formOne"
                 :rules="rules"
                 label-width="80px"
-                :model="form"
+                :model="date"
                 class="form"
               >
                 <el-form-item label="昵称" prop="name">
-                  <el-input v-model="form.name" />
+                  <el-input v-model="date.name" />
                 </el-form-item>
                 <el-form-item label="手机号">
-                  <el-input v-model="form.phone" :disabled="true" />
+                  <el-input v-model="date.mobile" :disabled="true" />
                 </el-form-item>
                 <el-form-item label="邮箱">
-                  <el-input v-model="form.email" :disabled="true" />
+                  <el-input v-model="date.email" :disabled="true" />
                 </el-form-item>
                 <el-form-item label="性别" prop="sex">
-                  <el-radio v-model="form.radio" label="1" style="margin-left: 30px">
+                  <el-radio v-model="date.sex" label="1" style="margin-left: 30px">
                     男
                   </el-radio>
-                  <el-radio v-model="form.radio" label="2">
+                  <el-radio v-model="date.sex" label="2">
                     女
                   </el-radio>
                 </el-form-item>
                 <el-form-item label="公司名称">
-                  <el-input v-model="form.companyName" />
+                  <el-input v-model="date.companyName" />
                 </el-form-item>
                 <el-form-item label="公司地址">
-                  <el-input v-model="form.address" />
+                  <el-input v-model="date.companyAddress" />
                 </el-form-item>
                 <el-row class="bo_sub">
                   <span class="sub" @click="sub">
@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import { HomeService } from '@/services/myCentent'
 import menuS from '@/components/my/leftMenu'
 export default {
   components: { menuS },
@@ -67,28 +68,55 @@ export default {
   data () {
     return {
       right: 'right',
-      form: {
+      date: {
         name: '',
-        radio: '1',
-        phone: '',
+        sex: '1',
+        mobile: '',
         companyName: '',
-        address: ''
+        email: '',
+        companyAddress: ''
       },
       rules: {
         name: [{ required: true, message: '昵称不能为空', trigger: 'blur' }]
       }
     }
   },
+  mounted () {
+    this.getUser()
+  },
   methods: {
+    getUser () {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getUser().then((res) => {
+        console.log(res.data.result)
+        this.date = res.data.result
+        this.date.sex = this.date.sex.toString()
+      })
+    },
     sub () {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       this.$refs.formOne.validate((valid) => {
         if (!valid) {
           this.$message({
-            message: '你填写的信息不完整哦！~~~',
+            message: '昵称是必填的哦！~~~',
             type: 'warning'
           })
-          return
+          return false
         }
+        const params = this.date
+        homeService.putUser(params).then((res) => {
+          console.log(res)
+          if (res.status === 200) {
+            this.$message({
+              message: '修改成功！！！',
+              type: 'success'
+            })
+            setTimeout(() => {
+              this.$router.push('/my/basicInfo')
+            }, 1000)
+          }
+        })
+
         console.log(66)
         // this.$refs.formOne.resetFields()
       })

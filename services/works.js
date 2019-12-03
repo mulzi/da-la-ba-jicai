@@ -111,4 +111,17 @@ export class HomeService {
       params
     })
   }
+  async postInfo (params) { // 获取推荐
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/info/open/browser.json`,
+      method: 'POST',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
 }

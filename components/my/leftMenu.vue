@@ -2,13 +2,13 @@
   <el-row class="leftBox">
     <el-row class="headTop">
       <el-row class="headImg">
-        <img src="@/assets/img/0123.jpg" alt="">
+        <img :src="date.headUri" alt="">
       </el-row>
       <el-row class="name">
-        这是是名字
+        {{ date.name }}
       </el-row>
       <el-row class="numID">
-        ID:12345678966
+        ID:{{ date.id }}
       </el-row>
     </el-row>
     <el-row class="menuUl">
@@ -18,12 +18,12 @@
         </nuxt-link>
       </div>
     </el-row>
-    <el-row class="release">
-      <div class="tit" @click="flag = !flag">
+    <el-row class="release" >
+      <div class="tit" @click="flag = !flag" v-if="false">
         <span>我的发布</span><i :class=" flag ? 'el-icon-arrow-down':'el-icon-arrow-right'" />
       </div>
       <transition name="el-zoom-in-top">
-        <el-row class="leb" v-show="flag">
+        <el-row class="leb" v-show="flag" v-if="false">
           <div class="le" :class="$store.state.myCentent.menuBId === i ? 'active': '' " v-for="(t, i) in menub" :key="i" @click="changeMenuBId(i)">
             <nuxt-link :to="t.url">
               {{ t.name }}
@@ -36,15 +36,17 @@
 </template>
 
 <script>
+import { HomeService } from '@/services/myCentent'
 export default {
   data () {
     return {
       flag: false,
+      date: [],
       menu: [
         { name: '基本信息', url: '/my/basicInfo' },
         { name: '我的会员', url: '/my/member' },
         { name: '我的积分', url: '/my/point' },
-        { name: '我的订单', url: '' },
+        // { name: '我的订单', url: '' },
         { name: '我的收藏', url: '/my/collection' }
       ],
       menub: [
@@ -54,7 +56,17 @@ export default {
       ]
     }
   },
+  mounted () {
+    this.getUser()
+  },
   methods: {
+    getUser () {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getUser().then((res) => {
+        console.log(res)
+        this.date = res.data.result
+      })
+    },
     changeMenuId (i) {
       this.$store.commit('myCentent/changeMenuId', i)
       this.$store.commit('myCentent/changeMenuBId', 999)

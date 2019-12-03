@@ -1,7 +1,7 @@
 <template>
   <el-row>
     <el-row class="bottomListBox">
-      <el-row class="NoData marginBottom40">
+      <el-row class="NoData marginBottom40" v-if="date !== undefined && date.length === 0">
         <el-row class="img">
           <img src="@/assets/img/nodata.png" alt="">
         </el-row>
@@ -9,22 +9,24 @@
           没有数据
         </el-row>
       </el-row>
-      <el-row class="contentList">
-        <nuxt-link v-for="(item, index) in 15" :key="index" to="">
+      <el-row class="contentList" v-if="date !== undefined && date.length > 0">
+        <nuxt-link v-for="(t, i) in date" :key="i" :to="`/user/designDecoration/${t.supplierId}`">
           <p>
-            <img src="@/assets/img/nodata.png" alt="">
+            <img :src="t.producePic" alt="">
           </p>
           <el-row class="companyName">
-            <span>公司名字</span>
-            <span>公司地址</span>
+            <span>{{ t.agent }}</span>
+            <span>{{ t.address }}</span>
           </el-row>
         </nuxt-link>
       </el-row>
-      <el-row class="pageSbox">
+      <el-row class="pageSbox" v-if="date !== undefined && date.length > 0">
         <el-pagination
           background
           layout="prev, pager, next"
-          :total="1000"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :total="totalCount"
         />
       </el-row>
     </el-row>
@@ -32,8 +34,38 @@
 </template>
 
 <script>
+import { HomeService } from '@/services/myCentent'
 export default {
-  name: 'User'
+  name: 'User',
+  data () {
+    return {
+      size: 12,
+      page: 0,
+      date: [],
+      currentPage: 1,
+      totalCount: 0
+    }
+  },
+  mounted () {
+    this.get({ attribute: 3, size: this.size, page: this.page })
+  },
+  methods: {
+    handleCurrentChange (val) {
+      this.page = val - 1
+      this.get({ attribute: 3, size: this.size, page: this.page })
+    },
+    get (params) {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getSupplierCol(params).then((res) => {
+        if (res.status === 200) {
+          console.log(res.data)
+          this.date = res.data.results
+          this.totalCount = res.data.totalCount
+          console.log(this.date)
+        }
+      })
+    }
+  }
 }
 </script>
 

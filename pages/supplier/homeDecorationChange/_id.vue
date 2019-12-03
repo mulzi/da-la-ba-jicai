@@ -171,14 +171,14 @@ export default {
     // eslint-disable-next-line no-undef
     return homeService.SupplierListParticulars({ supplierId: params.id }).then((res) => {
       // eslint-disable-next-line no-console
-      console.log('详情', res.data)
+      // console.log('详情', res.data)
       return { date: res.data || {} }
     })
   },
   created () {
     const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
     homeService.postHotProducts(this.$route.params.id).then((res) => { // 获取特价爆款
-      console.log('主页面获取', res.data.results)
+      // console.log('主页面获取', res.data.results)
       this.dates = res.data.results
       this.changeSE()
       if (res.data.results === null || res.data.results.length === 0) {
@@ -199,7 +199,7 @@ export default {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.SupplierListParticulars({ supplierId: this.$route.params.id }).then((res) => {
         // eslint-disable-next-line no-console
-        console.log(res.data)
+        console.log(res.data, '家装详情')
         this.date = res.data
       })
     },

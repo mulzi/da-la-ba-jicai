@@ -144,8 +144,17 @@ export default {
   },
   mounted () {
     this.getWorksDetails(this.$route.params.id)
+    this.postInfo({ type: 5, otherId: this.$route.params.id })
   },
   methods: {
+    postInfo (pamars) { // 创建浏览量
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.postInfo(pamars).then((res) => {
+        if (res.status === 200) {
+          console.log('浏览成功')
+        }
+      })
+    },
     getWorksDetails (pamars) { // 获取详情
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getWorksDetails(pamars).then((res) => {

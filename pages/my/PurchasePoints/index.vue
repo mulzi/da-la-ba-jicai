@@ -1,7 +1,7 @@
 <template>
   <el-row class="points">
     <el-row class="Balance">
-      <span>当前余额：10积分</span>
+      <span>当前余额：{{ balance }}积分</span>
     </el-row>
     <el-row class="way">
       <span>充值方式</span>
@@ -79,6 +79,7 @@
 
 <script>
 import Qrcode from 'qrcode'
+import { HomeService } from '@/services/myCentent'
 import points from '@/components/my/points/points'
 export default {
   components: {
@@ -87,6 +88,8 @@ export default {
   layout: 'PurchasePoints',
   data () {
     return {
+      balance: 0,
+      order: 0,
       canvas: false,
       canvasTwo: false,
       form: {
@@ -95,6 +98,9 @@ export default {
         radioes: null
       }
     }
+  },
+  mounted () {
+    this.getBalance()
   },
   methods: {
     changeCanvas () {
@@ -128,16 +134,59 @@ export default {
             type: 'error'
           })
         } else {
+          this.buyOrder({ money: this.form.radioes * 100 })
           console.log(this.form.radioes)
-          this.qrCode(this.form.radioes)
-          this.changeCanvas()
         }
       } else {
         this.form.radioes = this.form.radioe
-        console.log(this.form.radioes)
-        this.qrCode('http://m.315sj.cn/')
-        this.changeCanvas()
+        this.buyOrder({ money: this.form.radioes * 100 })
+        // console.log(this.form.radioes)
       }
+    },
+    buyOrder (params) { // 创建订单
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.buyOrder(params).then((res) => {
+        if (res.status === 200) {
+          this.order = res.data.result
+          console.log(res)
+          this.buyPayment({ tradeId: res.data.result, payType: '0302' })
+        }
+      })
+    },
+    buyPayment (params) { // 创建购买支付链接
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.buyPayment(params).then((res) => {
+        if (res.status === 200) {
+          console.log(res, '支付链接')
+          this.order = res.data.paymentId
+          this.qrCode(res.data.payCode)
+          this.changeCanvas()
+          this.buyStatus({ paymentId: res.data.paymentId })
+        }
+      })
+    },
+    buyStatus (params) { // 创建购买支付链接
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.buyStatus(params).then((res) => {
+        console.log(res.data.result)
+        if (!res.data.result) {
+          setTimeout(() => {
+            this.buyStatus({ paymentId: this.order })
+          }, 1000)
+        } else {
+          this.changeCanvas()
+          window.location.reload()
+        }
+      })
+    },
+    getBalance () { // 获取积分
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getBalance().then((res) => {
+        console.log(res)
+        if (res.status === 200) {
+          this.balance = res.data.result.balance
+        }
+      })
     }
   }
 

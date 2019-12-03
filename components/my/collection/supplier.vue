@@ -1,7 +1,7 @@
 <template>
   <el-row class="supplier">
     <el-row class="bottomListBox">
-      <el-row class="NoData marginBottom40">
+      <el-row class="NoData marginBottom40" v-if="date !== undefined && date.length === 0">
         <div class="img">
           <img src="@/assets/img/nodata.png" alt="">
         </div>
@@ -9,25 +9,25 @@
           没有数据
         </div>
       </el-row>
-      <el-row class="contentList">
-        <nuxt-link v-for="(t, i) in 15" :key="i" to="">
+      <el-row class="contentList" v-if="date !== undefined && date.length > 0">
+        <nuxt-link v-for="(t, i) in date" :key="i" :to="`${t.attribute === 1 ?'/supplier/toolDecoration/':'/supplier/homeDecorationChange/'}${t.supplierId}`">
           <p>
-            <img src="@/assets/img/0123.jpg" alt="">
+            <img :src="t.producePic" alt="">
           </p>
           <el-row class="oneName">
             <el-col :span="14">
-              代理品牌
+              {{ t.brand }}
             </el-col>
             <el-col :span="10" class="rightVip color">
-              超级会员
+              {{ t.vipTypeStr }}
             </el-col>
           </el-row>
           <el-row class="twoName">
             <el-col :span="16">
-              公司名称
+              {{ t.agent }}
             </el-col>
             <el-col :span="8" class="right">
-              厂家
+              {{ t.nature }}
             </el-col>
           </el-row>
           <el-row class="rate">
@@ -41,11 +41,13 @@
           </el-row>
         </nuxt-link>
       </el-row>
-      <el-row class="pageSbox">
+      <el-row class="pageSbox" v-if="date !== undefined && date.length > 0">
         <el-pagination
           background
           layout="prev, pager, next"
-          :total="1000"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :total="con"
         />
       </el-row>
     </el-row>
@@ -53,8 +55,40 @@
 </template>
 
 <script>
+import { HomeService } from '@/services/myCentent'
 export default {
-  name: 'Supplier'
+  name: 'Supplier',
+  // eslint-disable-next-line vue/require-prop-types
+  props: ['date', 'con'],
+  data () {
+    return {
+      size: 12,
+      page: 0,
+      list: this.date,
+      currentPage: 1,
+      totalCount: 0
+    }
+  },
+  mounted () {
+    console.log(this.list, '第二次')
+  },
+  methods: {
+    handleCurrentChange (val) {
+      this.page = val - 1
+      this.get({ attribute: 0, size: this.size, page: this.page })
+    },
+    get (params) {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getSupplierCol(params).then((res) => {
+        if (res.status === 200) {
+          console.log(res.data)
+          this.date = res.data.results
+          this.totalCount = res.data.totalCount
+          console.log(this.date)
+        }
+      })
+    }
+  }
 }
 </script>
 
