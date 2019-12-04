@@ -20,9 +20,11 @@
             <nuxt-link v-if="!this.$store.state.home.isLogin" to="/">
               注册
             </nuxt-link>
-            <nuxt-link to="/my/basicInfo">
-              个人中心
-            </nuxt-link>
+            <span @click="$store.commit('myCentent/changeMenuId', 0)">
+              <nuxt-link to="/my/basicInfo">
+                个人中心
+              </nuxt-link>
+            </span>
           </div>
         </div>
         <div class="rightShops">
@@ -32,13 +34,13 @@
           <nuxt-link to="/my/collection">
             我的收藏
           </nuxt-link>
-          <nuxt-link to="">
+          <nuxt-link to="http://merchant.dalabajicai.com/#/login?redirect=%2Fdashboard">
             商家登录
           </nuxt-link>
           <nuxt-link to="">
             联系客服
           </nuxt-link>
-          <nuxt-link to="">
+          <nuxt-link to="http://www.dalabajicai.com/myMembers/members#" target="_blank">
             商家入驻
           </nuxt-link>
         </div>

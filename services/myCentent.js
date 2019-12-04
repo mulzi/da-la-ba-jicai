@@ -124,4 +124,29 @@ export class HomeService {
       params
     })
   }
+  async getVipRecord (params) { // 查询vip记录
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/trade/open/member/getMemberProductOrders.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      // eslint-disable-next-line no-undef
+      params
+    })
+  }
+  async getVipBuyList () { // 查询vip购买列表
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/trade/open/member/getWebMemberProducts.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT
+      // eslint-disable-next-line no-undef
+    })
+  }
 }

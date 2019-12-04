@@ -1,6 +1,6 @@
 <template>
   <div class="companyIntroduction marginBottom100">
-    <div v-if="this.list.introduce" class="ones">
+    <div v-if="list.introduce" class="ones">
       <div class="titName">
         <span>品牌概况</span>
       </div>
@@ -10,7 +10,7 @@
         </P>
       </div>
     </div>
-    <div v-if="this.list.advantage" class="ones">
+    <div v-if="list.advantage" class="ones">
       <div class="titName">
         <span>产品卖点</span>
       </div>
@@ -20,13 +20,13 @@
         </p>
       </div>
     </div>
-    <div v-if="this.list.contacts" class="ones">
+    <div v-if="list.contacts" class="ones">
       <div class="titName">
         <span>联系方式</span>
       </div>
       <div class="aboutList">
         <ul>
-          <li v-for="(t,i) in lists.contacts" :key="i">
+          <li v-for="(t,i) in list.contacts" :key="i">
             <div class="li">
               <span>联系人：</span><em>{{ t.name }}</em>
             </div>
@@ -42,14 +42,14 @@
           </li>
         </ul>
       </div>
-      <!--      <div class="clickShow">-->
-      <!--        <span @click="payShow">积分查看</span>-->
-      <!--      </div>-->
+      <div class="clickShow" v-if="list.contacts[0].flag">
+        <span @click="payShow">积分查看</span>
+      </div>
       <div class="tips">
         联系我时请说是在大喇叭集采网上看到的，谢谢！
       </div>
     </div>
-    <el-row v-if="this.list.promise" class="promise">
+    <el-row v-if="list.promise" class="promise">
       <el-row class="tit">
         <span>服务承诺</span>
       </el-row>
@@ -59,16 +59,22 @@
         </p>
       </el-row>
     </el-row>
+    <integral-pay @clickTwo="getSupplierList" :id="list.contacts[0].id" v-if="$store.state.supplier.IntegralPay" />
   </div>
 </template>
 
 <script>
+import { HomeService } from '@/services/home'
+import IntegralPay from '@/components/supplier/IntegralPay'
 export default {
+  components: {
+    IntegralPay
+  },
   // eslint-disable-next-line vue/require-prop-types
-  props: ['list'],
+  // props: ['list'],
   data () {
     return {
-      lists: this.list,
+      list: '',
       introduceList: [ ], // 品牌简介
       companyIntroduce: [], // 公司介绍
       advantage: [], // 产品优势
@@ -78,21 +84,7 @@ export default {
     }
   },
   mounted () {
-    if (this.list.introduce !== null || undefined || '') {
-      this.introduceList = this.list.introduce.split('\n')
-    } else {
-      this.introduceList = null
-    }
-    if (this.list.promise !== null || undefined || '') {
-      this.promise = this.list.promise.split('\n')
-    } else {
-      this.promise = null
-    }
-    if (this.list.advantage !== null || undefined || '') {
-      this.advantage = this.list.advantage.split('\n')
-    } else {
-      this.advantage = null
-    }
+    this.getSupplierList()
   },
   methods: {
     payShow () {
@@ -108,8 +100,33 @@ export default {
 
         return false
       }
-      this.$store.dispatch('home/CHANGEPAYSCORE', 9)
+      this.$store.dispatch('home/CHANGEPAYSCORE', 9) // 改变积分查看数字
       this.$store.commit('supplier/changeIntegralPay')
+    },
+    getSupplierList () { // 获取详情数据
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.SupplierListParticulars({ supplierId: this.$route.params.id }).then((res) => {
+        // eslint-disable-next-line no-console
+        if (res.status === 200) {
+          this.list = res.data
+          if (res.data.introduce !== null || undefined || '') {
+            this.introduceList = res.data.introduce.split('\n')
+          } else {
+            this.introduceList = null
+          }
+          if (res.data.promise !== null || undefined || '') {
+            this.promise = res.data.promise.split('\n')
+          } else {
+            this.promise = null
+          }
+          if (res.data.advantage !== null || undefined || '') {
+            this.advantage = res.data.advantage.split('\n')
+          } else {
+            this.advantage = null
+          }
+        }
+        console.log(this.list, '家装详情2')
+      })
     }
   }
 }

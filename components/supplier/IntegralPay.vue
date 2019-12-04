@@ -144,8 +144,10 @@ export default {
     postSCore () { // 查询账户余额及积分价格
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.postScore(this.$store.state.home.payScore).then((res) => {
-        this.date = res.data.result
-        console.log(res.data)
+        if (res.status === 200) {
+          this.date = res.data.result
+          console.log(res.data)
+        }
       })
     },
     consumeScore () { // 积分消费

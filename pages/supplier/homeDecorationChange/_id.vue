@@ -102,7 +102,7 @@
             <li v-if="dates !== undefined && dates.length > 0" :class="oneListShow ? 'active':''" @click="oneChangeShow">
               <span>特价爆款</span>
             </li>
-            <li v-if="date.product !== undefined && date.product.length !== 0" :class="twoListShow ? 'active':''" @click="twoChangeShow">
+            <li v-if="date.product !== undefined && date.product.length > 0" :class="twoListShow ? 'active':''" @click="twoChangeShow">
               <span>产品系列</span>
             </li>
             <li :class="threeListShow ? 'active':''" @click="threeChangeShow">
@@ -156,7 +156,7 @@ export default {
       threeListShow: false, // 公司介绍列表显示
       fourListShow: false, // 公司资讯列表显示
       fiveListShow: false, // 评价留言显示
-      date: [ ], // 主数据
+      date: '', // 主数据
       dates: [ ], // 特价爆款
       datesES: [],
       collectionFlag: true, // 点击收藏的锁
@@ -199,8 +199,10 @@ export default {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.SupplierListParticulars({ supplierId: this.$route.params.id }).then((res) => {
         // eslint-disable-next-line no-console
+        if (res.status === 200) {
+          this.date = res.data
+        }
         console.log(res.data, '家装详情')
-        this.date = res.data
       })
     },
     getCollection () { // 点击收藏

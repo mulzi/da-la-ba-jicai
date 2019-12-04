@@ -24,13 +24,13 @@
       <div class="titName">
         <span>公司资质</span>
       </div>
-      <viewer class="banner">
+      <div class="banner">
         <el-carousel :interval="4000" type="card" height="340px">
-          <el-carousel-item v-for="(item,index) in date.credentialImages" :key="index">
+          <el-carousel-item v-for="(item,index) in date.credentialImages" :key="index" v-viewer>
             <img :src="item.pic" alt="">
           </el-carousel-item>
         </el-carousel>
-      </viewer>
+      </div>
     </div>
     <div v-if="date.advantage" class="ones">
       <div class="titName">

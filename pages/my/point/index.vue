@@ -26,34 +26,38 @@
               </em>
             </el-row>
             <el-row class="list">
-              <el-row class="top">
-                <el-col :span="6">
-                  操作时间
-                </el-col>
-                <el-col :span="9">
-                  变更原因
-                </el-col>
-                <el-col :span="5">
-                  变更明细
-                </el-col>
-                <el-col :span="4">
-                  积分变动
-                </el-col>
-              </el-row>
-              <el-row class="b_list" v-for="(t,i) in date" :key="i">
-                <el-col :span="6">
-                  {{ t.createAtStr }}
-                </el-col>
-                <el-col :span="9">
-                  {{ t.remark }}
-                </el-col>
-                <el-col :span="5">
-                  大喇叭平台
-                </el-col>
-                <el-col :span="4">
-                  {{ t.scoreStr }}
-                </el-col>
-              </el-row>
+              <el-table
+                :data="date"
+                border
+                highlight-current-row
+                style="width: 100%;"
+                header-cell-style="background:#fff7f7;font-size:16px;height:74px"
+                header-row-style=""
+              >
+                <el-table-column
+                  label="操作时间"
+                  align="center"
+                  prop="createAtStr"
+                />
+                <el-table-column
+                  label="变更原因"
+                  prop="remark"
+                  align="center"
+                />
+                <el-table-column
+                  label="变更明细"
+                  align="center"
+                >
+                  <template>
+                    <span>大喇叭平台</span>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="积分变动"
+                  prop="scoreStr"
+                  align="center"
+                />
+              </el-table>
               <el-row class="pageSbox">
                 <el-pagination
                   background

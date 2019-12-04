@@ -4,7 +4,7 @@ import CollapseTransition from 'element-ui/lib/transitions/collapse-transition'
 import {
   Button, Input, Carousel, Container, Icon, Col, Row, CarouselItem, Pagination, BreadcrumbItem,
   Breadcrumb, Tooltip, Rate, Radio, RadioButton, InfiniteScroll, Message, Form, FormItem, Calendar, Select, Cascader,
-  Option, Upload, Dialog, DatePicker, Loading, RadioGroup, Checkbox, CollapseItem
+  Option, Upload, Dialog, DatePicker, Loading, RadioGroup, Checkbox, CollapseItem, Table, TableColumn
 } from 'element-ui'
 Vue.use(CarouselItem)
 Vue.use(Col)
@@ -32,10 +32,12 @@ Vue.use(Upload)
 Vue.use(Dialog)
 Vue.use(DatePicker)
 Vue.use(Checkbox)
+Vue.use(Table)
 Vue.use(InfiniteScroll)
 Vue.use(Message)
 Vue.use(CollapseItem)
 Vue.use(Loading)
+Vue.use(TableColumn)
 Vue.prototype.$message = Message
 Vue.prototype.$loading = Loading.service
 Vue.component(CollapseTransition.name, CollapseTransition)

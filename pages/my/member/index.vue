@@ -5,7 +5,7 @@
         <el-col :span="4" class="leftBox">
           <menu-s />
         </el-col>
-        <el-col :span="20" class="rightBox">
+        <el-col :span="20" class="rightBox" v-loading="loading">
           <el-row class="infoBox">
             <el-row class="title">
               <span>我的会员</span>
@@ -13,7 +13,7 @@
                 <i class="el-icon-tickets" /> <em>VIP会员服务协议</em>
               </nuxt-link>
             </el-row>
-            <el-row v-if="false" class="noVip">
+            <el-row class="noVip" v-if="date !== undefined && date.length === 0">
               <el-row class="imgBox">
                 <img src="@/assets/img/nodata.png" alt="">
               </el-row>
@@ -21,12 +21,12 @@
                 您还未开通任何VIP，加入 vip 会员，立享几大特权
               </el-row>
               <el-row class="addMore">
-                <nuxt-link to="">
+                <nuxt-link to="/my/member/members">
                   立即开通
                 </nuxt-link>
               </el-row>
             </el-row>
-            <el-row class="vipBox">
+            <el-row class="vipBox" v-if="date !== undefined && date.length > 0">
               <el-row class="topTit">
                 <li v-for="(t,i) in menu" @click="changeNum(i)" class="li" :class="num === i ? 'active' : ''" :key="i">
                   {{ t }}
@@ -34,40 +34,56 @@
               </el-row>
               <transition name="bounce">
                 <el-row class="record" v-if="num === 0">
-                  <el-row class="top">
-                    <el-col :span="4">
-                      VIP类型
-                    </el-col>
-                    <el-col :span="5">
-                      开通时间
-                    </el-col>
-                    <el-col :span="5">
-                      权限说明
-                    </el-col>
-                    <el-col :span="5">
-                      到期时间
-                    </el-col>
-                    <el-col :span="5">
-                      状态
-                    </el-col>
-                  </el-row>
-                  <el-row class="bottomList">
-                    <el-col :span="4">
-                      <i class="iconfont">&#xe70e;</i>
-                      项目信息
-                    </el-col>
-                    <el-col :span="5">
-                      2019-03-29
-                    </el-col>
-                    <el-col :span="5">
-                      可浏览板块：项目信息
-                    </el-col>
-                    <el-col :span="5">
-                      2020-03-29
-                    </el-col>
-                    <el-col :span="5">
-                      正常使用/ 即将过期/过期/试用期
-                    </el-col>
+                  <el-table
+                    :data="date"
+                    border
+                    highlight-current-row
+                    style="width: 100%;"
+                    header-cell-style="background:#fff7f7;font-size:16px;height:74px"
+                  >
+                    <el-table-column
+                      label="VIP类型"
+                      style="width: 20%;height: 120px;"
+                      align="center"
+                    >
+                      <template slot-scope="scope">
+                        <i class="iconfont" :style="scope.row.statusStr === '正常使用' ? 'color:red' : '' ">&#xe70e;</i>
+                        <span style="margin-left: 10px">{{ scope.row.memberProductName }}</span>
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      label="使用范围"
+                      style="width: 20%; text-align: center"
+                      prop="startedAtStr"
+                      align="center"
+                    />
+                    <el-table-column
+                      label="权限说明"
+                      style="width: 20%;"
+                      align="center"
+                      prop="illustrate"
+                    />
+                    <el-table-column
+                      label="到期时间"
+                      style="width: 20%;"
+                      prop="expiredAtStr"
+                      align="center"
+                    />
+                    <el-table-column
+                      label="状态"
+                      align="center"
+                      style="width: 20%;"
+                      prop="statusStr"
+                    />
+                  </el-table>
+                  <el-row class="pageSbox">
+                    <el-pagination
+                      background
+                      layout="prev, pager, next"
+                      @current-change="handleCurrentChange"
+                      :current-page.sync="currentPage"
+                      :total="totalCount"
+                    />
                   </el-row>
                 </el-row>
               </transition>
@@ -104,23 +120,49 @@
 </template>
 
 <script>
+import { HomeService } from '@/services/myCentent'
 import menuS from '@/components/my/leftMenu'
 export default {
   components: { menuS },
   layout: 'my',
   data () {
     return {
+      loading: true,
       num: 0,
       menu: [
         'VIP记录',
         '线上开票',
         'VIP优惠券'
-      ]
+      ],
+      size: 10,
+      page: 0,
+      date: '',
+      currentPage: 1,
+      balance: 0,
+      totalCount: 0
     }
+  },
+  mounted () {
+    this.get({ size: this.size, page: this.page })
   },
   methods: {
     changeNum (i) {
       this.num = i
+    },
+    handleCurrentChange (val) {
+      this.page = val - 1
+      this.get({ size: this.size, page: this.page })
+    },
+    get (params) {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.getVipRecord(params).then((res) => {
+        if (res.status === 200) {
+          this.loading = false
+          console.log(res.data)
+          this.date = res.data.results
+          this.totalCount = res.data.totalCount
+        }
+      })
     }
   }
 }
