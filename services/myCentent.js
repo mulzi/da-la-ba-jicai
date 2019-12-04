@@ -149,4 +149,16 @@ export class HomeService {
       // eslint-disable-next-line no-undef
     })
   }
+  async postVipOrder (params) { // 创建VIP订单
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/trade/open/member/createOrder.json`,
+      method: 'POST',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT,
+      params
+    })
+  }
 }

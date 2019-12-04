@@ -9,7 +9,6 @@
         <el-table
           :data="date"
           border
-          highlight-current-row
           style="width: 100%;"
           @row-click="rowClick"
           header-cell-style="background:#fff7f7;font-size:16px;height:74px"
@@ -49,11 +48,12 @@
             label="加入方式"
             align="center"
           >
-            <template>
+            <template slot-scope="scope">
               <el-button
                 size="mini"
                 type="primary"
                 plain
+                @click="postOrder({id: scope.row.id})"
               >
                 立即开通
               </el-button>
@@ -70,11 +70,30 @@
         </el-row>
       </el-col>
     </el-row>
+    <transition name="scle">
+      <el-row class="codeBox" v-show="canvas">
+        <div class="bg" @click="changeCanvas" v-if="canvasTwo" />
+        <el-row class="codeBody">
+          <el-row class="topTit">
+            <el-col :span="20">
+              扫码支付
+            </el-col>
+            <el-col :span="4" class="right">
+              <span class="el-icon-close" @click="changeCanvas" />
+            </el-col>
+          </el-row>
+          <el-row class="canv">
+            <canvas id="canvas" ref="qrcode" class="canvas" />
+          </el-row>
+        </el-row>
+      </el-row>
+    </transition>
     <index-foot />
   </el-row>
 </template>
 
 <script>
+import Qrcode from 'qrcode'
 import { HomeService } from '@/services/myCentent'
 import indexHead from '@/components/head/headTop'
 import indexFoot from '@/components/indexFoot'
@@ -86,6 +105,10 @@ export default {
   },
   data () {
     return {
+      canvas: false,
+      timer: null,
+      canvasTwo: false,
+      order: 0,
       remark: '',
       date: []
     }
@@ -94,6 +117,18 @@ export default {
     this.get()
   },
   methods: {
+    changeCanvas () {
+      this.canvas = false
+      clearInterval(this.timer)
+      setTimeout(() => {
+        this.canvasTwo = false
+      }, 300)
+    },
+    qrCode (url) { // 生成二维码
+      Qrcode.toCanvas(this.$refs.qrcode, url, function (error) {
+        console.log(error)
+      })
+    },
     rowClick (row, column, event) {
       const that = this
       that.remark = row.remark
@@ -107,11 +142,114 @@ export default {
           this.date = res.data.results
         }
       })
+    },
+    postOrder (params) {
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.postVipOrder(params).then((res) => {
+        if (res.status === 200) {
+          console.log(res.data)
+          this.buyPayment({ tradeId: res.data.result, payType: '0302' })
+        }
+      })
+    },
+    buyPayment (params) { // 创建购买支付链接
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.buyPayment(params).then((res) => {
+        if (res.status === 200) {
+          console.log(res, '支付链接')
+          this.order = res.data.paymentId
+          this.qrCode(res.data.payCode)
+          this.canvas = true
+          setTimeout(() => {
+            this.canvasTwo = true
+          }, 500)
+          this.timer = setInterval(() => {
+            this.buyStatus({ paymentId: res.data.paymentId })
+          }, 1000)
+        }
+      })
+    },
+    buyStatus (params) { // 查询购买状态
+      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+      homeService.buyStatus(params).then((res) => {
+        console.log(res.data.result)
+        if (!res.data.result) {
+        } else {
+          this.changeCanvas()
+          clearInterval(this.timer)
+          this.$message({
+            message: '恭喜你~~~ 购买成功',
+            type: 'success'
+          })
+        }
+      })
     }
   }
 }
 </script>
 
+<style scoped lang="scss">
+  .codeBox{
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: fixed;
+    z-index: 800;
+    .bg{
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0, .5);
+      position: absolute;
+      z-index: 900;
+      top: 0;
+      left: 0;
+    }
+    .codeBody{
+      width: 400px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      background: #ffffFF;
+      z-index: 910;
+      .topTit{
+        padding: 0 30px;
+        height: 60px;
+        line-height: 60px;
+        background: $redColor;
+        font-size: 18px;
+        color: #ffffFF;
+        .right{
+          text-align: right;
+          span{
+
+            display: inline-block;
+            cursor: pointer;
+            font-size: 26px;
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            width: 36px;
+            border-radius: 50%;
+            &:hover{
+              transition: .2s ease-in-out;
+              background: rgba(255,255,255, .15);
+            }
+          }
+        }
+      }
+      .canv{
+        .canvas{
+          display: block;
+          height: 148px;
+          width: 148px;
+          margin: 40px auto;
+        }
+      }
+    }
+  }
+</style>
 <style lang="scss">
 .members{
   width: 1200px;

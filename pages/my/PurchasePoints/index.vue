@@ -165,7 +165,7 @@ export default {
         }
       })
     },
-    buyStatus (params) { // 创建购买支付链接
+    buyStatus (params) { // 查询购买状态
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.buyStatus(params).then((res) => {
         console.log(res.data.result)
