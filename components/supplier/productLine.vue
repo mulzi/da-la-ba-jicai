@@ -1,6 +1,6 @@
 <template>
   <el-row class="productLineBox">
-    <div id="topListBox" class="topListBox padding30">
+    <div id="topListBox" class="topListBox">
       <product-line-one v-for="(item,index) in lists" :key="index" :dates="item" />
     </div>
     <div v-if="lists.priceIllustrated" class="moneyState ">
@@ -63,6 +63,7 @@ export default {
     width: 100%;
     overflow: hidden;
     .topListBox{
+      padding: 50px 30px;
       background: #ffffff;
       .listOne{
         width: 100%;

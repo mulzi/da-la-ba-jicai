@@ -184,11 +184,15 @@ export default {
       })
     },
     getSupplierList (parmes) {
+      this.$nuxt.$loading.start()
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.SupplierList(parmes).then((res) => {
-        console.log('s', res.data)
-        this.getSupplierLiList = res.data.results
-        this.totalCount = res.data.totalCount
+        if (res.status === 200) {
+          console.log('s', res.data)
+          this.getSupplierLiList = res.data.results
+          this.totalCount = res.data.totalCount
+          this.$nuxt.$loading.finish()
+        }
       })
     }
   }

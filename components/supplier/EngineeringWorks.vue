@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <div class="engineeringWorks padding30 marginBottom100">
+    <div class="engineeringWorks marginBottom100">
       <div v-for="(t,i) in list" :key="i" class="a" @click="getEngeering(t.id)">
         <div class="img">
           <img v-lazy="t.coverPic" alt="">
@@ -51,6 +51,7 @@ export default {
 <style scoped lang="scss">
     .engineeringWorks{
         background: #ffffff;
+      padding: 60px 30px;
         .a{
             float: left;
             cursor: pointer;

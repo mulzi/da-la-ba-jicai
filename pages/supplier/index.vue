@@ -65,7 +65,7 @@
             没有数据
           </div>
         </div>
-        <div v-if="getSupplierLiList.length !== 0 " class="contentList" v-loading="loading">
+        <div v-if="getSupplierLiList.length !== 0 " class="contentList">
           <nuxt-link v-for="(item, index) in getSupplierLiList" :key="index" :to="`/supplier/${categoryIdNu === 66 ? 'homeDecorationChange' : 'toolDecoration' }/${item.supplierId}`">
             <p>
               <img :src="item.logo" alt="">
@@ -184,8 +184,7 @@ export default {
       pageID: 0, // 分页第几页
       sizeID: 20, // 分页数量
       totalCount: 0, // 获取的总数
-      currentPage4: 1,
-      loading: true
+      currentPage4: 1
     }
   },
   async asyncData (context) { // 获取一级类别
@@ -261,7 +260,7 @@ export default {
       })
     },
     getSupplierList (parmes) {
-      this.loading = true
+      this.$nuxt.$loading.start()
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.SupplierList(parmes).then((res) => {
         // console.log('s', res.data)
@@ -269,7 +268,7 @@ export default {
         this.totalCount = res.data.totalCount
         if (res.status === 200) {
           setTimeout(() => {
-            this.loading = false
+            this.$nuxt.$loading.finish()
           }, 500)
         }
       })

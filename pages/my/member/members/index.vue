@@ -144,6 +144,7 @@ export default {
       })
     },
     postOrder (params) {
+      this.$nuxt.$loading.start()
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.postVipOrder(params).then((res) => {
         if (res.status === 200) {
@@ -156,13 +157,13 @@ export default {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.buyPayment(params).then((res) => {
         if (res.status === 200) {
-          console.log(res, '支付链接')
-          this.order = res.data.paymentId
+          // console.log(res, '支付链接')
+          this.$nuxt.$loading.finish()
           this.qrCode(res.data.payCode)
           this.canvas = true
           setTimeout(() => {
             this.canvasTwo = true
-          }, 500)
+          }, 200)
           this.timer = setInterval(() => {
             this.buyStatus({ paymentId: res.data.paymentId })
           }, 1000)

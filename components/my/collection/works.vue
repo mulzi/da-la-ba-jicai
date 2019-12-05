@@ -22,8 +22,8 @@
               项目名称：{{ t.name }}
             </el-row>
             <el-row class="numbers">
-              <i class="el-icon-view">&nbsp;{{t.browser}}</i>
-              <i class="el-icon-chat-dot-square">&nbsp;{{t.comment}}</i>
+              <i class="el-icon-view">&nbsp;{{ t.browser }}</i>
+              <i class="el-icon-chat-dot-square">&nbsp;{{ t.comment }}</i>
               <i class="iconfont">&#xe680;&nbsp;{{ t.likes }}</i>
               <span>{{ t.createdAtStr }}</span>
             </el-row>
@@ -68,7 +68,7 @@ export default {
   methods: {
     handleCurrentChange (val) {
       this.page = val - 1
-      this.get({ size: this.size, page: this.page })
+      this.get({ attribute: 4, size: this.size, page: this.page })
     },
     get (params) {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })

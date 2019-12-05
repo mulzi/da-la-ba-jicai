@@ -20,6 +20,18 @@ export class HomeService {
       // eslint-disable-next-line no-undef
     })
   }
+  async getAreas () { // 获取地区第二接口 建表
+    const token = await this.auth.checkAndRefreshToken()
+    return this.axios({
+      url: `/api/basic/open/area/getAreas.json`,
+      method: 'GET',
+      headers: {
+        Authorization: token.accessToken
+      },
+      timeout: TIME_OUT
+      // eslint-disable-next-line no-undef
+    })
+  }
   async getType () { // 获取项目信息列表类别
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({

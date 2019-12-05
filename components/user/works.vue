@@ -48,7 +48,7 @@ export default {
         width: 100%;
         background: #ffffff;
         .contentList{
-            margin: 40px 0;
+            margin: 60px 0;
             padding: 0 30px;
             overflow: hidden;
             a{

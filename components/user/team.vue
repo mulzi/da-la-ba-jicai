@@ -71,7 +71,7 @@ export default {
         width: 100%;
         background: #ffffff;
         .list{
-            margin-top: 32px;
+            margin-top: 60px;
             padding: 0 30px;
             overflow: hidden;
             .a{

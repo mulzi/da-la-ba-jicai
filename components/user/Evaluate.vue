@@ -152,7 +152,7 @@ export default {
     overflow: hidden;
     .formBox{
       width: 94%;
-      margin: 40px auto 0;
+      margin: 60px auto 0;
       form{
         display: block;
         .top{

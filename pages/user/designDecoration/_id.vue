@@ -107,15 +107,13 @@ export default {
 
     }
   },
-  computed: {
+  asyncData (context) {
+    const { params } = context
+    const homeService = new HomeService(context)
+    return homeService.getUserDetails({ supplierId: params.id }).then((res) => {
+      return { dates: res.data.result }
+    })
   },
-  // asyncData (context) {
-  //   const { params } = context
-  //   const homeService = new HomeService(context)
-  //   return homeService.getUserDetails({ supplierId: params.id }).then((res) => {
-  //     return { dates: res.data.result }
-  //   })
-  // },
   created () {
     this.getDate()
   },
@@ -147,7 +145,7 @@ export default {
       if (this.collectionFlag) {
         this.collectionFlag = false
         const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-        homeService.createCollection({ type: 0, id: this.$route.params.id }).then((res) => {
+        homeService.createCollection({ type: 3, id: this.$route.params.id }).then((res) => {
           // console.log(res)
           if (res.status === 200) {
             this.$message({
@@ -167,7 +165,7 @@ export default {
     },
     createCollection () { // 取消收藏
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.deletelCollection({ type: 0, id: this.$route.params.id }).then((res) => {
+      homeService.deletelCollection({ type: 3, id: this.$route.params.id }).then((res) => {
         // console.log(res)
         if (res.status === 200) {
           this.$message({

@@ -89,6 +89,7 @@ export default {
   data () {
     return {
       balance: 0,
+      timer: null,
       order: 0,
       canvas: false,
       canvasTwo: false,
@@ -104,10 +105,11 @@ export default {
   },
   methods: {
     changeCanvas () {
-      this.canvas = !this.canvas
+      this.canvas = false
       setTimeout(() => {
-        this.canvasTwo = !this.canvasTwo
+        this.canvasTwo = false
       }, 300)
+      clearInterval(this.timer)
     },
     qrCode (url) { // 生成二维码
       Qrcode.toCanvas(this.$refs.qrcode, url, function (error) {
@@ -144,6 +146,7 @@ export default {
       }
     },
     buyOrder (params) { // 创建订单
+      this.$nuxt.$loading.start()
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.buyOrder(params).then((res) => {
         if (res.status === 200) {
@@ -158,10 +161,15 @@ export default {
       homeService.buyPayment(params).then((res) => {
         if (res.status === 200) {
           console.log(res, '支付链接')
-          this.order = res.data.paymentId
+          this.$nuxt.$loading.finish()
           this.qrCode(res.data.payCode)
-          this.changeCanvas()
-          this.buyStatus({ paymentId: res.data.paymentId })
+          this.canvas = true
+          setTimeout(() => {
+            this.canvasTwo = true
+          }, 300)
+          this.timer = setInterval(() => {
+            this.buyStatus({ paymentId: res.data.paymentId })
+          }, 1000)
         }
       })
     },
@@ -170,12 +178,14 @@ export default {
       homeService.buyStatus(params).then((res) => {
         console.log(res.data.result)
         if (!res.data.result) {
-          setTimeout(() => {
-            this.buyStatus({ paymentId: this.order })
-          }, 1000)
         } else {
           this.changeCanvas()
-          window.location.reload()
+          clearInterval(this.timer)
+          this.$message({
+            message: '恭喜你~~~ 购买成功',
+            type: 'success'
+          })
+          this.getBalance()
         }
       })
     },

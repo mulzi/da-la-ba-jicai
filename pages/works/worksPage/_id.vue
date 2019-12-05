@@ -179,7 +179,7 @@ export default {
         return false
       } else if (this.flagA) {
         this.flagA = false
-        homeService.getCollection({ type: 2, id: this.$route.params.id }).then((res) => {
+        homeService.getCollection({ type: 4, id: this.$route.params.id }).then((res) => {
           // console.log(res)
           if (res.status === 200) {
             this.$message({
@@ -202,7 +202,7 @@ export default {
     },
     delCollection () { // 取消收藏
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.delCollection({ type: 2, id: this.$route.params.id }).then((res) => {
+      homeService.delCollection({ type: 4, id: this.$route.params.id }).then((res) => {
         // console.log(res)
         if (res.status === 200) {
           this.$message({

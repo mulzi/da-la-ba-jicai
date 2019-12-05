@@ -137,7 +137,7 @@ export default {
         width: 100%;
         overflow: hidden;
         .ones{
-            padding: 30px;
+            padding:60px 30px;
             background: #ffffff;
             margin-bottom: 20px;
             .titName{

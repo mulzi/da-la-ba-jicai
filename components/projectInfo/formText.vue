@@ -1,83 +1,73 @@
 <template>
-  <el-row class="AddIntelligence" v-loading="loading">
+  <el-row class="AddIntelligence">
     <el-row class="contentBox">
-      <el-form ref="props" class="formBox demo-ruleForm" onsubmit="return false">
+      <el-form ref="forms" :model="fromBox" class="formBox demo-ruleForm" onsubmit="return false">
         <el-row class="ulAddList">
           <el-row v-for="(ti,ii) in fromBox.contacts" :key="ii" class="topForm">
-            <el-row class="listUl">
-              <el-col class="leftName" :span="6">
-                <em>*</em><span>公司类别：</span>
-              </el-col>
-              <el-col class="rightInp" :span="18">
-                <el-select v-model="fromBox.contacts[ii].categoryId" placeholder="请选择公司类别">
-                  <el-option v-for="(t,i) in type" :key="i" :label="t.name" :value="t.id" />
-                </el-select>
-              </el-col>
-            </el-row>
-            <el-row class="listUl">
-              <el-col :span="6" class="leftName">
-                <em>*</em><span>公司名称：</span>
-              </el-col>
-              <el-col :span="18" class="rightInp">
-                <el-input v-model="fromBox.contacts[ii].companyName" placeholder="请输入公司名称" />
-              </el-col>
-            </el-row>
-            <el-row class="listUl">
-              <el-col class="leftName" :span="6">
-                <span>公司地址：</span>
-              </el-col>
-              <el-col class="rightInp" :span="18">
-                <el-input v-model="fromBox.contacts[ii].address" placeholder="请输入公司地址" />
-              </el-col>
-            </el-row>
-            <el-row class="listUl">
-              <el-col class="leftName" :span="6">
-                <em>*</em><span>联系人：</span>
-              </el-col>
-              <el-col :span="18" class="rightInp">
-                <el-input v-model="fromBox.contacts[ii].name" placeholder="请输入联系人" />
-              </el-col>
-            </el-row>
-            <el-row class="listUl">
-              <el-col :span="6" class="leftName">
-                <span>联系人职位：</span>
-              </el-col>
-              <el-col :span="18" class="rightInp">
-                <el-input v-model="fromBox.contacts[ii].positionLevel" placeholder="请输入联系人职位介绍" />
-              </el-col>
-            </el-row>
-            <el-row class="listUl">
-              <el-col :span="6" class="leftName">
-                <em>*</em><span>联系人职位介绍：</span>
-              </el-col>
-              <el-col :span="18" class="rightInp">
-                <el-input v-model="fromBox.contacts[ii].positionIntroduce" placeholder="请输入联系人职位介绍" />
-              </el-col>
-            </el-row>
-            <el-row class="listUl">
-              <el-col class="leftName" :span="6">
-                <em>*</em><span>联系人职位电话：</span>
-              </el-col>
-              <el-col class="rightInp" :span="18">
-                <el-input v-model="fromBox.contacts[ii].telephone" placeholder="请输入联系人电话" />
-              </el-col>
-            </el-row>
-            <el-row class="listUl">
-              <el-col :span="6" class="leftName">
-                <em>*</em><span>项目阶段：</span>
-              </el-col>
-              <el-col class="rightInp" :span="18">
-                <el-input v-model="fromBox.contacts[ii].projectStage" placeholder="请输入项目阶段" />
-              </el-col>
-            </el-row>
-            <el-row class="listUl">
-              <el-col class="leftName" :span="6">
-                <span>未定材料：</span>
-              </el-col>
-              <el-col class="rightInp" :span="18">
-                <el-input v-model="fromBox.contacts[ii].uncertaintyMaterials" placeholder="请输入未定材料" />
-              </el-col>
-            </el-row>
+            <el-form-item
+              label="公司类别："
+              :prop="'contacts.' + ii + '.categoryId'"
+              :rules="{
+                required: true, message: '公司类别', trigger: 'change'
+              }"
+            >
+              <el-select v-model="ti.categoryId" placeholder="请选择公司类别">
+                <el-option v-for="(t,i) in type" :key="i" :label="t.name" :value="t.id" />
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              label="公司名称："
+              :prop="'contacts.' + ii +'.companyName'"
+              :rules="{
+                required: true, message: '请输入公司名称', trigger: 'blur'
+              }"
+            >
+              <el-input v-model="ti.companyName" placeholder="请输入公司名称" />
+            </el-form-item>
+            <el-form-item label="公司地址：">
+              <el-input v-model="ti.address" placeholder="请输入公司地址" />
+            </el-form-item>
+            <el-form-item
+              label="联系人姓名："
+              :prop="'contacts.' + ii +'.name'"
+              :rules="{
+                required: true, message: '请输入联系人', trigger: 'blur'
+              }"
+            >
+              <el-input v-model="ti.name" placeholder="请输入联系人" />
+            </el-form-item>
+            <el-form-item label="联系人职位：">
+              <el-input v-model="ti.positionLevel" placeholder="请输入联系人职位" />
+            </el-form-item>
+            <el-form-item
+              label="联系人职位介绍："
+              :rules="{
+                required: true, message: '联系人职位介绍', trigger: 'blur'
+              }"
+              :prop="'contacts.' + ii +'.positionIntroduce'"
+            >
+              <el-input v-model="ti.positionIntroduce" placeholder="联系人职位介绍" />
+            </el-form-item>
+            <el-form-item
+              label="联系人电话："
+              :rules="constantsRules.tel"
+              :prop="'contacts.' + ii +'.telephone'"
+            >
+              <el-input v-model="ti.telephone" placeholder="请输入联系人电话" />
+            </el-form-item>
+
+            <el-form-item
+              label="项目阶段："
+              :prop="'contacts.' + ii +'.projectStage'"
+              :rules="{
+                required: true, message: '项目阶段', trigger: 'blur'
+              }"
+            >
+              <el-input v-model="ti.projectStage" placeholder="项目阶段" />
+            </el-form-item>
+            <el-form-item label="未定材料：">
+              <el-input v-model="ti.uncertaintyMaterials" placeholder="未定材料" />
+            </el-form-item>
             <el-row class="listUl">
               <el-col class="leftName" :span="6">
                 <span>项目图片：</span>
@@ -181,6 +171,27 @@ export default {
           }
         ]
       },
+      constantsRules: {
+        tel: [{ required: true, message: '请输入联系人号码', trigger: 'blur' },
+          {
+            validator: (rule, value, callback) => {
+              if (!value) {
+                return callback(new Error('请输入电话号码'))
+              } else {
+                const myreg = /^((13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})|(19[0-9]{9}))$/
+                setTimeout(() => {
+                  if (!myreg.test(value)) {
+                    callback(new Error('请输入正确的电话号码'))
+                  } else {
+                    callback()
+                  }
+                }, 1000)
+              }
+            },
+            trigger: 'change'
+          }
+        ]
+      },
       loading: false
     }
   },
@@ -198,62 +209,29 @@ export default {
         return false
       }
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      const mobile = /^((13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})|(19[0-9]{9}))$/
-      if (this.fromBox.contacts[0].categoryId === null) {
-        this.tipsText = '请选择公司类型'
-        this.DialogVisibles = true
-      } else if (this.fromBox.contacts[0].companyName === null) {
-        this.tipsText = '请输入公司名字'
-        this.DialogVisibles = true
-      } else if (this.fromBox.contacts[0].name === null) {
-        this.tipsText = '请输入联系人名字'
-        this.DialogVisibles = true
-      } else if (this.fromBox.contacts[0].positionIntroduce === null) {
-        this.tipsText = '请输入联系人职位介绍'
-        this.DialogVisibles = true
-      } else if (this.fromBox.contacts[0].telephone === null) {
-        this.tipsText = '请输入联系人电话'
-        this.DialogVisibles = true
-      } else if (!mobile.test(this.fromBox.contacts[0].telephone)) {
-        this.tipsText = '请输入正确的电话号码'
-        this.DialogVisibles = true
-      } else if (this.fromBox.contacts[0].projectStage === null) {
-        this.tipsText = '请输入项目阶段'
-        this.DialogVisibles = true
-      } else {
-        this.loading = true
-        const params = { intelligences: this.fromBox.contacts, projectId: this.$route.params.id }
-        homeService.postIntelligences(params).then((res) => {
-          if (res.status === 200) {
-            this.fromBox = {
-              contacts: [
-                {
-                  id: this.$route.params.id,
-                  projectId: this.$route.params.id,
-                  categoryId: null,
-                  name: null,
-                  companyName: null,
-                  positionLevel: null,
-                  positionIntroduce: null,
-                  address: null,
-                  telephone: null,
-                  projectStage: null,
-                  uncertaintyMaterials: null,
-                  pics: [] // 图片
-
-                }
-              ]
+      const params = { intelligences: this.fromBox.contacts, projectId: this.$route.params.id }
+      this.$refs.forms.validate((valid) => {
+        if (valid) {
+          this.$nuxt.$loading.start()
+          homeService.postIntelligences(params).then((res) => {
+            if (res.status === 200) {
+              setTimeout(() => {
+                this.$refs.forms.resetFields()
+                this.$message({
+                  message: '上传成功',
+                  type: 'success'
+                })
+              }, 1000)
+              this.$nuxt.$loading.finish()
             }
-            setTimeout(() => {
-              this.loading = false
-              this.$message({
-                message: '上传成功',
-                type: 'success'
-              })
-            }, 1000)
-          }
-        })
-      }
+          })
+        } else {
+          this.$message({
+            message: '你的信息没有填完整哦！！',
+            type: 'error'
+          })
+        }
+      })
     },
     overList () {
       this.tipsText = '最多只能传3张图片'
@@ -321,7 +299,7 @@ export default {
   }
 }
 </script>
-<style  scoped lang="scss">
+<style lang="scss">
   .AddIntelligence{
     width: 100%;
     padding-bottom: 50px;
@@ -351,7 +329,6 @@ export default {
               .el-form-item__content{
                 flex: 1;
                 -ms-flex: 1;
-                overflow: hidden;
                 .el-select{
                   width: 100%;
                 }

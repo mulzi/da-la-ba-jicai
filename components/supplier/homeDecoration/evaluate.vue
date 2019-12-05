@@ -101,7 +101,7 @@ export default {
     overflow: hidden;
     .evaluatelIST{
       width: 94%;
-      margin: 30px auto 0;
+      margin: 60px auto 0;
       overflow: hidden;
       .top{
         width: 100%;

@@ -89,6 +89,7 @@ export default {
   .saleBox{
     width: 100%;
     background: #ffffff;
+    margin-top: 20px;
     .saleList{
       padding: 0 30px;
       margin:60px auto 0 ;

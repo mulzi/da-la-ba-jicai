@@ -39,12 +39,14 @@ export default {
       }
     }
   },
-  computed: {
-  },
-  mounted () {
+  created () {
+    console.log(this.list)
     if (this.list) {
       this.imgUrl = this.list[0]
     }
+  },
+  mounted () {
+
   },
   methods: {
     callback () {

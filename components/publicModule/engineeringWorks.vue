@@ -109,7 +109,7 @@ export default {
       min-height: 100vh;
       position: absolute;
       z-index: 901;
-      background: rgba(255,255,255,.95);
+      background: rgba(244,244,244,.95);
       .close{
         width: 60px;
         height: 60px;

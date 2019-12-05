@@ -323,9 +323,11 @@ export default {
     },
     getArea () { // 获取地区
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.getArea().then((res) => {
-        // console.log(res)
-        this.areaList = this.convertTree(res.data.results)
+      homeService.getAreas().then((res) => {
+        if (res.status === 200) {
+          // console.log(res.data, '地区')
+          this.areaList = this.convertTree(res.data)
+        }
       })
     },
     getType () { // 获取类型
@@ -334,19 +336,6 @@ export default {
         // console.log(res)
         this.typeList = this.convertTree(res.data)
         console.log(this.typeList)
-      })
-    },
-    getList () { // 获取列表
-      this.loading = true
-      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.getList({ flag: false, title: this.searchText || '', categoryId: this.type || 0, page: this.pageID, size: this.sizeID, province: this.area[0] || 0, city: this.area[1] || 0, area: this.area[2] || 0 }).then((res) => {
-        if (res.status === 200) {
-          this.loading = false
-          this.date = res.data.results
-          this.totalCount = res.data.totalCount
-          console.log(this.date)
-          console.log(res)
-        }
       })
     },
     convertTree (tree) {

@@ -14,10 +14,10 @@
       <div class="titName">
         <span>公司资质</span>
       </div>
-      <el-row class="banner" v-viewer>
-        <el-carousel :interval="4000" type="card" height="340px">
+      <el-row class="banner">
+        <el-carousel :interval="4000" type="card" height="340px" >
           <el-carousel-item v-for="(item,index) in dates.credentialImages" :key="index">
-            <img :src="item.pic" alt="">
+            <img :src="item.pic" alt="" v-viewer>
           </el-carousel-item>
         </el-carousel>
       </el-row>
@@ -218,6 +218,9 @@ export default {
       }
       &:last-child{
         margin-bottom: 100px;
+      }
+      &:first-child{
+        padding-top: 60px;
       }
     }
   }

@@ -259,6 +259,9 @@ export default {
       &:last-child{
         margin-bottom: 100px;
       }
+      &:first-child{
+        padding-top: 60px;
+      }
     }
   }
 </style>

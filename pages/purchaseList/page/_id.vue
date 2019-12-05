@@ -11,10 +11,10 @@
             </nuxt-link>
             <span class="iconfont right">&#xe603;</span>
             <nuxt-link to="/purchaseList">
-              招采信息
+              采购信息
             </nuxt-link>
             <span class="iconfont right">&#xe603;</span>
-            <span>招采详情</span>
+            <span>采购详情</span>
           </div>
         </el-col>
       </el-row>

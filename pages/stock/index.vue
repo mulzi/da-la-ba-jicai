@@ -24,7 +24,8 @@
             <div class="right class" />
             <div class="leftBottom class" />
             <div class="rightBottom class" />
-          </div> <div class="text">
+          </div>
+          <div class="text">
             <div>
               请用微信扫描上方二维码
             </div> <span>进入公众号查看</span>
@@ -72,7 +73,7 @@ export default {
             content: '';
             border-top: 2px solid gray;
             border-left: 2px solid gray;
-            margin: .7rem .5rem .5rem .5rem;
+            margin: 14px 9px 9px 9px;
           }
           &:after{
             display: block;
@@ -82,7 +83,7 @@ export default {
             content: '';
             border-top: 2px solid gray;
             border-left: 2px solid gray;
-            margin: .7rem .5rem .5rem .5rem;
+            margin: 14px 9px 9px 9px;
           }
         }
         &.right{
@@ -95,7 +96,7 @@ export default {
             content: '';
             border-top: 2px solid gray;
             border-right: 2px solid gray;
-            margin: .5rem .5rem -.5rem .5rem;
+            margin: 9px 9px -9px 9px;
             width: 97px;
           }
           &::after{
@@ -107,7 +108,7 @@ export default {
             right: 0;
             border-top: 2px solid gray;
             border-right: 2px solid gray;
-            margin: .5rem -.5rem -.5rem -.5rem;
+            margin: 9px -9px -9px -9px;
           }
         }
         &.leftBottom{
@@ -120,7 +121,7 @@ export default {
             content: '';
             border-top: 2px solid gray;
             border-left: 2px solid gray;
-            margin: .7rem .5rem -.5rem .5rem;
+            margin: 14px 9px -9px 9px;
             position: absolute;
             bottom: 0;
             width:85px;
@@ -132,7 +133,7 @@ export default {
             content: '';
             border-top: 2px solid gray;
             border-right: 2px solid gray;
-            margin: .7rem .5rem -.5rem .5rem;
+            margin: 14px 9px -9px 9px;
           }
         }
         &.rightBottom{
@@ -145,7 +146,7 @@ export default {
             content: '';
             border-top: 2px solid gray;
             border-left: 2px solid gray;
-            margin: -.7rem -.5rem -.5rem -.5rem;
+            margin: -14px -9px -9px -9px;
             position: absolute;
             bottom: 0;
             right: 0;
@@ -160,11 +161,15 @@ export default {
             bottom: 0;
             border-top: 2px solid gray;
             border-right: 2px solid gray;
-            margin: -.7rem -.5rem -.5rem -.5rem;
+            margin: -14px -9px -9px -9px;
           }
         }
       }
-
+       .text{
+         margin-top: 100px;
+         color: #555555;
+         font-size: 18px;
+       }
     }
   }
 </style>

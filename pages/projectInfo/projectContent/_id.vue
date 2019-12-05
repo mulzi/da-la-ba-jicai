@@ -42,9 +42,9 @@
           </li>
         </el-row>
         <el-row class="bo_list">
-            <project-int v-if="this.$store.state.projectInfo.num === 0" :list="date" />
-            <contact v-if="this.$store.state.projectInfo.num === 1" />
-            <form-text v-if="this.$store.state.projectInfo.num === 2" />
+          <project-int v-if="this.$store.state.projectInfo.num === 0" :list="date" />
+          <contact v-if="this.$store.state.projectInfo.num === 1" />
+          <form-text v-if="this.$store.state.projectInfo.num === 2" />
         </el-row>
       </el-row>
       <message-one class="marginBottom100" v-if="this.$store.state.projectInfo.num === 0" />

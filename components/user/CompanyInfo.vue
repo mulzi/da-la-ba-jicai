@@ -65,7 +65,7 @@ export default {
 .companyInfo{
     width: 100%;
     .topNewsBox{
-        padding: 30px;
+        padding: 60px 30px;
         overflow: hidden;
         background: #ffffff;
         li{

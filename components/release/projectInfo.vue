@@ -488,9 +488,9 @@ export default {
     },
     getArea () { // 获取项目地区
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.getArea().then((res) => {
+      homeService.getAreas().then((res) => {
         // console.log('项目地区', res.data.results)
-        this.areaList = this.convertTree(res.data.results)
+        this.areaList = this.convertTree(res.data)
         // console.log(this.options)
         setTimeout(() => {
           console.log(this.area)

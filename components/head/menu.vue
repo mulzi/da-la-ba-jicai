@@ -39,7 +39,7 @@ export default {
           path: '/projectInfo'
         },
         {
-          title: '招采信息',
+          title: '采购信息',
           path: '/purchaseList'
         },
         {

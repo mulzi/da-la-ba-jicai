@@ -11,7 +11,7 @@
         <el-row>
           <el-row class="tit">
             <el-row class="name">
-              招采信息
+              采购信息
             </el-row>
             <el-row class="desc">
               <em>ISSUING
@@ -276,9 +276,9 @@ export default {
     },
     getArea () { // 获取地区
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.getArea().then((res) => {
+      homeService.getAreas().then((res) => {
         console.log(res.data)
-        this.areaList = this.convertTree(res.data.results)
+        this.areaList = this.convertTree(res.data)
       })
     },
     getType () { // 获取类型
