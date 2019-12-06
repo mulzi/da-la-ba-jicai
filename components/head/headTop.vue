@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="rightShops">
-          <nuxt-link to="/">
+          <nuxt-link :to="{path: '/'}">
             首页
           </nuxt-link>
           <nuxt-link to="/my/collection">

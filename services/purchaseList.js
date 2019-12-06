@@ -24,7 +24,7 @@ export class HomeService {
   async getAreas () { // 获取地区第二接口 建表
     const token = await this.auth.checkAndRefreshToken()
     return this.axios({
-      url: `/api/basic/open/area/getAreas.json`,
+      url: `/api/basic/open/getAreasExcludeProvince.json`,
       method: 'GET',
       headers: {
         Authorization: token.accessToken

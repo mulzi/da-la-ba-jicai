@@ -1,12 +1,18 @@
 <template>
   <div class="menu">
     <div class="list">
-      <nuxt-link to="/">
-        首页
-      </nuxt-link>
-      <nuxt-link v-for="(item,index) in nav" :key="index" :to="item.path">
-        {{ item.title }}
-      </nuxt-link>
+      <ul>
+        <li>
+          <nuxt-link to="/">
+            首页
+          </nuxt-link>
+        </li>
+        <li v-for="(item,index) in nav" :key="index">
+          <nuxt-link :to="item.path">
+            {{ item.title }}
+          </nuxt-link>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -78,29 +84,51 @@ export default {
       margin: 0 auto 0;
       border-bottom: 1px solid $redColor;
       overflow: hidden;
-      display: -ms-flex;
-      display: flex;
+      ul{
+        width: 100%;
+        display: -ms-flex;
+        display: flex;
+        li{
+          flex: 1 1 auto;
+          -ms-flex: 1 1 auto;
+          a {
+            width: 100%;
+            display: inline-block;
+            font-family: "Microsoft YaHei", "微软雅黑";
+            margin-bottom: 10px;
+            text-align: center;
+            height: 30px;
+            line-height: 30px;
+            font-size: 18px;
+            color: #616161;
+            text-align: center;
+            &:hover {
+              color: $redColor;
+            }
+          }
+        }
 
-      a {
-        margin-bottom: 10px;
-        flex: 1;
-        -ms-flex: 1;
-        text-align: center;
-        height: 30px;
-        line-height: 30px;
-        font-size: 18px;
-        width: 11%;
-        float: left;
-        color: #616161;
-        &.nuxt-link-exact-active{
-          color: $redColor;
-        }
-        &:hover {
-          color: #DA251D;
-        }
       }
+
     }
 
+  }
+
+</style>
+<style lang="scss">
+  .menu{
+    .list{
+      ul{
+        li{
+          a{
+            &.nuxt-link-exact-active.nuxt-link-active{
+              color: $redColor;
+            }
+          }
+        }
+      }
+
+    }
   }
 
 </style>

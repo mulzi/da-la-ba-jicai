@@ -79,7 +79,7 @@ export default {
     getProject () {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getProject(this.$route.params.id).then((res) => {
-        // console.log('详情', res.data)
+        console.log('详情', res.data)
         this.date = res.data
       })
     },

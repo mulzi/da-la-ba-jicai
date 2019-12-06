@@ -9,12 +9,14 @@
           <div v-for="(item,index) in goodNews " :key="index" class="swiper-slide clearfix swiper-no-swiping">
             <el-row class="pone">
               <nuxt-link target="_blank" :to="`/purchaseList/detailsPage/${item.id}`" class="p1">
-                <em>恭喜</em>{{ item.info | text }}
+                <el-col class="abc">
+                  <em>恭喜</em>{{ item.info | text }}
+                </el-col>
               </nuxt-link>
-              <i>{{ item.money }}</i>
-              <span>
+              <div class="i">{{ item.money }}</div>
+              <div class="span" >
                 {{ item.createdAtStr }}
-              </span>
+              </div>
             </el-row>
           </div>
         </div>
@@ -111,39 +113,42 @@ export default {
                         height: 96px;
                         overflow: hidden;
                         .swiper-slide{
-                            display: flex;
-                            display: -ms-flex;
                           .pone{
                             display: flex;
                             display: -ms-flex;
                             align-items: center;
-                            justify-items: center;
                             .p1{
-                              display: block;
                               flex: 1;
+                              -ms-flex: 1;
                               height: 32px;
                               line-height: 32px;
                               margin-left: 30px;
                               color: #333333;
                               font-size: 14px;
-                              align-items: center;
-                              @include over;
-                              em{
-                                color: $redColor;
+                              overflow: hidden;
+                              .abc{
+                                width: 100%;
+                                @include over;
+                                em{
+                                  color: $redColor;
 
+                                }
                               }
+
                             }
-                            span{
+                            .span{
                               width: 80px;
-                              margin-left: 20px;
                               font-size:14px ;
                               color: #333333;
+                              text-align: right;
+                              margin-left: auto;
+                              display: block;
                             }
-                            i{
-                              min-width: 66px;
+                            .i{
+                              display: block;
+                              width: 66px;
                               color: $redColor;
                               font-size: 14px;
-                              margin-left: 40px;
                             }
                           }
 

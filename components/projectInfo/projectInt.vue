@@ -2,12 +2,12 @@
   <el-row class="one">
     <div class="text">
       <p>
-{{ list.introduce }}
+        {{ list.introduce }}
       </p>
     </div>
-    <div v-viewer class="boImg" v-if="list.pics !== undefined && list.pics.length > 0">
+    <div class="boImg" v-if="list.pics !== undefined && list.pics.length > 0">
       <li v-for="(t,i) in list.pics" :key="i">
-        <span>
+        <span v-viewer>
           <img :src="t.pic" alt="">
         </span>
       </li>

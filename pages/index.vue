@@ -63,6 +63,15 @@ export default {
       // console.log('首页全部数据', res.data)
       return { home: res.data || {} }
     })
+  },
+  head () {
+    return {
+      title: '大喇叭集采-工程项目采购信息供需服务平台',
+      meta: [
+        { hid: 'keyworks', name: 'keyworks', content: '大喇叭集采,材料供应商,设计施工方,建材市场价,工程作品精选' },
+        { hid: 'description', name: 'description', content: '大喇叭集采网一家针对业主、设计方、施工方、材料方多方信息交互、信用体系建立的大数据供需平台；同时大喇叭为家装业主提供材料询价砍价服务，大喇叭集采网每天更新上千条招标信息,工程项目信息是行业最全、覆盖地区及招标行业最广的专业平台,众多用户精准情报,项目采购信息,工程项目信息能通过平台发布；大喇叭集采网已成为业主单位、施工单位、设计单位进行招标采购的首选平台,让工程找供应商,供应商找工程,让工程变得更简单,成为您做工程业务的好帮手。' }
+      ]
+    }
   }
   // async fetch (context) {
   //   const auth = new Auth(context)

@@ -142,10 +142,9 @@ html, body {
 
         a {
           display: inline-block;
-          padding: 0 6px;
-          margin: 0 10px;
+          margin: 0 0 0 20px;
           font-size: 12px;
-          color: #666666;
+          color: #333333;
         }
       }
     }
@@ -233,6 +232,7 @@ html, body {
         margin-right: 16px;
         margin-top: 8px;
         cursor: pointer;
+        color: #989898;
 
         &.active {
           color: #DA251D;

@@ -110,7 +110,7 @@ export default {
                 height: 24px;
                 line-height: 24px;
                 &:nth-child(1){
-                  margin-top: 10px;
+                  margin-top: 2px;
                   color: #1a1a1a;
                   font-size: 18px;
                   &:hover{
@@ -120,6 +120,7 @@ export default {
                 &:nth-child(2){
                   color: #808080;
                   font-size: 15px;
+                  margin-top: 10px;
                   em{
                     color: #333333;
 
@@ -128,6 +129,7 @@ export default {
                 &:nth-child(3){
                   color: #808080;
                   font-size: 15px;
+                  margin-top: 10px;
                   em{
                     color: #333333;
 

@@ -7,7 +7,7 @@ export default {
     ** Headers of the page
     */
   head: {
-    title: '大喇叭集采-一家工程行业多方数据采集,多方需求集采的大数据供需平台',
+    // title: '大喇叭集采-一家工程行业多方数据采集,多方需求集采的大数据供需平台',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes' }
@@ -47,7 +47,8 @@ export default {
     */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    '@/modules/static/'
   ],
   /*
     ** Nuxt.js modules
@@ -109,5 +110,9 @@ export default {
         */
     extend (config, ctx) {
     }
+  },
+  generate: {
+    fallback: true,
+    interval: 100
   }
 }

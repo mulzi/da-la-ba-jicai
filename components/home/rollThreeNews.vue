@@ -122,7 +122,7 @@ export default {
                 align-items: center;
                 a{
                   color: $redColor;
-                  max-width: 150px;
+                  max-width: 130px;
                   display: inline-block;
                   @include over;
                   height: 32px;

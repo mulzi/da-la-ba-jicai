@@ -21,7 +21,6 @@
               板块：
             </div>
             <div class="rightList">
-              <span :class="supplierOne === 999 ? 'active': '' " @click="changeOne(999), getWorksOneList() ,changeCategoryIdNuOne(0),getSupplierList({ sourceId: 0, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })">全部</span>
               <span
                 v-for="(item,index) in supplierOneTit"
                 :id="item.id"
@@ -146,11 +145,11 @@ export default {
         }
       ],
       getSupplierLiList: [],
-      supplierOne: 999, // 选项1样式记录
+      supplierOne: 0, // 选项1样式记录
       supplierTwo: 0, // 选项2样式记录
       supplierThree: 0, // 选项3样式记录
       supplierFour: 0, // 选项4样式记录
-      sourceId: 0, // 板块临时存储
+      sourceId: 10000, // 板块临时存储
       typeId: 0, // 产品类型临时存储
       styleId: 0, // 作品风格临时存储
       searchId: 0, // 搜索类型临时存储
@@ -271,189 +270,189 @@ export default {
 </script>
 
 <style scoped lang="scss">
-      .topMenuBox{
-        background: #ffffff;
+  .topMenuBox{
+    background: #ffffff;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 20px;
+    .contentBox{
+      width:92% ;
+      max-width: 1342px;
+      margin: 40px auto 0;
+      .defaultBox{
         width: 100%;
-        overflow: hidden;
-        margin-top: 20px;
-        .contentBox{
-          width:92% ;
-          max-width: 1342px;
-          margin: 40px auto 0;
-          .defaultBox{
-            width: 100%;
-            margin-bottom: 20px;
-            border-bottom: 1px solid $borderE7;
-            display: flex;
-            display: -ms-flex;
-            .leftText{
-              width: 80px;
-              height: 30px;
-              line-height: 30px;
-              margin-bottom: 16px;
-              text-align: right;
-              font-size: 14px;
-              font-weight: bold;
-              color: #333333;
-            }
-            .rightList{
-              flex: 1;
-              -ms-flex: 1;
-              font-size: 0;
-              span{
-                display: inline-block;
-                height: 26px;
-                line-height: 26px;
-                font-size: 14px;
-                color: #666666;
-                margin: 0 6px 6px 0;
-                border-radius: 2px;
-                padding: 2px 10px;
-                cursor: pointer;
-                &.active{
-                  color: #ffffff;
-                  background: $redColor;
-                }
-                &:hover{
-                  color: #ffffff;
-                  background: $redColor;
-                  @include triText;
-                }
-              }
-            }
-          }
-          .defaultBoxTwo{
-            width: 100%;
-            margin-bottom: 20px;
-            .contentx{
-              width: 100%;
-              text-align: center;
-              span{
-                font-size: 16px;
-                display: inline-block;
-                margin-right: 60px;
-                cursor: pointer;
-                &:hover{
-                  color: $redColor;
-                }
-                &.active{
-                  color: $redColor;
-                }
-              }
-            }
-          }
+        margin-bottom: 20px;
+        border-bottom: 1px solid $borderE7;
+        display: flex;
+        display: -ms-flex;
+        .leftText{
+          width: 80px;
+          height: 30px;
+          line-height: 30px;
+          margin-bottom: 16px;
+          text-align: right;
+          font-size: 14px;
+          font-weight: bold;
+          color: #333333;
         }
-      }
-      .bottomListBox{
-        margin-top: 30px;
-        width: 100%;
-
-        .contentList{
-          width: 100%;
-          a{
-            width:19% ;
-            float: left;
-            margin-right: 1.25%;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            background: #ffffff;
-            >p{
-              width: 100%;
-              height:258px ;
-              img{
-                @include img;
-              }
-            }
-            &:nth-child(5n){
-              margin-right: 0;
-            }
-            .topNameBox{
-              width: 100%;
-              margin: 0 auto;
-              border-bottom: 1px solid $borderE7;
-              .oneName{
-                width: 90%;
-                margin: 10px auto 0;
-                height: 20px;
-                line-height: 20px;
-                color: #333333;
-                font-size: 14px;
-                @include over;
-
-              }
-              .twoName{
-                width: 90%;
-                margin: 10px auto 0;
-                height: 18px;
-                line-height: 18px;
-                color: #333333;
-                font-size: 12px;
-                @include over;
-              }
-              .numbers{
-                width: 90%;
-                margin: 14px auto ;
-                font-size: 12px;
-                color: #bfbfbf;
-                @include over;
-                i{
-                  font-size: 12px;
-                  margin-right: 6px;
-                }
-                span{
-                  margin-left: 10px;
-                }
-              }
-            }
-            .b_name{
-              width: 90%;
-              margin: 10px auto;
-              display: flex;
-              display: -ms-flex;
-              justify-items: center;
-              align-items: center;
-              img{
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-              }
-              span{
-                flex: 1;
-                display: block;
-                -ms-flex: 1;
-                @include over;
-                margin-left: 10px;
-                font-size:12px ;
-                color: #333333;
-              }
+        .rightList{
+          flex: 1;
+          -ms-flex: 1;
+          font-size: 0;
+          span{
+            display: inline-block;
+            height: 26px;
+            line-height: 26px;
+            font-size: 14px;
+            color: #666666;
+            margin: 0 6px 6px 0;
+            border-radius: 2px;
+            padding: 2px 10px;
+            cursor: pointer;
+            &.active{
+              color: #ffffff;
+              background: $redColor;
             }
             &:hover{
-              transition: .2s ease-in;
-              box-shadow: 0px 6px 20px #cbcbcb;
+              color: #ffffff;
+              background: $redColor;
+              @include triText;
             }
-
-          }
-        }
-        .NoData{
-          background: #ffffff;
-          width: 100%;
-          height: 600px;
-          overflow: hidden;
-          .img{
-            width: 200px;
-            height: 200px;
-            margin: 100px auto;
-            img{
-              @include img;
-            }
-
-          }
-          .text{
-            font-size: 13px;
-            color: #333333;
-            text-align: center;
           }
         }
       }
+      .defaultBoxTwo{
+        width: 100%;
+        margin-bottom: 20px;
+        .contentx{
+          width: 100%;
+          text-align: center;
+          span{
+            font-size: 16px;
+            display: inline-block;
+            margin-right: 60px;
+            cursor: pointer;
+            &:hover{
+              color: $redColor;
+            }
+            &.active{
+              color: $redColor;
+            }
+          }
+        }
+      }
+    }
+  }
+  .bottomListBox{
+    margin-top: 30px;
+    width: 100%;
+
+    .contentList{
+      width: 100%;
+      a{
+        width:19% ;
+        float: left;
+        margin-right: 1.25%;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        background: #ffffff;
+        >p{
+          width: 100%;
+          height:258px ;
+          img{
+            @include img;
+          }
+        }
+        &:nth-child(5n){
+          margin-right: 0;
+        }
+        .topNameBox{
+          width: 100%;
+          margin: 0 auto;
+          border-bottom: 1px solid $borderE7;
+          .oneName{
+            width: 90%;
+            margin: 10px auto 0;
+            height: 20px;
+            line-height: 20px;
+            color: #333333;
+            font-size: 14px;
+            @include over;
+
+          }
+          .twoName{
+            width: 90%;
+            margin: 10px auto 0;
+            height: 18px;
+            line-height: 18px;
+            color: #333333;
+            font-size: 12px;
+            @include over;
+          }
+          .numbers{
+            width: 90%;
+            margin: 14px auto ;
+            font-size: 12px;
+            color: #bfbfbf;
+            @include over;
+            i{
+              font-size: 12px;
+              margin-right: 6px;
+            }
+            span{
+              margin-left: 10px;
+            }
+          }
+        }
+        .b_name{
+          width: 90%;
+          margin: 10px auto;
+          display: flex;
+          display: -ms-flex;
+          justify-items: center;
+          align-items: center;
+          img{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+          }
+          span{
+            flex: 1;
+            display: block;
+            -ms-flex: 1;
+            @include over;
+            margin-left: 10px;
+            font-size:12px ;
+            color: #333333;
+          }
+        }
+        &:hover{
+          transition: .2s ease-in;
+          box-shadow: 0px 6px 20px #cbcbcb;
+        }
+
+      }
+    }
+    .NoData{
+      background: #ffffff;
+      width: 100%;
+      height: 600px;
+      overflow: hidden;
+      .img{
+        width: 200px;
+        height: 200px;
+        margin: 100px auto;
+        img{
+          @include img;
+        }
+
+      }
+      .text{
+        font-size: 13px;
+        color: #333333;
+        text-align: center;
+      }
+    }
+  }
 </style>
