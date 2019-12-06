@@ -47,7 +47,7 @@ export default {
     getContact () { // 获取联系人列表
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getContact(this.$route.params.id).then((res) => {
-        console.log(res.data.result, '联系人 ')
+        console.log(res, '联系人 ')
         if (res.data.result.intelligence !== [] && res.data.result.intelligence.length > 0) {
           this.dateE = res.data.result.intelligence
           this.$store.commit('projectInfo/changeDateE')

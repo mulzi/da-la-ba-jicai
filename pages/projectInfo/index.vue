@@ -102,7 +102,7 @@
                   <span v-if="t.intelligences">精准情报</span>
                 </el-col>
               </el-col>
-              <el-col :span="6">
+              <el-col :span="6" style="text-align: right">
                 {{ t.updatedAtStr }}
               </el-col>
             </el-row>
@@ -372,7 +372,6 @@ export default {
           margin-top: 30px;
           a{
             float: left;
-            height: 224px;
             width: 49%;
             margin-right: 2%;
             background: #ffffff;
@@ -384,7 +383,7 @@ export default {
             }
             .topBox{
               padding: 0 30px;
-              margin: 40px 0;
+              margin: 25px 0;
               .one{
                 width: 100%;
                 @include over;
@@ -394,7 +393,7 @@ export default {
               }
               .two{
                 width: 100%;
-                margin-top: 20px;
+                margin-top: 16px;
                 height: 48px;
                 line-height: 24px;
                 @include twoText;

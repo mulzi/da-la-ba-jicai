@@ -379,15 +379,15 @@ export default {
             message: '上传成功！请等待审核！！！',
             type: 'success'
           })
-          this.$store.commit('release/changeNumber', 1)
-          this.$nextTick(() => {
-            this.$nuxt.$loading.start()
-            this.$store.commit('release/changeNumber', 0)
-            this.$store.commit('release/changeNum', 0)
-            setTimeout(() => {
-              this.$nuxt.$loading.finish()
-            }, 500)
-          })
+          // this.$store.commit('release/changeNumber', 1)
+          // this.$nextTick(() => {
+          //   this.$nuxt.$loading.start()
+          //   this.$store.commit('release/changeNumber', 0)
+          //   this.$store.commit('release/changeNum', 0)
+          //   setTimeout(() => {
+          //     this.$nuxt.$loading.finish()
+          //   }, 500)
+          // })
         }
       })
     },
@@ -409,21 +409,23 @@ export default {
       const that = this
       const fileName = file.response.uri
       that.delone(fileName)
+      console.log(this.form.pic)
     },
 
     // 删除图片数组具体函数del
     delone (fileName) {
       const that = this
-      const arr = that.form.project.pic
+      const arr = that.form.pic
       const del = arr.indexOf(fileName)
-      that.form.project.pic.splice(del, 1)
+      that.form.pic.splice(del, 1)
     },
 
     // 图片上传
     uploadPicture (response, file, fileList) {
       console.log(response.uri)
-      this.form.project.pic.push(response.uri)
+      this.form.pic.push(response.uri)
       this.dialogImageUrl = file.url
+      console.log(this.form.pic)
     },
     beforeAvatarUpload (file) { // 文件上传之前调用做一些拦截限制
       console.log(file)
