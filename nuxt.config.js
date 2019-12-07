@@ -70,14 +70,14 @@ export default {
     ** See https://axios.nuxtjs.org/options
     */
   axios: {
-    baseURL: 'http://qy.cqsudu.com:10200/',
+    baseURL: 'http://lightning-gateway:13020/',
     browserBaseURL: '/',
     proxy: false
   },
 
   proxy: {
     '/api': {
-      target: 'http://qy.cqsudu.com:10200/',
+      target: 'http://lightning-gateway:13020/',
       pathRewrite: {
         '^/api': '/api'
       }
