@@ -69,7 +69,7 @@ export default {
 <style scoped lang="scss">
     .teamBox{
         width: 100%;
-        background: #ffffff;
+        background: rgba(0,0,0,9);
         .list{
             margin-top: 60px;
             padding: 0 30px;

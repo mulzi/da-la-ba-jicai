@@ -161,7 +161,7 @@ export default {
               overflow: hidden;
               display: flex;
               display: -ms-flex;
-              margin-bottom: 30px;
+              margin-bottom: 20px;
               justify-items: center;
               .leftName{
                 width: 110px;

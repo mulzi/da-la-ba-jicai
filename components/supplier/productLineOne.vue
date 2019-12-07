@@ -145,7 +145,6 @@ export default {
             .Property{
               padding: 0 9px;
               margin-top: 6px;
-              height: 66px;
               overflow: hidden;
               p{
                 height: 22px;

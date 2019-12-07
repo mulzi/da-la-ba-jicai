@@ -52,7 +52,10 @@
               【作品介绍】
             </div>
             <div class="content_c">
-              <p>
+              <div v-if="date.supplement !== undefined && date.supplement !== null" class="cText" v-html="date.supplement">
+                {{ date.supplement }}
+              </div>
+              <p v-else>
                 {{ date.introduce }}
               </p>
               <p v-for="(t,i) in date.worksExpands" :key="i">
@@ -158,12 +161,14 @@ export default {
     getWorksDetails (pamars) { // 获取详情
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getWorksDetails(pamars).then((res) => {
-        console.log('详情', res.data.result)
-        this.date = res.data.result
-        this.getRecommend({ source: this.date.sourceId, size: 10 })
-        setTimeout(() => {
-          this.loading = false
-        }, 500)
+        if (res.status === 200) {
+          console.log('详情', res.data.result)
+          this.date = res.data.result
+          this.getRecommend({ source: this.date.sourceId, size: 10 })
+          setTimeout(() => {
+            this.loading = false
+          }, 500)
+        }
       })
     },
     getCollection () { // 添加收藏
@@ -371,7 +376,17 @@ export default {
                 .content_c {
                     width: 92%;
                     margin: 20px auto 40px;
-
+                     .cText{
+                       width: 100%;
+                       overflow: hidden;
+                       p{
+                         width: 100%;
+                         img{
+                           width: 94%;
+                           margin: 0 auto;
+                         }
+                       }
+                     }
                     p {
                         width: 100%;
                         text-indent: 2em;
@@ -577,4 +592,23 @@ export default {
             }
         }
     }
+</style>
+
+<style lang="scss">
+  .cText{
+    width: 100%;
+    overflow: hidden;
+    p{
+      width: 100%;
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #333333;
+      line-height: 26px;
+      img{
+        max-width: 94%;
+        display: block;
+        margin: 0 auto;
+      }
+    }
+  }
 </style>

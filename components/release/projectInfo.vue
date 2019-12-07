@@ -136,11 +136,12 @@
               :before-upload="beforeAvatarUpload"
               :on-exceed="handleExceed"
             >
-              <i class="el-icon-plus" />
+              <el-row v-if=" form.pic !== undefined && form.pic.length < 2" size="small" type="primary">
+                <span style="width: 120px;height: 120px;background: gainsboro;display: flex; opacity: 0.5;">
+                  <i class="el-icon-plus" style="margin: auto;font-size: 20px" />
+                </span>
+              </el-row>
             </el-upload>
-            <el-dialog :visible.sync="dialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt="">
-            </el-dialog>
           </el-row>
           <el-row class="proNext">
             <div class="left" @click="$store.commit('release/changeNum', 0)">
