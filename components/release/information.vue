@@ -46,7 +46,7 @@
           <el-row class="tips">
             请上传产品图片 <span>（图片限制在2M以内，最多上传3张，支持PNG\PG\JPEG\GIF格式）</span>
           </el-row>
-          <el-row class="upImg">
+          <el-row class="upImg" :class="{imghide:imghide}">
             <el-upload
               accept="image/*"
               action="/api/file/dalaba/file/upload.json"
@@ -127,6 +127,7 @@ export default {
       right: 'right',
       errorText: '', // 错误信息展示
       dialogVisible: false,
+      imghide: false,
       form: {
         class: '', // 项目类别
         nameS: '', // 联系人姓名
@@ -236,6 +237,9 @@ export default {
       const that = this
       const fileName = file.response.uri
       that.delone(fileName)
+      if (this.form.pic.length < 3) {
+        this.imghide = false
+      }
     },
 
     // 删除图片数组具体函数del
@@ -253,6 +257,9 @@ export default {
       this.form.pic.push({ type: 1, 'linkUrl': file.response.uri })
       this.dialogImageUrl = file.url
       console.log(this.form.pic)
+      if (this.form.pic.length > 2) {
+        this.imghide = true
+      }
     },
     beforeAvatarUpload (file) { // 文件上传之前调用做一些拦截限制
       console.log(file)

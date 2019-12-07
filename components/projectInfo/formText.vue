@@ -78,7 +78,7 @@
                   <span class="caption ">（图片限制在4M以内且只能上传3张,支持PNG\PG\JPEG\GIF格式）</span>
                 </el-row>
                 <el-row>
-                  <el-row>
+                  <el-row :class="fromBox.contacts[ii].pics !== undefined && fromBox.contacts[ii].pics.length > 2 ? 'imghide':''">
                     <el-upload
                       action="/api/file/dalaba/file/upload.json"
                       list-type="picture-card"
@@ -91,7 +91,6 @@
                     >
                       <i class="el-icon-plus" />
                     </el-upload>
-                    <el-dialog :visible.sync="dialogVisible" class="updateImg" />
                     <el-dialog
                       title="提示"
                       :visible.sync="DialogVisibles"
@@ -151,6 +150,7 @@ export default {
       DialogVisibles: false,
       dialogVisible: false,
       tipsText: '多少岁',
+      imghide: false,
       dialogImageUrl: '',
       fromBox: {
         contacts: [
@@ -436,5 +436,10 @@ export default {
   .el-upload--picture-card{
     width: 134px;
     height: 134px;
+  }
+</style>
+<style>
+  .imghide .el-upload--picture-card {
+    display: none;
   }
 </style>
