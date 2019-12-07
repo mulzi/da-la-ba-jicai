@@ -45,7 +45,7 @@
             <el-cascader :options="areaList" v-model="form.area" :props="{ expandTrigger: 'hover' }" clearable />
           </el-form-item>
           <el-form-item label="内容：" prop="content">
-            <el-input type="textarea" v-model="form.content" placeholder="请输入招募内容，请输入30字以上" />
+            <el-input type="textarea" v-model="form.content" placeholder="请输入招募内容，请输入10字以上" />
           </el-form-item>
           <el-row class="tips">
             请上传文件 <span>(文件限制在10m以内，支持word/excl等格式)</span>
@@ -133,8 +133,8 @@ export default {
         return callback(new Error('内容不能为空'))
       }
       setTimeout(() => {
-        if (Array.from(value).length < 30) {
-          return callback(new Error('请输入30个字以上！'))
+        if (Array.from(value).length < 10) {
+          return callback(new Error('请输入10个字以上！'))
         } else {
           callback()
         }
@@ -146,6 +146,7 @@ export default {
           return time.getTime() < Date.now() - 8.64e7
         }
       },
+      subFlag: true,
       dialogImageUrl: '',
       right: 'right',
       errorText: '', // 错误信息展示
@@ -213,81 +214,52 @@ export default {
         return false
       }
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      if (this.form.title === '') {
-        this.errorText = '请输入招募！'
-        this.dialogVisible = true
-      } else if (this.form.class === '') {
-        this.errorText = '请选择项目类别！'
-        this.dialogVisible = true
-      } else if (this.form.area === '') {
-        this.errorText = '请选择项目地区！'
-        this.dialogVisible = true
-      } else if (this.form.content === '') {
-        this.errorText = '请输入内容！'
-        this.dialogVisible = true
-      } else if (this.form.content !== undefined && this.form.content.length < 30) {
-        this.errorText = '输入的招募内容不少于30个字！'
-        this.dialogVisible = true
-      } else if (this.form.recruitAnnexeList.length === 0) {
-        this.errorText = '请上传招标文件！'
-        this.dialogVisible = true
-      } else if (this.form.time === '') {
-        this.errorText = '请选择报名截止时间！'
-        this.dialogVisible = true
-      } else if (this.form.companyName === '') {
-        this.errorText = '请输入需求单位名称！'
-        this.dialogVisible = true
-      } else if (this.form.nameS === '') {
-        this.errorText = '请输入联系人姓名！'
-        this.dialogVisible = true
-      } else if (this.form.positionLevel === '') {
-        this.errorText = '请输入联系人职位！'
-        this.dialogVisible = true
-      } else if (this.form.phone === '') {
-        this.errorText = '请输入联系人电话！'
-        this.dialogVisible = true
-      } else {
-        this.$refs.formOne.validate((valid) => {
-          if (!valid) {
-            this.$message({
-              message: '你填写的信息不完整哦！~~~',
-              type: 'warning'
-            })
-          } else {
-            const params = {
-              title: this.form.title,
-              categoryId: this.form.class,
-              content: this.form.content,
-              companyName: this.form.companyName,
-              contactName: this.form.nameS,
-              contactPosition: this.form.positionLevel,
-              contactPhone: this.form.phone,
-              source: 0,
-              expiredAt: this.form.time,
-              province: this.form.area[0],
-              city: this.form.area[1],
-              area: this.form.area[2],
-              recruitAnnexeList: this.form.recruitAnnexeList
-            }
-            homeService.postList(params).then((res) => {
-              if (res.status === 200) {
-                this.$message({
-                  message: '上传成功！请等待审核！！！',
-                  type: 'success'
-                })
-                this.$store.commit('release/changeNumber', 0)
-                this.$nextTick(() => {
-                  this.$nuxt.$loading.start()
-                  this.$store.commit('release/changeNumber', 2)
-                  setTimeout(() => {
-                    this.$nuxt.$loading.finish()
-                  }, 500)
-                })
-              }
-            })
+      this.$refs.formOne.validate((valid) => {
+        if (!valid) {
+          this.$message({
+            message: '你填写的信息不完整哦！~~~',
+            type: 'error'
+          })
+        } else if (this.subFlag) {
+          this.subFlag = false
+          const params = {
+            title: this.form.title,
+            categoryId: this.form.class,
+            content: this.form.content,
+            companyName: this.form.companyName,
+            contactName: this.form.nameS,
+            contactPosition: this.form.positionLevel,
+            contactPhone: this.form.phone,
+            source: 0,
+            expiredAt: this.form.time,
+            province: this.form.area[0],
+            city: this.form.area[1],
+            area: this.form.area[2],
+            recruitAnnexeList: this.form.recruitAnnexeList
           }
-        })
-      }
+          homeService.postList(params).then((res) => {
+            if (res.status === 200) {
+              this.$message({
+                message: '上传成功！请等待审核！！！',
+                type: 'success'
+              })
+              this.$store.commit('release/changeNumber', 0)
+              this.$nextTick(() => {
+                this.$nuxt.$loading.start()
+                this.$store.commit('release/changeNumber', 2)
+                setTimeout(() => {
+                  this.$nuxt.$loading.finish()
+                }, 500)
+              })
+            }
+          })
+        } else {
+          this.$message({
+            message: '请等待~~  提交中',
+            type: 'error'
+          })
+        }
+      })
     },
     handleClose () {
       this.dialogVisible = false

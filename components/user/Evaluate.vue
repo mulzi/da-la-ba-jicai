@@ -92,9 +92,12 @@ export default {
         content: this.text
       }
       this.postComment(params)
-      this.getComment({ otherId: this.$route.params.id, type: 3, page: 0, size: this.size })
-      this.getGoodComment({ otherId: this.$route.params.id, type: 3, page: 0, size: this.size })
-      this.getBadComment({ otherId: this.$route.params.id, type: 3, page: 0, size: this.size })
+      this.flagTwo = true
+      this.flagOne = false
+      this.$nextTick(() => {
+        this.flagTwo = false
+        this.flagOne = true
+      })
     },
     postComment (params) { // 提交评论
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })

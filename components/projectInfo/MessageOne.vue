@@ -64,9 +64,6 @@ export default {
         return
       }
       this.loading = true
-      this.$message({
-        message: '提交中~~~ 请等待'
-      })
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.postComment({ type: 3, otherId: this.$route.params.id, content: this.text }).then((res) => {
         if (res.status === 200) {
@@ -76,13 +73,13 @@ export default {
             message: '提交成功！',
             type: 'success'
           })
+          this.getComment()
           this.text = null
         }
         setTimeout(() => {
           this.flag = true
         }, 10000)
       })
-      this.getComment()
     },
     getComment () {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })

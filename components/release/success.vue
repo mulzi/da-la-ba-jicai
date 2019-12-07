@@ -72,6 +72,7 @@ export default {
       right: 'right',
       errorText: '', // 错误信息展示
       dialogVisible: false,
+      subFlag: true,
       form: {
         title: '', // 项目名称
         companyNameT: '', // 供应方公司名称
@@ -112,34 +113,18 @@ export default {
         return false
       }
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      if (this.form.companyNameT === '') {
-        this.errorText = '请输入供应公司名称！'
-        this.dialogVisible = true
-      } else if (this.form.companyName === '') {
-        this.errorText = '请输入需求公司名称！'
-        this.dialogVisible = true
-      } else if (this.form.money === '') {
-        this.errorText = '请输入金额！'
-        this.dialogVisible = true
-      } else if (this.form.content === '') {
-        this.errorText = '请输入合成过程！'
-        this.dialogVisible = true
-      } else {
-        this.$refs.formOne.validate((valid) => {
-          if (!valid) {
-            this.$message({
-              message: '你填写的信息不完整哦！~~~',
-              type: 'warning'
-            })
-            return false
-          } else {
-            const params = {
-              supplier: this.form.companyNameT,
-              demander: this.form.companyName,
-              projectName: this.form.title,
-              money: this.form.money,
-              cooperation: this.form.content
-            }
+
+      this.$refs.formOne.validate((valid) => {
+        if (valid) {
+          const params = {
+            supplier: this.form.companyNameT,
+            demander: this.form.companyName,
+            projectName: this.form.title,
+            money: this.form.money,
+            cooperation: this.form.content
+          }
+          if (this.subFlag) {
+            this.subFlag = false
             homeService.postSuccess(params).then((res) => {
               if (res.status === 200) {
                 this.$message({
@@ -156,9 +141,21 @@ export default {
                 })
               }
             })
+          } else {
+            this.$message({
+              message: '请等待~~  提交中',
+              type: 'error'
+            })
+            return false
           }
-        })
-      }
+        } else {
+          this.$message({
+            message: '你填写的信息不完整哦！~~~',
+            type: 'error'
+          })
+          return false
+        }
+      })
     },
     handleClose () {
       this.dialogVisible = false

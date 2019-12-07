@@ -62,12 +62,12 @@
             </el-row>
           </el-row>
         </el-row>
-        <el-row class="addItem" to="">
-          <nuxt-link to="">
+        <div @click="$store.commit('release/changeNumber', 3)" class="addItem">
+          <nuxt-link to="/release">
             <em class="iconfont">&#xe880;</em>
-            <span>发布项目</span>
+            <span>发布成功案列</span>
           </nuxt-link>
-        </el-row>
+        </div>
       </el-row>
       <el-row class="cooper marginBottom100">
         <el-row class="tit">

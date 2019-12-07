@@ -27,6 +27,7 @@
                   clearable
                   :options="areaList"
                   :props="{ expandTrigger: 'hover' }"
+                  @change="getPage"
                 />
               </el-col>
             </el-col>
@@ -35,7 +36,7 @@
                 项目类别
               </el-col>
               <el-col :span="18">
-                <el-select v-model="type" clearable placeholder="请选择">
+                <el-select v-model="type" @change="getPage" clearable placeholder="请选择">
                   <el-option
                     v-for="item in typeList"
                     :key="item.value"
@@ -50,7 +51,7 @@
                 项目阶段
               </el-col>
               <el-col :span="18">
-                <el-select v-model="phase" clearable placeholder="请选择">
+                <el-select v-model="phase" @change="getPage" clearable placeholder="请选择">
                   <el-option
                     v-for="item in phaesList"
                     :key="item.value"
@@ -403,7 +404,7 @@ export default {
               .three{
                 color: #999999;
                 font-size: 14px;
-                margin-top: 35px;
+                margin-top: 25px;
                 .red{
                   color: $redColor;
                 }

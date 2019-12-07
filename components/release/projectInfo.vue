@@ -270,6 +270,7 @@ export default {
           name: '装饰方',
           id: 4
         }],
+      subFlag: true,
       imghide: false,
       dialogImageUrl: '',
       number: 0,
@@ -377,15 +378,15 @@ export default {
             message: '上传成功！请等待审核！！！',
             type: 'success'
           })
-          // this.$store.commit('release/changeNumber', 1)
-          // this.$nextTick(() => {
-          //   this.$nuxt.$loading.start()
-          //   this.$store.commit('release/changeNumber', 0)
-          //   this.$store.commit('release/changeNum', 0)
-          //   setTimeout(() => {
-          //     this.$nuxt.$loading.finish()
-          //   }, 500)
-          // })
+          this.$store.commit('release/changeNumber', 1)
+          this.$nextTick(() => {
+            this.$nuxt.$loading.start()
+            this.$store.commit('release/changeNumber', 0)
+            this.$store.commit('release/changeNum', 0)
+            setTimeout(() => {
+              this.$nuxt.$loading.finish()
+            }, 500)
+          })
         }
       })
     },
@@ -482,13 +483,18 @@ export default {
         return false
       }
       this.$refs.formOne.validate((valid) => {
-        if (!valid) {
+        if (valid) {
+          if (!this.subFlag) {
+            return false
+          } else {
+            this.subFlag = false
+            this.postProject()
+          }
+        } else {
           this.$message({
             message: '你填写的信息不完整哦！~~~',
-            type: 'warning'
+            type: 'error'
           })
-        } else {
-          this.postProject()
         }
       })
     },

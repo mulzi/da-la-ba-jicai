@@ -26,7 +26,7 @@
                 :id="item.id"
                 :key="index"
                 :class="supplierOne === index ? 'active':'' "
-                @click="changeOne (index), getFilterBySupplier({id:item.id,type:0}) , changeCategoryIdNuOne (item.id), getSupplierList({ type: type, categoryId: item.id, materialId: null, projectTypeId: null, page: 0, size: 20 })"
+                @click="changeOne (index), getFilterBySupplier({id:item.id,type:1}) , changeCategoryIdNuOne (item.id), getSupplierList({ type: type, categoryId: item.id, materialId: null, projectTypeId: null, page: 0, size: 20 })"
               >{{ item.name }}</span>
             </div>
           </div>
@@ -109,10 +109,11 @@ export default {
       supplierOne: 0, // 选项1样式记录
       supplierTwo: 0, // 选项2样式记录
       supplierThree: 0, // 选项3样式记录
-      categoryIdNu: 1, // 供应商ID临时存储
+      categoryIdNu: 69, // 供应商ID临时存储
       materialIdNu: null, // 材料类别ID临时存储
       projectTypeIdNu: null, // 项目类别ID临时存储
       type: 1,
+      typeId: 69,
       pageID: 0, // 分页第几页
       sizeID: 20, // 分页数量
       totalCount: 0, // 获取的总数
@@ -131,7 +132,7 @@ export default {
 
   created () {
     const _this = this
-    _this.getFilterBySupplier({ id: 1, type: this.type })
+    _this.getFilterBySupplier({ id: this.typeId, type: this.type })
     // eslint-disable-next-line no-undef
     _this.getSupplierList({ type: this.type, categoryId: _this.categoryIdNu, materialId: _this.projectTypeIdNu, projectTypeId: _this.materialIdNu, page: _this.pageID, size: _this.sizeID })
   },

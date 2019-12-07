@@ -57,7 +57,7 @@
         <div @click="$store.commit('release/changeNumber', 2)" class="addItem">
           <nuxt-link to="/release">
             <em class="iconfont">&#xe880;</em>
-            <span>发布项目</span>
+            <span>发布招募招标</span>
           </nuxt-link>
         </div>
       </el-row>

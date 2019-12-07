@@ -151,6 +151,7 @@ export default {
       dialogVisible: false,
       tipsText: '多少岁',
       imghide: false,
+      subFlag: true,
       dialogImageUrl: '',
       fromBox: {
         contacts: [
@@ -205,26 +206,42 @@ export default {
         })
         setTimeout(() => {
           _this.$router.push('/login')
-        }, 1000)
+        }, 500)
         return false
       }
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       const params = { intelligences: this.fromBox.contacts, projectId: this.$route.params.id }
       this.$refs.forms.validate((valid) => {
         if (valid) {
-          this.$nuxt.$loading.start()
-          homeService.postIntelligences(params).then((res) => {
-            if (res.status === 200) {
-              setTimeout(() => {
-                this.$refs.forms.resetFields()
-                this.$message({
-                  message: '上传成功',
-                  type: 'success'
+          if (this.subFlag) {
+            this.subFlag = false
+            this.$nuxt.$loading.start()
+            homeService.postIntelligences(params).then((res) => {
+              if (res.status === 200) {
+                setTimeout(() => {
+                  this.$message({
+                    message: '上传成功',
+                    type: 'success'
+                  })
+                  this.subFlag = true
+                }, 1000)
+                this.$store.commit('projectInfo/changeOne', 0)
+                this.$nextTick(() => {
+                  this.$store.commit('projectInfo/changeOne', 2)
+                  setTimeout(() => {
+                    this.$nuxt.$loading.finish()
+                  }, 1000)
                 })
-              }, 1000)
-              this.$nuxt.$loading.finish()
-            }
-          })
+              }
+            })
+          } else {
+            setTimeout(() => {
+              this.$message({
+                message: '提交中~~ 请等待！！',
+                type: 'error'
+              })
+            }, 500)
+          }
         } else {
           this.$message({
             message: '你的信息没有填完整哦！！',

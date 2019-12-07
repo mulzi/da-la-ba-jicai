@@ -128,6 +128,7 @@ export default {
       errorText: '', // 错误信息展示
       dialogVisible: false,
       imghide: false,
+      subFlag: true,
       form: {
         class: '', // 项目类别
         nameS: '', // 联系人姓名
@@ -165,33 +166,24 @@ export default {
   },
   methods: {
     onSub () {
-      if (this.form.class === '') {
-        this.errorText = '请选择项目类别！'
-        this.dialogVisible = true
-      } else if (this.form.material === '') {
-        this.errorText = '请输入招采材料！'
-        this.dialogVisible = true
-      } else if (this.form.area === '') {
-        this.errorText = '请选择工地地区！'
-        this.dialogVisible = true
-      } else if (this.form.nameS === '') {
-        this.errorText = '请输入联系人姓名！'
-        this.dialogVisible = true
-      } else if (this.form.phone === '') {
-        this.errorText = '请输入联系人电话！'
-        this.dialogVisible = true
-      } else {
-        this.$refs.formOne.validate((valid) => {
-          if (!valid) {
-            this.$message({
-              message: '你填写的信息不完整哦！~~~',
-              type: 'warning'
-            })
-          } else {
+      this.$refs.formOne.validate((valid) => {
+        if (valid) {
+          if (this.subFlag) {
+            this.subFlag = false
             this.postRecruit()
+          } else {
+            this.$message({
+              message: '请等待~~  提交中',
+              type: 'error'
+            })
           }
-        })
-      }
+        } else {
+          this.$message({
+            message: '你填写的信息不完整哦！~~~',
+            type: 'error'
+          })
+        }
+      })
     },
     postRecruit () {
       const params = {
