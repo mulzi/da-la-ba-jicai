@@ -17,7 +17,7 @@
             <span v-if="this.$store.state.home.isLogin" class="active" @click="delCookies">
               退出登录
             </span>
-            <nuxt-link v-if="!this.$store.state.home.isLogin" to="/">
+            <nuxt-link v-if="!this.$store.state.home.isLogin" to="/register">
               注册
             </nuxt-link>
             <span @click="$store.commit('myCentent/changeMenuId', 0)">

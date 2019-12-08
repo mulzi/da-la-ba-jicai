@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div class="login-container" v-loading="loading">
     <div class="login-form-container">
       <div class="login-welcome">
         <span class="welcome">用户注册</span> <span class="btn-register fRight">已有账号，<nuxt-link to="/login">立即登录</nuxt-link></span>
@@ -18,7 +18,7 @@
                   <i slot="prefix" class="el-icon-lock" />
                 </el-input>
               </el-form-item>
-              <el-form-item label="昵称：" prop="name">
+              <el-form-item label="昵称：">
                 <el-input v-model="form.name" placeholder="请输入昵称">
                   <i slot="prefix" class="el-icon-user" />
                 </el-input>
@@ -90,6 +90,7 @@ export default {
         password: '',
         sex: '1'
       },
+      loading: false,
       countDown: 0,
       remember: false,
       isRead: false,
@@ -123,6 +124,12 @@ export default {
   created () {
     const vm = this
     vm.auth = new Auth({ $axios: vm.$axios, app: { $cookies: vm.$cookies } })
+    if (vm.$store.state.home.isLogin) {
+      vm.loading = true
+      setTimeout(() => {
+        vm.loading = false
+      }, 1000)
+    }
   },
   methods: {
     registerUser () {

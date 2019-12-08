@@ -149,6 +149,7 @@ export default {
         setTimeout(() => {
           this.$router.push('/login')
         }, 1000)
+        return false
       }
       this.$store.commit('projectInfo/changeIntegralPay')
     }

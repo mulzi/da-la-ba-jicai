@@ -28,6 +28,15 @@ export default function (context) {
     } else {
       next()
     }
+    if (to.path === '/register') {
+      if (app.store.state.home.isLogin) {
+        app.router.push('/')
+      } else {
+        next()
+      }
+    } else {
+      next()
+    }
     // console.log(app)
     // console.log(app.store.state.home.isLogin)
     // console.log(to.path)
