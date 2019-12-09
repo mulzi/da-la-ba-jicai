@@ -1,7 +1,19 @@
 export default {
   mode: 'universal',
   router: {
-    middleware: 'isLogin'
+    middleware: 'isLogin',
+    extendRoutes (routes, resolve) {
+      routes.push({
+        name: 'custom',
+        path: '/works/ss/dd',
+        component: resolve(__dirname, 'pages/works/index')
+      })
+      routes.push({
+        name: 'ss',
+        path: '/works/:code/:code/de',
+        component: resolve(__dirname, 'pages/works/index')
+      })
+    }
   },
   /*
     ** Headers of the page
