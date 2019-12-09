@@ -12,7 +12,7 @@ RUN yarn install \
   --non-interactive \
   --production=false
 
-RUN yarn build
+RUN NUXT_ENV_API='http://lightning-gateway:13020' yarn build
 
 RUN rm -rf node_modules && \
   NODE_ENV=production yarn install \
