@@ -3,7 +3,7 @@
     <div class="list">
       <ul>
         <li>
-          <nuxt-link to="/">
+          <nuxt-link :to="{name: 'index'}">
             首页
           </nuxt-link>
         </li>
@@ -24,21 +24,15 @@ export default {
       nav: [
         {
           title: '作品精选',
-          path: '/works'
+          path: '/works/user'
         },
         {
           title: '材料供应商',
-          path: '/supplier',
-          params: {
-            type: 0
-          }
+          path: '/supplier'
         },
         {
           title: '设计施工方',
-          path: '/user',
-          params: {
-            type: 3
-          }
+          path: '/user'
         },
         {
           title: '项目信息',
@@ -124,6 +118,9 @@ export default {
             &.nuxt-link-exact-active.nuxt-link-active{
               color: $redColor;
             }
+            /*<!--&.nuxt-link-active{-->*/
+            /*<!--  color: $redColor;-->*/
+            /*<!--}-->*/
           }
         }
       }

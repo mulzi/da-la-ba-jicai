@@ -265,6 +265,15 @@ export default {
         }
       })
     }
+  },
+  head () {
+    return {
+      title: '设计方施工方作品精选-大喇叭集采',
+      meta: [
+        { hid: 'keyworks', name: 'keyworks', content: '设计施工方作品展示,大喇叭集采' },
+        { hid: 'description', name: 'description', content: '设计方作品展示,大喇叭集采' }
+      ]
+    }
   }
 }
 </script>
