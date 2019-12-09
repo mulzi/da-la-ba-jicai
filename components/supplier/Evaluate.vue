@@ -81,6 +81,16 @@ export default {
   },
   methods: {
     clickComment () {
+      if (!this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没有登录哦！ 请先登录吧',
+          type: 'error'
+        })
+        setTimeout(() => {
+          this.$router.push('/login')
+        }, 1000)
+        return false
+      }
       if (this.text === null || this.text === '') {
         this.$message.error('没有留言内容哦')
         return
@@ -101,9 +111,10 @@ export default {
             message: '恭喜你，提交成功~',
             type: 'success'
           })
-          this.getComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
-          this.getGoodComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
-          this.getBadComment({ otherId: this.$route.params.id, type: 1, page: 0, size: this.size })
+          this.changeFlagTwo()
+          this.$nextTick(() => {
+            this.changeFlagOne()
+          })
         }
       })
       this.text = ''

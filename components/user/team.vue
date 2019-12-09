@@ -56,8 +56,8 @@ export default {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getUserTeam(id).then((res) => {
         console.log(res.data.result)
-        this.bo_list = res.data.result
         if (res.status === 200) {
+          this.bo_list = res.data.result
           this.$store.commit('user/changePopup')
         }
       })
@@ -69,7 +69,7 @@ export default {
 <style scoped lang="scss">
     .teamBox{
         width: 100%;
-        background: rgba(0,0,0,9);
+        background: #ffffFF;
         .list{
             margin-top: 60px;
             padding: 0 30px;

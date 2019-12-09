@@ -81,6 +81,16 @@ export default {
   },
   methods: {
     clickComment () {
+      if (!this.$store.state.home.isLogin) {
+        this.$message({
+          message: '你还没有登录哦！ 请先登录吧',
+          type: 'error'
+        })
+        setTimeout(() => {
+          this.$router.push('/login')
+        }, 1000)
+        return false
+      }
       if (this.text === null || this.text === '') {
         this.$message.error('没有留言内容哦')
         return
@@ -92,11 +102,9 @@ export default {
         content: this.text
       }
       this.postComment(params)
-      this.flagTwo = true
-      this.flagOne = false
+      this.changeFlagTwo()
       this.$nextTick(() => {
-        this.flagTwo = false
-        this.flagOne = true
+        this.changeFlagOne()
       })
     },
     postComment (params) { // 提交评论

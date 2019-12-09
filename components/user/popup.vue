@@ -72,7 +72,7 @@ export default {
     z-index: 900;
     overflow: auto;
     overflow-y: scroll;
-    background: rgba(255,255,255,.96);
+    background: rgba(0,0,0,.75);
     .close{
       width: 60px;
       height: 60px;
@@ -85,7 +85,7 @@ export default {
         height: 60px;
         line-height: 60px;
         text-align: center;
-        color: #333333;
+        color: #dbdbdb;
         display: inline-block;
         font-size: 40px;
       }

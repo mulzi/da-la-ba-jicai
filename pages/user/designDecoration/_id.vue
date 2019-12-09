@@ -313,46 +313,53 @@ export default {
         margin-top: 10px;
         display: flex;
         display: -ms-flex;
-        -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-        -webkit-justify-content: space-between;
-        justify-content: space-between;
         li{
+          width: 20%;
           font-size: 26px;
           color: #333333;
-          position: relative;
+          text-align: center;
+
+          span{
+            display: inline-block;
+            margin: 0 auto;
+            position: relative;
+            &:hover{
+              cursor: pointer;
+              color: $redColor;
+              &::before{
+                width: 100%;
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 3px;
+                background: $redColor;
+              }
+
+            }
+
+          }
           &:first-child{
             margin-left: 30px;
           }
           &:last-child{
             margin-right: 20px;
           }
-          &:hover{
-            cursor: pointer;
-            color: $redColor;
-            &::before{
-              width: 100%;
-              content: "";
-              position: absolute;
-              bottom: 0;
-              left: 0;
-              height: 3px;
-              background: $redColor;
+          &.active{
+            span{
+              cursor: pointer;
+              color: $redColor;
+              &::before{
+                width: 100%;
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 3px;
+                background: $redColor;
+              }
             }
 
-          }
-          &.active{
-            cursor: pointer;
-            color: $redColor;
-            &::before{
-              width: 100%;
-              content: "";
-              position: absolute;
-              bottom: 0;
-              left: 0;
-              height: 3px;
-              background: $redColor;
-            }
           }
         }
       }
