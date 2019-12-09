@@ -70,14 +70,14 @@ export default {
     ** See https://axios.nuxtjs.org/options
     */
   axios: {
-    baseURL: process.env.api || 'http://qy.cqsudu.com:10200/',
+    baseURL: process.env.DLB_API || 'http://qy.cqsudu.com:10200/',
     browserBaseURL: '/',
     proxy: false
   },
 
   proxy: {
     '/api': {
-      target: process.env.api || 'http://qy.cqsudu.com:10200/',
+      target: process.env.DLB_API || 'http://qy.cqsudu.com:10200/',
       pathRewrite: {
         '^/api': '/api'
       }
