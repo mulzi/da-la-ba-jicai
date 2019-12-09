@@ -1,6 +1,6 @@
 <template>
   <el-col :span="14" class="leftMi">
-    <el-carousel height="546px">
+    <el-carousel height="700px">
       <el-carousel-item v-for="(item, index) in banner" :key="index">
         <img :src="item.pic" alt="">
       </el-carousel-item>
@@ -20,8 +20,8 @@ export default {
 
 <style scoped lang="scss">
 .leftMi{
-  height: 546px;
-  width: 749px;
+  height: 700px;
+  width: 700px;
   img{
     @include img;
   }

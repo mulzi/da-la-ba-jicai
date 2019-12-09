@@ -20,7 +20,7 @@
         </p>
       </div>
     </div>
-    <div v-if="date.credentialImages" class="ones">
+    <div v-if="date.credentialImages !==undefined && date.credentialImages.length > 0 " class="ones">
       <div class="titName">
         <span>公司资质</span>
       </div>
@@ -52,7 +52,7 @@
         </p>
       </div>
     </div>
-    <div v-if="date.contacts" class="ones">
+    <div v-if="date.contacts !== undefined && date.contacts.length > 0" class="ones">
       <div class="titName">
         <span>联系方式</span>
       </div>
@@ -107,6 +107,9 @@ export default {
   },
   mounted () {
     this.getSupplierList()
+    // if (this.list.companyIntroduce) {
+    //   this.companyIntroduce = this.list.companyIntroduce.split('\n')
+    // }
   },
   methods: {
     getSupplierList () { // 获取详情数据

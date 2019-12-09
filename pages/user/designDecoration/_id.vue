@@ -340,7 +340,7 @@ export default {
 
           }
           &:first-child{
-            margin-left: 30px;
+            margin-left: -30px;
           }
           &:last-child{
             margin-right: 20px;

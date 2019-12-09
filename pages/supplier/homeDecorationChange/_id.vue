@@ -327,48 +327,55 @@ export default {
                 margin-top: 10px;
                 display: flex;
                 display: -ms-flex;
-                -webkit-box-pack: justify;
-                -ms-flex-pack: justify;
-                -webkit-justify-content: space-between;
-                justify-content: space-between;
-                li{
-                    font-size: 26px;
-                    color: #333333;
-                    position: relative;
-                    &:first-child{
-                        margin-left: 30px;
-                    }
-                    &:last-child{
-                        margin-right: 20px;
-                    }
-                    &:hover{
-                        cursor: pointer;
-                        color: $redColor;
-                        &::before{
-                            width: 100%;
-                            content: "";
-                            position: absolute;
-                            bottom: 0;
-                            left: 0;
-                            height: 3px;
-                            background: $redColor;
-                        }
+              li{
+                width: 20%;
+                font-size: 26px;
+                color: #333333;
+                text-align: center;
 
+                span{
+                  display: inline-block;
+                  margin: 0 auto;
+                  position: relative;
+                  &:hover{
+                    cursor: pointer;
+                    color: $redColor;
+                    &::before{
+                      width: 100%;
+                      content: "";
+                      position: absolute;
+                      bottom: 0;
+                      left: 0;
+                      height: 3px;
+                      background: $redColor;
                     }
-                    &.active{
-                        cursor: pointer;
-                        color: $redColor;
-                        &::before{
-                            width: 100%;
-                            content: "";
-                            position: absolute;
-                            bottom: 0;
-                            left: 0;
-                            height: 3px;
-                            background: $redColor;
-                        }
-                    }
+
+                  }
+
                 }
+                &:first-child{
+                  margin-left: -30px;
+                }
+                &:last-child{
+                  margin-right: -30px;
+                }
+                &.active{
+                  span{
+                    cursor: pointer;
+                    color: $redColor;
+                    &::before{
+                      width: 100%;
+                      content: "";
+                      position: absolute;
+                      bottom: 0;
+                      left: 0;
+                      height: 3px;
+                      background: $redColor;
+                    }
+                  }
+
+                }
+              }
             }
         }
     }
@@ -382,8 +389,8 @@ export default {
             position: relative;
             display: flex;
             .leftMi{
-                width: 749px;
-                height: 546px;
+                width: 700px;
+                height: 700px;
                 min-width: 600px;
                 border: 1px solid $borderE7;
                 box-sizing: border-box;
@@ -398,7 +405,7 @@ export default {
                 position: absolute;
                 bottom: 100px;
                 left: 24px;
-                width: 749px;
+                width: 700px;
                 z-index: 99;
                 text-align: center;
                 button{
