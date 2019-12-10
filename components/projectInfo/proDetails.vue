@@ -90,7 +90,9 @@
           <el-col :span="18" class="right" />
         </el-row>
         <div v-viewer class="imgList">
-          <li v-for="(t,i) in date.pics" :key="i"><span><img :src="t.pic" alt=""></span></li>
+          <li v-for="(t,i) in date.pics" :key="i">
+            <span><img :src="t.pic" alt=""></span>
+          </li>
         </div>
       </el-row>
     </el-row>

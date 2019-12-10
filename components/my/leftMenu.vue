@@ -18,7 +18,7 @@
         </nuxt-link>
       </div>
     </el-row>
-    <el-row class="release" >
+    <el-row class="release">
       <div class="tit" @click="flag = !flag" v-if="false">
         <span>我的发布</span><i :class=" flag ? 'el-icon-arrow-down':'el-icon-arrow-right'" />
       </div>

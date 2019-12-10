@@ -13,8 +13,10 @@
                   <em>恭喜</em>{{ item.info | text }}
                 </el-col>
               </nuxt-link>
-              <div class="i">{{ item.money }}</div>
-              <div class="span" >
+              <div class="i">
+                {{ item.money }}
+              </div>
+              <div class="span">
                 {{ item.createdAtStr }}
               </div>
             </el-row>

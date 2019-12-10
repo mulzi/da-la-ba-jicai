@@ -24,7 +24,7 @@ export default {
       nav: [
         {
           title: '作品精选',
-          path: '/works/user'
+          path: '/works'
         },
         {
           title: '材料供应商',

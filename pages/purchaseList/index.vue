@@ -75,7 +75,7 @@
               />
             </el-col>
             <el-col :span="5">
-              <span @click="getList" class="el-icon-search searchSt"></span>
+              <span @click="getList" class="el-icon-search searchSt" />
             </el-col>
           </el-col>
         </el-row>
@@ -99,7 +99,7 @@
               项目类型\{{ t.projectCategoryName }}
             </el-col>
             <el-col :span="8" class="three">
-              {{ t.createdAtStr}}
+              {{ t.createdAtStr }}
             </el-col>
           </el-row>
           <el-row v-if="t.finishStatus === 2 " class="complete">

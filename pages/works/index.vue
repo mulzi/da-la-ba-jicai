@@ -25,11 +25,10 @@
                 v-for="(item,index) in supplierOneTit"
                 :id="item.id"
                 :key="index"
-                :class="supplierOne === index ? 'active':'' "
-              ><nuxt-link :to="`/works/${item.code}`">
+                :class="query.sourceId === item.id ? 'active':'' "
+              ><nuxt-link :to="`/works/${item.id}`">
                 {{ item.name }}
               </nuxt-link>
-
               </span>
             </div>
           </div>
@@ -39,12 +38,10 @@
             </div>
             <div class="rightList">
               <span
-                v-for="(item,index) in projectTypes"
-                :id="item.id"
-                :key="index"
-                :class="supplierTwo === index ? 'active':'' "
-                @click="changeTwo (index),changeMaterialIdNuOne( item.id || null)"
-              ><nuxt-link :to="`/works/${oneUrl}/c${index}`">{{ item.name }}</nuxt-link></span>
+                v-for="(item,i) in projectTypes"
+                :key="i"
+                :class="query.typeId === item.id ? 'active':'' "
+              ><nuxt-link :to="`/works/${query.sourceId}/c${item.id}`">{{ item.name }}</nuxt-link></span>
             </div>
           </div>
           <div class="defaultBox">
@@ -53,23 +50,22 @@
             </div>
             <div class="rightList">
               <span
-                v-for="(item,index) in materialTypes"
+                v-for="(item,i) in materialTypes"
                 :id="item.id"
-                :key="index"
-                :class="supplierThree === index ? 'active':'' "
-                @click="changeThree (index),changeProjectTypeIdNuOne(item.id || null) , getSupplierList({ sourceId: sourceId, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })"
-              ><nuxt-link :to="`/works/${oneUrl}/${twoUrl}/s${index}`">{{ item.name }}</nuxt-link></span>
+                :key="i"
+                :class="query.styleId === item.id ? 'active':'' "
+              ><nuxt-link :to="`/works/${query.sourceId}/c${query.typeId}s${item.id}`">{{ item.name }}</nuxt-link></span>
             </div>
           </div>
           <div class="defaultBoxTwo">
             <div class="contentx">
-              <span v-for="(item,index) in brandLevels" :key="index" :class="supplierFour === index ? 'active':'' " @click="changeFour (index) ,changeGradeNuOne (item.id || null ),getSupplierList({ sourceId: sourceId, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })">{{ item.name }}</span>
+              <span v-for="(item,index) in rankTypes" :key="index" :class="query.searchId === item.id ? 'active':''">{{ item.name }}</span>
             </div>
           </div>
         </div>
       </el-row>
       <el-row class="bottomListBox">
-        <div v-if="getSupplierLiList.length === 0 " class="NoData marginBottom40">
+        <div v-if="works.length === 0 " class="NoData marginBottom40">
           <div class="img">
             <img src="@/assets/img/nodata.png" alt="">
           </div>
@@ -77,8 +73,8 @@
             没有数据
           </div>
         </div>
-        <el-row v-if="getSupplierLiList.length !== 0 " class="contentList" v-loading="loading">
-          <nuxt-link v-for="(item, index) in getSupplierLiList" :key="index" :to="`/works/worksPage/${item.id}`">
+        <el-row v-if="works.length !== 0 " class="contentList" v-loading="loading">
+          <nuxt-link v-for="(item, index) in works" :key="index" :to="`/works/worksPage/${item.id}`">
             <p>
               <img :src="item.cover" alt="">
             </p>
@@ -104,12 +100,12 @@
             </el-row>
           </nuxt-link>
         </el-row>
-        <div v-if="getSupplierLiList.length !== 0 " class="pageSbox">
+        <div v-if="works.length !== 0 " class="pageSbox">
           <el-pagination
             background
-            :current-page="currentPage4"
+            :current-page="query.page + 1"
             :page-sizes="[10, 20, 30, 50]"
-            :page-size="sizeID"
+            :page-size="query.size"
             layout="total, sizes, prev, pager, next, jumper"
             :total="totalCount"
             @size-change="handleSizeChange"
@@ -128,190 +124,133 @@ export default {
   layout: 'main',
   data () {
     return {
+      seo: {
+        title: '',
+        description: '',
+        keywords: ''
+      },
+      query: {
+        sourceCode: '',
+        sourceId: 0,
+        typeId: 0,
+        styleId: 0,
+        searchId: 1,
+        page: 0,
+        size: 20
+      },
       supplierOneTit: [],
       projectTypes: [ // 分类
-        {
-          id: null,
-          name: '全部'
-        }
       ],
       materialTypes: [ // 风格
-        {
-          id: null,
-          name: '全部'
-        }
       ],
-      brandLevels: [
+      rankTypes: [
         {
           name: '全部',
           id: null
         },
         {
           name: '最新',
-          id: '1'
+          id: 1
         },
         {
           name: '推荐',
-          id: '2'
+          id: 2
         },
         {
           name: '热门',
-          id: '3'
+          id: 3
         }
       ],
-      getSupplierLiList: [],
-      supplierOne: 0, // 选项1样式记录
-      supplierTwo: 0, // 选项2样式记录
-      supplierThree: 0, // 选项3样式记录
-      supplierFour: 0, // 选项4样式记录
-      sourceId: 10000, // 板块临时存储
-      typeId: 0, // 产品分类临时存储
-      styleId: 0, // 作品风格临时存储
-      searchId: 0, // 搜索类型临时存储
-      pageID: 0, // 分页第几页
-      sizeID: 20, // 分页数量
-      totalCount: 0, // 获取的总数
-      currentPage4: 1,
-      loading: true,
-      routerS: [], // 路由解析
-      oneUrl: 'user',
-      twoUrl: 'c0',
-      threeUrl: 's0'
+      works: [],
+      totalCount: 0,
+      loading: false
     }
   },
-  // async asyncData (context) { // 获取一级类别
-  //   const supplierOneTit = [{
-  //     id: 0,
-  //     name: '全部'
-  //   }]
-  //   const homeService = new HomeService(context)
-  //   // eslint-disable-next-line no-return-await
-  //   return await homeService.getWorksOneList().then((res) => {
-  //     console.log(res.data.result)
-  //     return { supplierOneTit: supplierOneTit.concat(res.data.result.worksSources) }
-  //   })
-  // },
+  async asyncData (context) {
+    const { params } = context
+    const homeService = new HomeService(context)
+    const res = await homeService.getWorksOneList()
 
+    // 路由参数
+    const paramCode = params.code
+    let paramTypeId = params.pathMatch
+    paramTypeId = paramTypeId ? paramTypeId * 1 : paramTypeId
+    let paramStyleId = params['1']
+    paramStyleId = paramStyleId ? paramStyleId * 1 : paramStyleId
+
+    // 获取数据
+    const { result } = res.data
+    const supplierOneTit = result.worksSources
+
+    // 设置默认的查询条件
+    const query = {}
+    if (paramCode) {
+      // 目前先用id代替
+      const matchedItems = supplierOneTit.filter(item => item.id === paramCode * 1)
+      query.sourceId = matchedItems[0].id
+      query.sourceCode = matchedItems[0].code
+    } else {
+      // 默认第一个
+      query.sourceId = supplierOneTit[0].id
+      query.sourceCode = supplierOneTit[0].code
+    }
+
+    // 基础数据
+    const defaultProjectTypes = [{ id: 0, sourceId: query.sourceId, name: '全部' }]
+    const defaultMaterialTypes = [{ id: 0, sourceId: query.sourceId, name: '全部' }]
+    const allProjectTypes = defaultProjectTypes.concat(res.data.result.worksTypes)
+    const allMaterialTypes = defaultMaterialTypes.concat(res.data.result.worksStyles)
+    const projectTypes = allProjectTypes.filter(item => item.sourceId === query.sourceId)
+    const materialTypes = allMaterialTypes.filter(item => item.sourceId === query.sourceId)
+
+    // 其他参数
+    query.typeId = paramTypeId || projectTypes[0].id
+    query.styleId = paramStyleId || materialTypes[0].id
+    query.searchId = 1
+    query.page = 0
+    query.size = 20
+
+    // 加载列表
+    const worksRes = await homeService.getWorksContList(query)
+    const { results, totalCount } = worksRes.data
+    return { query, supplierOneTit, projectTypes, materialTypes, works: results, totalCount }
+  },
   created () {
     const _this = this
-    _this.getWorksOneList()
-    _this.routerS = this.$route.fullPath.split('/')
-    _this.routerS.splice(0, 2)
-    console.log(_this.routerS, '路由')
-    if (_this.routerS[0] === 'user') {
-      this.sourceId = 10000
-      this.supplierOne = 0
-    } else if (_this.routerS[0] === 'supplier') {
-      this.sourceId = 10004
-      this.supplierOne = 1
-    } else {
-      this.$router.push({ name: 'error' })
-    }
-    // console.log(_this.routerS[1].slice(1), 'sss')
-    if (_this.routerS[1] !== undefined) {
-      if (/^[0-9]*$/.test(_this.routerS[1].slice(1))) {
-        this.supplierTwo = _this.routerS[1].slice(1)
-        console.log(this.supplierTwo)
-        console.log(_this.routerS[1].slice(1), '打印')
-      } else {
-        this.$router.push({ name: 'error' })
-      }
-    } else {
-    }
-
-    console.log(this.$route.fullPath)
-    // _this.getFilterBySupplier({ id: 0 })
-    // eslint-disable-next-line no-undef
-    _this.getSupplierList({ sourceId: _this.sourceId, typeId: _this.typeId, styleId: _this.styleId, searchId: _this.searchId, page: _this.pageID, size: _this.sizeID })
+    _this.homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
   },
   methods: {
-    changeOne (index) {
-      this.currentPage4 = 1
-      this.supplierOne = index
-    },
-    changeTwo (index) {
-      this.supplierTwo = index
-    },
-    changeThree (index) {
-      this.supplierThree = index
-    },
-    changeFour (index) {
-      this.supplierFour = index
-    },
-    changeCategoryIdNuOne (index) {
-      this.sourceId = index
-    },
-    changeMaterialIdNuOne (index) {
-      this.typeId = index
-    },
-    changeProjectTypeIdNuOne (index) {
-      this.styleId = index
-    },
-    changeGradeNuOne (index) {
-      this.searchId = index
+    changeGradeNuOne (searchId) {
+      const _this = this
+      _this.query.searchId = searchId
     },
     handleSizeChange (val) {
       const _this = this
-      _this.sizeID = val
-      _this.getSupplierList({ sourceId: _this.sourceId, typeId: _this.typeId, styleId: _this.styleId, searchId: _this.searchId, page: _this.pageID, size: _this.sizeID })
+      _this.query.size = val
+      _this.getSupplierList(_this.query)
     },
     handleCurrentChange (val) {
       const _this = this
-      _this.currentPage4 = val
-      this.pageID = val - 1
-      _this.getSupplierList({ sourceId: _this.sourceId, typeId: _this.typeId, styleId: _this.styleId, searchId: _this.searchId, page: _this.pageID, size: _this.sizeID })
+      _this.query.page = val - 1
+      _this.getSupplierList(_this.query)
     },
-    getWorksOneList () { // 获取一级栏目
-      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.getWorksOneList().then((res) => {
-        if (res.status === 200) {
-          console.log('第一级', res.data.result)
-          this.supplierOneTit = res.data.result.worksSources
-          this.supplierOneTit[0].code = 'user'
-          this.supplierOneTit[1].code = 'supplier'
-          const projectTypes = [{ id: 0, name: '全部' }]
-          const materialTypes = [{ id: 0, name: '全部' }]
-          this.materialTypes = materialTypes.concat(res.data.result.worksStyles)
-          this.projectTypes = projectTypes.concat(res.data.result.worksTypes)
-          this.supplierTwo = 0
-          this.supplierThree = 0
-          this.supplierFour = 0
-        }
-      })
-    },
-    getFilterBySupplier (parmes) { // 获取二级三级类别
-      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.getWorksTwoList(parmes).then((res) => {
-        console.log('ss', res.data.result)
-        const projectTypes = [{ id: 0, name: '全部' }]
-        const materialTypes = [{ id: 0, name: '全部' }]
-        this.materialTypes = materialTypes.concat(res.data.result.worksStyles)
-        this.projectTypes = projectTypes.concat(res.data.result.worksTypes)
-        this.supplierTwo = 0
-        this.supplierThree = 0
-        this.supplierFour = 0
-        // this.$store.commit('supplier/changeCategoryIdNu', 1)
-        this.typeId = 0
-        this.styleId = 0
-        this.searchId = 0
-        this.pageID = 0
-        this.sizeID = 20
-        this.currentPage4 = 1
-      })
-    },
-    getSupplierList (parmes) {
-      this.loading = true
-      const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
-      homeService.getWorksContList(parmes).then((res) => {
-        // console.log('s', res)
-        this.getSupplierLiList = res.data.results
-        this.totalCount = res.data.totalCount
-        if (res.status === 200) {
-          setTimeout(() => {
-            this.loading = false
-          }, 500)
-        }
-      })
+    async getSupplierList (params) {
+      const _this = this
+      _this.loading = true
+      const res = await _this.homeService.getWorksContList(params)
+      const { results, totalCount } = res.data
+      _this.works = results
+      _this.totalCount = totalCount
+      _this.loading = false
+    }
+  },
+  head () {
+    return {
+      title: this.wordsThree + this.wordsTwo + this.wordsOne + '作品精选,大喇叭集采',
+      meta: [
+        { hid: 'keywords', name: 'keywords', content: this.wordsThree + this.wordsTwo + this.wordsOne + '作品精选,大喇叭集采' },
+        { hid: 'description', name: 'description', content: this.wordsThree + this.wordsTwo + this.wordsOne + '作品精选,大喇叭集采' }
+      ]
     }
   }
 }
@@ -348,16 +287,16 @@ export default {
           -ms-flex: 1;
           font-size: 0;
           span{
-            display: inline-block;
-            height: 26px;
-            line-height: 26px;
+            display:inline-block;
             font-size: 14px;
             color: #666666;
             margin: 0 6px 6px 0;
             border-radius: 2px;
-            padding: 2px 10px;
             cursor: pointer;
             a{
+              display:block;
+              text-align: center;
+              padding: 4px 6px;
               color: #666666;
             }
             &.active{

@@ -4,19 +4,19 @@ export default {
     middleware: 'isLogin',
     extendRoutes (routes, resolve) {
       routes.push({
-        name: 'worksOne',
+        name: '作品一级页面',
         path: '/works/:code',
-        component: resolve(__dirname, 'pages/works/_code/index')
+        component: resolve(__dirname, 'pages/works/index')
       })
       routes.push({
-        name: 'worksTwo',
-        path: '/works/:code/:code',
-        component: resolve(__dirname, 'pages/works/_code/index')
+        name: '作品二级页面',
+        path: '/works/:code/c*s*',
+        component: resolve(__dirname, 'pages/works/index')
       })
       routes.push({
-        name: 'worksThree',
-        path: '/works/:code/:code/:code',
-        component: resolve(__dirname, 'pages/works/_code/index')
+        name: '作品二级页面',
+        path: '/works/:code/c*',
+        component: resolve(__dirname, 'pages/works/index')
       })
     }
   },
@@ -87,14 +87,14 @@ export default {
     ** See https://axios.nuxtjs.org/options
     */
   axios: {
-    baseURL: 'http://www.dalabajicai.com/',
+    baseURL: 'http://qy.cqsudu.com:10200/',
     browserBaseURL: '/',
     proxy: false
   },
 
   proxy: {
     '/api': {
-      target: 'http://www.dalabajicai.com/',
+      target: 'http://qy.cqsudu.com:10200/',
       pathRewrite: {
         '^/api': '/api'
       }

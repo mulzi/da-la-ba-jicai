@@ -46,7 +46,7 @@
               2. 发布招采购信息 送100个积分
             </el-col>
             <el-col :span="7">
-               <span @click="$store.commit('release/changeNumber', 1)">
+              <span @click="$store.commit('release/changeNumber', 1)">
                 <nuxt-link to="/release">
                   点击这里去发布
                 </nuxt-link>

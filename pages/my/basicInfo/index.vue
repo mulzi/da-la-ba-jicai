@@ -12,7 +12,7 @@
                 <img :src="date.headUri" alt="">
               </el-row>
               <el-row class="name">
-                {{date.name}}
+                {{ date.name }}
               </el-row>
               <el-row class="userId">
                 Id:{{ date.id }}
@@ -52,7 +52,7 @@
                   昵称
                 </el-col>
                 <el-col class="rig">
-                  {{date.name}}
+                  {{ date.name }}
                 </el-col>
               </el-row>
 
@@ -61,7 +61,7 @@
                   手机号
                 </el-col>
                 <el-col class="rig">
-                  {{date.mobile}}
+                  {{ date.mobile }}
                 </el-col>
               </el-row>
               <el-row class="list">
@@ -69,7 +69,7 @@
                   邮箱
                 </el-col>
                 <el-col class="rig">
-                  {{date.email}}
+                  {{ date.email }}
                 </el-col>
               </el-row>
               <el-row class="list">
@@ -79,7 +79,7 @@
                 <el-col v-if="date.sex === 1" class="rig">
                   男
                 </el-col>
-                <el-col  v-if="date.sex === 2" class="rig">
+                <el-col v-if="date.sex === 2" class="rig">
                   女
                 </el-col>
               </el-row>
@@ -88,7 +88,7 @@
                   公司名称
                 </el-col>
                 <el-col class="rig">
-                  {{date.companyName}}
+                  {{ date.companyName }}
                 </el-col>
               </el-row>
               <el-row class="list">

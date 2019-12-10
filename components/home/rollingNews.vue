@@ -9,12 +9,12 @@
           </div>
 
           <el-carousel
-                  class="rightRollList"
-                  height="20px"
-                  direction="vertical"
-                  :autoplay="true"
-                  loop
-                  indicator-position="none"
+            class="rightRollList"
+            height="20px"
+            direction="vertical"
+            :autoplay="true"
+            loop
+            indicator-position="none"
           >
             <el-carousel-item v-for="(item,index) in rollNews.homeSupplierTile" :key="index">
               <span> {{ item.title }}</span>
@@ -29,12 +29,12 @@
             <span>【家装商家推荐】</span>
           </div>
           <el-carousel
-                  class="rightRollList"
-                  height="20px"
-                  direction="vertical"
-                  :autoplay="true"
-                  loop
-                  indicator-position="none"
+            class="rightRollList"
+            height="20px"
+            direction="vertical"
+            :autoplay="true"
+            loop
+            indicator-position="none"
           >
             <el-carousel-item v-for="(item,index) in rollNews.projectSupplierTile" :key="index">
               <span> {{ item.title }}</span>
@@ -49,12 +49,12 @@
             <span>【设计施工方推荐】</span>
           </div>
           <el-carousel
-                  class="rightRollList"
-                  height="20px"
-                  direction="vertical"
-                  :autoplay="true"
-                  loop
-                  indicator-position="none"
+            class="rightRollList"
+            height="20px"
+            direction="vertical"
+            :autoplay="true"
+            loop
+            indicator-position="none"
           >
             <el-carousel-item v-for="(item,index) in rollNews.simpleProjectTile" :key="index">
               <span> {{ item.title }}</span>
