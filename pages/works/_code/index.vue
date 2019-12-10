@@ -25,9 +25,11 @@
                 v-for="(item,index) in supplierOneTit"
                 :id="item.id"
                 :key="index"
-                :class="supplierOne === index ? 'active':'' "
-                @click=" changeOne (index), getFilterBySupplier({id:item.id}) , changeCategoryIdNuOne (item.id), getSupplierList({ sourceId: sourceId, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })"
-              >{{ item.name }}</span>
+                :class="$store.state.works.styleOne === index ? 'active':'' "
+              ><nuxt-link :to="`/works/${item.code}`">
+                {{ item.name }}
+              </nuxt-link>
+              </span>
             </div>
           </div>
           <div class="defaultBox">
@@ -35,7 +37,11 @@
               分类：
             </div>
             <div class="rightList">
-              <span v-for="(item,index) in projectTypes" :id="item.id" :key="index" :class="supplierTwo === index ? 'active':'' " @click="changeTwo (index),changeMaterialIdNuOne( item.id || null) ,getSupplierList({ sourceId: sourceId, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })">{{ item.name }}</span>
+              <span
+                v-for="(t,i) in projectTypes"
+                :key="i"
+                :class="+$store.state.works.styleTwo === i ? 'active':'' "
+              ><nuxt-link :to="`/works/${$store.state.works.oneUrl}/c${i}`">{{ t.name }}</nuxt-link></span>
             </div>
           </div>
           <div class="defaultBox">
@@ -43,12 +49,17 @@
               风格：
             </div>
             <div class="rightList">
-              <span v-for="(item,index) in materialTypes" :id="item.id" :key="index" :class="supplierThree === index ? 'active':'' " @click="changeThree (index),changeProjectTypeIdNuOne(item.id || null) , getSupplierList({ sourceId: sourceId, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })">{{ item.name }}</span>
+              <span
+                v-for="(t,i) in materialTypes"
+                :id="t.id"
+                :key="i"
+                :class="+$store.state.works.styleThree === i ? 'active':'' "
+              ><nuxt-link :to="`/works/${$store.state.works.oneUrl}/${$store.state.works.twoUrl}/s${i}`">{{ t.name }}</nuxt-link></span>
             </div>
           </div>
           <div class="defaultBoxTwo">
             <div class="contentx">
-              <span v-for="(item,index) in brandLevels" :key="index" :class="supplierFour === index ? 'active':'' " @click="changeFour (index) ,changeGradeNuOne (item.id || null ),getSupplierList({ sourceId: sourceId, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })">{{ item.name }}</span>
+              <span v-for="(item,index) in brandLevels" :key="index" :class="supplierFour === index ? 'active':'' " @click="changeFour (index) ,changeGradeNuOne (item.id || null ),getSupplierList({ sourceId: $store.state.works.sourceId, typeId: $store.state.works.typeId, styleId: $store.state.works.styleId, searchId: searchId, page: pageID, size: sizeID })">{{ item.name }}</span>
             </div>
           </div>
         </div>
@@ -115,16 +126,8 @@ export default {
     return {
       supplierOneTit: [],
       projectTypes: [ // 分类
-        {
-          id: null,
-          name: '全部'
-        }
       ],
       materialTypes: [ // 风格
-        {
-          id: null,
-          name: '全部'
-        }
       ],
       brandLevels: [
         {
@@ -145,40 +148,32 @@ export default {
         }
       ],
       getSupplierLiList: [],
-      supplierOne: 0, // 选项1样式记录
-      supplierTwo: 0, // 选项2样式记录
-      supplierThree: 0, // 选项3样式记录
+      wordsOne: '',
+      wordsTwo: '',
+      wordsThree: '',
+      // supplierOne: 0, // 选项1样式记录
+      // supplierTwo: 0, // 选项2样式记录
+      // supplierThree: 0, // 选项3样式记录
       supplierFour: 0, // 选项4样式记录
-      sourceId: 10000, // 板块临时存储
-      typeId: 0, // 产品类型临时存储
-      styleId: 0, // 作品风格临时存储
+      // sourceId: 10000, // 板块临时存储
+      // typeId: 0, // 产品分类临时存储
+      // styleId: 0, // 作品风格临时存储
       searchId: 0, // 搜索类型临时存储
       pageID: 0, // 分页第几页
       sizeID: 20, // 分页数量
       totalCount: 0, // 获取的总数
       currentPage4: 1,
-      loading: true
+      loading: true,
+      routerS: [] // 路由解析
     }
   },
-  // async asyncData (context) { // 获取一级类别
-  //   const supplierOneTit = [{
-  //     id: 0,
-  //     name: '全部'
-  //   }]
-  //   const homeService = new HomeService(context)
-  //   // eslint-disable-next-line no-return-await
-  //   return await homeService.getWorksOneList().then((res) => {
-  //     console.log(res.data.result)
-  //     return { supplierOneTit: supplierOneTit.concat(res.data.result.worksSources) }
-  //   })
-  // },
+  asyncData () {
 
+  },
   created () {
     const _this = this
     _this.getWorksOneList()
-    // _this.getFilterBySupplier({ id: 0 })
-    // eslint-disable-next-line no-undef
-    _this.getSupplierList({ sourceId: _this.sourceId, typeId: _this.typeId, styleId: _this.styleId, searchId: _this.searchId, page: _this.pageID, size: _this.sizeID })
+    // _this.getSupplierList({ sourceId: _this.sourceId, typeId: _this.typeId, styleId: _this.styleId, searchId: _this.searchId, page: _this.pageID, size: _this.sizeID })
   },
   methods: {
     changeOne (index) {
@@ -220,16 +215,69 @@ export default {
     getWorksOneList () { // 获取一级栏目
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getWorksOneList().then((res) => {
-        console.log('第一级', res.data.result)
-        this.supplierOneTit = res.data.result.worksSources
-        const projectTypes = [{ id: 0, name: '全部' }]
-        const materialTypes = [{ id: 0, name: '全部' }]
-        this.materialTypes = materialTypes.concat(res.data.result.worksStyles)
-        this.projectTypes = projectTypes.concat(res.data.result.worksTypes)
-        this.supplierTwo = 0
-        this.supplierThree = 0
-        this.supplierFour = 0
+        if (res.status === 200) {
+          console.log('第一级', res.data.result)
+          this.supplierOneTit = res.data.result.worksSources
+          this.supplierOneTit[0].code = 'user'
+          this.supplierOneTit[1].code = 'supplier'
+          const projectTypes = [{ id: 0, name: '全部' }]
+          const materialTypes = [{ id: 0, name: '全部' }]
+          this.materialTypes = materialTypes.concat(res.data.result.worksStyles)
+          this.projectTypes = projectTypes.concat(res.data.result.worksTypes)
+          this.getRouter()
+          this.getFilterBySupplier({ id: this.$store.state.works.sourceId })
+          this.getSupplierList({ sourceId: this.$store.state.works.sourceId, typeId: this.$store.state.works.typeId, styleId: this.$store.state.works.styleId, searchId: this.searchId, page: this.pageID, size: this.sizeID })
+        }
       })
+    },
+    getRouter () {
+      const _this = this
+      _this.routerS = this.$route.fullPath.split('/') // 获取路由
+      _this.routerS.splice(0, 2)
+      console.log(_this.routerS, '路由')
+      if (_this.routerS[0] === 'user') { // 判断第一级路由
+        this.$store.commit('works/chSourceId', 10000)
+        this.$store.commit('works/chTypeId', 0)
+        this.$store.commit('works/chStyleId', 0)
+        this.$store.commit('works/chSearchId', 0)
+        this.$store.commit('works/chSOne', 0)
+        this.$store.commit('works/chUOne', 'user')
+        this.wordsOne = '设计施工方'
+      } else if (_this.routerS[0] === 'supplier') {
+        this.$store.commit('works/chSourceId', 10004)
+        this.$store.commit('works/chTypeId', 0)
+        this.$store.commit('works/chStyleId', 0)
+        this.$store.commit('works/chSearchId', 0)
+        this.$store.commit('works/chSOne', 1)
+        this.$store.commit('works/chUOne', 'supplier')
+        this.wordsOne = '材料供应商'
+      } else {
+        this.$router.push({ name: 'error' })
+      }
+      if (_this.routerS[1] !== undefined) { // 判断第二级路由
+        this.$store.commit('works/chStyleId', 0)
+        this.$store.commit('works/chSearchId', 0)
+        this.$store.commit('works/chUTwo', _this.routerS[1])
+        this.$store.commit('works/chSTwo', _this.routerS[1].slice(1))
+        this.$store.commit('works/chTypeId', this.projectTypes[_this.routerS[1].slice(1)].id)
+        this.wordsTwo = this.projectTypes[_this.routerS[1].slice(1)].name
+      } else {
+        this.$store.commit('works/chSTwo', 0)
+        this.$store.commit('works/chTypeId', 0)
+        this.$store.commit('works/chStyleId', 0)
+        this.$store.commit('works/chSearchId', 0)
+      }
+      if (_this.routerS[2] !== undefined) { // 判断第二级路由
+        this.$store.commit('works/chUThree', _this.routerS[2])
+        this.$store.commit('works/chSearchId', 0)
+        this.$store.commit('works/chSThree', _this.routerS[2].slice(1))
+        this.$store.commit('works/chStyleId', this.projectTypes[_this.routerS[2].slice(1)].id)
+        this.wordsThree = this.projectTypes[_this.routerS[2].slice(1)].name
+      } else {
+        this.$store.commit('works/chSearchId', 0)
+        this.$store.commit('works/chSThree', 0)
+        this.$store.commit('works/chStyleId', 0)
+      }
     },
     getFilterBySupplier (parmes) { // 获取二级三级类别
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
@@ -239,13 +287,6 @@ export default {
         const materialTypes = [{ id: 0, name: '全部' }]
         this.materialTypes = materialTypes.concat(res.data.result.worksStyles)
         this.projectTypes = projectTypes.concat(res.data.result.worksTypes)
-        this.supplierTwo = 0
-        this.supplierThree = 0
-        this.supplierFour = 0
-        // this.$store.commit('supplier/changeCategoryIdNu', 1)
-        this.typeId = 0
-        this.styleId = 0
-        this.searchId = 0
         this.pageID = 0
         this.sizeID = 20
         this.currentPage4 = 1
@@ -256,9 +297,9 @@ export default {
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getWorksContList(parmes).then((res) => {
         // console.log('s', res)
-        this.getSupplierLiList = res.data.results
-        this.totalCount = res.data.totalCount
         if (res.status === 200) {
+          this.getSupplierLiList = res.data.results
+          this.totalCount = res.data.totalCount
           setTimeout(() => {
             this.loading = false
           }, 500)
@@ -268,10 +309,10 @@ export default {
   },
   head () {
     return {
-      title: '设计方施工方作品精选-大喇叭集采',
+      title: this.wordsThree + this.wordsTwo + this.wordsOne + '作品精选,大喇叭集采',
       meta: [
-        { hid: 'keyworks', name: 'keyworks', content: '设计施工方作品展示,大喇叭集采' },
-        { hid: 'description', name: 'description', content: '设计方作品展示,大喇叭集采' }
+        { hid: 'keyworks', name: 'keyworks', content: this.wordsThree + this.wordsTwo + this.wordsOne + '作品精选,大喇叭集采' },
+        { hid: 'description', name: 'description', content: this.wordsThree + this.wordsTwo + this.wordsOne + '作品精选,大喇叭集采' }
       ]
     }
   }
@@ -309,23 +350,32 @@ export default {
           -ms-flex: 1;
           font-size: 0;
           span{
-            display: inline-block;
-            height: 26px;
-            line-height: 26px;
+            display:inline-block;
             font-size: 14px;
             color: #666666;
             margin: 0 6px 6px 0;
             border-radius: 2px;
-            padding: 2px 10px;
             cursor: pointer;
+            a{
+              display:block;
+              text-align: center;
+              padding: 4px 6px;
+              color: #666666;
+            }
             &.active{
               color: #ffffff;
               background: $redColor;
+              a{
+                color: #ffffFF;
+              }
             }
             &:hover{
               color: #ffffff;
               background: $redColor;
               @include triText;
+              a{
+                color: #ffffFF;
+              }
             }
           }
         }

@@ -26,8 +26,11 @@
                 :id="item.id"
                 :key="index"
                 :class="supplierOne === index ? 'active':'' "
-                @click=" changeOne (index), getFilterBySupplier({id:item.id}) , changeCategoryIdNuOne (item.id), getSupplierList({ sourceId: sourceId, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })"
-              >{{ item.name }}</span>
+              ><nuxt-link :to="`/works/${item.code}`">
+                {{ item.name }}
+              </nuxt-link>
+
+              </span>
             </div>
           </div>
           <div class="defaultBox">
@@ -35,7 +38,13 @@
               分类：
             </div>
             <div class="rightList">
-              <span v-for="(item,index) in projectTypes" :id="item.id" :key="index" :class="supplierTwo === index ? 'active':'' " @click="changeTwo (index),changeMaterialIdNuOne( item.id || null) ,getSupplierList({ sourceId: sourceId, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })">{{ item.name }}</span>
+              <span
+                v-for="(item,index) in projectTypes"
+                :id="item.id"
+                :key="index"
+                :class="supplierTwo === index ? 'active':'' "
+                @click="changeTwo (index),changeMaterialIdNuOne( item.id || null)"
+              ><nuxt-link :to="`/works/${oneUrl}/c${index}`">{{ item.name }}</nuxt-link></span>
             </div>
           </div>
           <div class="defaultBox">
@@ -43,7 +52,13 @@
               风格：
             </div>
             <div class="rightList">
-              <span v-for="(item,index) in materialTypes" :id="item.id" :key="index" :class="supplierThree === index ? 'active':'' " @click="changeThree (index),changeProjectTypeIdNuOne(item.id || null) , getSupplierList({ sourceId: sourceId, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })">{{ item.name }}</span>
+              <span
+                v-for="(item,index) in materialTypes"
+                :id="item.id"
+                :key="index"
+                :class="supplierThree === index ? 'active':'' "
+                @click="changeThree (index),changeProjectTypeIdNuOne(item.id || null) , getSupplierList({ sourceId: sourceId, typeId: typeId, styleId: styleId, searchId: searchId, page: pageID, size: sizeID })"
+              ><nuxt-link :to="`/works/${oneUrl}/${twoUrl}/s${index}`">{{ item.name }}</nuxt-link></span>
             </div>
           </div>
           <div class="defaultBoxTwo">
@@ -150,14 +165,18 @@ export default {
       supplierThree: 0, // 选项3样式记录
       supplierFour: 0, // 选项4样式记录
       sourceId: 10000, // 板块临时存储
-      typeId: 0, // 产品类型临时存储
+      typeId: 0, // 产品分类临时存储
       styleId: 0, // 作品风格临时存储
       searchId: 0, // 搜索类型临时存储
       pageID: 0, // 分页第几页
       sizeID: 20, // 分页数量
       totalCount: 0, // 获取的总数
       currentPage4: 1,
-      loading: true
+      loading: true,
+      routerS: [], // 路由解析
+      oneUrl: 'user',
+      twoUrl: 'c0',
+      threeUrl: 's0'
     }
   },
   // async asyncData (context) { // 获取一级类别
@@ -176,6 +195,31 @@ export default {
   created () {
     const _this = this
     _this.getWorksOneList()
+    _this.routerS = this.$route.fullPath.split('/')
+    _this.routerS.splice(0, 2)
+    console.log(_this.routerS, '路由')
+    if (_this.routerS[0] === 'user') {
+      this.sourceId = 10000
+      this.supplierOne = 0
+    } else if (_this.routerS[0] === 'supplier') {
+      this.sourceId = 10004
+      this.supplierOne = 1
+    } else {
+      this.$router.push({ name: 'error' })
+    }
+    // console.log(_this.routerS[1].slice(1), 'sss')
+    if (_this.routerS[1] !== undefined) {
+      if (/^[0-9]*$/.test(_this.routerS[1].slice(1))) {
+        this.supplierTwo = _this.routerS[1].slice(1)
+        console.log(this.supplierTwo)
+        console.log(_this.routerS[1].slice(1), '打印')
+      } else {
+        this.$router.push({ name: 'error' })
+      }
+    } else {
+    }
+
+    console.log(this.$route.fullPath)
     // _this.getFilterBySupplier({ id: 0 })
     // eslint-disable-next-line no-undef
     _this.getSupplierList({ sourceId: _this.sourceId, typeId: _this.typeId, styleId: _this.styleId, searchId: _this.searchId, page: _this.pageID, size: _this.sizeID })
@@ -220,15 +264,19 @@ export default {
     getWorksOneList () { // 获取一级栏目
       const homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
       homeService.getWorksOneList().then((res) => {
-        console.log('第一级', res.data.result)
-        this.supplierOneTit = res.data.result.worksSources
-        const projectTypes = [{ id: 0, name: '全部' }]
-        const materialTypes = [{ id: 0, name: '全部' }]
-        this.materialTypes = materialTypes.concat(res.data.result.worksStyles)
-        this.projectTypes = projectTypes.concat(res.data.result.worksTypes)
-        this.supplierTwo = 0
-        this.supplierThree = 0
-        this.supplierFour = 0
+        if (res.status === 200) {
+          console.log('第一级', res.data.result)
+          this.supplierOneTit = res.data.result.worksSources
+          this.supplierOneTit[0].code = 'user'
+          this.supplierOneTit[1].code = 'supplier'
+          const projectTypes = [{ id: 0, name: '全部' }]
+          const materialTypes = [{ id: 0, name: '全部' }]
+          this.materialTypes = materialTypes.concat(res.data.result.worksStyles)
+          this.projectTypes = projectTypes.concat(res.data.result.worksTypes)
+          this.supplierTwo = 0
+          this.supplierThree = 0
+          this.supplierFour = 0
+        }
       })
     },
     getFilterBySupplier (parmes) { // 获取二级三级类别
@@ -309,14 +357,23 @@ export default {
             border-radius: 2px;
             padding: 2px 10px;
             cursor: pointer;
+            a{
+              color: #666666;
+            }
             &.active{
               color: #ffffff;
               background: $redColor;
+              a{
+                color: #ffffFF;
+              }
             }
             &:hover{
               color: #ffffff;
               background: $redColor;
               @include triText;
+              a{
+                color: #ffffFF;
+              }
             }
           }
         }

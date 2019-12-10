@@ -4,14 +4,19 @@ export default {
     middleware: 'isLogin',
     extendRoutes (routes, resolve) {
       routes.push({
-        name: 'custom',
-        path: '/works/ss/dd',
-        component: resolve(__dirname, 'pages/works/index')
+        name: 'worksOne',
+        path: '/works/:code',
+        component: resolve(__dirname, 'pages/works/_code/index')
       })
       routes.push({
-        name: 'ss',
-        path: '/works/:code/:code/de',
-        component: resolve(__dirname, 'pages/works/index')
+        name: 'worksTwo',
+        path: '/works/:code/:code',
+        component: resolve(__dirname, 'pages/works/_code/index')
+      })
+      routes.push({
+        name: 'worksThree',
+        path: '/works/:code/:code/:code',
+        component: resolve(__dirname, 'pages/works/_code/index')
       })
     }
   },
