@@ -24,9 +24,10 @@
               <span
                 v-for="(item,index) in supplierOneTit"
                 :id="item.id"
+                :code="item.code"
                 :key="index"
-                :class="query.sourceId === item.id ? 'active':'' "
-              ><nuxt-link :to="`/works/${item.id}`">
+                :class="query.sourceCode === item.code ? 'active':'' "
+              ><nuxt-link :to="`/works/${item.code}`">
                 {{ item.name }}
               </nuxt-link>
               </span>
@@ -40,8 +41,9 @@
               <span
                 v-for="(item,i) in projectTypes"
                 :key="i"
+                :code="item.code"
                 :class="query.typeId === item.id ? 'active':'' "
-              ><nuxt-link :to="`/works/${query.sourceId}/c${item.id}`">{{ item.name }}</nuxt-link></span>
+              ><nuxt-link :to="`/works/${query.sourceCode}/c${item.code}`">{{ item.name }}</nuxt-link></span>
             </div>
           </div>
           <div class="defaultBox">
@@ -51,15 +53,17 @@
             <div class="rightList">
               <span
                 v-for="(item,i) in materialTypes"
-                :id="item.id"
+                :code="item.code"
                 :key="i"
                 :class="query.styleId === item.id ? 'active':'' "
-              ><nuxt-link :to="`/works/${query.sourceId}/c${query.typeId}s${item.id}`">{{ item.name }}</nuxt-link></span>
+              ><nuxt-link :to="`/works/${query.sourceCode}/c${query.typeCode}s${item.code}`">{{ item.name }}</nuxt-link></span>
             </div>
           </div>
           <div class="defaultBoxTwo">
             <div class="contentx">
-              <span v-for="(item,index) in rankTypes" :key="index" :class="query.searchId === item.id ? 'active':''">{{ item.name }}</span>
+              <span v-for="(t,i) in rankTypes" :key="i" :class="query.searchId === t.id ? 'active':''">
+                {{ t.name }}
+              </span>
             </div>
           </div>
         </div>
@@ -125,16 +129,18 @@ export default {
   data () {
     return {
       seo: {
-        title: '',
+        title: '作品精选,大喇叭集采',
         description: '',
         keywords: ''
       },
       query: {
         sourceCode: '',
+        typeCode: '',
+        styleCode: '',
         sourceId: 0,
         typeId: 0,
         styleId: 0,
-        searchId: 1,
+        searchId: 0,
         page: 0,
         size: 20
       },
@@ -146,7 +152,7 @@ export default {
       rankTypes: [
         {
           name: '全部',
-          id: null
+          id: 0
         },
         {
           name: '最新',
@@ -172,11 +178,12 @@ export default {
     const res = await homeService.getWorksOneList()
 
     // 路由参数
+    console.log(params)
     const paramCode = params.code
-    let paramTypeId = params.pathMatch
-    paramTypeId = paramTypeId ? paramTypeId * 1 : paramTypeId
-    let paramStyleId = params['1']
-    paramStyleId = paramStyleId ? paramStyleId * 1 : paramStyleId
+    const paramTypeId = params.pathMatch
+    // paramTypeId = paramTypeId ? paramTypeId * 1 : paramTypeId
+    const paramStyleId = params['1']
+    // paramStyleId = paramStyleId ? paramStyleId * 1 : paramStyleId
 
     // 获取数据
     const { result } = res.data
@@ -186,27 +193,36 @@ export default {
     const query = {}
     if (paramCode) {
       // 目前先用id代替
-      const matchedItems = supplierOneTit.filter(item => item.id === paramCode * 1)
+      const matchedItems = supplierOneTit.filter(item => item.code === paramCode)
       query.sourceId = matchedItems[0].id
       query.sourceCode = matchedItems[0].code
     } else {
       // 默认第一个
+      console.log(4)
       query.sourceId = supplierOneTit[0].id
       query.sourceCode = supplierOneTit[0].code
     }
-
+    console.log(3)
     // 基础数据
-    const defaultProjectTypes = [{ id: 0, sourceId: query.sourceId, name: '全部' }]
-    const defaultMaterialTypes = [{ id: 0, sourceId: query.sourceId, name: '全部' }]
+    const defaultProjectTypes = [{ id: 0, sourceId: query.sourceId, name: '全部', code: 0 }]
+    const defaultMaterialTypes = [{ id: 0, sourceId: query.sourceId, name: '全部', code: 0 }]
     const allProjectTypes = defaultProjectTypes.concat(res.data.result.worksTypes)
     const allMaterialTypes = defaultMaterialTypes.concat(res.data.result.worksStyles)
     const projectTypes = allProjectTypes.filter(item => item.sourceId === query.sourceId)
     const materialTypes = allMaterialTypes.filter(item => item.sourceId === query.sourceId)
+    const types = projectTypes.filter(item => +item.code === +paramTypeId)
+    const styles = materialTypes.filter(item => +item.code === +paramStyleId)
+    console.log(paramStyleId)
+    console.log(styles)
+    console.log(projectTypes)
+    console.log(materialTypes)
 
     // 其他参数
-    query.typeId = paramTypeId || projectTypes[0].id
-    query.styleId = paramStyleId || materialTypes[0].id
-    query.searchId = 1
+    query.typeCode = projectTypes[0].code
+    query.styleCode = materialTypes[0].code
+    query.typeId = types[0].id || 0
+    query.styleId = 0
+    query.searchId = 0
     query.page = 0
     query.size = 20
 
@@ -218,6 +234,7 @@ export default {
   created () {
     const _this = this
     _this.homeService = new HomeService({ $axios: this.$axios, app: { $cookies: this.$cookies } })
+    // console.log(this.$route)
   },
   methods: {
     changeGradeNuOne (searchId) {
@@ -246,10 +263,10 @@ export default {
   },
   head () {
     return {
-      title: this.wordsThree + this.wordsTwo + this.wordsOne + '作品精选,大喇叭集采',
+      title: this.seo.title,
       meta: [
-        { hid: 'keywords', name: 'keywords', content: this.wordsThree + this.wordsTwo + this.wordsOne + '作品精选,大喇叭集采' },
-        { hid: 'description', name: 'description', content: this.wordsThree + this.wordsTwo + this.wordsOne + '作品精选,大喇叭集采' }
+        { hid: 'keywords', name: 'keywords', content: '' },
+        { hid: 'description', name: 'description', content: '' }
       ]
     }
   }

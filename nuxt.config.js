@@ -9,7 +9,7 @@ export default {
         component: resolve(__dirname, 'pages/works/index')
       })
       routes.push({
-        name: '作品二级页面',
+        name: '作品三级页面',
         path: '/works/:code/c*s*',
         component: resolve(__dirname, 'pages/works/index')
       })
