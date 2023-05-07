@@ -30,7 +30,7 @@
     "cookie-universal-nuxt": "^2.0.18",
     "element-ui": "^2.12.0",
     "express": "^4.17.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "js-base64": "^2.5.1",
     "nuxt": "^2.0.0",
     "qrcode": "^1.4.4",
